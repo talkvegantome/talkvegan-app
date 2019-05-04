@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {View, Platform, StyleSheet, Button, Text, ScrollView, Dimensions, SafeAreaView} from 'react-native';
+import {View, Platform, StyleSheet, Button, Text, ScrollView, Dimensions, SafeAreaView, Linking} from 'react-native';
 import {createStackNavigator, createDrawerNavigator, createMaterialTopTabNavigator, createAppContainer} from 'react-navigation';
 import {Header} from 'react-native-elements'
 // https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
@@ -15,37 +15,18 @@ import SideMenu from './sideMenu.js'
 import loadLocalResource from 'react-native-local-resource'
 import {pages, menu} from './pages.js'
 import { MarkdownView } from 'react-native-markdown-view'
+import { markdownStyles } from './markdownStyles.js'
 import { primary, secondary, light, highlight, dark} from './colours.js'
 
 const styles = StyleSheet.create({
   content: {
     textAlign: 'justify',
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
     paddingBottom: 20,
   }
 });
-const markdownStyles =  StyleSheet.create({
-  heading1: {
-    marginTop: 0,
-    color: primary,
-    fontFamily: 'Helvetica',
-    marginBottom: 10,
-    lineHeight: 45,
-  },
-  heading2: {
-    marginTop: 10,
-    color: primary,
-    fontFamily: 'Helvetica',
-    marginBottom: 10,
-  },
-  paragraph: {
-    fontFamily: 'Georgia',
-    fontSize: 18,
-    textAlign: 'justify',
-    lineHeight: 28,
-  }
-});
+
 
 type Props = {};
 class App extends React.Component {
@@ -76,7 +57,16 @@ class App extends React.Component {
 
           <ScrollView style={styles.content}>
 
-              <MarkdownView styles={markdownStyles}>{pages[this.props.navigation.getParam('indexId','default')]}</MarkdownView>
+              <MarkdownView
+                styles={markdownStyles}
+                onLinkPress={(url) => {
+                  Linking.openURL(url).catch(error =>
+                    console.warn('An error occurred: ', error),
+                  )
+                }}
+              >
+                {pages[this.props.navigation.getParam('indexId','default')]}
+              </MarkdownView>
           </ScrollView>
         </SafeAreaView>
       </View>
