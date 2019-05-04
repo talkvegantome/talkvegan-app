@@ -21,7 +21,7 @@ class SideMenu extends Component {
         return(
           <View style={styles.navSectionStyle} key={item.screenId}>
             <Text style={styles.navItemStyle} onPress={this.navigateToScreen(item.screenId)}>
-              {item.friendlyName}
+              - {item.friendlyName}
             </Text>
           </View>
         )
@@ -40,6 +40,9 @@ class SideMenu extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
+          <View style={styles.navHeaderStyle}>
+            <Text style={styles.navHeaderTextStyle} onPress={this.navigateToScreen('default')}>Vegan Index</Text>
+          </View>
           {menuObjects}
         </ScrollView>
         <View style={styles.footerContainer}>

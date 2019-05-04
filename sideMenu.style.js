@@ -5,10 +5,18 @@ export default {
   },
   navItemStyle: {
     paddingHorizontal: 25,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   navSectionStyle: {
 
+  },
+  navHeaderStyle: {
+    backgroundColor: 'teal',
+  },
+  navHeaderTextStyle: {
+    padding: 10,
+    fontSize: 30,
+    color: 'white',
   },
   sectionHeadingStyle: {
     backgroundColor: 'lightgrey',
