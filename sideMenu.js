@@ -1,38 +1,26 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './sideMenu.style.js';
-import {NavigationActions} from 'react-navigation';
+import {NavigationActions, StackActions} from 'react-navigation';
 import {ScrollView, Text, View} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import _ from 'lodash';
 
 class SideMenu extends Component {
-  navigateToScreen = (route) => () => {
-    const navigateAction = NavigationActions.navigate({
-      routeName: route
-    });
-    this.props.navigation.dispatch(navigateAction);
+  navigateToScreen = (key) => () => {
+
+    this.props.navigation.navigate("Home", {indexId:key});
+    this.props.navigation.closeDrawer();
   }
 
   render () {
-    menu = [
-      {
-        "friendlyName": "Header 1",
-        "screenId": "screen1",
-        "subItems":[
-          {
-            "friendlyName": "Item 1",
-            "screenId": "screen1"
-          }
-        ]
-      }
-    ]
-    let navmenu = this;
-    menuObjects = _.map(menu, function(header){
-      items = _.map(header.subItems, function(item){
+
+
+    menuObjects = this.props.menu.map( (header) => {
+      items = header.subItems.map((item) => {
         return(
           <View style={styles.navSectionStyle} key={item.screenId}>
-            <Text style={styles.navItemStyle} onPress={navmenu.navigateToScreen(item.screenId)}>
+            <Text style={styles.navItemStyle} onPress={this.navigateToScreen(item.screenId)}>
               {item.friendlyName}
             </Text>
           </View>
@@ -63,7 +51,8 @@ class SideMenu extends Component {
 }
 
 SideMenu.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  menu: PropTypes.array
 };
 
 export default SideMenu;

@@ -50,71 +50,85 @@ const styles = StyleSheet.create({
   }
 });
 
-class MyIndexScreen extends React.Component {
-  static navigationOptions = {
-    drawerLabel: 'Index',
-
-
-  };
-
-  render() {
-    return (
-      <ScrollView style={styles.content}>
-        <Button
-          onPress={() => this.props.navigation.goBack()}
-          title="Go back home"
-        />
-      </ScrollView>
-    );
-  }
-}
-
 type Props = {};
 class App extends React.Component {
   static navigationOptions = {
     drawerLabel: 'Home'
   };
-  constructor(props){
-    super(props);
-    this.state ={ isLoading: true, copy:null}
+  pages = {
+    'default': "# This is the default page",
+    'screen1': "# Screen 1"
   }
 
-  componentDidMount(){
-    loadLocalResource(myResource).then((myResourceContent) => {
-            this.setState({copy: myResourceContent})
-        }
-    )
-  }
   static navigationOptions = {
     header: null,
   };
 
   static propTypes = {};
   static defaultProps = {};
-
+  //static navigation  = this.props.navigation;
   render() {
     return (
       <ScrollView style={styles.content}>
-      <Button
-    onPress={() => this.props.navigation.navigate('Index')}
-    title="Go to Index"
-  />
-          <MarkdownView >{this.state.copy}</MarkdownView>
+
+          <MarkdownView >{this.pages[this.props.navigation.getParam('indexId','default')]}</MarkdownView>
       </ScrollView>
     );
   }
 
 }
 
+class DetailPage extends React.Component {
+  static navigationOptions = {
+    drawerLabel: 'Detail'
+  };
+  pages = {
+    'default': "# This is the default page",
+    'screen1': "# Screen 1"
+  }
+
+  static navigationOptions = {
+    header: null,
+  };
+
+  static propTypes = {};
+  static defaultProps = {};
+  //static navigation  = this.props.navigation;
+  render() {
+    return (
+      <ScrollView style={styles.content}>
+
+          <MarkdownView >- {this.props.navigation.getParam('indexId','default')}</MarkdownView>
+      </ScrollView>
+    );
+  }
+
+}
+
+const menu = [
+  {
+    "friendlyName": "Header 1",
+    "screenId": "screen1",
+    "subItems":[
+      {
+        "friendlyName": "Item 1",
+        "screenId": "screen1"
+      }
+    ]
+  }
+]
+
 const MyDrawerNavigator = createDrawerNavigator({
   Home: {
     screen: App,
   },
-  Index: {
-    screen: MyIndexScreen,
+  Detail: {
+    screen: DetailPage,
   },
+
 },{
-    contentComponent: SideMenu,
+    contentComponent: ({ navigation }) => (<SideMenu navigation={navigation} menu={menu}/>
+    ),
     drawerWidth: Dimensions.get('window').width - 120,
 });
 const MyApp = createAppContainer(MyDrawerNavigator);
