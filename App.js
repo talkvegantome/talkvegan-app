@@ -7,10 +7,11 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Button, Text, ScrollView} from 'react-native';
+import {Platform, StyleSheet, Button, Text, ScrollView, Dimensions} from 'react-native';
 import {createStackNavigator, createDrawerNavigator, createMaterialTopTabNavigator, createAppContainer} from 'react-navigation';
 
-
+// https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
+import SideMenu from './sideMenu.js'
 import loadLocalResource from 'react-native-local-resource'
 import myResource from './MarkDown/index.md'
 import { MarkdownView } from 'react-native-markdown-view'
@@ -112,6 +113,9 @@ const MyDrawerNavigator = createDrawerNavigator({
   Index: {
     screen: MyIndexScreen,
   },
+},{
+    contentComponent: SideMenu,
+    drawerWidth: Dimensions.get('window').width - 120,
 });
 const MyApp = createAppContainer(MyDrawerNavigator);
 export default MyApp
