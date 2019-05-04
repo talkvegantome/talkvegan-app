@@ -1,7 +1,11 @@
 export const pages = {
   default: `
-# Welcome to Vegan Index
-This text is defined as a simple MarkDown style string.`,
+# Welcome to VegBook
+This app provides a resource of information to help new and old vegans navigate the world.
+
+## Contributors
+The vast majority of the content comes from Earthling Ed of Surge Activism.
+Who has kindly agreed to let us reproduce the work from his book [30 Non-Vegan Excuses](https://earthlinged.org/ebook).`,
   personalChoice: `
 # Eating Animals is My Personal Choice
 “Respect my opinion!”, “It's my personal choice to eat meat, don't force your views on to me!” - of all the excuses used to defend eating animal products, this could well be the most common. So is eating animals a personal choice or is it a little more complex than that?
@@ -10,15 +14,15 @@ The problem is when non-vegans use this argument they have either become so deta
 So when a vegan seeks to educate a non-vegan we are met with “you should respect other people's points of view”. However, as vegans we do respect the views of others. We respect the views of the 56 billion land animals murdered each year that didn't want to die. We respect the views of the dairy cows and egg-laying hens whose bodies are sexually abused and exploited and treated as nothing other than a disposable commodity.
 We respect the views of the 2 - 2.7 trillion fish and marine animals that are dragged out of their natural habitat every year and suffocated or crushed to death.
 We respect the views of animals skinned alive for their fur or abused, tortured and killed for their skin, wool and feathers. We respect the views of the animals callously tested on by scientists and cosmetics companies, confined to a life of agony and unbelievable pain.
-
-
- We respect the views of the animals beaten and punished to perform circus tricks and unnatural behaviours for our entertainment. We respect the views of every animal that is oppressed, tortured and murdered.
+We respect the views of the animals beaten and punished to perform circus tricks and unnatural behaviours for our entertainment. We respect the views of every animal that is oppressed, tortured and murdered.
 We respect the views of the humans who are also victims within our systems of animal exploitation - and we even respect the view of the person we are talking to, the view that they probably want to live a long life by caring enough to tell them that consuming animal products hugely increases their risk of cancer, diabetes, strokes, dementia, heart disease and every other major disease plaguing our species.
 So when people so defiantly tell us to respect the views of others, the question is, which other view point are they considering other than their own?
 When they declare it's their personal choice to eat animal products, what about the personal choice of every other creature, human and non-human alike, whose life is treated as inferior and meaningless just so people can poison their bodies with products created from their death and fear?
 It is not morally justifiable to murder just because the murderer personally made the choice to murder. It is not morally justifiable to rape just because the rapist personally made the choice to commit the act of rape. It is not morally justifiable to kick and beat a dog just because the abuser personally made the choice to kick and beat the dog and it is not morally justifiable to pay for animals to be exploited and killed, just because a non-vegan personally made the choice to pay for animals to be exploited and killed.
-
 When someone uses the “my personal choice” argument, simply ask them “what about the personal choice of the animal who wants to live, have you considered their choice?”.
+
+## Source
+This page reproduced verbatim from [30 Non-Vegan Excuses](https://earthlinged.org/ebook) with permission of the author.
 `,
   iLikeTheTaste: `
 # I Like the Taste & I Couldn't Give it Up
@@ -40,27 +44,26 @@ When someone uses the “my personal choice” argument, simply ask them “what
   Also, remember to explain that it’s not as if people even have to give up the flavours of the animal products that they eat. There is now such a huge and varied selection of vegan alternatives to cheese, milk, eggs and meats. Explain that as vegans we eat burgers, hot dogs, burritos, nachos, lasagna, mac and cheese, curries, cheese pizza, cakes, cupcakes, cheesecakes, cookies, ice cream and everything else in between.
   Explain how as vegans we experience all of the flavours and textures that we used to, except now they’re made from plants. No dead body parts, no gristle, no cholesterol, no hormones, no antibiotics. It’s also really helpful to tell them where they can get these products from, so for example here in the UK, Sainsbury’s and Tesco have their own range of vegan cheese and you can get meat alternatives in nearly every supermarket.
   I also think it can be worth highlighting which restaurants now have vegan menus and options, again just to make veganism seem as easy and accessible as possible. Some great examples of places in the UK are: Wagamama, Zizzi, Pizza Express, Nando’s, Pizza Hut, GBK, Wetherspoons, Pret A Manger, All Bar One and Carluccio’s.
+  ## Source
+  This page reproduced verbatim from [30 Non-Vegan Excuses](https://earthlinged.org/ebook) with permission of the author.
 `,
   otherAnimals: `
 # Other Animals Eat Other Animals
   When confronted with the idea that the consumption of animals is done purely for the taste rather than for nutrition (see nutrition) one of the most common excuses vegans hear is, “but animals eat other animals, so why shouldn’t we?”
 As much as this may be true, some animals do indeed eat other animals, there’s many reasons as to why this statement holds no veracity whatsoever.
   We need only first consider the anatomical biology of omnivores compared to that of humans. Firstly, omnivores have sharp claws and huge fangs compared to our hands
-Page 18 of 122
  and blunt, ineffective canines. When was the last time you saw a human running on all fours ripping the flesh off a living animal? Omnivores also have short intestines, ideal for digesting flesh, whilst humans have incredibly long intestines, which are useless at digesting flesh - hence the constipation and colon cancer! The acid contained within omnivore and carnivore stomachs is very strong hydrochloric acid, ideal for the digestion of raw animal flesh, which when compared to the weak acid found in our stomachs, explains why we are susceptible to food poisoning from undercooked meat.
 You don’t see a lion checking to make sure their dinner is cooked through all the way to the middle. You also don’t see a lion being picky about which part of an animal they should eat, but how often do we see stories in the newspaper of the shocking revelation that a brain was found in a piece of KFC? It’s like for that split second the illusion that meat doesn’t come from a living, breathing, feeling animal is shattered and people are forced to confront the abject reality of where their food comes from. A real omnivore isn’t disgusted by the gore.
 Let’s consider this, if you were locked in a room with a live chicken and an apple you would always eat the apple first. Because when we see a living being we don’t feel hungry, we don’t want to ravage animals and tear them apart - but when we see an apple we do feel hungry.
-Furthermore, even though certain animals eat other animals, there are many more herbivorous animals than there are carnivorous ones. But regardless, what exactly is the relevance of what other animals do when applied to human behaviour? Some animals rape and kill each other, so does that mean humans would be excused if they
-Page 19 of 122
-
- committed these acts too? Ask that question to the non-vegan who is using the excuse, say “wild animals kill each other, does that mean it is morally justifiable for humans to kill each other just because some wild animals do?”.
+Furthermore, even though certain animals eat other animals, there are many more herbivorous animals than there are carnivorous ones. But regardless, what exactly is the relevance of what other animals do when applied to human behaviour? Some animals rape and kill each other, so does that mean humans would be excused if they committed these acts too? Ask that question to the non-vegan who is using the excuse, say “wild animals kill each other, does that mean it is morally justifiable for humans to kill each other just because some wild animals do?”.
 Furthermore, lions have been documented killing their own cubs before, so using non-vegan logic it must therefore be acceptable for humans to kill their children as other animals have been shown to do so. In this situation ask the non-vegan “do you think it is wise to base our morality on that of a wild animal?”.
 Animals also kill their food themselves, they don’t pay others to kill on their behalf because they find the prospect of slaughtering an animal too traumatising. If we were naturally designed to eat meat we would have no objection to killing animals. We also wouldn’t shelter the truth from our children and yet we deem the reality of slaughterhouses to be too troubling and disturbing for a child.
 Other animals kill out of necessity whereas humans do not, in fact eating animals is incredibly detrimental to our health. Humans kill other animals because we enjoy the way they taste, meaning we kill them for pleasure, even though this goes against many of our core morals. Many of us oppose animal exploitation when it comes to things like dog fighting or hunting as they are seen as unnecessary and only done for pleasure and yet can’t see that eating animals is also unnecessary and only done for pleasure. It’s important to try and get people to make this connection so you can also ask the non-vegan “are you an obligate carnivore?” and then say “if you don’t have to eat meat then why do you do so?”. If they say it’s because they like the taste, then ask “are your tastebuds more important than a life?”. As you can see, the circle of excuses tends to go round like a revolving door!
-Page 20 of 122
-
 It is so unbelievably ironic that we deem ourselves so incredibly superior to animals (see intelligence), but when the superiority argument no longer functions as an effective excuse for murdering living beings, we suddenly portray ourselves as just a wild animal acting out our primal instincts.
 So what are we, better than animals, or only animals? We can’t be both.
+
+## Source
+This page reproduced verbatim from [30 Non-Vegan Excuses](https://earthlinged.org/ebook) with permission of the author.
 `
 }
 export const menu = [

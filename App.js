@@ -15,7 +15,7 @@ import SideMenu from './sideMenu.js'
 import loadLocalResource from 'react-native-local-resource'
 import {pages, menu} from './pages.js'
 import { MarkdownView } from 'react-native-markdown-view'
-import { primary, secondary, background, highlight, dark} from './colours.js'
+import { primary, secondary, light, highlight, dark} from './colours.js'
 
 const styles = StyleSheet.create({
   content: {
@@ -32,6 +32,12 @@ const markdownStyles =  StyleSheet.create({
     fontFamily: 'Helvetica',
     marginBottom: 10,
     lineHeight: 45,
+  },
+  heading2: {
+    marginTop: 10,
+    color: primary,
+    fontFamily: 'Helvetica',
+    marginBottom: 10,
   },
   paragraph: {
     fontFamily: 'Georgia',
@@ -59,14 +65,14 @@ class App extends React.Component {
     return (
       <View style={{flex: 1}}>
         <Header
-          leftComponent={{ icon: 'menu', color: background,  onPress: () => this.props.navigation.openDrawer()}}
-          centerComponent={{text: 'VegBook', style: {color: background, fontSize: 40, fontFamily: 'Helvetica', lineHeight:40}}}
+          leftComponent={{ icon: 'menu', color: light,  onPress: () => this.props.navigation.openDrawer()}}
+          centerComponent={{text: 'VegBook', style: {color: light, fontSize: 40, fontFamily: 'Helvetica', lineHeight:40}}}
           containerStyle={{
               backgroundColor: primary,
               justifyContent: 'space-around',
             }}
           />
-        <SafeAreaView style={{flex: 1, backgroundColor: background}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: light}}>
 
           <ScrollView style={styles.content}>
 

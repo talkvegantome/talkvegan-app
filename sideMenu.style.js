@@ -1,40 +1,36 @@
-import { primary, secondary, background, highlight, dark} from './colours.js'
+import { primary, secondary, light, highlight, dark} from './colours.js'
 export default {
   container: {
-    paddingTop: 0,
+    flex: 1,
+    backgroundColor: light,
+  },
+  safeContainer: {
+    backgroundColor: primary,
     flex: 1
   },
-  navItemStyle: {
+  navSectionStyle: {
     paddingHorizontal: 25,
     paddingVertical: 10,
+    bottomBorderColor: primary,
+    bottomBorderWidth: 1
   },
-  navSectionStyle: {
 
-  },
   navHeaderStyle: {
     backgroundColor: primary,
   },
   navHeaderTitleStyle: {
     fontSize: 30,
-    color: background,
+    color: light,
   },
   navHeaderTextStyle: {
     padding: 10,
-
-    color: background,
+    color: light,
   },
   sectionHeadingStyle: {
     backgroundColor: highlight,
   },
   sectionHeadingTitleStyle: {
     fontSize: 20,
-    color: dark,
-  },
-  footerContainer: {
-    padding: 10,
-    backgroundColor: dark,
-  },
-  footerText: {
-    color: background
+    color: light,
   }
 };
