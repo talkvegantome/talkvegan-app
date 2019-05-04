@@ -7,20 +7,19 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Button, Text, ScrollView, Dimensions} from 'react-native';
+import {View, Platform, StyleSheet, Button, Text, ScrollView, Dimensions, SafeAreaView} from 'react-native';
 import {createStackNavigator, createDrawerNavigator, createMaterialTopTabNavigator, createAppContainer} from 'react-navigation';
-
+import {Header} from 'react-native-elements'
 // https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
 import SideMenu from './sideMenu.js'
 import loadLocalResource from 'react-native-local-resource'
 import {pages, menu} from './pages.js'
 import { MarkdownView } from 'react-native-markdown-view'
-
+import { primary, secondary, background, highlight, dark} from './colours.js'
 
 const styles = StyleSheet.create({
   content: {
     textAlign: 'justify',
-    paddingTop: 10,
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 20,
@@ -28,11 +27,17 @@ const styles = StyleSheet.create({
 });
 const markdownStyles =  StyleSheet.create({
   heading1: {
+    marginTop: 0,
+    color: primary,
+    fontFamily: 'Helvetica',
     marginBottom: 10,
+    lineHeight: 45,
   },
   paragraph: {
+    fontFamily: 'Georgia',
+    fontSize: 18,
     textAlign: 'justify',
-    lineHeight: 22,
+    lineHeight: 28,
   }
 });
 
@@ -52,10 +57,23 @@ class App extends React.Component {
   //static navigation  = this.props.navigation;
   render() {
     return (
-      <ScrollView style={styles.content}>
+      <View style={{flex: 1}}>
+        <Header
+          leftComponent={{ icon: 'menu', color: background,  onPress: () => this.props.navigation.openDrawer()}}
+          centerComponent={{text: 'VegBook', style: {color: background, fontSize: 40, fontFamily: 'Helvetica', lineHeight:40}}}
+          containerStyle={{
+              backgroundColor: primary,
+              justifyContent: 'space-around',
+            }}
+          />
+        <SafeAreaView style={{flex: 1, backgroundColor: background}}>
 
-          <MarkdownView styles={markdownStyles}>{pages[this.props.navigation.getParam('indexId','default')]}</MarkdownView>
-      </ScrollView>
+          <ScrollView style={styles.content}>
+
+              <MarkdownView styles={markdownStyles}>{pages[this.props.navigation.getParam('indexId','default')]}</MarkdownView>
+          </ScrollView>
+        </SafeAreaView>
+      </View>
     );
   }
 

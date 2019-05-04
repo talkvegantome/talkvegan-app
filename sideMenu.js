@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './sideMenu.style.js';
 import {NavigationActions, StackActions} from 'react-navigation';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, View, SafeAreaView} from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import { ListItem } from 'react-native-elements';
 import _ from 'lodash';
 
 class SideMenu extends Component {
@@ -19,18 +20,22 @@ class SideMenu extends Component {
     menuObjects = this.props.menu.map( (header) => {
       items = header.subItems.map((item) => {
         return(
-          <View style={styles.navSectionStyle} key={item.screenId}>
-            <Text style={styles.navItemStyle} onPress={this.navigateToScreen(item.screenId)}>
-              - {item.friendlyName}
-            </Text>
-          </View>
+          <ListItem
+            key={item.friendlyName}
+            style={styles.navSectionStyle} key={item.screenId}
+            onPress={this.navigateToScreen(item.screenId)}
+            title={item.friendlyName}
+          />
         )
       })
       return (
         <View key={header.friendlyName}>
-          <Text style={styles.sectionHeadingStyle}>
-            {header.friendlyName}
-          </Text>
+          <ListItem
+            key={header.friendlyName}
+            containerStyle={styles.sectionHeadingStyle}
+            titleStyle={styles.sectionHeadingTitleStyle}
+            title={header.friendlyName}
+          />
           {items}
         </View>
       )
@@ -38,17 +43,19 @@ class SideMenu extends Component {
 
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ScrollView>
-          <View style={styles.navHeaderStyle}>
-            <Text style={styles.navHeaderTextStyle} onPress={this.navigateToScreen('default')}>Vegan Index</Text>
-          </View>
+          <ListItem
+            containerStyle={styles.navHeaderStyle}
+            titleStyle={styles.navHeaderTitleStyle}
+            onPress={this.navigateToScreen('default')}
+            title="VegBook"/>
           {menuObjects}
         </ScrollView>
         <View style={styles.footerContainer}>
-          <Text>This is my fixed footer</Text>
+          <Text style={styles.footerText}>Copyright 2019</Text>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

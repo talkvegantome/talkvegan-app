@@ -1,6 +1,7 @@
+import { primary, secondary, background, highlight, dark} from './colours.js'
 export default {
   container: {
-    paddingTop: 40,
+    paddingTop: 0,
     flex: 1
   },
   navItemStyle: {
@@ -11,21 +12,29 @@ export default {
 
   },
   navHeaderStyle: {
-    backgroundColor: 'teal',
+    backgroundColor: primary,
+  },
+  navHeaderTitleStyle: {
+    fontSize: 30,
+    color: background,
   },
   navHeaderTextStyle: {
     padding: 10,
-    fontSize: 30,
-    color: 'white',
+
+    color: background,
   },
   sectionHeadingStyle: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: highlight,
+  },
+  sectionHeadingTitleStyle: {
     fontSize: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20
+    color: dark,
   },
   footerContainer: {
-    padding: 20,
-    backgroundColor: 'lightgrey'
+    padding: 10,
+    backgroundColor: dark,
+  },
+  footerText: {
+    color: background
   }
 };
