@@ -13,7 +13,7 @@ import {Header} from 'react-native-elements'
 // https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
 import SideMenu from './sideMenu.js'
 import loadLocalResource from 'react-native-local-resource'
-import {pages, menu} from './pages.js'
+import {pages} from './pages.js'
 import { MarkdownView } from 'react-native-markdown-view'
 import { markdownStyles } from './markdownStyles.js'
 import { primary, secondary, light, highlight, dark} from './colours.js'
@@ -65,7 +65,7 @@ class App extends React.Component {
                   )
                 }}
               >
-                {pages[this.props.navigation.getParam('indexId','default')]}
+                {pages[this.props.navigation.getParam('indexId','splash')]}
               </MarkdownView>
           </ScrollView>
         </SafeAreaView>
