@@ -6171,12 +6171,7 @@ react-native-gesture-handler@~1.0.14:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-local-resource@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/react-native-local-resource/-/react-native-local-resource-0.1.6.tgz#9aea39488c7b3f3d107e9459d3d83c3ac707d24e"
-  integrity sha512-uDT6Ig8w6WkmA7ReIUG8soBkWJ94b/d1cnFHnlEMvMPlBf6fhPHh90mVdNTTYf95oT4sL09mBN5MYFDX4hRIiQ==
-
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 

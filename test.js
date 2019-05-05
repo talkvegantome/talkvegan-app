@@ -12,4 +12,10 @@ _.map(data, (menuItem, index) => {
       expect(!menuItem.rawContent.match(pattern));
 
   })
+  test("index.json: '" + menuItem.friendlyName + "' content has no \\n\\n separated lists (breaks MD)", () => {
+      let pattern = /\n\s*-[^\n]*\n{2,}\s*-/g
+      console.log(menuItem.rawContent.match(pattern))
+      expect(!menuItem.rawContent.match(pattern));
+
+  })
 });

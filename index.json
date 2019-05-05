@@ -1,7 +1,7 @@
 {
-    "data" :
+    "data" : 
 [
-
+      
       {
           "friendlyName": "Splash",
           "machineName": "splash",
@@ -12,18 +12,18 @@
           },
           "permalink" : "http://localhost:1313/splash/"
       }
-      ,
+      , 
       {
           "friendlyName": "Learning More",
           "machineName": "learningMore",
-          "rawContent": "\n# Learning More\n\n## Websites\n\n- [The Vegan Society](https://vegansociety.com) - Provides a wealth of information about getting started, the grandaddies of Veganism\n\n\n## Books\n\n## Films\n\n- [Land of Glory](https://www.landofhopeandglory.org/) **VIOLENT FOOTAGE**\n- [Dominion](https://www.youtube.com/watch?v=LQRAfJyEsko) **VIOLENT FOOTAGE**\n- [Earthlings](http://www.nationearth.com/) **VIOLENT FOOTAGE**\n- [What the Health](http://www.whatthehealthfilm.com/) Available on Netflix, some statistics may be disputed.\n\n## Podcasts\n\n- [The Bearded Vegans](https://www.thebeardedvegans.com/)\n\n## YouTube Channels\n",
+          "rawContent": "\n# Learning More\n\n## Websites\n\n- [The Vegan Society](https://vegansociety.com) - Provides a wealth of information about getting started, the grandaddies of Veganism\n\n\n## Books\n\n## Films\n\n- [Land of Hope and Glory](https://www.landofhopeandglory.org/) **VIOLENT FOOTAGE**\n- [Dominion](https://www.youtube.com/watch?v=LQRAfJyEsko) **VIOLENT FOOTAGE**\n- [Earthlings](http://www.nationearth.com/) **VIOLENT FOOTAGE**\n- [What the Health](http://www.whatthehealthfilm.com/) Available on Netflix, some statistics may be disputed.\n\n## Podcasts\n\n- [The Bearded Vegans](https://www.thebeardedvegans.com/)\n\n## YouTube Channels\n",
           "section": {
             "friendlyName": "Getting Started",
             "machineName": "gettingStarted"
           },
           "permalink" : "http://localhost:1313/getting-started/learning-more/"
       }
-      ,
+      , 
       {
           "friendlyName": "Eating Out",
           "machineName": "eatingOut",
@@ -34,18 +34,18 @@
           },
           "permalink" : "http://localhost:1313/getting-started/eating-out/"
       }
-      ,
+      , 
       {
           "friendlyName": "Shopping",
           "machineName": "shopping",
-          "rawContent": "\n# Shopping\n\nShopping as a vegan requires a little more attention than shopping as an omnivore.  \n\nIn this section we will cover the major everyday shopping scenarios.\n\n## Food\n\nWhen you first start checking labels on products in the supermarket it can seem overwhelming to check for everything, especially when it comes to E numbers and obscure ingredients. Do the best you can, but try not to overwhelm yourself.\n\n### Vegetarian Products\n\nIt's easy to be lulled into a false sense of security by products made from vegetarian manufacturers like Quorn. But keep a watchful eye on the ingredients of these products as they commonly contain non-vegan ingredients even when you least expect!\n\n### E Numbers\n\n- E120 - Never vegan\n- E322 - Usually vegan\n- E422 - Usually vegan\n- E542 - Never vegan\n- E631 - Usually not vegan\n- E901 - Never vegan\n- E904 - Never vegan\n- E471 - Usually vegan\n- E920 - Check for further information\n\n**Source:** [Vegan Society](https://www.vegansociety.com/whats-new/blog/how-avoid-buying-non-vegan-products)\n\n### Gotchas\n\n* Honey\n\n* Beer/Wine\n\n* Bread (Regional. particularly in the UK often contains milk)\n\n* Smoothies (Often contain yogurt)\n\n* Chocolate (Dark chocolate is usually fine, but always check the packaging for milk!)\n\n## Clothes\n\nOften less thought about than food, the following products on clothes will not be vegan.\n\n* Leather (including Suede)\n\n* Wool\n\n* Silk\n\n* Fur\n\n* Feathers\n\n### Gotchas\n\nIt's advisable to patronise vegan shoe establishments in particular as glues used in the manufacturing process for shoes made of otherwise vegan materials will make the shoes not vegan.\n\n## Toiletries\n\nWith all items, but particularly makeup, some research is required to determine whether animal testing was involved in the research and development stages of the product.\n\n### Gotchas\n\n* Bar soap is usually made with animal fat\n\n* 'Cruelty free' does not mean it is free from animal products\n\n## Household items\n\nEverything from household cleansers to pillows may contain animal products, as always it's important to read the ingredients.  \n\n### Gotchas\n\n* Pillows often contain feathers\n\n## Resources\n\n- Beer [Barnivore](http://www.barnivore.com/) is a great source of information\n",
+          "rawContent": "\n# Shopping\n\nShopping as a vegan requires a little more attention than shopping as an omnivore.  \n\nIn this section we will cover the major everyday shopping scenarios.\n\n## Food\n\nWhen you first start checking labels on products in the supermarket it can seem overwhelming to check for everything, especially when it comes to E numbers and obscure ingredients. Do the best you can, but try not to overwhelm yourself.\n\n### Vegetarian Products\n\nIt's easy to be lulled into a false sense of security by products made from vegetarian manufacturers like Quorn. But keep a watchful eye on the ingredients of these products as they commonly contain non-vegan ingredients even when you least expect!\n\n### E Numbers\n\n- E120 - Never vegan\n- E322 - Usually vegan\n- E422 - Usually vegan\n- E542 - Never vegan\n- E631 - Usually not vegan\n- E901 - Never vegan\n- E904 - Never vegan\n- E471 - Usually vegan\n- E920 - Check for further information\n\n**Source:** [Vegan Society](https://www.vegansociety.com/whats-new/blog/how-avoid-buying-non-vegan-products)\n\n### Gotchas\n\n- Honey\n- Beer/Wine\n- Bread (Regional. particularly in the UK often contains milk)\n- Smoothies (Often contain yogurt)\n- Chocolate (Dark chocolate is usually fine, but always check the packaging for milk!)\n\n## Clothes\n\nOften less thought about than food, the following products on clothes will not be vegan.\n\n- Leather (including Suede)\n- Wool\n- Silk\n- Fur\n- Feathers\n\n### Gotchas\n\nIt's advisable to patronise vegan shoe establishments in particular as glues used in the manufacturing process for shoes made of otherwise vegan materials will make the shoes not vegan.\n\n## Toiletries\n\nWith all items, but particularly makeup, some research is required to determine whether animal testing was involved in the research and development stages of the product.\n\n### Gotchas\n\n- Bar soap is usually made with animal fat\n- 'Cruelty free' does not mean it is free from animal products\n\n## Household items\n\nEverything from household cleansers to pillows may contain animal products, as always it's important to read the ingredients.  \n\n### Gotchas\n\n- Pillows often contain feathers\n\n## Resources\n\n- Beer [Barnivore](http://www.barnivore.com/) is a great source of information\n",
           "section": {
             "friendlyName": "Getting Started",
             "machineName": "gettingStarted"
           },
           "permalink" : "http://localhost:1313/getting-started/shopping/"
       }
-      ,
+      , 
       {
           "friendlyName": "They Would Go Extinct Without Us",
           "machineName": "theyWouldGoExtinctWithoutUs",
@@ -56,7 +56,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/they-would-go-extinct-without-us/"
       }
-      ,
+      , 
       {
           "friendlyName": "Ancestors",
           "machineName": "ancestors",
@@ -67,7 +67,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/ancestors/"
       }
-      ,
+      , 
       {
           "friendlyName": "Animal Products Tradition and Culture",
           "machineName": "animalProductsForTradition",
@@ -78,7 +78,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/animal-products-tradition-and-culture/"
       }
-      ,
+      , 
       {
           "friendlyName": "Animal Products for Nutrition",
           "machineName": "animalProductsForNutrition",
@@ -89,7 +89,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/animal-products-for-nutrition/"
       }
-      ,
+      , 
       {
           "friendlyName": "Other Animals Eat Other Animals",
           "machineName": "otherAnimals",
@@ -100,7 +100,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/other-animals/"
       }
-      ,
+      , 
       {
           "friendlyName": "I Like the Taste",
           "machineName": "iLikeTheTaste",
@@ -111,7 +111,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/i-like-the-taste/"
       }
-      ,
+      , 
       {
           "friendlyName": "Personal Choice",
           "machineName": "personalChoice",
