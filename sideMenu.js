@@ -6,6 +6,7 @@ import {ScrollView, Text, View, SafeAreaView} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { ListItem } from 'react-native-elements';
 import _ from 'lodash';
+import {pages, menu} from './pages.js'
 
 class SideMenu extends Component {
   constructor(props) {
@@ -24,9 +25,10 @@ class SideMenu extends Component {
 
   render () {
 
+    menuObjects = _.map( menu, (headerItem, header) => {
+      headerFriendlyName = headerItem.friendlyName
 
-    menuObjects = this.props.menu.map( (header) => {
-      items = header.subItems.map((item) => {
+      items = headerItem.subItems.map((item) => {
         return(
           <ListItem
             key={item.friendlyName}
@@ -38,17 +40,17 @@ class SideMenu extends Component {
         )
       })
       let headerVisibility = this.state.headerVisibility
-      display = header.friendlyName in headerVisibility && headerVisibility[header.friendlyName]? 'block': 'none'
+      display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'block': 'none'
       return (
-        <View key={header.friendlyName}>
+        <View key={headerFriendlyName}>
           <ListItem
-            key={header.friendlyName}
+            key={headerFriendlyName}
             bottomDivider={true}
             containerStyle={styles.sectionHeadingStyle}
             titleStyle={styles.sectionHeadingTitleStyle}
             leftIcon={{name: 'expand-more', iconStyle: styles.sectionHeadingTitleStyle}}
-            title={header.friendlyName}
-            onPress={()=>{this.toggleHeaderVisibility(header.friendlyName)}}
+            title={headerFriendlyName}
+            onPress={()=>{this.toggleHeaderVisibility(headerFriendlyName)}}
           />
           <View style={{display:display}}>
             {items}
@@ -76,7 +78,6 @@ class SideMenu extends Component {
 
 SideMenu.propTypes = {
   navigation: PropTypes.object,
-  menu: PropTypes.array
 };
 
 export default SideMenu;

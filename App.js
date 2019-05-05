@@ -83,7 +83,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   }
 
 },{
-    contentComponent: ({ navigation }) => (<SideMenu navigation={navigation} menu={menu}/>
+    contentComponent: ({ navigation }) => (<SideMenu navigation={navigation}/>
     ),
     drawerWidth: Dimensions.get('window').width - 120,
 });
