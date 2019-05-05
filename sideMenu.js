@@ -26,7 +26,7 @@ class SideMenu extends Component {
   render () {
 
     menuObjects = _.map( menu, (headerItem, header) => {
-      headerFriendlyName = headerItem.friendlyName
+      let headerFriendlyName = headerItem.friendlyName
 
       items = headerItem.subItems.map((item) => {
         return(

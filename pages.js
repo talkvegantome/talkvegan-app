@@ -4,13 +4,8 @@ let pages = {}
 let menu = {}
 
 data.map((page) => {
-  if(!page.section.machineName && page.machineName != 'splash'){
-    return
-  }
   pages[page.machineName] = page.rawContent
-
-
-  if(!page.section.machineName){
+  if(page.section.machineName == 'index'){
     return
   }
   if(!(page.section.machineName in menu)){
