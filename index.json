@@ -1,18 +1,18 @@
 {
-    "data" : 
+    "data" :
 [
-      
+
       {
           "friendlyName": "Splash",
           "machineName": "splash",
-          "rawContent": "\n\n# Welcome to VegBook\nThis app provides a resource of information to help new and old vegans navigate the world.\n\n## Contributors\n\n1. The vast majority of the content comes from Earthling Ed of Surge Activism.\nWho has kindly agreed to let us reproduce the work from his book [30 Non-Vegan Excuses](https://earthlinged.org/ebook).\n",
+          "rawContent": "# Welcome to VegBook\n\nThis app provides a resource of information to help new and old vegans navigate the world.\n\n## Contributors\n\n1. The vast majority of the content comes from Earthling Ed of Surge Activism.\nWho has kindly agreed to let us reproduce the work from his book [30 Non-Vegan Excuses](https://earthlinged.org/ebook).\n",
           "section": {
             "friendlyName": "Index",
             "machineName": "index"
           },
           "permalink" : "http://localhost:1313/splash/"
       }
-      , 
+      ,
       {
           "friendlyName": "Learning More",
           "machineName": "learningMore",
@@ -23,18 +23,18 @@
           },
           "permalink" : "http://localhost:1313/getting-started/learning-more/"
       }
-      , 
+      ,
       {
           "friendlyName": "Eating Out",
           "machineName": "eatingOut",
-          "rawContent": "\n# Eating Out\n\nThe ease of eating out varies hugely depending on where you are in the world, and also who you're with.  \n\n## Scenarios\n\n### Attending a function you didn't organise\nIf you're going a restaurant, find the menu online, and email the restaurant in advance with any questions you have. A little preparation can go a long way to making the process smoother.\n\nIf you're attending a catered function, contact the organiser if possible specifying No Meat, No Dairy, No Eggs, No Honey, do not rely on people knowing what 'vegan' means, even if they claim to!\n\n## Resources\n\n- [HappyCow](https://happycow.com) Is a wonderful website and app helping you to find vegan restaurants and vegan options near you\n",
+          "rawContent": "\n# Eating Out\n\nThe ease of eating out varies hugely depending on where you are in the world, and also who you're with.\n\n## Scenarios\n\n### Attending a function you didn't organise\n\nIf you're going a restaurant, find the menu online, and email the restaurant in advance with any questions you have. A little preparation can go a long way to making the process smoother.\n\nIf you're attending a catered function, contact the organiser if possible specifying No Meat, No Dairy, No Eggs, No Honey, do not rely on people knowing what 'vegan' means, even if they claim to!\n\n## Resources\n\n- [HappyCow](https://happycow.com) Is a wonderful website and app helping you to find vegan restaurants and vegan options near you\n",
           "section": {
             "friendlyName": "Getting Started",
             "machineName": "gettingStarted"
           },
           "permalink" : "http://localhost:1313/getting-started/eating-out/"
       }
-      , 
+      ,
       {
           "friendlyName": "Shopping",
           "machineName": "shopping",
@@ -45,7 +45,7 @@
           },
           "permalink" : "http://localhost:1313/getting-started/shopping/"
       }
-      , 
+      ,
       {
           "friendlyName": "They Would Go Extinct Without Us",
           "machineName": "theyWouldGoExtinctWithoutUs",
@@ -56,7 +56,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/they-would-go-extinct-without-us/"
       }
-      , 
+      ,
       {
           "friendlyName": "Ancestors",
           "machineName": "ancestors",
@@ -67,7 +67,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/ancestors/"
       }
-      , 
+      ,
       {
           "friendlyName": "Animal Products Tradition and Culture",
           "machineName": "animalProductsForTradition",
@@ -78,7 +78,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/animal-products-tradition-and-culture/"
       }
-      , 
+      ,
       {
           "friendlyName": "Animal Products for Nutrition",
           "machineName": "animalProductsForNutrition",
@@ -89,7 +89,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/animal-products-for-nutrition/"
       }
-      , 
+      ,
       {
           "friendlyName": "Other Animals Eat Other Animals",
           "machineName": "otherAnimals",
@@ -100,7 +100,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/other-animals/"
       }
-      , 
+      ,
       {
           "friendlyName": "I Like the Taste",
           "machineName": "iLikeTheTaste",
@@ -111,7 +111,7 @@
           },
           "permalink" : "http://localhost:1313/excuses/i-like-the-taste/"
       }
-      , 
+      ,
       {
           "friendlyName": "Personal Choice",
           "machineName": "personalChoice",

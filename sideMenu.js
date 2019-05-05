@@ -40,7 +40,7 @@ class SideMenu extends Component {
         )
       })
       let headerVisibility = this.state.headerVisibility
-      display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'block': 'none'
+      display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'flex': 'none'
       return (
         <View key={headerFriendlyName}>
           <ListItem

@@ -1,4 +1,4 @@
-import { primary, secondary, light, highlight, dark} from './colours.js'
+import { primary, secondary, light, highlight, dark} from './commonStyling.js'
 export default {
   container: {
     flex: 1,
