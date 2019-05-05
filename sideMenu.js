@@ -13,8 +13,9 @@ class SideMenu extends Component {
     super(props);
     this.state = { headerVisibility: {} };
   }
-  navigateToScreen = (key) => () => {
-    this.props.navigation.navigate("Home", {indexId:key});
+  navigateToScreen = (indexId) => () => {
+    // Navigation is always to the 'Home' screen, but content changes based on the indexId
+    this.props.navigation.navigate('Home', {indexId: indexId});
     this.props.navigation.closeDrawer();
   }
   toggleHeaderVisibility = (headerName) => {
@@ -67,7 +68,7 @@ class SideMenu extends Component {
           <ListItem
             containerStyle={styles.navHeaderStyle}
             titleStyle={styles.navHeaderTitleStyle}
-            onPress={this.navigateToScreen('default')}
+            onPress={this.navigateToScreen('splash')}
             title="VegBook"/>
           {menuObjects}
         </ScrollView>

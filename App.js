@@ -12,7 +12,6 @@ import {createStackNavigator, createDrawerNavigator, createMaterialTopTabNavigat
 import {Header} from 'react-native-elements'
 // https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
 import SideMenu from './sideMenu.js'
-import loadLocalResource from 'react-native-local-resource'
 import {pages} from './pages.js'
 import Markdown from 'react-native-simple-markdown';
 
@@ -27,6 +26,10 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   }
 });
+
+if (!__DEV__) {
+  console.log = () => {};
+}
 
 
 type Props = {};
@@ -60,19 +63,6 @@ class App extends React.Component {
 
               <Markdown
                 styles={markdownStyles}
-                renderListBullet={(ordered, index) => {
-                  return (
-                    <Text/>
-                    )
-                  }}
-                renderLink={(href, title, childrenm) => {
-                  return(
-
-                     <Text style={{flexDirection: 'row'}}> Start here, </Text>
-
-                    )
-                  }}
-
               >
                 {pages[this.props.navigation.getParam('indexId','splash')]}
               </Markdown>
