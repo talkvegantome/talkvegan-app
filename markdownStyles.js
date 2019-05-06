@@ -7,7 +7,7 @@ import {getUniqueID} from 'react-native-markdown-renderer';
 export const markdownStyles =  StyleSheet.create({
   heading1: {
     textAlign:'left',
-    fontSize: 250,
+    fontSize: 25,
     fontWeight: 'bold',
     color: primary,
     fontFamily: headerFont,
@@ -16,7 +16,7 @@ export const markdownStyles =  StyleSheet.create({
   },
   heading2: {
     textAlign:'left',
-    fontSize: 220,
+    fontSize: 22,
     fontWeight: 'bold',
     color: primary,
     fontFamily: headerFont,
@@ -54,12 +54,17 @@ export const markdownStyles =  StyleSheet.create({
 function generateHeading(node, children, parent, styles){
 
   return (
-    <Text key={getUniqueID()} style={styles[node.type]}>
-      {children}
+    <Text key={getUniqueID()} style={markdownStyles[node.type]}>
+       {children[0].props.children}
     </Text>
   )
 }
 
 export const markdownRules = {
   heading1: generateHeading,
+  heading2: generateHeading,
+  heading3: generateHeading,
+  heading4: generateHeading,
+  heading5: generateHeading,
+  heading6: generateHeading,
 }

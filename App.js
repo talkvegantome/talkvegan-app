@@ -63,7 +63,6 @@ class App extends React.Component {
           <ScrollView style={styles.content}>
 
               <Markdown style={markdownStyles} rules={markdownRules}>
-# What
                 {pages[this.props.navigation.getParam('indexId','splash')]}
               </Markdown>
           </ScrollView>
