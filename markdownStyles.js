@@ -1,6 +1,6 @@
 import { primary, secondary, light, highlight, dark, headerFont, paragraphFont} from './commonStyling.js'
 import React, {Component} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, Platform} from 'react-native';
 import {getUniqueID} from 'react-native-markdown-renderer';
 
 
@@ -11,7 +11,8 @@ export const markdownStyles =  StyleSheet.create({
     fontWeight: 'bold',
     color: primary,
     fontFamily: headerFont,
-    marginVertical: 10,
+    marginTop: 15,
+    marginBottom: 10,
     lineHeight: 35,
   },
   heading2: {
@@ -32,10 +33,8 @@ export const markdownStyles =  StyleSheet.create({
   },
   paragraph: {
     flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    textAlign: 'center'
+    textAlign: 'justify'
   },
   text: {
     fontFamily: paragraphFont,
@@ -43,18 +42,22 @@ export const markdownStyles =  StyleSheet.create({
     textAlign: 'justify',
     lineHeight: 28,
   },
-  listItemText: {
-    textAlign: 'left'
+  listUnorderedItemIcon: {
+    marginLeft: 10,
+    marginRight: 10,
+    lineHeight: Platform.OS === 'ios' ? 15 : 15
   },
-  listItem: {
-    flexDirection: 'row',
-  }
+  listOrderedItemIcon: {
+    marginLeft: 10,
+    marginRight: 10,
+    lineHeight: Platform.OS === 'ios' ? 15 : 15
+  },
 });
 
 function generateHeading(node, children, parent, styles){
 
   return (
-    <Text key={getUniqueID()} style={markdownStyles[node.type]}>
+    <Text key={getUniqueID()} style={styles[node.type]}>
        {children[0].props.children}
     </Text>
   )
