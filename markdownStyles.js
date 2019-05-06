@@ -1,10 +1,13 @@
 import { primary, secondary, light, highlight, dark, headerFont, paragraphFont} from './commonStyling.js'
-import {StyleSheet} from 'react-native';
+import React, {Component} from 'react';
+import {StyleSheet, Text} from 'react-native';
+import {getUniqueID} from 'react-native-markdown-renderer';
+
 
 export const markdownStyles =  StyleSheet.create({
   heading1: {
     textAlign:'left',
-    fontSize: 25,
+    fontSize: 250,
     fontWeight: 'bold',
     color: primary,
     fontFamily: headerFont,
@@ -13,7 +16,7 @@ export const markdownStyles =  StyleSheet.create({
   },
   heading2: {
     textAlign:'left',
-    fontSize: 20,
+    fontSize: 220,
     fontWeight: 'bold',
     color: primary,
     fontFamily: headerFont,
@@ -47,3 +50,16 @@ export const markdownStyles =  StyleSheet.create({
     flexDirection: 'row',
   }
 });
+
+function generateHeading(node, children, parent, styles){
+
+  return (
+    <Text key={getUniqueID()} style={styles[node.type]}>
+      {children}
+    </Text>
+  )
+}
+
+export const markdownRules = {
+  heading1: generateHeading,
+}

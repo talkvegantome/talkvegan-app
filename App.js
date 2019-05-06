@@ -13,9 +13,10 @@ import {Header} from 'react-native-elements'
 // https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
 import SideMenu from './sideMenu.js'
 import {pages} from './pages.js'
-import Markdown from 'react-native-simple-markdown';
+// import Markdown from 'react-native-simple-markdown'; // This was garbage as each _word_ was a separte <Text> making formatting a nightmare!
+import Markdown from 'react-native-markdown-renderer';
 
-import { markdownStyles } from './markdownStyles.js'
+import { markdownStyles, markdownRules } from './markdownStyles.js'
 import { primary, secondary, light, highlight, dark, paragraphFont, headerFont} from './commonStyling.js'
 
 const styles = StyleSheet.create({
@@ -61,9 +62,8 @@ class App extends React.Component {
 
           <ScrollView style={styles.content}>
 
-              <Markdown
-                styles={markdownStyles}
-              >
+              <Markdown style={markdownStyles} rules={markdownRules}>
+# What
                 {pages[this.props.navigation.getParam('indexId','splash')]}
               </Markdown>
           </ScrollView>
