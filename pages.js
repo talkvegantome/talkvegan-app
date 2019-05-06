@@ -1,10 +1,12 @@
 import {data} from './index.json'
 import {_} from 'lodash'
 let pages = {}
+let pagesMachineNameByRelativePermalink = {}
 let menu = {}
 
 data.map((page) => {
   pages[page.machineName] = page.rawContent
+  pagesMachineNameByRelativePermalink[page.relativePermalink] = page.machineName
   if(page.section.machineName == 'index'){
     return
   }
@@ -20,5 +22,14 @@ data.map((page) => {
   })
 })
 
+let getPageByRelativeUrl = function(relativePermalink){
+  // Ensure leading slash
+  relativePermalink = relativePermalink[0] === '/' ? relativePermalink : '/' + relativePermalink
+  // Ensure trailing slash
+  relativePermalink = relativePermalink[-1] === '/' ? relativePermalink : relativePermalink + '/'
+  return pagesMachineNameByRelativePermalink[relativePermalink]
+
+}
 export {pages}
+export {getPageByRelativeUrl}
 export {menu}

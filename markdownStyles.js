@@ -1,9 +1,9 @@
 import { primary, secondary, light, highlight, dark, headerFont, paragraphFont} from './commonStyling.js'
 import React, {Component} from 'react';
-import {StyleSheet, Text, Platform} from 'react-native';
+import {StyleSheet, Text, Platform, Linking} from 'react-native';
 import {getUniqueID} from 'react-native-markdown-renderer';
-
-
+import {NavigationActions, StackActions} from 'react-navigation';
+import {getPageByRelativeUrl} from './pages.js'
 export const markdownStyles =  StyleSheet.create({
   heading1: {
     textAlign:'left',
@@ -54,20 +54,65 @@ export const markdownStyles =  StyleSheet.create({
   },
 });
 
-function generateHeading(node, children, parent, styles){
 
-  return (
-    <Text key={getUniqueID()} style={styles[node.type]}>
-       {children[0].props.children}
-    </Text>
-  )
+
+
+export class markdownRules {
+  constructor(navigation) {
+    this.navigation = navigation
+  }
+  generateHeading(node, children, parent, styles){
+
+     return (
+       <Text key={getUniqueID()} style={styles[node.type]}>
+          {children[0].props.children}
+       </Text>
+     )
+ }
+ openUrl(url){
+     // If it's an internal link reformatted by preProcessMarkDown, navigate!
+     if(url.match(/^REF:/)){
+       let indexId = url.replace(/REF:/,'')
+       this.navigation.navigate('Home', {indexId: getPageByRelativeUrl(indexId)});
+       return
+     }
+     Linking.openURL(url)
+ }
+ rules = {
+    heading1: this.generateHeading,
+    heading2: this.generateHeading,
+    heading3: this.generateHeading,
+    heading4: this.generateHeading,
+    heading5: this.generateHeading,
+    heading6: this.generateHeading,
+    link: (node, children, parent, styles) => {
+      return (
+        <Text key={node.key} style={styles.link} onPress={() => this.openUrl(node.attributes.href)}>
+          {children}
+        </Text>
+      );
+    }
+  }
+  returnRules(){
+    return this.rules
+  }
 }
 
-export const markdownRules = {
-  heading1: generateHeading,
-  heading2: generateHeading,
-  heading3: generateHeading,
-  heading4: generateHeading,
-  heading5: generateHeading,
-  heading6: generateHeading,
+
+
+export function preProcessMarkDown(markdown){
+  let patterns = [
+    {
+      // Replace hugo cross reference links' inner {{<ref>}} syntax as it prevents them from being recognised by
+      //   the markdown formatter
+      find: /\[([^\]\]]+)\]\(\{\{\<\s*ref\s*"(.+)"\s*>\}\}\)/,
+      replacement: function(match, p1, p2){
+        return "["+p1+"](REF:"+p2+")"
+      }
+    }
+  ]
+  patterns.forEach((pattern) =>{
+    markdown = markdown.replace(pattern.find, pattern.replacement)
+  })
+  return markdown
 }

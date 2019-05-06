@@ -16,8 +16,10 @@ import {pages} from './pages.js'
 // import Markdown from 'react-native-simple-markdown'; // This was garbage as each _word_ was a separte <Text> making formatting a nightmare!
 import Markdown from 'react-native-markdown-renderer';
 
-import { markdownStyles, markdownRules } from './markdownStyles.js'
+import { markdownStyles, markdownRules, preProcessMarkDown } from './markdownStyles.js'
 import { primary, secondary, light, highlight, dark, paragraphFont, headerFont} from './commonStyling.js'
+
+
 
 const styles = StyleSheet.create({
   content: {
@@ -35,11 +37,18 @@ if (!__DEV__) {
 
 type Props = {};
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    let markdownRulesObj = new markdownRules(props.navigation)
+
+    this.state = {
+      markDownRules: markdownRulesObj.returnRules()
+    }
+
+  }
   static navigationOptions = {
     drawerLabel: 'Home'
   };
-
-
   static navigationOptions = {
     header: null,
   };
@@ -62,8 +71,10 @@ class App extends React.Component {
 
           <ScrollView style={styles.content}>
 
-              <Markdown style={markdownStyles} rules={markdownRules}>
-                {pages[this.props.navigation.getParam('indexId','splash')]}
+              <Markdown style={markdownStyles} rules={this.state.markDownRules}>
+                {
+                  preProcessMarkDown(pages[this.props.navigation.getParam('indexId','splash')])
+                }
               </Markdown>
           </ScrollView>
         </SafeAreaView>
