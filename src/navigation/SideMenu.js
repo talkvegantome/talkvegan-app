@@ -18,7 +18,15 @@ class SideMenu extends Component {
   }
   toggleHeaderVisibility = (headerName) => {
     let headerVisibility = this.state.headerVisibility
-    headerVisibility[headerName] = headerName in headerVisibility && headerVisibility[headerName] ? false : true
+    if(headerVisibility[headerName]){
+      headerVisibility[headerName] = false
+    }else{
+        _.forEach(headerVisibility, (val, headerName) => {
+          headerVisibility[headerName] = false
+        })
+        headerVisibility[headerName] = true
+    }
+
     this.setState({headerVisibility: headerVisibility})
   }
 
