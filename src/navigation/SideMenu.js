@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import styles from './sideMenu.style.js';
-import {NavigationActions, StackActions} from 'react-navigation';
-import {ScrollView, Text, View, SafeAreaView} from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import styles from '../styles/SideMenu.style.js';
+import {ScrollView, View, SafeAreaView} from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { menu } from '../Pages.js'
 import _ from 'lodash';
-import {pages, menu} from './pages.js'
 
 class SideMenu extends Component {
   constructor(props) {
@@ -26,12 +24,11 @@ class SideMenu extends Component {
 
   render () {
     let menuSorted = _.sortBy(menu, ['weight'])
-    menuObjects = _.map( menuSorted, (headerItem, header) => {
+    let menuObjects = _.map( menuSorted, (headerItem) => {
       let headerFriendlyName = headerItem.friendlyName
-      items = headerItem.subItems.map((item) => {
+      let items = headerItem.subItems.map((item) => {
         return(
           <ListItem
-            key={item.friendlyName}
             bottomDivider={true}
             key={item.relativePermalink}
             onPress={this.navigateToScreen(item.relativePermalink)}
@@ -40,7 +37,7 @@ class SideMenu extends Component {
         )
       })
       let headerVisibility = this.state.headerVisibility
-      display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'flex': 'none'
+      let display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'flex': 'none'
       return (
         <View key={headerFriendlyName}>
           <ListItem
@@ -68,7 +65,7 @@ class SideMenu extends Component {
             containerStyle={styles.navHeaderStyle}
             titleStyle={styles.navHeaderTitleStyle}
             onPress={this.navigateToScreen('/splash/')}
-            title="VegBook"/>
+            title="TalkVeganToMe"/>
           {menuObjects}
         </ScrollView>
       </SafeAreaView>

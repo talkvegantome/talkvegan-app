@@ -1,7 +1,5 @@
-import {data} from './index.json'
-import {_} from 'lodash'
+import {data} from '../assets/index.json'
 let pages = {}
-let pagesMachineNameByRelativePermalink = {}
 let menu = {}
 
 data.map((page) => {

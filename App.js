@@ -6,95 +6,79 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {View, Platform, StyleSheet, Button, Text, ScrollView, Dimensions, SafeAreaView, Linking} from 'react-native';
-import {createStackNavigator, createDrawerNavigator, createMaterialTopTabNavigator, createAppContainer} from 'react-navigation';
-import {Header} from 'react-native-elements'
+import React from 'react';
+import { View, ScrollView, Dimensions, SafeAreaView, } from 'react-native';
+import { createDrawerNavigator, createAppContainer} from 'react-navigation';
+import { Header } from 'react-native-elements';
 // https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
-import SideMenu from './sideMenu.js'
-import {pages} from './pages.js'
-// import Markdown from 'react-native-simple-markdown'; // This was garbage as each _word_ was a separte <Text> making formatting a nightmare!
 import Markdown from 'react-native-markdown-renderer';
+import SideMenu from './src/navigation/SideMenu.js';
+import { pages } from './src/Pages.js';
+// import Markdown from 'react-native-simple-markdown'; // This was garbage as each _word_ was a separte <Text> making formatting a nightmare!
 
-import { markdownStyles, markdownRules, preProcessMarkDown } from './markdownStyles.js'
-import { primary, secondary, light, highlight, dark, paragraphFont, headerFont} from './commonStyling.js'
-
-
-
-const styles = StyleSheet.create({
-  content: {
-    textAlign: 'justify',
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 20,
-  }
-});
-
-if (!__DEV__) {
-  console.log = () => {};
-}
+import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
+import { markdownStyles } from './src/styles/Markdown.style.js';
+import { navContainerStyle, navHeaderStyle } from './src/styles/Header.style.js'
+import { light, content} from './src/styles/Common.style.js';
 
 
-type Props = {};
 class App extends React.Component {
   constructor(props) {
     super(props);
-    let markdownRulesObj = new markdownRules(props.navigation)
+    const markdownRulesObj = new markdownRules(props.navigation);
 
     this.state = {
-      markDownRules: markdownRulesObj.returnRules()
-    }
-
+      markDownRules: markdownRulesObj.returnRules(),
+    };
   }
+
   static navigationOptions = {
-    drawerLabel: 'Home'
+    drawerLabel: 'Home',
   };
+
   static navigationOptions = {
     header: null,
   };
 
-  static propTypes = {};
+
   static defaultProps = {};
-  //static navigation  = this.props.navigation;
+
+  // static navigation  = this.props.navigation;
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Header
-          leftComponent={{ icon: 'menu', color: light,  onPress: () => this.props.navigation.openDrawer()}}
-          centerComponent={{text: 'VegBook', style: {color: light, fontSize: 40, fontFamily: headerFont, lineHeight:40}}}
-          containerStyle={{
-              backgroundColor: primary,
-              justifyContent: 'space-around',
-            }}
-          />
-        <SafeAreaView style={{flex: 1, backgroundColor: light}}>
-
-          <ScrollView style={styles.content}>
-
-              <Markdown style={markdownStyles} rules={this.state.markDownRules}>
-                {
-                  preProcessMarkDown(pages[this.props.navigation.getParam('indexId','/splash/')])
+          leftComponent={{ icon: 'menu', color: light, navHeaderStyle, onPress: () => this.props.navigation.openDrawer() }}
+          centerComponent={{
+            text: 'TalkVeganToMe',
+            style: navHeaderStyle,
+          }}
+          containerStyle={navContainerStyle}
+        />
+        <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView style={content}>
+            <Markdown style={markdownStyles} rules={this.state.markDownRules}>
+              {
+                  preProcessMarkDown(pages[this.props.navigation.getParam('indexId', '/splash/')])
                 }
-              </Markdown>
+            </Markdown>
           </ScrollView>
         </SafeAreaView>
       </View>
     );
   }
-
 }
-
 
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home: {
     screen: App,
-  }
+  },
 
-},{
-    contentComponent: ({ navigation }) => (<SideMenu navigation={navigation}/>
-    ),
-    drawerWidth: Dimensions.get('window').width - 120,
+}, {
+  contentComponent: ({ navigation }) => (<SideMenu navigation={navigation} />
+  ),
+  drawerWidth: Dimensions.get('window').width - 120,
 });
 const MyApp = createAppContainer(MyDrawerNavigator);
-export default MyApp
+export default MyApp;

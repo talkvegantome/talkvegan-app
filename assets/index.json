@@ -18,7 +18,7 @@
       , 
       {
           "friendlyName": "Splash",
-          "rawContent": "\n\n# Welcome to VegBook\n\nThis app provides a resource of information to help new and old vegans navigate the world.\n\n## Contributors\n\nThe vast majority of the content comes from Earthling Ed of Surge Activism. Who has kindly agreed to let us reproduce the work from his book [30 Non-Vegan Excuses](https://earthlinged.org/ebook).\n",
+          "rawContent": "\n\n# TalkVeganToMe\n\nThis app provides a resource of information to help new and old vegans navigate the world.\n\n## Contributors\n\nThe vast majority of the content comes from Earthling Ed of Surge Activism. Who has kindly agreed to let us reproduce the work from his book [30 Non-Vegan Excuses](https://earthlinged.org/ebook).\n",
           "relativePermalink": "/splash/",
           "weight": null,
           "permalink" : "http://localhost:1313/splash/",
