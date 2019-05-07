@@ -73,7 +73,7 @@ class App extends React.Component {
 
               <Markdown style={markdownStyles} rules={this.state.markDownRules}>
                 {
-                  preProcessMarkDown(pages[this.props.navigation.getParam('indexId','splash')])
+                  preProcessMarkDown(pages[this.props.navigation.getParam('indexId','/splash/')])
                 }
               </Markdown>
           </ScrollView>

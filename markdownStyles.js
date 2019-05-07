@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, Platform, Linking} from 'react-native';
 import {getUniqueID} from 'react-native-markdown-renderer';
 import {NavigationActions, StackActions} from 'react-navigation';
-import {getPageByRelativeUrl} from './pages.js'
+import {normaliseRelPath} from './pages.js'
 export const markdownStyles =  StyleSheet.create({
   heading1: {
     textAlign:'left',
@@ -73,7 +73,7 @@ export class markdownRules {
      // If it's an internal link reformatted by preProcessMarkDown, navigate!
      if(url.match(/^REF:/)){
        let indexId = url.replace(/REF:/,'')
-       this.navigation.navigate('Home', {indexId: getPageByRelativeUrl(indexId)});
+       this.navigation.navigate('Home', {indexId: normaliseRelPath(indexId)});
        return
      }
      Linking.openURL(url)

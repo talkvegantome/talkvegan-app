@@ -25,17 +25,16 @@ class SideMenu extends Component {
   }
 
   render () {
-
-    menuObjects = _.map( menu, (headerItem, header) => {
+    let menuSorted = _.sortBy(menu, ['weight'])
+    menuObjects = _.map( menuSorted, (headerItem, header) => {
       let headerFriendlyName = headerItem.friendlyName
-
       items = headerItem.subItems.map((item) => {
         return(
           <ListItem
             key={item.friendlyName}
             bottomDivider={true}
-            key={item.screenId}
-            onPress={this.navigateToScreen(item.screenId)}
+            key={item.relativePermalink}
+            onPress={this.navigateToScreen(item.relativePermalink)}
             title={item.friendlyName}
           />
         )
@@ -68,7 +67,7 @@ class SideMenu extends Component {
           <ListItem
             containerStyle={styles.navHeaderStyle}
             titleStyle={styles.navHeaderTitleStyle}
-            onPress={this.navigateToScreen('splash')}
+            onPress={this.navigateToScreen('/splash/')}
             title="VegBook"/>
           {menuObjects}
         </ScrollView>

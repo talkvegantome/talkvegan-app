@@ -5,31 +5,22 @@ let pagesMachineNameByRelativePermalink = {}
 let menu = {}
 
 data.map((page) => {
-  pages[page.machineName] = page.rawContent
-  pagesMachineNameByRelativePermalink[page.relativePermalink] = page.machineName
-  if(page.section.machineName == 'index'){
+  pages[page.relativePermalink] = page.rawContent
+  if(page.section.relativePermalink == '/'){
     return
   }
-  if(!(page.section.machineName in menu)){
-    menu[page.section.machineName] = {
-      friendlyName: page.section.friendlyName,
-      subItems: []
-    }
+  if(!(page.section.relativePermalink in menu)){
+    menu[page.section.relativePermalink] = page.section
+    menu[page.section.relativePermalink].subItems = []
   }
-  menu[page.section.machineName].subItems.push({
-    friendlyName: page.friendlyName,
-    screenId: page.machineName
-  })
+  menu[page.section.relativePermalink].subItems.push(page)
 })
 
-let getPageByRelativeUrl = function(relativePermalink){
-  // Ensure leading slash
-  relativePermalink = relativePermalink[0] === '/' ? relativePermalink : '/' + relativePermalink
-  // Ensure trailing slash
-  relativePermalink = relativePermalink[-1] === '/' ? relativePermalink : relativePermalink + '/'
-  return pagesMachineNameByRelativePermalink[relativePermalink]
-
+export function normaliseRelPath(relpath){
+  // Ensure trailing and leading slashes
+  relpath = relpath[0] === '/' ? relpath : '/' + relpath;
+  relpath = relpath[-1] === '/' ? relpath : relpath + '/';
+  return relpath
 }
 export {pages}
-export {getPageByRelativeUrl}
 export {menu}
