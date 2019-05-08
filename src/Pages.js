@@ -1,4 +1,4 @@
-import {data} from '../assets/index.json'
+import {data} from '../assets/index.en.json'
 let pages = {}
 let menu = {}
 

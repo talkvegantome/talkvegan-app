@@ -1,0 +1,47 @@
+{
+    "data" : 
+[
+      
+      {
+          "friendlyName": "Apprendre plus",
+          "rawContent": "\n# Apprendre plus\n\n## Sites Internet\n\n- [The Vegan Society] (https://vegansociety.com) - Fournit une mine d'informations sur les débuts, les grands-papes du véganisme\n\n\n## Livres\n\n## Films\n\n- [Terre d'espoir et de gloire] (https://www.landofhopeandglory.org/) ** VIOLENT FOOTAGE **\n- [Earthlings] (http://www.nationearth.com/) ** FOOTAGE VIOLENT **\n- [What the Health] (http://www.whatthehealthfilm.com/) Disponible sur Netflix, certaines statistiques peuvent être contestées.\n\n## Podcasts\n\n- [Les végétaliens barbus] (https://www.thebeardedvegans.com/)\n\n## Chaînes YouTube\n",
+          "relativePermalink": "/fr/getting-started/apprendre-plus/",
+          "weight": null,
+          "permalink" : "http://localhost:1313/fr/getting-started/apprendre-plus/",
+          "section": {
+            "friendlyName": "Getting Started",
+            "relativePermalink": "/fr/getting-started/",
+            "weight": 1000
+          }
+
+      }
+      , 
+      {
+          "friendlyName": "Manger à l'extérieur",
+          "rawContent": "\n# Manger à l'extérieur\n\nLa facilité à manger varie énormément selon l'endroit où vous vous trouvez dans le monde et les personnes avec qui vous êtes.\n\n## Scénarios\n\n### Assister à une fonction que vous n'avez pas organisée\n\nSi vous allez dans un restaurant, trouvez le menu en ligne et envoyez-lui un courriel à l'avance avec toutes vos questions. Un peu de préparation peut contribuer grandement à simplifier le processus.\n\nSi vous assistez à une activité de traiteur, contactez si possible l'organisateur en précisant «Pas de viande, pas de produits laitiers, pas d'œufs, pas de miel», ne comptez pas sur les personnes qui savent ce que veut dire «végétalien», même si elles prétendent le faire!\n\n## Resources\n\n- [HappyCow](https://happycow.com) Is a wonderful website and app helping you to find vegan restaurants and vegan options near you\n",
+          "relativePermalink": "/fr/getting-started/manger-a-lexterieur/",
+          "weight": null,
+          "permalink" : "http://localhost:1313/fr/getting-started/manger-a-lexterieur/",
+          "section": {
+            "friendlyName": "Getting Started",
+            "relativePermalink": "/fr/getting-started/",
+            "weight": 1000
+          }
+
+      }
+      , 
+      {
+          "friendlyName": "Shopping",
+          "rawContent": "# Achats\n\nLe shopping végétalien nécessite un peu plus d’attention que le shopping omnivore.\n\nDans cette section, nous aborderons les principaux scénarios d'achat quotidien.\n\n## Aliments\n\nLorsque vous commencez à vérifier les étiquettes des produits au supermarché, il peut sembler fastidieux de tout vérifier, en particulier en ce qui concerne les numéros E et les ingrédients obscurs. Faites de votre mieux, mais essayez de ne pas vous submerger.\n\n### Produits végétariens\n\nIl est facile de se laisser bercer par un faux sentiment de sécurité grâce à des produits fabriqués par des fabricants végétariens comme Quorn. Mais gardez un œil vigilant sur les ingrédients de ces produits car ils contiennent généralement des ingrédients non végétaliens, même lorsque vous vous y attendez le moins!\n\n### E Numéros\n\n- E120 - Jamais végétalien\n- E322 - Habituellement végétalien\n- E422 - Habituellement végétalien\n- E542 - Jamais végétalien\n- E631 - Généralement pas végétalien\n- E901 - Jamais végétalien\n- E904 - Jamais végétalien\n- E471 - Habituellement végétalien\n- E920 - Vérifiez les informations supplémentaires\n\n** Source: ** [Vegan Society] (https://www.vegansociety.com/whats-new/blog/how-avoid-buying-non-vegan-products)\n\n### Gotchas\n\n- Mon chéri\n- Bière vin\n- Pain (régional, surtout au Royaume-Uni, contient souvent du lait)\n- Smoothies (contiennent souvent du yaourt)\n- Chocolat (le chocolat noir est bon, mais vérifiez toujours l'emballage pour le lait!)\n\n## Vêtements\n\nSouvent moins considérés que la nourriture, les produits suivants sur les vêtements ne seront pas végétaliens.\n\n- Cuir (y compris le daim)\n- La laine\n- soie\n- Fourrure\n- Plumes\n\n### Gotchas\n\nIl est conseillé de fréquenter les établissements de chaussures végétaliens en particulier, car les colles utilisées dans le processus de fabrication de chaussures en matériaux autrement végétaliens rendront les chaussures non végétaliennes.\n\n## Articles de toilette\n\nAvec tous les articles, mais en particulier le maquillage, des recherches sont nécessaires pour déterminer si les tests sur les animaux ont été impliqués dans les étapes de recherche et de développement du produit.\n\n### Gotchas\n\n- Le pain de savon est généralement fait avec de la graisse animale\n- \"Sans cruauté\" ne signifie pas qu'il est exempt de produits d'origine animale\n\n## Articles ménagers\n\nTout, des nettoyants ménagers aux oreillers, peut contenir des produits d'origine animale, il est donc important de lire les ingrédients.\n\n### Gotchas\n\n- Les oreillers contiennent souvent des plumes\n\n## Ressources\n\n- La bière [Barnivore] (http://www.barnivore.com/) est une excellente source d'informations\n",
+          "relativePermalink": "/fr/getting-started/achats/",
+          "weight": null,
+          "permalink" : "http://localhost:1313/fr/getting-started/achats/",
+          "section": {
+            "friendlyName": "Getting Started",
+            "relativePermalink": "/fr/getting-started/",
+            "weight": 1000
+          }
+
+      }
+]
+}
