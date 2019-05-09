@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "VegBook",
-    "slug": "vegbook",
+    "name": "TalkVeganToMe",
+    "slug": "talkvegantome",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [

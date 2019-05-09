@@ -3,13 +3,32 @@ import React, {Component} from 'react';
 import styles from '../styles/SideMenu.style.js';
 import {ScrollView, View, SafeAreaView} from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { menu } from '../Pages.js'
+import Pages from '../Pages.js'
 import _ from 'lodash';
 
+
+
 class SideMenu extends Component {
+
   constructor(props) {
     super(props);
-    this.state = { headerVisibility: {} };
+    this.props.settings.triggerUpdateMethods.push((settings) => {
+      pages = new Pages(settings)
+      this.setState({
+        settings: settings,
+        menu: pages.getMenu(this.props.settings.settings),
+      })
+    })
+    pages = new Pages(this.props.settings.settings)
+
+    this.state = {
+      settings: this.props.settings.settings,
+      menu: pages.getMenu(),
+      headerVisibility: {}
+    };
+  }
+  refreshSettings(){
+
   }
   navigateToScreen = (indexId) => () => {
     // Navigation is always to the 'Home' screen, but content changes based on the indexId
@@ -31,7 +50,7 @@ class SideMenu extends Component {
   }
 
   render () {
-    let menuSorted = _.sortBy(menu, ['weight'])
+    let menuSorted = _.sortBy(this.state.menu, ['weight'])
     let menuObjects = _.map( menuSorted, (headerItem) => {
       let headerFriendlyName = headerItem.friendlyName
       let items = headerItem.subItems.map((item) => {
@@ -44,8 +63,10 @@ class SideMenu extends Component {
           />
         )
       })
-      let headerVisibility = this.state.headerVisibility
-      let display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'flex': 'none'
+
+
+      headerVisibility = this.state.headerVisibility
+      display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'flex': 'none'
       return (
         <View key={headerFriendlyName}>
           <ListItem
@@ -72,7 +93,7 @@ class SideMenu extends Component {
           <ListItem
             containerStyle={styles.navHeaderStyle}
             titleStyle={styles.navHeaderTitleStyle}
-            onPress={this.navigateToScreen('/splash/')}
+            onPress={this.navigateToScreen('/'+this.state.settings.language+'/splash/')}
             title="TalkVeganToMe"/>
           {menuObjects}
         </ScrollView>

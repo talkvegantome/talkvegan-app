@@ -3,6 +3,20 @@
 [
       
       {
+          "friendlyName": "Splash",
+          "rawContent": "\n",
+          "relativePermalink": "/fr/splash/",
+          "weight": null,
+          "permalink" : "http://localhost:1313/fr/splash/",
+          "section": {
+            "friendlyName": "French",
+            "relativePermalink": "/fr/",
+            "weight": null
+          }
+
+      }
+      , 
+      {
           "friendlyName": "Apprendre plus",
           "rawContent": "\n# Apprendre plus\n\n## Sites Internet\n\n- [The Vegan Society] (https://vegansociety.com) - Fournit une mine d'informations sur les débuts, les grands-papes du véganisme\n\n\n## Livres\n\n## Films\n\n- [Terre d'espoir et de gloire] (https://www.landofhopeandglory.org/) ** VIOLENT FOOTAGE **\n- [Earthlings] (http://www.nationearth.com/) ** FOOTAGE VIOLENT **\n- [What the Health] (http://www.whatthehealthfilm.com/) Disponible sur Netflix, certaines statistiques peuvent être contestées.\n\n## Podcasts\n\n- [Les végétaliens barbus] (https://www.thebeardedvegans.com/)\n\n## Chaînes YouTube\n",
           "relativePermalink": "/fr/getting-started/apprendre-plus/",
