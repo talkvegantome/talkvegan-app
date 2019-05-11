@@ -71,8 +71,8 @@ class Pages {
 
 export function normaliseRelPath(relpath){
   // Ensure trailing and leading slashes
-  relpath = relpath[0] === '/' ? relpath : '/' + relpath;
-  relpath = relpath[-1] === '/' ? relpath : relpath + '/';
+  relpath = _.first(relpath) === '/' ? relpath : '/' + relpath;
+  relpath = _.last(relpath) === '/' ? relpath : relpath + '/';
   return relpath
 }
 export default Pages

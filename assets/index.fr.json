@@ -3,8 +3,36 @@
 [
       
       {
-          "friendlyName": "Splash",
-          "rawContent": "\n# TalkVeganToMe\n\nCette application fournit une ressource d'informations pour aider les nouveaux et les anciens végétaliens à naviguer dans le monde.\n\n## Contributors\n\nLa grande majorité du contenu provient de Earthling Ed of Surge Activism. Qui a aimablement accepté de nous laisser reproduire le travail de son livre [30 excuses non-végétaliennes](https://earthlinged.org/ebook).\n",
+          "friendlyName": "Earthlings",
+          "rawContent": "\n# Earthlings\n\nCe [documentaire de 2005](http://www.nationearth.com/) utilise une combinaison de métrages sous couverture pour exposer les horreurs de la production mondiale de:\n\n* Animaux domestiques\n* Aliments\n* Vêtements\n* Divertissement\n* Recherche scientifique\n\n**AVERTISSEMENT SUR LE CONTENU:** Des images d'animaux en situation de détresse et de violence sont présentes tout au long du documentaire.\n\nLe documentaire complet peut être visionné [sur Vimeo](https://vimeo.com/209647801)\n",
+          "relativePermalink": "/fr/documentaries/earthlings/",
+          "weight": null,
+          "permalink" : "http://localhost:1313/fr/documentaries/earthlings/",
+          "section": {
+            "friendlyName": "Documentaires",
+            "relativePermalink": "/fr/documentaries/",
+            "weight": 3000
+          }
+
+      }
+      , 
+      {
+          "friendlyName": "Terre d'espoir et de gloire",
+          "rawContent": "\n# Terre d'espoir et de gloire\n\n[Terre d'espoir et de gloire](https://www.landofhopeandglory.org/) est un film de 2017 des fondateurs de l'organisation de défense des droits des animaux [Surge](https://www.facebook.com/surgeactivism/) présente le secteur de l'élevage au Royaume-Uni à travers des images sous couverture d'environ 100 fermes d'élevage britanniques.\n\n**AVERTISSEMENT SUR LE CONTENU:** Des images d'animaux en situation de détresse et de violence sont présentes tout au long du documentaire.\n\nLe documentaire peut être visionné sur [Youtube](https://www.youtube.com/watch?v=dvtVkNofcq8)\n",
+          "relativePermalink": "/fr/documentaries/land-of-hope-and-glory/",
+          "weight": null,
+          "permalink" : "http://localhost:1313/fr/documentaries/land-of-hope-and-glory/",
+          "section": {
+            "friendlyName": "Documentaires",
+            "relativePermalink": "/fr/documentaries/",
+            "weight": 3000
+          }
+
+      }
+      , 
+      {
+          "friendlyName": "Maison",
+          "rawContent": "\n# Bienvenue sur TalkVeganToMe\n\nTalkVeganToMe est un projet collaboratif intersectionnel, compatissant et destiné à fournir aux végétaliens, anciens et nouveaux, une ressource centrale pour des informations communément requises sur le végétalisme.\n\n## Commencer\n\nConsultez notre section [En savoir plus]({{\u003cref \"/getting-started/apprendre-plus\" \u003e}}).\n\n## Notre mission\n\n1. Faciliter la vie quotidienne des végétaliens en rendant l’information facilement accessible\n2. Rendre le plaidoyer végétalien sous toutes ses formes plus facile à apprendre, à comprendre et à faire\n3. Veiller à ne pas promouvoir des messages nuisibles aux autres mouvements de la justice\n4. Incarnez la compassion que le véganisme caractérise dans tous nos matériaux et nos interactions\n5. Assurer l'exactitude de nos informations et fournir la divulgation complète d'informations d'atténuation, même si cela affaiblit l'argument présenté\n6. Ne pas participer à la surveillance du véganisme (personne ne peut vous enlever votre carte V)\n7. Ne pas utiliser la plateforme pour promouvoir l'agenda personnel ou le profit des contributeurs individuels\n8. Utilisez la plateforme pour promouvoir l'inclusion et la messagerie intersectionnelle dans la mesure du possible\n\n\n## Collaborer\n\nVous voulez ajouter du contenu ou simplement corriger une faute de frappe? Vous pouvez visiter le [Github Repo](https://github.com/talkvegantome/talkvegan-hugo) où vous trouverez un guide complet sur la manière de contribuer.\n",
           "relativePermalink": "/fr/splash/",
           "weight": null,
           "permalink" : "http://localhost:1313/fr/splash/",
@@ -17,39 +45,25 @@
       }
       , 
       {
+          "friendlyName": "Dominion",
+          "rawContent": "\n# Dominion\nDominion est un film de 2018 d'Aussie Farms sur le secteur agricole en Australie.\n**AVERTISSEMENT SUR LE CONTENU:** Des images d'animaux en situation de détresse et de violence sont présentes tout au long du documentaire.\n[https://www.dominionmovement.com/](https://www.dominionmovement.com/)\n",
+          "relativePermalink": "/fr/documentaries/dominion/",
+          "weight": null,
+          "permalink" : "http://localhost:1313/fr/documentaries/dominion/",
+          "section": {
+            "friendlyName": "Documentaires",
+            "relativePermalink": "/fr/documentaries/",
+            "weight": 3000
+          }
+
+      }
+      , 
+      {
           "friendlyName": "Apprendre plus",
-          "rawContent": "\n# Apprendre plus\n\n## Sites Internet\n\n- [The Vegan Society](https://vegansociety.com) - Fournit une mine d'informations sur les débuts, les grands-papes du véganisme\n\n\n## Livres\n\n## Films\n\n- [Terre d'espoir et de gloire](https://www.landofhopeandglory.org/) ** VIOLENT FOOTAGE **\n- [Earthlings](http://www.nationearth.com/) ** FOOTAGE VIOLENT **\n- [What the Health](http://www.whatthehealthfilm.com/) Disponible sur Netflix, certaines statistiques peuvent être contestées.\n\n## Podcasts\n\n- [Les végétaliens barbus](https://www.thebeardedvegans.com/)\n\n## Chaînes YouTube\n",
+          "rawContent": "\n# Apprendre plus\n\n## Sites Internet\n\n- [The Vegan Society](https://vegansociety.com) - Fournit une mine d'informations sur les débuts, les grands-papes du véganisme\n\n\n## Livres\n\n## Films\n\n- [Terre of hope and glory]({{ \u003c\u003cref \"/documentaries/land-of-hope-and-glory\" \u003e }})\n- [Dominion]({{\u003cref \"/documentaries/dominion\"\u003e}})\n- [Terriens]({{\u003cref \"/documentaries/earthlings\"\u003e}})\n\n## Podcasts\n\n- [Les végétaliens barbus](https://www.thebeardedvegans.com/)\n\n## Chaînes YouTube\n",
           "relativePermalink": "/fr/getting-started/apprendre-plus/",
           "weight": null,
           "permalink" : "http://localhost:1313/fr/getting-started/apprendre-plus/",
-          "section": {
-            "friendlyName": "Commencer",
-            "relativePermalink": "/fr/getting-started/",
-            "weight": 1000
-          }
-
-      }
-      , 
-      {
-          "friendlyName": "Manger à l'extérieur",
-          "rawContent": "\n# Manger à l'extérieur\n\nLa facilité à manger varie énormément selon l'endroit où vous vous trouvez dans le monde et les personnes avec qui vous êtes.\n\n## Scénarios\n\n### Assister à une fonction que vous n'avez pas organisée\n\nSi vous allez dans un restaurant, trouvez le menu en ligne et envoyez-lui un courriel à l'avance avec toutes vos questions. Un peu de préparation peut contribuer grandement à simplifier le processus.\n\nSi vous assistez à une activité de traiteur, contactez si possible l'organisateur en précisant «Pas de viande, pas de produits laitiers, pas d'œufs, pas de miel», ne comptez pas sur les personnes qui savent ce que veut dire «végétalien», même si elles prétendent le faire!\n\n## Resources\n\n- [HappyCow](https://happycow.com) Is a wonderful website and app helping you to find vegan restaurants and vegan options near you\n",
-          "relativePermalink": "/fr/getting-started/manger-a-lexterieur/",
-          "weight": null,
-          "permalink" : "http://localhost:1313/fr/getting-started/manger-a-lexterieur/",
-          "section": {
-            "friendlyName": "Commencer",
-            "relativePermalink": "/fr/getting-started/",
-            "weight": 1000
-          }
-
-      }
-      , 
-      {
-          "friendlyName": "Achats",
-          "rawContent": "# Achats\n\nLe shopping végétalien nécessite un peu plus d’attention que le shopping omnivore.\n\nDans cette section, nous aborderons les principaux scénarios d'achat quotidien.\n\n## Aliments\n\nLorsque vous commencez à vérifier les étiquettes des produits au supermarché, il peut sembler fastidieux de tout vérifier, en particulier en ce qui concerne les numéros E et les ingrédients obscurs. Faites de votre mieux, mais essayez de ne pas vous submerger.\n\n### Produits végétariens\n\nIl est facile de se laisser bercer par un faux sentiment de sécurité grâce à des produits fabriqués par des fabricants végétariens comme Quorn. Mais gardez un œil vigilant sur les ingrédients de ces produits car ils contiennent généralement des ingrédients non végétaliens, même lorsque vous vous y attendez le moins!\n\n### E Numéros\n\n- E120 - Jamais végétalien\n- E322 - Habituellement végétalien\n- E422 - Habituellement végétalien\n- E542 - Jamais végétalien\n- E631 - Généralement pas végétalien\n- E901 - Jamais végétalien\n- E904 - Jamais végétalien\n- E471 - Habituellement végétalien\n- E920 - Vérifiez les informations supplémentaires\n\n** Source: ** [Vegan Society] (https://www.vegansociety.com/whats-new/blog/how-avoid-buying-non-vegan-products)\n\n### Gotchas\n\n- Mon chéri\n- Bière vin\n- Pain (régional, surtout au Royaume-Uni, contient souvent du lait)\n- Smoothies (contiennent souvent du yaourt)\n- Chocolat (le chocolat noir est bon, mais vérifiez toujours l'emballage pour le lait!)\n\n## Vêtements\n\nSouvent moins considérés que la nourriture, les produits suivants sur les vêtements ne seront pas végétaliens.\n\n- Cuir (y compris le daim)\n- La laine\n- soie\n- Fourrure\n- Plumes\n\n### Gotchas\n\nIl est conseillé de fréquenter les établissements de chaussures végétaliens en particulier, car les colles utilisées dans le processus de fabrication de chaussures en matériaux autrement végétaliens rendront les chaussures non végétaliennes.\n\n## Articles de toilette\n\nAvec tous les articles, mais en particulier le maquillage, des recherches sont nécessaires pour déterminer si les tests sur les animaux ont été impliqués dans les étapes de recherche et de développement du produit.\n\n### Gotchas\n\n- Le pain de savon est généralement fait avec de la graisse animale\n- \"Sans cruauté\" ne signifie pas qu'il est exempt de produits d'origine animale\n\n## Articles ménagers\n\nTout, des nettoyants ménagers aux oreillers, peut contenir des produits d'origine animale, il est donc important de lire les ingrédients.\n\n### Gotchas\n\n- Les oreillers contiennent souvent des plumes\n\n## Ressources\n\n- La bière [Barnivore] (http://www.barnivore.com/) est une excellente source d'informations\n",
-          "relativePermalink": "/fr/getting-started/achats/",
-          "weight": null,
-          "permalink" : "http://localhost:1313/fr/getting-started/achats/",
           "section": {
             "friendlyName": "Commencer",
             "relativePermalink": "/fr/getting-started/",
