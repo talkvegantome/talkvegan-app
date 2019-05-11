@@ -8,6 +8,9 @@ class Wrapper extends React.Component {
   constructor(props) {
     super(props);
   }
+  static defaultProps = {
+    style: {}
+  }
   render(){
     return (
       <View style={{ flex: 1 }}>
@@ -25,7 +28,7 @@ class Wrapper extends React.Component {
           containerStyle={navContainerStyle}
         />
         <SafeAreaView style={{ flex: 1 }}>
-          <ScrollView style={content}>
+          <ScrollView style={{...content,...this.props.style}}>
             {this.props.children}
           </ScrollView>
         </SafeAreaView>

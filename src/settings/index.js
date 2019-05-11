@@ -50,7 +50,7 @@ class SettingsScreen extends React.Component {
 
   render(){
     return (
-      <Wrapper navigation={this.props.navigation} title="Settings">
+      <Wrapper navigation={this.props.navigation} title="Settings" style={{paddingRight:0, paddingLeft: 0,  backgroundColor:'#D3D3D3'}}>
         <Modal
             animationType="slide"
             transparent={false}
@@ -102,6 +102,7 @@ class SettingsItem extends React.Component {
         //style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'white'}}
          title={this.props.label}
          rightTitle={this.props.value}
+         rightIcon={{name:'chevron-right'}}
       />
     )
   }
