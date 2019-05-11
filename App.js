@@ -83,17 +83,17 @@ class App extends React.Component {
   }
 }
 
-global.settingsObj = new Settings()
+let setting = new Settings()
 
 const DrawerNavigator = createDrawerNavigator({
   Home: {
-    screen: ({ navigation }) => (<App settings={global.settingsObj} navigation={navigation} />),
+    screen: ({ navigation }) => (<App settings={setting} navigation={navigation} />),
   },
   Settings: {
-    screen: ({ navigation }) => (<SettingsScreen settings={global.settingsObj} navigation = {navigation} />)
+    screen: ({ navigation }) => (<SettingsScreen settings={setting} navigation = {navigation} />)
   }
   }, {
-  contentComponent: ({ navigation }) => (<SideMenu settings={global.settingsObj} navigation={navigation} />
+  contentComponent: ({ navigation }) => (<SideMenu settings={setting} navigation={navigation} />
   ),
   drawerWidth: Dimensions.get('window').width - 120,
 });
