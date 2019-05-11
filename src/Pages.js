@@ -1,13 +1,15 @@
-import React from 'react';
-import {AsyncStorage } from 'react-native';
 import _ from 'lodash';
 import {data as english} from '../assets/index.en.json'
 import {data as french} from '../assets/index.fr.json'
-
+import languages from './settings/Languages.js'
 
 class Pages {
   constructor(settings){
     this.settings = settings
+    this.languages = languages
+    this.languages['en']['data'] = english
+    this.languages['fr']['data'] = french
+
     this.generateMaps()
   }
   setDefaults(asyncStorageRes){
@@ -15,24 +17,10 @@ class Pages {
     this.settings = settings
   }
 
-  languages = {
-    en: {
-      name: 'English',
-      data: english,
-      pages: {},
-      menu: {}
-    },
-    fr: {
-      name: 'French',
-      data: french,
-      pages: {},
-      menu: {}
-    }
-  }
   generateMaps(){
     _.forEach(this.languages, (language, short) => {
       language.pages = {}
-      language.maps = {}
+      language.menu = {}
       language.data.map((page) => {
         page.friendlyName = page.friendlyName
         language.pages[page.relativePermalink] = page.rawContent
@@ -48,11 +36,13 @@ class Pages {
     })
   }
   getMenu(){
-
     return this.languages[this.settings.language].menu
   }
   getPages(){
     return this.languages[this.settings.language].pages
+  }
+  getSplashPath(){
+    return '/'+this.settings.language+'/splash/'
   }
 }
 

@@ -6,29 +6,29 @@ import { ListItem } from 'react-native-elements';
 import Pages from '../Pages.js'
 import _ from 'lodash';
 
-
-
 class SideMenu extends Component {
 
   constructor(props) {
     super(props);
     this.props.settings.triggerUpdateMethods.push((settings) => {
-      pages = new Pages(settings)
-      this.setState({
-        settings: settings,
-        menu: pages.getMenu(this.props.settings.settings),
-      })
+      this.refreshSettings(settings)
     })
     pages = new Pages(this.props.settings.settings)
 
     this.state = {
       settings: this.props.settings.settings,
       menu: pages.getMenu(),
+      splashPath: pages.getSplashPath(),
       headerVisibility: {}
     };
   }
-  refreshSettings(){
-
+  refreshSettings(settings){
+    pages = new Pages(settings)
+    this.setState({
+      settings: settings,
+      menu: pages.getMenu(this.props.settings.settings),
+      splashPath: pages.getSplashPath()
+    })
   }
   navigateToScreen = (indexId) => () => {
     // Navigation is always to the 'Home' screen, but content changes based on the indexId

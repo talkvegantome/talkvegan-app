@@ -30,13 +30,15 @@ class App extends React.Component {
       let pagesObj = new Pages(settings)
       this.setState({
         settings: settings,
-        pages: pagesObj.getPages()
+        pages: pagesObj.getPages(),
+        splashPath: pagesObj.getSplashPath()
       })
     })
     const markdownRulesObj = new markdownRules(props.navigation);
     let pagesObj = new Pages(this.props.settings.settings)
     this.state = {
       pages: pagesObj.getPages(),
+      splashPath: pagesObj.getSplashPath(),
       settings: this.props.settings.settings,
       markDownRules: markdownRulesObj.returnRules(),
     };
@@ -62,7 +64,7 @@ class App extends React.Component {
       return this.state.pages[pageIndex] ? this.state.pages[pageIndex] : 'error loading ' + pageIndex + 'sorry :('
 
     }
-    return this.state.pages['/'+this.state.settings.language+'/splash/']
+    return this.state.splashPath + this.state.pages[this.state.splashPath]
 
   }
 
@@ -90,6 +92,7 @@ class Settings{
       language: 'en'
     }
     this.triggerUpdateMethods = []
+    this.refreshSettings()
   }
 
   refreshSettings(){

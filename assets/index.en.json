@@ -3,20 +3,6 @@
 [
       
       {
-          "friendlyName": "Splash",
-          "rawContent": "\n",
-          "relativePermalink": "/en/french/splash/",
-          "weight": null,
-          "permalink" : "http://localhost:1313/en/french/splash/",
-          "section": {
-            "friendlyName": "Frenches",
-            "relativePermalink": "/en/french/",
-            "weight": null
-          }
-
-      }
-      , 
-      {
           "friendlyName": "Dominion",
           "rawContent": "\n# Dominion\n\nDominion is a 2018 film from Aussie Farms about the farming industry in Australia\n[https://www.dominionmovement.com/](https://www.dominionmovement.com/)\n",
           "relativePermalink": "/en/documentaries/dominion/",
@@ -32,7 +18,7 @@
       , 
       {
           "friendlyName": "Splash",
-          "rawContent": "\n\n# TalkVeganToMe\n\nCette application fournit une ressource d'informations pour aider les nouveaux et les anciens végétaliens à naviguer dans le monde.\n\n## Contributors\n\nLa grande majorité du contenu provient de Earthling Ed of Surge Activism. Qui a aimablement accepté de nous laisser reproduire le travail de son livre [30 excuses non-végétaliennes] (https://earthlinged.org/ebook).\n",
+          "rawContent": "\n\n# Welcome to VegBook\n\nThis app provides a resource of information to help new and old vegans navigate the world.\n\n## Contributors\n\nThe vast majority of the content comes from Earthling Ed of Surge Activism. Who has kindly agreed to let us reproduce the work from his book [30 Non-Vegan Excuses](https://earthlinged.org/ebook).\n",
           "relativePermalink": "/en/splash/",
           "weight": null,
           "permalink" : "http://localhost:1313/en/splash/",
