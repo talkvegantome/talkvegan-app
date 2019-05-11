@@ -5,9 +5,11 @@ import { SafeAreaView,
   Text,
   Modal,
   TouchableHighlight,
-  TouchableOpacity,
   Picker } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import Wrapper from '../navigation/Wrapper.js'
+import _ from 'lodash';
+import languages from './Languages.js'
 import {markdownStyles} from '../styles/Markdown.style.js'
 import { light, content} from '../styles/Common.style.js';
 
@@ -48,7 +50,7 @@ class SettingsScreen extends React.Component {
 
   render(){
     return (
-      <Wrapper navigation={this.props.navigation}>
+      <Wrapper navigation={this.props.navigation} title="Settings">
         <Modal
             animationType="slide"
             transparent={false}
@@ -65,8 +67,9 @@ class SettingsScreen extends React.Component {
                 onValueChange={(itemValue, itemIndex) =>
                   this.updateSetting('language', itemValue)
                 }>
-                <Picker.Item label="English" value="en" />
-                <Picker.Item label="Francais" value="fr" />
+                {_.map(languages, (lang, short) => {
+                  return <Picker.Item label={lang.name} value={short} key={short}/>
+                })}
               </Picker>
             </View>
             <View>
@@ -80,7 +83,7 @@ class SettingsScreen extends React.Component {
           </SafeAreaView>
         </Modal>
         <View style={{marginTop: 20}}>
-          <SettingsItem label='Language' value={this.state.settings.language}
+          <SettingsItem label='Language' value={languages[this.state.settings.language].name}
             onPress={() => {this.setModalVisible(!this.state.modalVisible)}}/>
         </View>
       </Wrapper>
@@ -94,13 +97,12 @@ class SettingsItem extends React.Component {
   }
   render() {
     return (
-      <TouchableOpacity
+      <ListItem
         onPress={() => {this.props.onPress()}}
-        style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'white'}}
-        >
-        <Text style={style.settingLabel}>{this.props.label}</Text>
-        <Text style={style.settingValue}>{this.props.value}</Text>
-      </TouchableOpacity>
+        //style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'white'}}
+         title={this.props.label}
+         rightTitle={this.props.value}
+      />
     )
   }
 }

@@ -29,22 +29,22 @@ class App extends React.Component {
     this.props.settings.triggerUpdateMethods.push((settings) => {
       let pagesObj = new Pages(settings)
       this.setState({
+        pagesObj: pagesObj,
         settings: settings,
         pages: pagesObj.getPages(),
         splashPath: pagesObj.getSplashPath()
       })
     })
-    const markdownRulesObj = new markdownRules(props.navigation);
     let pagesObj = new Pages(this.props.settings.settings)
+    const markdownRulesObj = new markdownRules(props.navigation);
     this.state = {
+      pagesObj: pagesObj,
       pages: pagesObj.getPages(),
       splashPath: pagesObj.getSplashPath(),
       settings: this.props.settings.settings,
       markDownRules: markdownRulesObj.returnRules(),
     };
   }
-
-
 
   static navigationOptions = {
     drawerLabel: 'Home',
@@ -64,16 +64,17 @@ class App extends React.Component {
       return this.state.pages[pageIndex] ? this.state.pages[pageIndex] : 'error loading ' + pageIndex + 'sorry :('
 
     }
-    return this.state.splashPath + this.state.pages[this.state.splashPath]
+    return this.state.pages[this.state.splashPath]
 
   }
-
-
-
-  // static navigation  = this.props.navigation;
+  getPageTitle(){
+    let pageTitle = this.state.pagesObj.getFriendlyName(this.props.navigation.getParam('indexId'))
+    return pageTitle ? pageTitle : 'TalkVeganToMe'
+  }
   render() {
+
     return (
-      <Wrapper navigation={this.props.navigation}>
+      <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
         <Markdown style={markdownStyles} rules={this.state.markDownRules}>
           {
               preProcessMarkDown(

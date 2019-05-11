@@ -44,6 +44,17 @@ class Pages {
   getSplashPath(){
     return '/'+this.settings.language+'/splash/'
   }
+  getFriendlyName(relPath){
+    let friendlyName = null
+     this.languages[this.settings.language].data.forEach((page) => {
+
+      if(page.relativePermalink === relPath){
+        friendlyName = page.friendlyName
+      }
+    })
+    return friendlyName
+  }
+
 }
 
 

@@ -14,7 +14,7 @@ class Wrapper extends React.Component {
         <Header
           leftComponent={{ icon: 'menu', color: light, navHeaderStyle, onPress: () => this.props.navigation.openDrawer() }}
           centerComponent={{
-            text: 'TalkVeganToMe',
+            text: this.props.title,
             style: navHeaderStyle,
           }}
           rightComponent={{
