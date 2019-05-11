@@ -1,5 +1,5 @@
 /**
- * Sample React Native App
+ * TalkVeganToMe
  * https://github.com/facebook/react-native
  *
  * @format
@@ -9,7 +9,6 @@
 import React from 'react';
 import { View, ScrollView, Dimensions, SafeAreaView } from 'react-native';
 import { createDrawerNavigator, createAppContainer} from 'react-navigation';
-// https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
 import Markdown from 'react-native-markdown-renderer';
 import SideMenu from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
@@ -77,11 +76,7 @@ class App extends React.Component {
     return (
       <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
         <Markdown style={markdownStyles} rules={this.state.markDownRules}>
-          {
-              preProcessMarkDown(
-                  this.getPage()
-              )
-            }
+          {preProcessMarkDown(this.getPage(), this.state.settings)}
         </Markdown>
       </Wrapper>
     );
@@ -97,7 +92,6 @@ const DrawerNavigator = createDrawerNavigator({
   Settings: {
     screen: ({ navigation }) => (<SettingsScreen settings={settings} navigation = {navigation} />)
   }
-
   }, {
   contentComponent: ({ navigation }) => (<SideMenu settings={settings} navigation={navigation} />
   ),

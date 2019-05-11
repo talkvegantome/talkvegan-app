@@ -44,16 +44,15 @@ export class markdownRules {
   }
 }
 
-
-
-export function preProcessMarkDown(markdown){
+export function preProcessMarkDown(markdown, settings){
   let patterns = [
     {
       // Replace hugo cross reference links' inner {{<ref>}} syntax as it prevents them from being recognised by
       //   the markdown formatter
       find: /\[([^\]\]]+)\]\(\{\{<\s*ref\s*"(.+)"\s*>\}\}\)/,
       replacement: function(match, p1, p2){
-        return "["+p1+"](REF:"+p2+")"
+        relPath = '/' + settings.language + '/' + p2
+        return "["+p1+"](REF:"+relPath+")"
       }
     }
   ]
