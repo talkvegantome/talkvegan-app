@@ -7,16 +7,17 @@
  */
 
 import React from 'react';
-import { View, ScrollView, Dimensions, SafeAreaView, AsyncStorage } from 'react-native';
+import { View, ScrollView, Dimensions, SafeAreaView } from 'react-native';
 import { createDrawerNavigator, createAppContainer} from 'react-navigation';
 // https://medium.com/@mehulmistri/drawer-navigation-with-custom-side-menu-react-native-fbd5680060ba
 import Markdown from 'react-native-markdown-renderer';
 import SideMenu from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
-import SettingsScreen  from './src/settings';
+import SettingsScreen  from './src/settings/SettingsScreen.js';
 import _ from 'lodash';
 // import Markdown from 'react-native-simple-markdown'; // This was garbage as each _word_ was a separte <Text> making formatting a nightmare!
 
+import {Settings} from './src/settings/Settings.js'
 import Wrapper from './src/navigation/Wrapper.js'
 import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
 import { markdownStyles } from './src/styles/Markdown.style.js';
@@ -54,22 +55,22 @@ class App extends React.Component {
     header: null,
   };
 
-
-  //pageIndex = this.props.navigation.getParam('indexId', '/'+ this.state.settings.language+'/splash/')
-
   getPage(){
     let pageIndex = this.props.navigation.getParam('indexId')
     if (pageIndex){
-
       return this.state.pages[pageIndex] ? this.state.pages[pageIndex] : 'error loading ' + pageIndex + 'sorry :('
-
     }
     return this.state.pages[this.state.splashPath]
 
   }
   getPageTitle(){
-    let pageTitle = this.state.pagesObj.getFriendlyName(this.props.navigation.getParam('indexId'))
-    return pageTitle ? pageTitle : 'TalkVeganToMe'
+    let pageMetadata = this.state.pagesObj.getPageMetadata(this.props.navigation.getParam('indexId'))
+    let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
+    // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
+    if(pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)){
+      return 'TalkVeganToMe'
+    }
+    return pageTitle
   }
   render() {
 
@@ -87,29 +88,9 @@ class App extends React.Component {
   }
 }
 
-class Settings{
-  constructor(){
-    this.settings = {
-      language: 'en'
-    }
-    this.triggerUpdateMethods = []
-    this.refreshSettings()
-  }
-
-  refreshSettings(){
-    AsyncStorage.getItem('settings').then(asyncStorageRes => {
-      this.settings =  JSON.parse(asyncStorageRes)
-    }).then(() => {
-        _.forEach(this.triggerUpdateMethods, (method) => {
-          method(this.settings)
-        })
-    })
-  }
-}
-
 let settings = new Settings()
 
-const MyDrawerNavigator = createDrawerNavigator({
+const DrawerNavigator = createDrawerNavigator({
   Home: {
     screen: ({ navigation }) => (<App settings={settings} navigation={navigation} />),
   },
@@ -122,5 +103,5 @@ const MyDrawerNavigator = createDrawerNavigator({
   ),
   drawerWidth: Dimensions.get('window').width - 120,
 });
-const MyApp = createAppContainer(MyDrawerNavigator);
-export default MyApp;
+const Main = createAppContainer(DrawerNavigator);
+export default Main;

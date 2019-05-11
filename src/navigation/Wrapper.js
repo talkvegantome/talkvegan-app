@@ -15,7 +15,12 @@ class Wrapper extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <Header
-          leftComponent={{ icon: 'menu', color: light, navHeaderStyle, onPress: () => this.props.navigation.openDrawer() }}
+          leftComponent={{
+            icon: 'menu',
+            color: light,
+            iconStyle: {paddingLeft: 10},
+            onPress: () => this.props.navigation.openDrawer()
+          }}
           centerComponent={{
             text: this.props.title,
             style: navHeaderStyle,
@@ -23,6 +28,7 @@ class Wrapper extends React.Component {
           rightComponent={{
             icon: 'settings',
             color: light,
+            iconStyle: {paddingRight: 10},
             onPress: () => this.props.navigation.navigate('Settings')
           }}
           containerStyle={navContainerStyle}

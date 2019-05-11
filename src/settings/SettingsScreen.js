@@ -51,42 +51,59 @@ class SettingsScreen extends React.Component {
   render(){
     return (
       <Wrapper navigation={this.props.navigation} title="Settings" style={{paddingRight:0, paddingLeft: 0,  backgroundColor:'#D3D3D3'}}>
-        <Modal
-            animationType="slide"
-            transparent={false}
-            visible={this.state.modalVisible}
-          >
-          <SafeAreaView style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <View>
-              <Text style={{fontSize: 22}}  >Select Language</Text>
-            </View>
-            <View style={{marginVertical: 20}}>
-              <Picker
-                selectedValue={this.state.settings.language}
-                itemStyle={{width: 100, height: 100, }}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.updateSetting('language', itemValue)
-                }>
-                {_.map(languages, (lang, short) => {
-                  return <Picker.Item label={lang.name} value={short} key={short}/>
-                })}
-              </Picker>
-            </View>
-            <View>
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Done</Text>
-              </TouchableHighlight>
-            </View>
-          </SafeAreaView>
-        </Modal>
+        <SettingsModal
+          modalVisible={this.state.modalVisible}
+          title={"Select Language"}
+          onClose={() => {this.setModalVisible(!this.state.modalVisible);}}>
+          <Picker
+            selectedValue={this.state.settings.language}
+            itemStyle={{width: 100, height: 200 }}
+            onValueChange={(itemValue, itemIndex) =>
+              this.updateSetting('language', itemValue)
+            }>
+            {_.map(languages, (lang, short) => {
+              return <Picker.Item label={lang.name} value={short} key={short}/>
+            })}
+          </Picker>
+        </SettingsModal>
         <View style={{marginTop: 20}}>
           <SettingsItem label='Language' value={languages[this.state.settings.language].name}
             onPress={() => {this.setModalVisible(!this.state.modalVisible)}}/>
         </View>
       </Wrapper>
+    )
+  }
+}
+
+class SettingsModal extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render(){
+    return (
+      <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.props.modalVisible}
+        >
+        <SafeAreaView style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+          <View>
+            <Text style={{fontSize: 22}}>{this.props.title}</Text>
+          </View>
+          <View style={{marginVertical: 20}}>
+            {this.props.children}
+          </View>
+          <View>
+            <TouchableHighlight
+              onPress={() => {
+                this.props.onClose()
+              }}>
+              <Text>Done</Text>
+            </TouchableHighlight>
+          </View>
+        </SafeAreaView>
+      </Modal>
     )
   }
 }
@@ -99,7 +116,6 @@ class SettingsItem extends React.Component {
     return (
       <ListItem
         onPress={() => {this.props.onPress()}}
-        //style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'white'}}
          title={this.props.label}
          rightTitle={this.props.value}
          rightIcon={{name:'chevron-right'}}
