@@ -8,14 +8,10 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -23,7 +19,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "me.talkveganto",
       "supportsTablet": true
+    },
+    "android": {
+     "package": "me.talkveganto"
     },
     "description": ""
   }

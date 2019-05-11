@@ -4,7 +4,7 @@
       
       {
           "friendlyName": "Splash",
-          "rawContent": "\n# TalkVeganToMe\n\nCette application fournit une ressource d'informations pour aider les nouveaux et les anciens végétaliens à naviguer dans le monde.\n\n## Contributors\n\nLa grande majorité du contenu provient de Earthling Ed of Surge Activism. Qui a aimablement accepté de nous laisser reproduire le travail de son livre [30 excuses non-végétaliennes] (https://earthlinged.org/ebook).\n",
+          "rawContent": "\n# TalkVeganToMe\n\nCette application fournit une ressource d'informations pour aider les nouveaux et les anciens végétaliens à naviguer dans le monde.\n\n## Contributors\n\nLa grande majorité du contenu provient de Earthling Ed of Surge Activism. Qui a aimablement accepté de nous laisser reproduire le travail de son livre [30 excuses non-végétaliennes](https://earthlinged.org/ebook).\n",
           "relativePermalink": "/fr/splash/",
           "weight": null,
           "permalink" : "http://localhost:1313/fr/splash/",
@@ -18,7 +18,7 @@
       , 
       {
           "friendlyName": "Apprendre plus",
-          "rawContent": "\n# Apprendre plus\n\n## Sites Internet\n\n- [The Vegan Society] (https://vegansociety.com) - Fournit une mine d'informations sur les débuts, les grands-papes du véganisme\n\n\n## Livres\n\n## Films\n\n- [Terre d'espoir et de gloire] (https://www.landofhopeandglory.org/) ** VIOLENT FOOTAGE **\n- [Earthlings] (http://www.nationearth.com/) ** FOOTAGE VIOLENT **\n- [What the Health] (http://www.whatthehealthfilm.com/) Disponible sur Netflix, certaines statistiques peuvent être contestées.\n\n## Podcasts\n\n- [Les végétaliens barbus] (https://www.thebeardedvegans.com/)\n\n## Chaînes YouTube\n",
+          "rawContent": "\n# Apprendre plus\n\n## Sites Internet\n\n- [The Vegan Society](https://vegansociety.com) - Fournit une mine d'informations sur les débuts, les grands-papes du véganisme\n\n\n## Livres\n\n## Films\n\n- [Terre d'espoir et de gloire](https://www.landofhopeandglory.org/) ** VIOLENT FOOTAGE **\n- [Earthlings](http://www.nationearth.com/) ** FOOTAGE VIOLENT **\n- [What the Health](http://www.whatthehealthfilm.com/) Disponible sur Netflix, certaines statistiques peuvent être contestées.\n\n## Podcasts\n\n- [Les végétaliens barbus](https://www.thebeardedvegans.com/)\n\n## Chaînes YouTube\n",
           "relativePermalink": "/fr/getting-started/apprendre-plus/",
           "weight": null,
           "permalink" : "http://localhost:1313/fr/getting-started/apprendre-plus/",
