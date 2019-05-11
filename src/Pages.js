@@ -12,8 +12,9 @@ class Pages {
 
     this.generateMaps()
   }
+  settings = {'language': 'en'}
   setDefaults(asyncStorageRes){
-    let settings = asyncStorageRes ? JSON.parse(asyncStorageRes) : {language: 'fr'}
+    let settings = asyncStorageRes ? JSON.parse(asyncStorageRes) : {language: 'en'}
     this.settings = settings
   }
 

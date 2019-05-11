@@ -2,3 +2,5 @@ node_modules
 .expo/**
 
 yarn-error.log
+
+talkvegantome.app/**
