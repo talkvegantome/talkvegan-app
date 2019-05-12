@@ -45,7 +45,7 @@
       }
       , 
       {
-          "friendlyName": "Splash",
+          "friendlyName": "Home",
           "rawContent": "\n\n# Welcome to TalkVeganToMe\n\nTalkVeganToMe is an intersectional, compassionate, collaborative project intended to provide vegans old and new alike a central resource for commonly required information about veganism.  \n\n## Getting Started\n\nCheck out our [Learning More]({{\u003c ref \"/getting-started/learning-more\" \u003e}}) section.\n\n## Our Mission\n\n1. Make the day-to- day lives of vegans easier by making information easily accessible\n2. Make vegan advocacy in all its forms easier to learn about, understand, and do\n3. Ensure we do not promote messaging which harm any other justice movements\n4. Embody the compassion that veganism typifies in all our material and interactions\n5. Ensure the accuracy of our information and provide _full disclosure_ of mitigating information even if it undermines the argument being presented\n6. Not to engage in the gatekeeping of veganism (no-one can take away your V card)\n7. Not to use the platform to further the personal agenda or profit of the individual contributors\n8. Use the platform to promote inclusion and intersectional messaging wherever possible\n\n\n## Collaborating\n\nWant to add content, or just correct a typo? You can visit the [Github Repo](https://github.com/talkvegantome/talkvegan-hugo) where you will find a full guide on how to contribute.\n",
           "relativePermalink": "/en/splash/",
           "weight": null,
@@ -60,7 +60,7 @@
       , 
       {
           "friendlyName": "Learning More",
-          "rawContent": "\n# Learning More\n\n## Websites\n\n- [The Vegan Society](https://vegansociety.com) - Provides a wealth of information about getting started, the grandaddies of Veganism\n\n\n## Books\n\n## Films\n\n- [Land of Hope and Glory]({{\u003c ref \"/documentaries/land-of-hope-and-glory\" \u003e}})\n\n- [Dominion]({{\u003c ref \"/documentaries/dominion\" \u003e}})\n\n- [Earthlings]({{\u003c ref \"/documentaries/earthlings\" \u003e}})\n\n## Podcasts\n\n- [The Bearded Vegans](https://www.thebeardedvegans.com/)\n\n## YouTube Channels\n",
+          "rawContent": "\n# Learning More\n\n## Websites\n\n- [The Vegan Society](https://vegansociety.com) - Provides a wealth of information about getting started, the grandaddies of Veganism\n\n\n## Books\n\n## Films\n\n- [Land of Hope and Glory]({{\u003c ref \"/documentaries/land-of-hope-and-glory\" \u003e}})\n- [Dominion]({{\u003c ref \"/documentaries/dominion\" \u003e}})\n- [Earthlings]({{\u003c ref \"/documentaries/earthlings\" \u003e}})\n\n## Podcasts\n\n- [The Bearded Vegans](https://www.thebeardedvegans.com/)\n\n## YouTube Channels\n",
           "relativePermalink": "/en/getting-started/learning-more/",
           "weight": null,
           "permalink" : "http://localhost:1313/en/getting-started/learning-more/",
@@ -99,5 +99,6 @@
           }
 
       }
-]
+],
+    "date": "2019-05-12T11:13:27.854936+01:00"
 }

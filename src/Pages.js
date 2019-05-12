@@ -1,35 +1,73 @@
+import { AsyncStorage } from 'react-native'
+import { DateTime } from 'luxon'
 import _ from 'lodash';
-import {data as english} from '../assets/index.en.json'
-import {data as french} from '../assets/index.fr.json'
+
+let defaultPageData = {
+  en: require('../assets/index.en.json'),
+  fr: require('../assets/index.fr.json')
+};
+
 import languages from './settings/Languages.js'
 
 class Pages {
   constructor(settings){
     this.settings = settings
-    this.languages = languages
-    this.languages['en']['data'] = english
-    this.languages['fr']['data'] = french
-
+    this.pageData = _.merge({}, languages, defaultPageData)
+    this.getData()
     this.generateMaps()
   }
-  settings = {'language': 'en'}
-  setDefaults(asyncStorageRes){
-    let settings = asyncStorageRes ? JSON.parse(asyncStorageRes) : {language: 'en'}
-    this.settings = settings
+
+  getData(){
+    this.loadPageDataFromStorage(this.settings.language)
   }
 
+  loadPageDataFromStorage(language){
+    AsyncStorage.getItem('pageData').then(asyncStorageRes => {
+      pageData = JSON.parse(asyncStorageRes)
+      currentDataDate = DateTime.fromISO(this.pageData[language]['date'])
+      storageDataDate = 'date' in pageData ? DateTime.fromISO(pageData['date']) : null
+      // Don't overwrite defaults with null if nothing exists in AsyncStorage!
+      if(pageData && pageData[language] && storageDataDate > currentDataDate){
+        console.log(storageDataDate)
+        console.log(currentDataDate)
+        this.pageData[language] = JSON.parse(asyncStorageRes)
+        return
+      }
+      this.savePageDataToStorage()
+    })
+  }
+
+  returnJSON(){
+    let jsonOutput = {}
+    _.forEach(this.pageData,(language, shortCode) => {
+      jsonOutput[shortCode] = {
+        data: language['data'],
+        date: language['date']
+      }
+    })
+    return JSON.stringify(jsonOutput)
+  }
+
+  savePageDataToStorage(pageData){
+    AsyncStorage.setItem('pageData', this.returnJSON())
+  }
+
+
   generateMaps(){
-    _.forEach(this.languages, (language, short) => {
+    _.forEach(this.pageData, (language, short) => {
       language.pages = {}
       language.menu = {}
-      language.data.map((page) => {
-        page.friendlyName = page.friendlyName
+      _.forEach(language['data'], (page) => {
         language.pages[page.relativePermalink] = page.rawContent
+
+        // If it's a top level page (e.g. splash, we don't want it appearing on the menu)
         if(page.section.relativePermalink.match(/^\/[^\/]+\/$/)){
           return
         }
+
         if(!(page.section.relativePermalink in language.menu)){
-          language.menu[page.section.relativePermalink] = page.section
+          // clone page.section as a base for the menu
+          language.menu[page.section.relativePermalink] = Object.assign({}, page.section)
           language.menu[page.section.relativePermalink].subItems = []
         }
         language.menu[page.section.relativePermalink].subItems.push(page)
@@ -37,17 +75,17 @@ class Pages {
     })
   }
   getMenu(){
-    return this.languages[this.settings.language].menu
+    return this.pageData[this.settings.language].menu
   }
   getPages(){
-    return this.languages[this.settings.language].pages
+    return this.pageData[this.settings.language].pages
   }
   getSplashPath(){
     return '/'+this.settings.language+'/splash/'
   }
   getPageMetadata(relPath){
     let pageMetadata = null
-    this.languages[this.settings.language].data.forEach((page) => {
+    this.pageData[this.settings.language].data.forEach((page) => {
 
      if(page.relativePermalink === relPath){
        pageMetadata = page
@@ -57,7 +95,7 @@ class Pages {
   }
   getFriendlyName(relPath){
     let friendlyName = null
-     this.languages[this.settings.language].data.forEach((page) => {
+     this.pageData[this.settings.language].data.forEach((page) => {
 
       if(page.relativePermalink === relPath){
         friendlyName = page.friendlyName
