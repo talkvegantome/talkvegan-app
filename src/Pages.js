@@ -13,11 +13,11 @@ class Pages {
   constructor(settings){
     this.settings = settings
     this.pageData = _.merge({}, languages, defaultPageData)
-    this.getData()
+    this.loadData()
     this.generateMaps()
   }
 
-  getData(){
+  loadData(){
     this.loadPageDataFromStorage(this.settings.language)
   }
 
@@ -28,8 +28,6 @@ class Pages {
       storageDataDate = 'date' in pageData ? DateTime.fromISO(pageData['date']) : null
       // Don't overwrite defaults with null if nothing exists in AsyncStorage!
       if(pageData && pageData[language] && storageDataDate > currentDataDate){
-        console.log(storageDataDate)
-        console.log(currentDataDate)
         this.pageData[language] = JSON.parse(asyncStorageRes)
         return
       }
@@ -49,7 +47,7 @@ class Pages {
   }
 
   savePageDataToStorage(pageData){
-    AsyncStorage.setItem('pageData', this.returnJSON())
+      AsyncStorage.setItem('x', this.returnJSON())
   }
 
 
@@ -73,6 +71,13 @@ class Pages {
         language.menu[page.section.relativePermalink].subItems.push(page)
       })
     })
+  }
+  getLastSync(duration){
+    let lastSyncDate = DateTime.fromISO(this.pageData[this.settings.language].date)
+    if(duration==='hours'){
+      return Math.floor(DateTime.local().diff(lastSyncDate, 'hours').hours) + ' hours ago'
+    }
+    return lastSyncDate
   }
   getMenu(){
     return this.pageData[this.settings.language].menu

@@ -8,7 +8,9 @@ import { SafeAreaView,
   Picker } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Wrapper from '../navigation/Wrapper.js'
+import { DateTime } from 'luxon';
 import _ from 'lodash';
+import Pages from '../Pages.js'
 import languages from './Languages.js'
 import {markdownStyles} from '../styles/Markdown.style.js'
 import { light, content} from '../styles/Common.style.js';
@@ -31,6 +33,7 @@ class SettingsScreen extends React.Component {
     })
     this.state = {
       modalVisible: false,
+      pagesObj: new Pages(this.props.settings.settings),
       settings: this.props.settings.settings
     }
   }
@@ -67,6 +70,9 @@ class SettingsScreen extends React.Component {
           </Picker>
         </SettingsModal>
         <View style={{marginTop: 20}}>
+          <SettingsItem
+            label='Last Synced Data'
+            value={this.state.pagesObj.getLastSync('hours')}/>
           <SettingsItem label='Language' value={languages[this.state.settings.language].name}
             onPress={() => {this.setModalVisible(!this.state.modalVisible)}}/>
         </View>
