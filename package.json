@@ -8,7 +8,10 @@
     "test": "jest"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "setupFiles": [
+      "./mocks/scrollViewFix.js"
+    ]
   },
   "dependencies": {
     "expo": "^32.0.0",

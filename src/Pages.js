@@ -30,13 +30,11 @@ class Pages {
       })
     })
   }
-  
+
   getMenu(){
-    console.log(this.settings.language)
     return this.pageData[this.settings.language].menu
   }
   getPages(){
-    console.log(this.settings.language)
     return this.pageData[this.settings.language].pages
   }
   getSplashPath(){
