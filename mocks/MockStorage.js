@@ -22,4 +22,8 @@ export class MockStorage{
       }
     }
   }
+
+  getLastPageDataSync(){
+    return '1 minute'
+  }
 }
