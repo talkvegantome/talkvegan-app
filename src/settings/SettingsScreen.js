@@ -5,6 +5,7 @@ import { SafeAreaView,
   Text,
   Modal,
   TouchableHighlight,
+  Linking,
   Picker } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Wrapper from '../navigation/Wrapper.js'
@@ -62,8 +63,20 @@ class SettingsScreen extends React.Component {
   }
 
   render(){
+    let footer = (
+      <ListItem
+        onPress={() => Linking.openURL('https://talkvegantome.freshdesk.com')}
+        leftIcon={{name: "help-outline"}}
+        title="Contact Us"
+      />
+    )
     return (
-      <Wrapper navigation={this.props.navigation} title="Settings" style={{paddingRight:0, paddingLeft: 0,  backgroundColor:'#D3D3D3'}}>
+      <Wrapper
+        navigation={this.props.navigation}
+        title="Settings"
+        safeAreaViewStyle={{backgroundColor:'#D3D3D3'}}
+        footer={footer}
+        style={{paddingRight:0, paddingLeft: 0, backgroundColor:'#D3D3D3'}}>
         <SettingsModal
           modalVisible={this.state.modalVisible}
           title={"Select Language"}

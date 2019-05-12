@@ -1,6 +1,6 @@
 # TalkVeganToMe App [![Build Status](https://travis-ci.org/talkvegantome/talkvegan-app.svg?branch=master)](https://travis-ci.org/talkvegantome/talkvegan-app)
 
-**Website:** [TalkVeganTo.Me](https://talkveganto.me)
+**Website:** [TalkVeganTo.Me](https://talkveganto.me)  
 **Website Repo:** [TalkVegan-Hugo](https://github.com/talkvegantome/talkvegan-hugo)
 
 ## Introduction

@@ -31,9 +31,6 @@ export class Storage {
         })
     })
   }
-  loadData(){
-    this.loadPageDataFromStorage(this.settings.language)
-  }
 
   getLanguageDataUri(){
     return 'https://talkveganto.me/' + this.settings.language + '/index.json'

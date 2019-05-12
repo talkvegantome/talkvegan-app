@@ -33,10 +33,13 @@ class Wrapper extends React.Component {
           }}
           containerStyle={navContainerStyle}
         />
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={ {...{ flex: 1 }, ...this.props.safeAreaViewStyle}}>
           <ScrollView style={{...commonStyle.content,...this.props.style}}>
             {this.props.children}
           </ScrollView>
+          {
+              this.props.footer && this.props.footer
+          }
         </SafeAreaView>
       </View>
     )
