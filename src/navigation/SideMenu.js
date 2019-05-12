@@ -13,7 +13,7 @@ class SideMenu extends Component {
     this.props.storage.triggerUpdateMethods.push((storage) => {
       this.refreshStorage(storage)
     })
-    pages = new Pages(this.props.storage)
+    let pages = new Pages(this.props.storage)
 
     this.state = {
       settings: this.props.storage.settings,
@@ -23,7 +23,7 @@ class SideMenu extends Component {
     };
   }
   refreshStorage(storage){
-    pages = new Pages(storage)
+    let pages = new Pages(storage)
     this.setState({
       settings: storage.settings,
       menu: pages.getMenu(storage),
@@ -65,8 +65,8 @@ class SideMenu extends Component {
       })
 
 
-      headerVisibility = this.state.headerVisibility
-      display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'flex': 'none'
+      let headerVisibility = this.state.headerVisibility
+      let display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'flex': 'none'
       return (
         <View key={headerFriendlyName}>
           <ListItem

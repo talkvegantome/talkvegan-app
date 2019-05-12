@@ -1,12 +1,12 @@
-import { primary, secondary, light, highlight, dark, headerFont, paragraphFont} from './Common.style.js'
+import { commonStyle } from './Common.style.js'
 
 export const navHeaderStyle = {
-  color: light,
+  color: commonStyle.light,
   fontSize: 20,
-  fontFamily: headerFont,
+  fontFamily: commonStyle.headerFont,
   lineHeight: 40,
 }
 export const navContainerStyle = {
-  backgroundColor: primary,
+  backgroundColor: commonStyle.primary,
   justifyContent: 'space-around',
 }

@@ -1,4 +1,4 @@
-import { primary, secondary, light, highlight, dark, headerFont, paragraphFont} from './Common.style.js'
+import { commonStyle } from './Common.style.js'
 import { StyleSheet, Platform } from 'react-native';
 
 export const markdownStyles =  StyleSheet.create({
@@ -6,8 +6,8 @@ export const markdownStyles =  StyleSheet.create({
     textAlign:'left',
     fontSize: 25,
     fontWeight: 'bold',
-    color: primary,
-    fontFamily: headerFont,
+    color: commonStyle.primary,
+    fontFamily: commonStyle.headerFont,
     marginTop: 15,
     marginBottom: 10,
     lineHeight: 35,
@@ -16,16 +16,16 @@ export const markdownStyles =  StyleSheet.create({
     textAlign:'left',
     fontSize: 22,
     fontWeight: 'bold',
-    color: primary,
-    fontFamily: headerFont,
+    color: commonStyle.primary,
+    fontFamily: commonStyle.headerFont,
     marginVertical: 10,
   },
   heading3: {
     textAlign: 'left',
     fontSize: 18,
     fontWeight: 'bold',
-    color: primary,
-    fontFamily: headerFont,
+    color: commonStyle.primary,
+    fontFamily: commonStyle.headerFont,
     marginVertical: 10,
   },
   paragraph: {
@@ -34,7 +34,7 @@ export const markdownStyles =  StyleSheet.create({
     textAlign: 'justify'
   },
   text: {
-    fontFamily: paragraphFont,
+    fontFamily: commonStyle.paragraphFont,
     fontSize: 18,
     textAlign: 'justify',
     lineHeight: 28,

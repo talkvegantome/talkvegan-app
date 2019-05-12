@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from 'react-native-elements';
-import {Text, View, SafeAreaView, ScrollView, AsyncStorage } from 'react-native';
-import { light, content} from '../styles/Common.style.js';
+import { View, SafeAreaView, ScrollView } from 'react-native';
+import { commonStyle } from '../styles/Common.style.js';
 import { navContainerStyle, navHeaderStyle } from '../styles/Header.style.js'
 
 class Wrapper extends React.Component {
@@ -17,7 +17,7 @@ class Wrapper extends React.Component {
         <Header
           leftComponent={{
             icon: 'menu',
-            color: light,
+            color: commonStyle.light,
             iconStyle: {paddingLeft: 10},
             onPress: () => this.props.navigation.openDrawer()
           }}
@@ -27,14 +27,14 @@ class Wrapper extends React.Component {
           }}
           rightComponent={{
             icon: 'settings',
-            color: light,
+            color: commonStyle.light,
             iconStyle: {paddingRight: 10},
             onPress: () => this.props.navigation.navigate('Settings')
           }}
           containerStyle={navContainerStyle}
         />
         <SafeAreaView style={{ flex: 1 }}>
-          <ScrollView style={{...content,...this.props.style}}>
+          <ScrollView style={{...commonStyle.content,...this.props.style}}>
             {this.props.children}
           </ScrollView>
         </SafeAreaView>

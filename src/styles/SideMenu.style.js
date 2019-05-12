@@ -1,36 +1,36 @@
-import { primary, secondary, light, highlight, dark} from './Common.style.js'
+import { commonStyle } from './Common.style.js'
 export default {
   container: {
     flex: 1,
-    backgroundColor: light,
+    backgroundColor: commonStyle.light,
   },
   safeContainer: {
-    backgroundColor: primary,
+    backgroundColor: commonStyle.primary,
     flex: 1
   },
   navSectionStyle: {
     paddingHorizontal: 25,
     paddingVertical: 10,
-    bottomBorderColor: primary,
+    bottomBorderColor: commonStyle.primary,
     bottomBorderWidth: 1
   },
 
   navHeaderStyle: {
-    backgroundColor: primary,
+    backgroundColor: commonStyle.primary,
   },
   navHeaderTitleStyle: {
     fontSize: 30,
-    color: light,
+    color: commonStyle.light,
   },
   navHeaderTextStyle: {
     padding: 10,
-    color: light,
+    color: commonStyle.light,
   },
   sectionHeadingStyle: {
-    backgroundColor: highlight,
+    backgroundColor: commonStyle.highlight,
   },
   sectionHeadingTitleStyle: {
     fontSize: 20,
-    color: light,
+    color: commonStyle.light,
   }
 };

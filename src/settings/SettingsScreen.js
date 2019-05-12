@@ -8,34 +8,29 @@ import { SafeAreaView,
   Picker } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Wrapper from '../navigation/Wrapper.js'
-import { DateTime } from 'luxon';
 import _ from 'lodash';
-import Pages from '../Pages.js'
 import languages from './Languages.js'
-import {markdownStyles} from '../styles/Markdown.style.js'
-import { light, content} from '../styles/Common.style.js';
 
-style = {
-  settingLabel: {
-    fontSize: 22,
-    lineHeight: 30
-  },
-  settingValue: {
-    fontSize: 18,
-    lineHeight: 30,
-  }
-}
+// style = {
+//   settingLabel: {
+//     fontSize: 22,
+//     lineHeight: 30
+//   },
+//   settingValue: {
+//     fontSize: 18,
+//     lineHeight: 30,
+//   }
+// }
+
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.props.storage.triggerUpdateMethods.push((storage) => {
-      let pages = new Pages(storage)
       this.setState({
         settings: storage.settings,
         lastSync: storage.getLastPageDataSync('auto')
       })
     })
-    let pages = new Pages(this.props.storage)
     this.state = {
       modalVisible: false,
       storage: this.props.storage,
@@ -43,8 +38,9 @@ class SettingsScreen extends React.Component {
       settings: this.props.storage.settings
     }
   }
+
   updateSetting(settingName, value){
-    settings = this.state.settings;
+    let settings = this.state.settings;
     settings[settingName] = value;
     this.setState(settings)
 
@@ -58,12 +54,9 @@ class SettingsScreen extends React.Component {
     this.setState({modalVisible: visible});
   }
   refreshPageData(){
-    this.state.pageDataIsLoading = true
-    console.log('refresh data please!')
-    this.state.storage.refreshPageData().then((data) => {
-      this.state.pageDataIsLoading = false
-      // Quick way to get data reloaded... Should Pages have its own function like this?
-      console.log('Refresh display please!')
+    this.setState({pageDataIsLoading: true})
+    this.state.storage.refreshPageData().then(() => {
+      this.setState({pageDataIsLoading: false})
       this.props.storage.refreshSettings()
     })
   }
@@ -78,7 +71,7 @@ class SettingsScreen extends React.Component {
           <Picker
             selectedValue={this.state.settings.language}
             itemStyle={{width: 100, height: 200 }}
-            onValueChange={(itemValue, itemIndex) =>
+            onValueChange={(itemValue) =>
               this.updateSetting('language', itemValue)
             }>
             {_.map(languages, (lang, short) => {

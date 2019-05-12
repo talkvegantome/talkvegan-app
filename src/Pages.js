@@ -1,5 +1,3 @@
-import { AsyncStorage } from 'react-native'
-
 import _ from 'lodash';
 
 class Pages {
@@ -10,7 +8,7 @@ class Pages {
   }
 
   generateMaps(){
-    _.forEach(this.pageData, (language, short) => {
+    _.forEach(this.pageData, (language) => {
       language.pages = {}
       language.menu = {}
       _.forEach(language['data'], (page) => {

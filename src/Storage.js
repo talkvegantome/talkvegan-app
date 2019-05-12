@@ -1,4 +1,3 @@
-import React from 'react';
 import { AsyncStorage } from 'react-native'
 import languages from './settings/Languages.js'
 import _ from 'lodash'
@@ -45,36 +44,30 @@ export class Storage {
       method: 'GET',
     }).then((response) => response.json()).then((responseJson) => {
       if(responseJson.data){
-        console.log('Saving response for ' + this.settings.language + ' to this.pageData')
         this.pageData[this.settings.language] = responseJson
         this.pageData[this.settings.language].lastSyncDate = DateTime.local()
         return this.savePageDataToStorage()
       }
       return null
-    }).catch((error)=>{
-      console.error(error)
+    }).catch(()=>{
+
+      // TODO: Make this a real error
     })
   }
 
   loadPageDataFromStorage(language){
     return AsyncStorage.getItem('pageData').then(asyncStorageRes => {
       if(!asyncStorageRes){
-        console.log('no storage')
         return this.savePageDataToStorage()
       }
-      storagePageData = JSON.parse(asyncStorageRes)
-      currentDataDate = DateTime.fromISO(this.pageData[language]['date'])
-      console.log('Got from storage: dataDate: ' + storagePageData['en']['lastSyncDate'])
-      storageDataDate = 'date' in storagePageData[language] ? DateTime.fromISO(storagePageData[language]['date']) : null
-      console.log('Storage dataDate: ' + storageDataDate.toISO())
+      let storagePageData = JSON.parse(asyncStorageRes)
+      let currentDataDate = DateTime.fromISO(this.pageData[language]['date'])
+      let storageDataDate = 'date' in storagePageData[language] ? DateTime.fromISO(storagePageData[language]['date']) : null
       // Don't overwrite defaults with null if nothing exists in AsyncStorage!
       if(storagePageData && storagePageData[language] && storageDataDate > currentDataDate){
-        console.log('Storage is newer than current class data')
         this.pageData[language] = storagePageData
         return
       }
-      //console.log(currentDataDate.toISO() + ' - ' + storageDataDate.toISO())
-      console.log('current class data is newer than Storage')
       return this.savePageDataToStorage()
     })
   }
@@ -88,22 +81,15 @@ export class Storage {
         lastSyncDate: this.getLastPageDataSync().toISO()
       }
     })
-    console.log('ReturningJson: lastSyncDate for en: ' + jsonOutput['en']['lastSyncDate'] )
     return JSON.stringify(jsonOutput)
   }
 
   async savePageDataToStorage(){
-    let debug = JSON.parse(this.returnPageDataJson())
-    console.log('Saving to storage: DataDate: ' +debug['en']['date'])
-    console.log('Saving to storage: SyncDate: ' + debug['en']['lastSyncDate'])
-
-    return AsyncStorage.setItem('pageData', this.returnPageDataJson()).catch((err) => {console.error(err)})
-    .then((response) => {console.log('Saved!' + response)})
+    return AsyncStorage.setItem('pageData', this.returnPageDataJson())
   }
 
   getLastPageDataSync(duration){
     // If never synced default to content generation date
-    console.log('getLastSync')
     let lastSyncDate = this.pageData[this.settings.language].lastSyncDate ?
       this.pageData[this.settings.language].lastSyncDate :
       DateTime.fromISO(this.pageData[this.settings.language].date)
@@ -116,7 +102,7 @@ export class Storage {
         return Math.round(diff.months) + ' months'
       }
       if(diff.days > 1){
-        return math.round(diff.days) + ' days'
+        return Math.round(diff.days) + ' days'
       }
       if(diff.hours > 1){
         return Math.round(diff.hours) + ' hours'

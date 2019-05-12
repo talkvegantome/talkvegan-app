@@ -7,20 +7,17 @@
  */
 
 import React from 'react';
-import { View, ScrollView, Dimensions, SafeAreaView } from 'react-native';
+import { Dimensions } from 'react-native';
 import { createDrawerNavigator, createAppContainer} from 'react-navigation';
 import Markdown from 'react-native-markdown-renderer';
 import SideMenu from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
 import SettingsScreen  from './src/settings/SettingsScreen.js';
-import _ from 'lodash';
-// import Markdown from 'react-native-simple-markdown'; // This was garbage as each _word_ was a separte <Text> making formatting a nightmare!
 
 import {Storage} from './src/Storage.js'
 import Wrapper from './src/navigation/Wrapper.js'
 import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
 import { markdownStyles } from './src/styles/Markdown.style.js';
-import { light, content} from './src/styles/Common.style.js';
 
 
 class App extends React.Component {

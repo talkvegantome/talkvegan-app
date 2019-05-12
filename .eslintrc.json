@@ -1,11 +1,13 @@
 {
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "jest": true
     },
     "globals": {
         "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+        "SharedArrayBuffer": "readonly",
+        "fetch": false
     },
     "parser": "babel-eslint",
     "plugins": [
@@ -16,5 +18,8 @@
       "plugin:react/recommended"
     ],
     "rules": {
+      "react/display-name": 0,
+      "react/prop-types": 0,
+      "no-useless-escape": 0
     }
 }
