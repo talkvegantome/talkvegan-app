@@ -50,6 +50,14 @@ class SettingsScreen extends React.Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
+  refreshPageData(){
+    this.state.pageDataIsLoading = true
+    this.state.pagesObj.refreshData().then((data) => {
+      this.state.pageDataIsLoading = false
+      // Quick way to get data reloaded... Should Pages have its own function like this?
+      this.props.settings.refreshSettings()
+    })
+  }
 
   render(){
     return (
@@ -72,7 +80,9 @@ class SettingsScreen extends React.Component {
         <View style={{marginTop: 20}}>
           <SettingsItem
             label='Last Synced Data'
-            value={this.state.pagesObj.getLastSync('hours')}/>
+            value={this.state.pagesObj.getLastSync('hours')}
+            icon={this.state.pageDataIsLoading ? 'hourglass-empty' : 'refresh'}
+            onPress={() => {this.refreshPageData()}}/>
           <SettingsItem label='Language' value={languages[this.state.settings.language].name}
             onPress={() => {this.setModalVisible(!this.state.modalVisible)}}/>
         </View>
@@ -118,13 +128,16 @@ class SettingsItem extends React.Component {
   constructor(props) {
     super(props);
   }
+  static defaultProps = {
+    icon: 'chevron-right'
+  }
   render() {
     return (
       <ListItem
         onPress={() => {this.props.onPress()}}
          title={this.props.label}
          rightTitle={this.props.value}
-         rightIcon={{name:'chevron-right'}}
+         rightIcon={{name:this.props.icon}}
       />
     )
   }

@@ -21,8 +21,33 @@ class Pages {
     this.loadPageDataFromStorage(this.settings.language)
   }
 
+  getLanguageDataUri(){
+    return 'https://talkveganto.me/' + this.settings.language + '/index.json'
+  }
+
+  async refreshData(){
+    return fetch(this.getLanguageDataUri(), {
+      method: 'GET',
+    }).then((response) => response.json()).then((responseJson) => {
+      if(responseJson.data){
+        this.pageData[this.settings.language] = responseJson
+        this.pageData[this.settings.language].lastSyncDate = DateTime.local()
+        this.generateMaps()
+        this.savePageDataToStorage()
+        return responseJson.data
+      }
+      return null
+    }).catch((error)=>{
+      console.error(error)
+    })
+  }
+
   loadPageDataFromStorage(language){
     AsyncStorage.getItem('pageData').then(asyncStorageRes => {
+      if(!asyncStorageRes){
+        this.savePageDataToStorage()
+        return
+      }
       pageData = JSON.parse(asyncStorageRes)
       currentDataDate = DateTime.fromISO(this.pageData[language]['date'])
       storageDataDate = 'date' in pageData ? DateTime.fromISO(pageData['date']) : null
@@ -73,7 +98,10 @@ class Pages {
     })
   }
   getLastSync(duration){
-    let lastSyncDate = DateTime.fromISO(this.pageData[this.settings.language].date)
+    // If never synced default to content generation date
+    let lastSyncDate = this.pageData[this.settings.language].lastSyncDate ?
+      this.pageData[this.settings.language].lastSyncDate :
+      DateTime.fromISO(this.pageData[this.settings.language].date)
     if(duration==='hours'){
       return Math.floor(DateTime.local().diff(lastSyncDate, 'hours').hours) + ' hours ago'
     }
