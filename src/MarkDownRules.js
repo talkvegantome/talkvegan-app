@@ -49,7 +49,7 @@ export function preProcessMarkDown(markdown, settings){
     {
       // Replace hugo cross reference links' inner {{<ref>}} syntax as it prevents them from being recognised by
       //   the markdown formatter
-      find: /\[([^\]\]]+)\]\([\s\{<]{3,}\s*ref\s*"([^"]+)"[\}>\s]{3,}\)/g,,
+      find: /\[([^\]\]]+)\]\([\s\{<]{3,}\s*ref\s*"([^"]+)"[\}>\s]{3,}\)/g,
       replacement: function(match, p1, p2){
         relPath = '/' + settings.language + normaliseRelPath(p2)
         return "["+p1+"](REF:"+relPath+")"
