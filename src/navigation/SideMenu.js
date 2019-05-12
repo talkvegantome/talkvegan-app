@@ -10,23 +10,23 @@ class SideMenu extends Component {
 
   constructor(props) {
     super(props);
-    this.props.settings.triggerUpdateMethods.push((settings) => {
-      this.refreshSettings(settings)
+    this.props.storage.triggerUpdateMethods.push((storage) => {
+      this.refreshStorage(storage)
     })
-    pages = new Pages(this.props.settings.settings)
+    pages = new Pages(this.props.storage)
 
     this.state = {
-      settings: this.props.settings.settings,
+      settings: this.props.storage.settings,
       menu: pages.getMenu(),
       splashPath: pages.getSplashPath(),
       headerVisibility: {}
     };
   }
-  refreshSettings(settings){
-    pages = new Pages(settings)
+  refreshStorage(storage){
+    pages = new Pages(storage)
     this.setState({
-      settings: settings,
-      menu: pages.getMenu(this.props.settings.settings),
+      settings: storage.settings,
+      menu: pages.getMenu(storage),
       splashPath: pages.getSplashPath()
     })
   }

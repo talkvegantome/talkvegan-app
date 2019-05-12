@@ -16,7 +16,7 @@ import SettingsScreen  from './src/settings/SettingsScreen.js';
 import _ from 'lodash';
 // import Markdown from 'react-native-simple-markdown'; // This was garbage as each _word_ was a separte <Text> making formatting a nightmare!
 
-import {Settings} from './src/settings/Settings.js'
+import {Storage} from './src/Storage.js'
 import Wrapper from './src/navigation/Wrapper.js'
 import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
 import { markdownStyles } from './src/styles/Markdown.style.js';
@@ -26,22 +26,22 @@ import { light, content} from './src/styles/Common.style.js';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.props.settings.triggerUpdateMethods.push((settings) => {
-      let pagesObj = new Pages(settings)
+    this.props.storage.triggerUpdateMethods.push((storage) => {
+      let pagesObj = new Pages(storage)
       this.setState({
         pagesObj: pagesObj,
-        settings: settings,
+        settings: storage.settings,
         pages: pagesObj.getPages(),
         splashPath: pagesObj.getSplashPath()
       })
     })
-    let pagesObj = new Pages(this.props.settings.settings)
+    let pagesObj = new Pages(this.props.storage)
     const markdownRulesObj = new markdownRules(props.navigation);
     this.state = {
       pagesObj: pagesObj,
       pages: pagesObj.getPages(),
       splashPath: pagesObj.getSplashPath(),
-      settings: this.props.settings.settings,
+      settings: this.props.storage.settings,
       markDownRules: markdownRulesObj.returnRules(),
     };
   }
@@ -83,17 +83,17 @@ class App extends React.Component {
   }
 }
 
-let setting = new Settings()
+let storage = new Storage()
 
 const DrawerNavigator = createDrawerNavigator({
   Home: {
-    screen: ({ navigation }) => (<App settings={setting} navigation={navigation} />),
+    screen: ({ navigation }) => (<App storage={storage} navigation={navigation} />),
   },
   Settings: {
-    screen: ({ navigation }) => (<SettingsScreen settings={setting} navigation = {navigation} />)
+    screen: ({ navigation }) => (<SettingsScreen storage={storage} navigation = {navigation} />)
   }
   }, {
-  contentComponent: ({ navigation }) => (<SideMenu settings={setting} navigation={navigation} />
+  contentComponent: ({ navigation }) => (<SideMenu storage={storage} navigation={navigation} />
   ),
   drawerWidth: Dimensions.get('window').width - 120,
 });

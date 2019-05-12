@@ -28,13 +28,19 @@ style = {
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.props.settings.triggerUpdateMethods.push((settings) => {
-      this.setState({settings:settings})
+    this.props.storage.triggerUpdateMethods.push((storage) => {
+      let pages = new Pages(storage)
+      this.setState({
+        settings: storage.settings,
+        lastSync: storage.getLastPageDataSync('auto')
+      })
     })
+    let pages = new Pages(this.props.storage)
     this.state = {
       modalVisible: false,
-      pagesObj: new Pages(this.props.settings.settings),
-      settings: this.props.settings.settings
+      storage: this.props.storage,
+      lastSync: this.props.storage.getLastPageDataSync('auto'),
+      settings: this.props.storage.settings
     }
   }
   updateSetting(settingName, value){
@@ -42,8 +48,9 @@ class SettingsScreen extends React.Component {
     settings[settingName] = value;
     this.setState(settings)
 
+    // TODO:  this should be a function on the settings object
     AsyncStorage.setItem('settings', JSON.stringify(this.state.settings)).then(() =>{
-      this.props.settings.refreshSettings()
+      this.props.storage.refreshSettings()
     });
 
   }
@@ -52,10 +59,12 @@ class SettingsScreen extends React.Component {
   }
   refreshPageData(){
     this.state.pageDataIsLoading = true
-    this.state.pagesObj.refreshData().then((data) => {
+    console.log('refresh data please!')
+    this.state.storage.refreshPageData().then((data) => {
       this.state.pageDataIsLoading = false
       // Quick way to get data reloaded... Should Pages have its own function like this?
-      this.props.settings.refreshSettings()
+      console.log('Refresh display please!')
+      this.props.storage.refreshSettings()
     })
   }
 
@@ -80,7 +89,7 @@ class SettingsScreen extends React.Component {
         <View style={{marginTop: 20}}>
           <SettingsItem
             label='Last Synced Data'
-            value={this.state.pagesObj.getLastSync('hours')}
+            value={this.state.lastSync}
             icon={this.state.pageDataIsLoading ? 'hourglass-empty' : 'refresh'}
             onPress={() => {this.refreshPageData()}}/>
           <SettingsItem label='Language' value={languages[this.state.settings.language].name}

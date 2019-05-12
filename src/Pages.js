@@ -1,80 +1,13 @@
 import { AsyncStorage } from 'react-native'
-import { DateTime } from 'luxon'
+
 import _ from 'lodash';
 
-let defaultPageData = {
-  en: require('../assets/index.en.json'),
-  fr: require('../assets/index.fr.json')
-};
-
-import languages from './settings/Languages.js'
-
 class Pages {
-  constructor(settings){
-    this.settings = settings
-    this.pageData = _.merge({}, languages, defaultPageData)
-    this.loadData()
+  constructor(storage){
+    this.settings = storage.settings
+    this.pageData = storage.pageData
     this.generateMaps()
   }
-
-  loadData(){
-    this.loadPageDataFromStorage(this.settings.language)
-  }
-
-  getLanguageDataUri(){
-    return 'https://talkveganto.me/' + this.settings.language + '/index.json'
-  }
-
-  async refreshData(){
-    return fetch(this.getLanguageDataUri(), {
-      method: 'GET',
-    }).then((response) => response.json()).then((responseJson) => {
-      if(responseJson.data){
-        this.pageData[this.settings.language] = responseJson
-        this.pageData[this.settings.language].lastSyncDate = DateTime.local()
-        this.generateMaps()
-        this.savePageDataToStorage()
-        return responseJson.data
-      }
-      return null
-    }).catch((error)=>{
-      console.error(error)
-    })
-  }
-
-  loadPageDataFromStorage(language){
-    AsyncStorage.getItem('pageData').then(asyncStorageRes => {
-      if(!asyncStorageRes){
-        this.savePageDataToStorage()
-        return
-      }
-      pageData = JSON.parse(asyncStorageRes)
-      currentDataDate = DateTime.fromISO(this.pageData[language]['date'])
-      storageDataDate = 'date' in pageData ? DateTime.fromISO(pageData['date']) : null
-      // Don't overwrite defaults with null if nothing exists in AsyncStorage!
-      if(pageData && pageData[language] && storageDataDate > currentDataDate){
-        this.pageData[language] = JSON.parse(asyncStorageRes)
-        return
-      }
-      this.savePageDataToStorage()
-    })
-  }
-
-  returnJSON(){
-    let jsonOutput = {}
-    _.forEach(this.pageData,(language, shortCode) => {
-      jsonOutput[shortCode] = {
-        data: language['data'],
-        date: language['date']
-      }
-    })
-    return JSON.stringify(jsonOutput)
-  }
-
-  savePageDataToStorage(pageData){
-      AsyncStorage.setItem('x', this.returnJSON())
-  }
-
 
   generateMaps(){
     _.forEach(this.pageData, (language, short) => {
@@ -97,20 +30,13 @@ class Pages {
       })
     })
   }
-  getLastSync(duration){
-    // If never synced default to content generation date
-    let lastSyncDate = this.pageData[this.settings.language].lastSyncDate ?
-      this.pageData[this.settings.language].lastSyncDate :
-      DateTime.fromISO(this.pageData[this.settings.language].date)
-    if(duration==='hours'){
-      return Math.floor(DateTime.local().diff(lastSyncDate, 'hours').hours) + ' hours ago'
-    }
-    return lastSyncDate
-  }
+  
   getMenu(){
+    console.log(this.settings.language)
     return this.pageData[this.settings.language].menu
   }
   getPages(){
+    console.log(this.settings.language)
     return this.pageData[this.settings.language].pages
   }
   getSplashPath(){
