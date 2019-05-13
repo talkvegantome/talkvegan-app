@@ -13,7 +13,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#D36135",
+        "backgroundColor": "#235789",
         "borderBottomColor": "#f2f2f2",
         "borderBottomWidth": 0.5,
         "flexDirection": "row",
@@ -191,7 +191,6 @@ exports[`SettingsScreen Renders Correctly 1`] = `
           "paddingBottom": 20,
           "paddingLeft": 0,
           "paddingRight": 0,
-          "textAlign": "justify",
         }
       }
     >

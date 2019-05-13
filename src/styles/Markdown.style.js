@@ -44,7 +44,6 @@ export const markdownStyles =  StyleSheet.create({
   },
   listUnorderedItemIcon: {
     fontSize: 15,
-    lineHeight: 28,
     paddingTop: 18,
     marginLeft: 10,
     marginRight: 10,
@@ -56,7 +55,6 @@ export const markdownStyles =  StyleSheet.create({
   },
   listOrderedItemIcon: {
     fontSize: 15,
-    lineHeight: 28,
     paddingTop: 18,
     marginLeft: 10,
     marginRight: 10,

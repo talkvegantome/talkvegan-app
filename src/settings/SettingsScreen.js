@@ -32,6 +32,7 @@ class SettingsScreen extends React.Component {
         lastSync: storage.getLastPageDataSync('auto')
       })
     })
+
     this.state = {
       modalVisible: false,
       storage: this.props.storage,
@@ -39,6 +40,19 @@ class SettingsScreen extends React.Component {
       settings: this.props.storage.settings
     }
   }
+
+  componentDidMount() {
+    let timer = setInterval(()=> {
+      this.setState({
+        lastSync: this.state.storage.getLastPageDataSync('auto'),
+      })
+    }, 1000);
+    this.setState({timer:timer});
+  }
+  componentWillUnmount() {
+    this.clearInterval(this.state.timer);
+  }
+
 
   updateSetting(settingName, value){
     let settings = this.state.settings;

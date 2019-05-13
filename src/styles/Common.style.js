@@ -1,11 +1,5 @@
 import {Platform} from 'react-native'
-let blueTheme = {
-	primary: '#235789',
-	secondary: '#401F3E',
-	light: '#E8E9EB',
-	highlight: '#6EA4BF',
-	dark: '#313638',
-}
+
 export const commonStyle = {
 	primary: '#235789',
 	secondary: '#401F3E',
