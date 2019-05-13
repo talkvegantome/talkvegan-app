@@ -1,8 +1,12 @@
 import React from 'react';
-import Wrapper from './Wrapper.js';
+import SideMenu from './SideMenu.js';
 import renderer from 'react-test-renderer';
 
-test('Wrapper Renders Correctly', () => {
-  const tree = renderer.create(<Wrapper/>).toJSON();
+import {MockStorage} from '../../mocks/MockStorage.js'
+
+let mockStorage = new MockStorage()
+
+test('SideMenu Renders Correctly', () => {
+  const tree = renderer.create(<SideMenu storage={mockStorage}/>).toJSON();
   expect(tree).toMatchSnapshot();
 });

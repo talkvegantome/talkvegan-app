@@ -9,6 +9,7 @@ export default {
     flex: 1
   },
   navSectionStyle: {
+    backgroundColor: commonStyle.light,
     paddingHorizontal: 25,
     paddingVertical: 10,
     bottomBorderColor: commonStyle.primary,
