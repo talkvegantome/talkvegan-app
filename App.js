@@ -7,7 +7,8 @@
  */
 
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Share } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { createDrawerNavigator, createAppContainer} from 'react-navigation';
 import Markdown from 'react-native-markdown-renderer';
 import SideMenu from './src/navigation/SideMenu.js';
@@ -51,12 +52,20 @@ class App extends React.Component {
     header: null,
   };
 
-  getPage(){
+  getPageIndex(){
     let pageIndex = this.props.navigation.getParam('indexId')
     if (pageIndex){
       return this.state.pages[pageIndex] ? this.state.pages[pageIndex] : 'error loading ' + pageIndex + 'sorry :('
     }
-    return this.state.pages[this.state.splashPath]
+    return this.state.splashPath
+  }
+  getPagePermalink(){
+    let pageIndex = this.getPageIndex()
+    let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
+    return pageMetadata.permalink
+  }
+  getPageContent(){
+    return this.state.pages[this.getPageIndex()]
 
   }
   getPageTitle(){
@@ -73,8 +82,12 @@ class App extends React.Component {
     return (
       <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
         <Markdown style={markdownStyles} rules={this.state.markDownRules}>
-          {preProcessMarkDown(this.getPage(), this.state.settings)}
+          {preProcessMarkDown(this.getPageContent(), this.state.settings)}
         </Markdown>
+        <ListItem leftIcon={{name: 'share'}} title='Share Link to Page' topDivider={true}
+          containerStyle={{marginTop:10, paddingTop: 20}}
+          onPress={() => {Share.share({message: this.getPagePermalink()})}}
+        />
       </Wrapper>
     );
   }
