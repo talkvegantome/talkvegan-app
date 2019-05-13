@@ -5,5 +5,5 @@ before_script:
   - npm install -g eslint
   - yarn install
 script:
-  - yarn test
+  - yarn test --ci --verbose --forceExit --detectOpenHandles
   - eslint .
