@@ -24,7 +24,8 @@
     ],
     "ios": {
       "bundleIdentifier": "me.talkveganto",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "2",
     },
     "android": {
      "package": "me.talkveganto"

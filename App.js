@@ -54,10 +54,7 @@ class App extends React.Component {
 
   getPageIndex(){
     let pageIndex = this.props.navigation.getParam('indexId')
-    if (pageIndex){
-      return this.state.pages[pageIndex] ? this.state.pages[pageIndex] : 'error loading ' + pageIndex + 'sorry :('
-    }
-    return this.state.splashPath
+    return pageIndex ? pageIndex : this.state.splashPath
   }
   getPagePermalink(){
     let pageIndex = this.getPageIndex()
@@ -65,8 +62,9 @@ class App extends React.Component {
     return pageMetadata.permalink
   }
   getPageContent(){
-    return this.state.pages[this.getPageIndex()]
-
+    let pageIndex = this.getPageIndex()
+    let errorMessage = 'error loading ' + pageIndex + 'sorry :('
+    return this.state.pages[pageIndex] ? this.state.pages[pageIndex] : errorMessage
   }
   getPageTitle(){
     let pageMetadata = this.state.pagesObj.getPageMetadata(this.props.navigation.getParam('indexId'))
