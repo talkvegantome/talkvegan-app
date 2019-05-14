@@ -95,7 +95,7 @@ class Pages {
         return this.mergePageDataToStorage(this.settings.language, responseJson)
       }
       throw 'Failed'
-    }).catch((err)=>{
+    }).catch(()=>{
       // TODO: Make this a real error
     })
   }

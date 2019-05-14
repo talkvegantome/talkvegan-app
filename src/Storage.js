@@ -1,7 +1,6 @@
 import { AsyncStorage } from 'react-native'
 import languages from './settings/Languages.js'
 import _ from 'lodash'
-import { DateTime } from 'luxon'
 import Pages from './Pages.js'
 
 export class Storage {
