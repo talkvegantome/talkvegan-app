@@ -1,4 +1,6 @@
+import { AsyncStorage } from 'react-native'
 import _ from 'lodash';
+import {DateTime} from 'luxon';
 
 class Pages {
   constructor(storage){
@@ -23,7 +25,7 @@ class Pages {
           }
         }
       ]
-      this.storage.refreshPageData()
+      this.pullPageDataFromSite()
     }
   }
 
@@ -79,6 +81,70 @@ class Pages {
     return friendlyName
   }
 
+  getLanguageDataUri(){
+    return 'https://talkveganto.me/' + this.settings.language + '/index.json'
+  }
+
+  async pullPageDataFromSite(){
+    return fetch(this.getLanguageDataUri(), {
+      method: 'GET',
+    }).then((response) => response.json()).then((responseJson) => {
+
+      if(responseJson.data){
+        responseJson.lastSyncDate = DateTime.local()
+        return this.mergePageDataToStorage(this.settings.language, responseJson)
+      }
+      throw 'Failed'
+    }).catch((err)=>{
+      // TODO: Make this a real error
+    })
+  }
+
+  async mergePageDataToStorage(language, pageData){
+    this.pageData[language] = pageData
+    return AsyncStorage.setItem('pageData', this.returnPageDataJson()).then(()=>{
+      this.storage.refreshFromStorage()
+    })
+  }
+
+  returnPageDataJson(){
+    let jsonOutput = {}
+    _.forEach(this.pageData,(language, shortCode) => {
+      jsonOutput[shortCode] = {
+        data: language['data'],
+        date: language['date'],
+        lastSyncDate: this.getLastPageDataSync('ISO')
+      }
+    })
+    return JSON.stringify(jsonOutput)
+  }
+
+  getLastPageDataSync(duration){
+    // If never synced default to content generation date
+    let lastSyncDate = this.pageData[this.settings.language].lastSyncDate ?
+      DateTime.fromISO(this.pageData[this.settings.language].lastSyncDate) :
+      DateTime.fromISO(this.pageData[this.settings.language].date)
+    if(duration==='auto'){
+      let diff = DateTime.local().diff(lastSyncDate, ['years','months','days','hours', 'minutes'])
+      if(isNaN(diff.minutes)){
+        return 'Never'
+      }
+      if(diff.years > 1){
+        return Math.round(diff.years) + ' years'
+      }
+      if(diff.months > 1){
+        return Math.round(diff.months) + ' months'
+      }
+      if(diff.days > 1){
+        return Math.round(diff.days) + ' days'
+      }
+      if(diff.hours > 1){
+        return Math.round(diff.hours) + ' hours'
+      }
+      return Math.round(diff.minutes) + ' minutes'
+    }
+    return lastSyncDate
+  }
 }
 
 

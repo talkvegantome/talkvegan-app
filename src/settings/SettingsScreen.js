@@ -9,22 +9,27 @@ import { SafeAreaView,
 import { ListItem } from 'react-native-elements';
 import Wrapper from '../navigation/Wrapper.js'
 import _ from 'lodash';
+import Pages from '../Pages.js';
 import languages from './Languages.js'
 
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.props.storage.triggerUpdateMethods.push((storage) => {
+      let pagesObj = new Pages(this.props.storage)
       this.setState({
         settings: storage.settings,
-        lastSync: storage.getLastPageDataSync('auto')
+        pageObj: pagesObj,
+        lastSync: pagesObj.getLastPageDataSync('auto')
       })
     })
 
+    let pagesObj = new Pages(this.props.storage)
     this.state = {
       modalVisible: false,
+      pagesObj: pagesObj,
       storage: this.props.storage,
-      lastSync: this.props.storage.getLastPageDataSync('auto'),
+      lastSync: pagesObj.getLastPageDataSync('auto'),
       settings: this.props.storage.settings
     }
   }
@@ -32,7 +37,7 @@ class SettingsScreen extends React.Component {
   componentDidMount() {
     let timer = setInterval(()=> {
       this.setState({
-        lastSync: this.props.storage.getLastPageDataSync('auto'),
+        lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
       })
     }, 1000);
     this.setState({timer:timer});
@@ -44,11 +49,10 @@ class SettingsScreen extends React.Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-  refreshPageData(){
+  pullPageDataFromSite(){
     this.setState({pageDataIsLoading: true})
-    this.state.storage.refreshPageData().then(() => {
+    this.state.pagesObj.pullPageDataFromSite().then(() => {
       this.setState({pageDataIsLoading: false})
-      this.props.storage.refreshStorage()
     })
   }
   updateSetting(settingName, value){
@@ -92,7 +96,7 @@ class SettingsScreen extends React.Component {
             label='Last Synced Data'
             value={this.state.lastSync}
             icon={this.state.pageDataIsLoading ? 'hourglass-empty' : 'refresh'}
-            onPress={() => {this.refreshPageData()}}/>
+            onPress={() => {this.pullPageDataFromSite()}}/>
           <SettingsItem label='Language' value={languages[this.state.settings.language].name}
             onPress={() => {this.setModalVisible(!this.state.modalVisible)}}/>
         </View>
