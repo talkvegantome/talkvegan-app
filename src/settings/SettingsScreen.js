@@ -61,7 +61,7 @@ class SettingsScreen extends React.Component {
   render(){
     let footer = (
       <ListItem
-        onPress={() => Linking.openURL('https://talkvegantome.freshdesk.com')}
+        onPress={() => Linking.openURL(this.state.settings.helpDeskUrl)}
         leftIcon={{name: "help-outline"}}
         title="Contact Us"
       />

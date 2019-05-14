@@ -21,6 +21,7 @@ export class Storage {
     fr: require('../assets/index.fr.json')
   })
   settings = {
+    helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
     language: 'en'
   }
 
