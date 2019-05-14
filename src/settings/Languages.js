@@ -5,9 +5,5 @@ export default {
     pages: {},
     menu: {}
   },
-  fr: {
-    name: 'French',
-    pages: {},
-    menu: {}
-  }
+  fr: {name: 'French'}
 }

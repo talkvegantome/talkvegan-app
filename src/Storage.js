@@ -18,7 +18,6 @@ export class Storage {
 
   pageData = _.merge({}, languages, {
     en: require('../assets/index.en.json'),
-    fr: require('../assets/index.fr.json')
   })
   settings = {
     helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
@@ -113,6 +112,9 @@ export class Storage {
       DateTime.fromISO(this.pageData[this.settings.language].date)
     if(duration==='auto'){
       let diff = DateTime.local().diff(lastSyncDate, ['years','months','days','hours', 'minutes'])
+      if(isNaN(diff.minutes)){
+        return 'Never'
+      }
       if(diff.years > 1){
         return Math.round(diff.years) + ' years'
       }

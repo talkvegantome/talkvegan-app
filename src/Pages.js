@@ -2,9 +2,29 @@ import _ from 'lodash';
 
 class Pages {
   constructor(storage){
+    this.storage = storage
     this.settings = storage.settings
     this.pageData = storage.pageData
+    this.setDefault()
     this.generateMaps()
+  }
+
+  setDefault(){
+    // if the language's data hasn't loaded yet return a default
+    if(!('data' in this.pageData[this.settings.language])){
+      this.pageData[this.settings.language].data = [
+        {
+          friendlyName: 'Home',
+          rawContent: 'Sorry the page data for ' + this.settings.language + " hasn\'t loaded yet.",
+          relativePermalink: normaliseRelPath(this.settings.language + '/splash'),
+          section: {
+            friendlyName: 'TalkVeganToMe',
+            relativePermalink: normaliseRelPath(this.settings.language)
+          }
+        }
+      ]
+      this.storage.refreshPageData()
+    }
   }
 
   generateMaps(){
