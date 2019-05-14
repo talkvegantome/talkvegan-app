@@ -1,7 +1,6 @@
 import React from 'react';
 import { SafeAreaView,
   View,
-  AsyncStorage,
   Text,
   Modal,
   TouchableHighlight,
