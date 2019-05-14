@@ -428,7 +428,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
                     }
                   }
                 >
-                  1 minute
+                  7 days
                 </Text>
               </View>
               <View

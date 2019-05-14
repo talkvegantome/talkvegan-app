@@ -1,3 +1,4 @@
+import {DateTime} from 'luxon'
 export class MockStorage{
   constructor(){
     this.triggerUpdateMethods = []
@@ -18,12 +19,9 @@ export class MockStorage{
             weight: 1000
           }
         }],
-        date: "2019-05-12T16:07:45.281077+01:00"
+        date: "2019-05-12T16:07:45.281077+01:00",
+        lastSyncDate: DateTime.local().plus({days:-7}).toISO()
       }
     }
-  }
-
-  getLastPageDataSync(){
-    return '1 minute'
   }
 }
