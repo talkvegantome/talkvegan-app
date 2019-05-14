@@ -1,4 +1,6 @@
 import { commonStyle } from './Common.style.js'
+import { StatusBar } from 'react-native';
+StatusBar.setBarStyle('light-content', true);
 export default {
   container: {
     flex: 1,

@@ -2,34 +2,53 @@ import { AsyncStorage } from 'react-native'
 import languages from './settings/Languages.js'
 import _ from 'lodash'
 import { DateTime } from 'luxon'
-let defaultPageData = {
-  en: require('../assets/index.en.json'),
-  fr: require('../assets/index.fr.json')
-};
 
 export class Storage {
   constructor(){
     this.triggerUpdateMethods = []
-    this.pageData = _.merge({}, languages, defaultPageData)
-    this.settings = {
-      language: 'en'
-    }
-    this.refreshSettings()
+    this.refreshStorage().then(() => {
+      // If it's been over a day since we loaded new data, load on start
+      let daysSinceLastSync = this.getLastPageDataSync().diffNow('days').days * -1
+      if(daysSinceLastSync > 1){
+        this.refreshPageData()
+      }
+    })
   }
+
+
+  pageData = _.merge({}, languages, {
+    en: require('../assets/index.en.json'),
+    fr: require('../assets/index.fr.json')
+  })
   settings = {
     language: 'en'
   }
-  refreshSettings(){
-    AsyncStorage.getItem('settings').then(asyncStorageRes => {
-      // Don't overwrite defaults with null if nothing exists in AsyncStorage!
-      if(JSON.parse(asyncStorageRes)){
-        this.settings = JSON.parse(asyncStorageRes)
-      }
-    }).then(() => {
+
+  refreshStorage(){
+    let promises = []
+
+    _.forEach(['pageData', 'settings'], (value, key) => {
+      let promise = AsyncStorage.getItem(key).then(asyncStorageRes => {
+        // Don't overwrite defaults with null if nothing exists in AsyncStorage!
+        if(JSON.parse(asyncStorageRes)){
+          this.settings = JSON.parse(asyncStorageRes)
+        }
+      })
+      promises.push(promise)
+    })
+    return Promise.all(promises).then(() => {
         _.forEach(this.triggerUpdateMethods, (method) => {
           method(this)
         })
     })
+  }
+
+  updateSetting(settingName, value){
+    this.settings[settingName] = value
+    return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(() =>{
+      this.refreshStorage()
+    });
+
   }
 
   getLanguageDataUri(){
@@ -82,6 +101,7 @@ export class Storage {
   }
 
   async savePageDataToStorage(){
+    this.refreshStorage()
     return AsyncStorage.setItem('pageData', this.returnPageDataJson())
   }
 

@@ -12,17 +12,6 @@ import Wrapper from '../navigation/Wrapper.js'
 import _ from 'lodash';
 import languages from './Languages.js'
 
-// style = {
-//   settingLabel: {
-//     fontSize: 22,
-//     lineHeight: 30
-//   },
-//   settingValue: {
-//     fontSize: 18,
-//     lineHeight: 30,
-//   }
-// }
-
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -44,7 +33,7 @@ class SettingsScreen extends React.Component {
   componentDidMount() {
     let timer = setInterval(()=> {
       this.setState({
-        lastSync: this.state.storage.getLastPageDataSync('auto'),
+        lastSync: this.props.storage.getLastPageDataSync('auto'),
       })
     }, 1000);
     this.setState({timer:timer});
@@ -53,18 +42,6 @@ class SettingsScreen extends React.Component {
     this.clearInterval(this.state.timer);
   }
 
-
-  updateSetting(settingName, value){
-    let settings = this.state.settings;
-    settings[settingName] = value;
-    this.setState(settings)
-
-    // TODO:  this should be a function on the settings object
-    AsyncStorage.setItem('settings', JSON.stringify(this.state.settings)).then(() =>{
-      this.props.storage.refreshSettings()
-    });
-
-  }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
@@ -72,9 +49,14 @@ class SettingsScreen extends React.Component {
     this.setState({pageDataIsLoading: true})
     this.state.storage.refreshPageData().then(() => {
       this.setState({pageDataIsLoading: false})
-      this.props.storage.refreshSettings()
+      this.props.storage.refreshStorage()
     })
   }
+  updateSetting(settingName, value){
+    this.setState({settings: {...this.state.settings, ...{[settingName]: value}}})
+    this.props.storage.updateSetting(settingName, value)
+  }
+
 
   render(){
     let footer = (
