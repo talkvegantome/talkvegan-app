@@ -2,7 +2,7 @@ import {Platform} from 'react-native'
 
 export const commonStyle = {
 	primary: '#235789',
-	secondary: '#401F3E',
+	secondary: '#3371AA',
 	light: '#E8E9EB',
 	highlight: '#161B33',
 	dark: '#313638',

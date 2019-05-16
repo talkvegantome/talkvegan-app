@@ -10,14 +10,10 @@ export default {
     backgroundColor: commonStyle.primary,
     flex: 1
   },
-  navSectionStyle: {
-    backgroundColor: commonStyle.light,
-    paddingHorizontal: 25,
-    paddingVertical: 10,
-    bottomBorderColor: commonStyle.primary,
-    bottomBorderWidth: 1
+  dividerStyle: {
+    height: 1,
+    backgroundColor: commonStyle.light
   },
-
   navHeaderStyle: {
     backgroundColor: commonStyle.primary,
   },
@@ -25,15 +21,17 @@ export default {
     fontSize: 30,
     color: commonStyle.light,
   },
-  navHeaderTextStyle: {
-    padding: 10,
-    color: commonStyle.light,
-  },
   sectionHeadingStyle: {
-    backgroundColor: commonStyle.highlight,
+    backgroundColor: commonStyle.secondary
   },
   sectionHeadingTitleStyle: {
     fontSize: 20,
     color: commonStyle.light,
+  },
+  itemHeadingStyle: {
+    backgroundColor: commonStyle.light
+  },
+  itemHeadingTitleStyle: {
+
   }
 };

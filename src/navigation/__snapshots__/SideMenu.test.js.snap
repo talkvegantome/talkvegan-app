@@ -100,6 +100,14 @@ exports[`SideMenu Renders Correctly 1`] = `
           </View>
         </View>
       </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#E8E9EB",
+            "height": 1,
+          }
+        }
+      />
       <View>
         <View
           accessible={true}
@@ -116,8 +124,7 @@ exports[`SideMenu Renders Correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "#161B33",
-                "borderBottomWidth": 0.5,
+                "backgroundColor": "#3371AA",
                 "borderColor": "#bcbbc1",
                 "flexDirection": "row",
                 "padding": 14,
@@ -241,6 +248,15 @@ exports[`SideMenu Renders Correctly 1`] = `
         <View
           style={
             Object {
+              "backgroundColor": "#E8E9EB",
+              "height": 1,
+            }
+          }
+        />
+        <View
+          animationType="slide"
+          style={
+            Object {
               "display": "none",
             }
           }
@@ -260,7 +276,7 @@ exports[`SideMenu Renders Correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "white",
+                  "backgroundColor": "#E8E9EB",
                   "borderBottomWidth": 0.5,
                   "borderColor": "#bcbbc1",
                   "flexDirection": "row",

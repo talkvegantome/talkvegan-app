@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from '../styles/SideMenu.style.js';
-import {ScrollView, View, SafeAreaView} from 'react-native';
-import { ListItem } from 'react-native-elements';
+import {ScrollView, View, SafeAreaView } from 'react-native';
+import { ListItem, Divider } from 'react-native-elements';
 import _ from 'lodash';
 
 import { Amplitude } from 'expo';
@@ -63,6 +63,8 @@ class SideMenu extends Component {
         return(
           <ListItem
             bottomDivider={true}
+            containerStyle={styles.itemHeadingStyle}
+            titleStyle={styles.itemHeadingTitleStyle}
             key={item.relativePermalink}
             onPress={this.navigateToScreen(item.relativePermalink)}
             title={item.friendlyName}
@@ -77,14 +79,14 @@ class SideMenu extends Component {
         <View key={headerFriendlyName}>
           <ListItem
             key={headerFriendlyName}
-            bottomDivider={true}
             containerStyle={styles.sectionHeadingStyle}
             titleStyle={styles.sectionHeadingTitleStyle}
             leftIcon={{name: 'expand-more', iconStyle: styles.sectionHeadingTitleStyle}}
             title={headerFriendlyName}
             onPress={()=>{this.toggleHeaderVisibility(headerFriendlyName)}}
           />
-          <View style={{display:display}}>
+          <Divider style={styles.dividerStyle} />
+          <View style={{display:display}} animationType="slide">
             {items}
           </View>
         </View>
@@ -101,6 +103,7 @@ class SideMenu extends Component {
             titleStyle={styles.navHeaderTitleStyle}
             onPress={this.navigateToScreen('/'+this.state.settings.language+'/splash/')}
             title="TalkVeganToMe"/>
+          <Divider style={styles.dividerStyle} />
           {menuObjects}
         </ScrollView>
       </SafeAreaView>
