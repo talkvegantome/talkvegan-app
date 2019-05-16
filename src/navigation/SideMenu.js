@@ -50,10 +50,10 @@ class SideMenu extends Component {
   }
 
   render () {
-    let menuSorted = _.sortBy(this.state.menu, ['weight'])
-    let menuObjects = _.map( menuSorted, (headerItem) => {
+    let menuSorted = _.sortBy(this.state.menu, ['weight', 'friendlyName'])
+    let menuObjects = _.map(menuSorted, (headerItem) => {
       let headerFriendlyName = headerItem.friendlyName
-      let items = headerItem.subItems.map((item) => {
+      let items = _.sortBy(headerItem.subItems, ['weight', 'friendlyName']).map((item) => {
         return(
           <ListItem
             bottomDivider={true}
