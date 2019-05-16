@@ -9,6 +9,13 @@ import { SafeAreaView,
 import { ListItem } from 'react-native-elements';
 import Wrapper from '../navigation/Wrapper.js'
 import _ from 'lodash';
+
+// AWS Amplify
+import Amplify, { Analytics } from 'aws-amplify';
+import awsmobile from '../../aws-exports';
+Amplify.configure(awsmobile);
+
+// App
 import Pages from '../Pages.js';
 
 class SettingsScreen extends React.Component {
@@ -57,6 +64,9 @@ class SettingsScreen extends React.Component {
   updateSetting(settingName, value){
     this.setState({settings: {...this.state.settings, ...{[settingName]: value}}})
     this.props.storage.updateSetting(settingName, value)
+    Analytics.record(
+      {name: 'updateSetting', attributes: {setting: settingName, value: value}}
+    )
   }
 
 

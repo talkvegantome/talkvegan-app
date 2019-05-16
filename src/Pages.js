@@ -3,6 +3,11 @@ import _ from 'lodash';
 import stringify from 'fast-stringify'
 import {DateTime} from 'luxon';
 
+// AWS Amplify
+import Amplify, { Analytics } from 'aws-amplify';
+import awsmobile from '../aws-exports';
+Amplify.configure(awsmobile);
+
 class Pages {
   constructor(storage){
     this.storage = storage
@@ -15,6 +20,9 @@ class Pages {
   setDefault(){
     // if the language's data hasn't loaded yet return a default
     if(!('data' in this.pageData[this.settings.language])){
+      Analytics.record(
+        {name: 'error', attributes: {errorType: 'language_page_data_not_found', 'language': this.settings.language}}
+      )
       this.pageData[this.settings.language].data = [
         {
           friendlyName: 'Home',
@@ -87,6 +95,9 @@ class Pages {
   }
 
   async pullPageDataFromSite(){
+    Analytics.record(
+      {name: 'refreshPageData', attributes: {'language': this.settings.language}}
+    )
     return fetch(this.getLanguageDataUri(), {
       method: 'GET',
     }).then((response) => response.json()).then((responseJson) => {
@@ -97,7 +108,9 @@ class Pages {
       }
       throw 'Failed'
     }).catch(()=>{
-      // TODO: Make this a real error
+      Analytics.record(
+        {name: 'error', attributes: {errorType: 'page_data_refresh_failed', 'language': this.settings.language}}
+      )
     })
   }
 

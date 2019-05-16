@@ -15,6 +15,12 @@ import SideMenu from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
 import SettingsScreen  from './src/settings/SettingsScreen.js';
 
+// AWS Amplify
+import Amplify, { Analytics } from 'aws-amplify';
+import awsmobile from './aws-exports';
+Amplify.configure(awsmobile);
+
+// App
 import {Storage} from './src/Storage.js'
 import Wrapper from './src/navigation/Wrapper.js'
 import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
@@ -42,6 +48,8 @@ class App extends React.Component {
       settings: this.props.storage.settings,
       markDownRules: markdownRulesObj.returnRules(),
     };
+
+    Analytics.record({name: 'loadedApp'})
   }
 
   static navigationOptions = {
@@ -63,8 +71,17 @@ class App extends React.Component {
   }
   getPageContent(){
     let pageIndex = this.getPageIndex()
-    let errorMessage = 'error loading ' + pageIndex + 'sorry :('
-    return this.state.pages[pageIndex] ? this.state.pages[pageIndex] : errorMessage
+    if(!this.state.pages[pageIndex]){
+      Analytics.record(
+        {name: 'error', attributes: {
+          errorType: 'page_content_not_found',
+          language: this.settings.language,
+          indexId: pageIndex
+        }}
+      )
+      return 'Error loading ' + pageIndex + '. Try refreshing data in Settings'
+    }
+    return this.state.pages[pageIndex]
   }
   getPageTitle(){
     let pageMetadata = this.state.pagesObj.getPageMetadata(this.props.navigation.getParam('indexId'))
