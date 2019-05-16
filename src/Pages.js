@@ -3,6 +3,10 @@ import _ from 'lodash';
 import stringify from 'fast-stringify'
 import {DateTime} from 'luxon';
 
+import { Amplitude } from 'expo';
+import amplitudeSettings from '../assets/amplitudeSettings.json'
+Amplitude.initialize(amplitudeSettings.apiKey)
+
 class Pages {
   constructor(storage){
     this.storage = storage
@@ -26,6 +30,8 @@ class Pages {
           }
         }
       ]
+      Amplitude.logEventWithProperties('error',
+        {errorDetail: "Failed to load page in language" + this.settings.language})
       this.pullPageDataFromSite()
     }
   }
@@ -87,6 +93,8 @@ class Pages {
   }
 
   async pullPageDataFromSite(){
+    Amplitude.logEventWithProperties('pullPageDataFromSite',
+      {language: this.settings.language})
     return fetch(this.getLanguageDataUri(), {
       method: 'GET',
     }).then((response) => response.json()).then((responseJson) => {
@@ -97,7 +105,8 @@ class Pages {
       }
       throw 'Failed'
     }).catch(()=>{
-      // TODO: Make this a real error
+      Amplitude.logEventWithProperties('error',
+        {errorDetail: "Failed to fetch page in language" + this.settings.language})
     })
   }
 

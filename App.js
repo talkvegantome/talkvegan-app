@@ -15,6 +15,11 @@ import SideMenu from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
 import SettingsScreen  from './src/settings/SettingsScreen.js';
 
+import { Amplitude } from 'expo';
+import amplitudeSettings from './assets/amplitudeSettings.json'
+Amplitude.initialize(amplitudeSettings.apiKey)
+
+
 import {Storage} from './src/Storage.js'
 import Wrapper from './src/navigation/Wrapper.js'
 import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
@@ -42,6 +47,7 @@ class App extends React.Component {
       settings: this.props.storage.settings,
       markDownRules: markdownRulesObj.returnRules(),
     };
+    Amplitude.logEvent('Loaded Application')
   }
 
   static navigationOptions = {
@@ -63,8 +69,12 @@ class App extends React.Component {
   }
   getPageContent(){
     let pageIndex = this.getPageIndex()
-    let errorMessage = 'error loading ' + pageIndex + 'sorry :('
-    return this.state.pages[pageIndex] ? this.state.pages[pageIndex] : errorMessage
+    if(!this.state.pages[pageIndex]){
+      errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
+      Amplitude.logEventWithProperties('error', {errorDetail: errorMessage})
+      return errorMessage
+    }
+    return this.state.pages[pageIndex]
   }
   getPageTitle(){
     let pageMetadata = this.state.pagesObj.getPageMetadata(this.props.navigation.getParam('indexId'))

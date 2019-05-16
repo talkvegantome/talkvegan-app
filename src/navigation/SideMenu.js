@@ -3,8 +3,13 @@ import React, {Component} from 'react';
 import styles from '../styles/SideMenu.style.js';
 import {ScrollView, View, SafeAreaView} from 'react-native';
 import { ListItem } from 'react-native-elements';
-import Pages from '../Pages.js'
 import _ from 'lodash';
+
+import { Amplitude } from 'expo';
+import amplitudeSettings from '../../assets/amplitudeSettings.json'
+Amplitude.initialize(amplitudeSettings.apiKey)
+
+import Pages from '../Pages.js'
 
 class SideMenu extends Component {
 
@@ -34,6 +39,7 @@ class SideMenu extends Component {
     // Navigation is always to the 'Home' screen, but content changes based on the indexId
     this.props.navigation.navigate('Home', {indexId: indexId});
     this.props.navigation.closeDrawer();
+    Amplitude.logEventWithProperties('navigateToPage', {relPath: indexId})
   }
   toggleHeaderVisibility = (headerName) => {
     let headerVisibility = this.state.headerVisibility

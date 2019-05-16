@@ -7,8 +7,13 @@ import { SafeAreaView,
   Linking,
   Picker } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import Wrapper from '../navigation/Wrapper.js'
 import _ from 'lodash';
+
+import { Amplitude } from 'expo';
+import amplitudeSettings from '../../assets/amplitudeSettings.json'
+Amplitude.initialize(amplitudeSettings.apiKey)
+
+import Wrapper from '../navigation/Wrapper.js'
 import Pages from '../Pages.js';
 
 class SettingsScreen extends React.Component {
@@ -57,6 +62,7 @@ class SettingsScreen extends React.Component {
   updateSetting(settingName, value){
     this.setState({settings: {...this.state.settings, ...{[settingName]: value}}})
     this.props.storage.updateSetting(settingName, value)
+    Amplitude.logEventWithProperties('updateSetting', {settingName: settingName, value: value})
   }
 
 
