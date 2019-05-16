@@ -238,11 +238,6 @@ exports[`SettingsScreen Renders Correctly 1`] = `
                         "textColor": undefined,
                         "value": "en",
                       },
-                      Object {
-                        "label": "French",
-                        "textColor": undefined,
-                        "value": "fr",
-                      },
                     ]
                   }
                   onChange={[Function]}

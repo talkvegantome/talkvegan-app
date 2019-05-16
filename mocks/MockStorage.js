@@ -20,7 +20,9 @@ export class MockStorage{
           }
         }],
         date: "2019-05-12T16:07:45.281077+01:00",
-        lastSyncDate: DateTime.local().plus({days:-7}).toISO()
+        lastSyncDate: DateTime.local().plus({days:-7}).toISO(),
+        languageName: 'English',
+        languageShortCode: 'en'
       }
     }
   }

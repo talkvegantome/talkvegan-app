@@ -1,5 +1,4 @@
 import { AsyncStorage } from 'react-native'
-import languages from './settings/Languages.js'
 import _ from 'lodash'
 import Pages from './Pages.js'
 
@@ -18,9 +17,9 @@ export class Storage {
   }
 
 
-  pageData = _.merge({}, languages, {
+  pageData = {
     en: require('../assets/index.en.json'),
-  })
+  }
   settings = {
     language: 'en'
   }
@@ -29,10 +28,10 @@ export class Storage {
     helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
   }
 
-  refreshFromStorage(){
+  refreshFromStorage(keysToRefresh=['pageData', 'settings']){
     let promises = []
 
-    _.forEach(['pageData', 'settings'], (propertyName) => {
+    _.forEach(keysToRefresh, (propertyName) => {
       let promise = AsyncStorage.getItem(propertyName).then(asyncStorageRes => {
         // Don't overwrite defaults with null if nothing exists in AsyncStorage!
         if(JSON.parse(asyncStorageRes)){

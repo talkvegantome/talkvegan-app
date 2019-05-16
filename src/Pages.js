@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native'
 import _ from 'lodash';
+import stringify from 'fast-stringify'
 import {DateTime} from 'luxon';
 
 class Pages {
@@ -102,21 +103,16 @@ class Pages {
 
   async mergePageDataToStorage(language, pageData){
     this.pageData[language] = pageData
-    return AsyncStorage.setItem('pageData', this.returnPageDataJson()).then(()=>{
-      this.storage.refreshFromStorage()
+    // Update pageData with the latest list of languages (We don't have or need the content yet)
+    _.map(pageData.languages, (language) => {
+      this.pageData[language.languageShortCode] = _.merge(
+        this.pageData[language.languageShortCode],
+        language
+      )
     })
-  }
-
-  returnPageDataJson(){
-    let jsonOutput = {}
-    _.forEach(this.pageData,(language, shortCode) => {
-      jsonOutput[shortCode] = {
-        data: language['data'],
-        date: language['date'],
-        lastSyncDate: this.getLastPageDataSync('ISO')
-      }
+    return AsyncStorage.setItem('pageData', stringify(this.pageData)).then(()=>{
+      this.storage.refreshFromStorage(['pageData'])
     })
-    return JSON.stringify(jsonOutput)
   }
 
   getLastPageDataSync(duration){

@@ -10,7 +10,6 @@ import { ListItem } from 'react-native-elements';
 import Wrapper from '../navigation/Wrapper.js'
 import _ from 'lodash';
 import Pages from '../Pages.js';
-import languages from './Languages.js'
 
 class SettingsScreen extends React.Component {
   constructor(props) {
@@ -86,8 +85,8 @@ class SettingsScreen extends React.Component {
             onValueChange={(itemValue) =>
               this.updateSetting('language', itemValue)
             }>
-            {_.map(languages, (lang, short) => {
-              return <Picker.Item label={lang.name} value={short} key={short}/>
+            {_.map(this.state.storage.pageData, (lang, short) => {
+              return <Picker.Item label={lang.languageName} value={short} key={short}/>
             })}
           </Picker>
         </SettingsModal>
@@ -97,7 +96,7 @@ class SettingsScreen extends React.Component {
             value={this.state.lastSync}
             icon={this.state.pageDataIsLoading ? 'hourglass-empty' : 'refresh'}
             onPress={() => {this.pullPageDataFromSite()}}/>
-          <SettingsItem label='Language' value={languages[this.state.settings.language].name}
+          <SettingsItem label='Language' value={this.state.storage.pageData[this.state.settings.language].languageName}
             onPress={() => {this.setModalVisible(!this.state.modalVisible)}}/>
         </View>
       </Wrapper>

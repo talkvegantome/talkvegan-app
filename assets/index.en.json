@@ -3,8 +3,22 @@
 [
       
       {
+          "friendlyName": "Finding Options",
+          "rawContent": "\n# Finding Options\n\nBizarrely the salad is often one of the least vegan items on the menu.\n\n## Asking for customisation\n\n## Cross contamination\n",
+          "relativePermalink": "/en/eating-out/finding-options/",
+          "weight": null,
+          "permalink" : "https://talkveganto.me/en/eating-out/finding-options/",
+          "section": {
+            "friendlyName": "Eating Out",
+            "relativePermalink": "/en/eating-out/",
+            "weight": null
+          }
+
+      }
+      , 
+      {
           "friendlyName": "Privacy Policy",
-          "rawContent": "\n## Privacy Policy\n\nbuilt the TalkVeganToMe app as a Free app. This SERVICE is provided by at no cost and is intended for use as is.\n\nThis page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.\n\nIf you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy.\n\nThe terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at TalkVeganToMe unless otherwise defined in this Privacy Policy.\n\n**Information Collection and Use**\n\nFor a better experience, while using our Service, I may require you to provide us with certain personally identifiable information. The information that I request will be retained on your device and is not collected by me in any way.\n\nThe app does use third party services that may collect information used to identify you.\n\nLink to privacy policy of third party service providers used by the app\n\n*   [Google Play Services](https://www.google.com/policies/privacy/)\n\n**Log Data**\n\nI want to inform you that whenever you use my Service, in a case of an error in the app I collect data and information (through third party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my Service, the time and date of your use of the Service, and other statistics.\n\n**Cookies**\n\nCookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.\n\nThis Service does not use these “cookies” explicitly. However, the app may use third party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.\n\n**Service Providers**\n\nI may employ third-party companies and individuals due to the following reasons:\n\n*   To facilitate our Service;\n*   To provide the Service on our behalf;\n*   To perform Service-related services; or\n*   To assist us in analyzing how our Service is used.\n\nI want to inform users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.\n\n**Security**\n\nI value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and I cannot guarantee its absolute security.\n\n**Links to Other Sites**\n\nThis Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by me. Therefore, I strongly advise you to review the Privacy Policy of these websites. I have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.\n\n**Children’s Privacy**\n\nThese Services do not address anyone under the age of 13\\. I do not knowingly collect personally identifiable information from children under 13\\. In the case I discover that a child under 13 has provided me with personal information, I immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me so that I will be able to do necessary actions.\n\n**Changes to This Privacy Policy**\n\nI may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.\n\n**Contact Us**\n\nIf you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at support@talkveganto.me.\n\nThis privacy policy page was created at [privacypolicytemplate.net](https://privacypolicytemplate.net) and modified/generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.firebaseapp.com/)\n",
+          "rawContent": "\n## Privacy Policy\n\nI built the TalkVeganToMe app as a Free app. This SERVICE is provided by at no cost and is intended for use as is.\n\nThis page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.\n\nIf you choose to use my Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that I collect is used for providing and improving the Service. I will not use or share your information with anyone except as described in this Privacy Policy.\n\nThe terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at TalkVeganToMe unless otherwise defined in this Privacy Policy.\n\n**Information Collection and Use**\n\nFor a better experience, while using our Service, I may require you to provide us with certain personally identifiable information. The information that I request will be retained on your device and is not collected by me in any way.\n\nThe app does use third party services that may collect information used to identify you.\n\nLink to privacy policy of third party service providers used by the app\n\n*   [Google Play Services](https://www.google.com/policies/privacy/)\n\n**Log Data**\n\nI want to inform you that whenever you use my Service, in a case of an error in the app I collect data and information (through third party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing my Service, the time and date of your use of the Service, and other statistics.\n\n**Cookies**\n\nCookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.\n\nThis Service does not use these “cookies” explicitly. However, the app may use third party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.\n\n**Service Providers**\n\nI may employ third-party companies and individuals due to the following reasons:\n\n*   To facilitate our Service;\n*   To provide the Service on our behalf;\n*   To perform Service-related services; or\n*   To assist us in analyzing how our Service is used.\n\nI want to inform users of this Service that these third parties have access to your Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.\n\n**Security**\n\nI value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and I cannot guarantee its absolute security.\n\n**Links to Other Sites**\n\nThis Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by me. Therefore, I strongly advise you to review the Privacy Policy of these websites. I have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.\n\n**Children’s Privacy**\n\nThese Services do not address anyone under the age of 13\\. I do not knowingly collect personally identifiable information from children under 13\\. In the case I discover that a child under 13 has provided me with personal information, I immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact me so that I will be able to do necessary actions.\n\n**Changes to This Privacy Policy**\n\nI may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Privacy Policy on this page. These changes are effective immediately after they are posted on this page.\n\n**Contact Us**\n\nIf you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at support@talkveganto.me.\n\nThis privacy policy page was created at [privacypolicytemplate.net](https://privacypolicytemplate.net) and modified/generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.firebaseapp.com/)\n",
           "relativePermalink": "/en/privacy-policy/",
           "weight": null,
           "permalink" : "https://talkveganto.me/en/privacy-policy/",
@@ -60,7 +74,7 @@
       , 
       {
           "friendlyName": "Home",
-          "rawContent": "\n\n# Welcome to TalkVeganToMe\n\nTalkVeganToMe is an intersectional, compassionate, collaborative project intended to provide vegans old and new alike a central resource for commonly required information about veganism.  \n\n## Getting Started\n\nCheck out our [Learning More]({{\u003c ref \"/getting-started/learning-more\" \u003e}}) section.\n\n## Our Mission\n\n1. Make the day-to- day lives of vegans easier by making information easily accessible\n2. Make vegan advocacy in all its forms easier to learn about, understand, and do\n3. Ensure we do not promote messaging which harm any other justice movements\n4. Embody the compassion that veganism typifies in all our material and interactions\n5. Ensure the accuracy of our information and provide _full disclosure_ of mitigating information even if it undermines the argument being presented\n6. Not to engage in the gatekeeping of veganism (no-one can take away your V card)\n7. Not to use the platform to further the personal agenda or profit of the individual contributors\n8. Use the platform to promote inclusion and intersectional messaging wherever possible\n\n\n## Collaborating\n\nWant to add content, or just correct a typo? You can visit the [Github Repo](https://github.com/talkvegantome/talkvegan-hugo) where you will find a full guide on how to contribute.\n",
+          "rawContent": "\n\n# Welcome to TalkVeganToMe\n\nTalkVeganToMe is an intersectional, compassionate, collaborative project intended to provide vegans old and new alike a central resource for commonly required information about veganism.  \n\n## Getting Started\n\nTODO\n\n## Our Mission\n\n1. Make the day-to- day lives of vegans easier by making information easily accessible\n2. Make vegan advocacy in all its forms easier to learn about, understand, and do\n3. Ensure we do not promote messaging which harm any other justice movements\n4. Embody the compassion that veganism typifies in all our material and interactions\n5. Ensure the accuracy of our information and provide _full disclosure_ of mitigating information even if it undermines the argument being presented\n6. Not to engage in the gatekeeping of veganism (no-one can take away your V card)\n7. Not to use the platform to further the personal agenda or profit of the individual contributors\n8. Use the platform to promote inclusion and intersectional messaging wherever possible\n\n\n## Collaborating\n\nWant to add content, or just correct a typo? You can visit the [Github Repo](https://github.com/talkvegantome/talkvegan-hugo) where you will find a full guide on how to contribute.\n",
           "relativePermalink": "/en/splash/",
           "weight": null,
           "permalink" : "https://talkveganto.me/en/splash/",
@@ -75,27 +89,27 @@
       {
           "friendlyName": "Learning More",
           "rawContent": "\n# Learning More\n\n## Websites\n\n- [The Vegan Society](https://vegansociety.com) - Provides a wealth of information about getting started, the grandaddies of Veganism\n\n\n## Books\n\n## Films\n\n- [Land of Hope and Glory]({{\u003c ref \"/documentaries/land-of-hope-and-glory\" \u003e}})\n- [Dominion]({{\u003c ref \"/documentaries/dominion\" \u003e}})\n- [Earthlings]({{\u003c ref \"/documentaries/earthlings\" \u003e}})\n\n## Podcasts\n\n- [The Bearded Vegans](https://www.thebeardedvegans.com/)\n\n## YouTube Channels\n\n- [Earthling Ed](https://www.youtube.com/channel/UCVRrGAcUc7cblUzOhI1KfFg)\n",
-          "relativePermalink": "/en/getting-started/learning-more/",
+          "relativePermalink": "/en/shopping/learning-more/",
           "weight": null,
-          "permalink" : "https://talkveganto.me/en/getting-started/learning-more/",
+          "permalink" : "https://talkveganto.me/en/shopping/learning-more/",
           "section": {
-            "friendlyName": "Getting Started",
-            "relativePermalink": "/en/getting-started/",
+            "friendlyName": "Shopping",
+            "relativePermalink": "/en/shopping/",
             "weight": 1000
           }
 
       }
       , 
       {
-          "friendlyName": "Eating Out",
-          "rawContent": "\n# Eating Out\n\nThe ease of eating out varies hugely depending on where you are in the world, and also who you're with.  \n\n## Scenarios\n\n### Attending a function you didn't organise\n\nIf you're going a restaurant, find the menu online, and email the restaurant in advance with any questions you have. A little preparation can go a long way to making the process smoother.\n\nIf you're attending a catered function, contact the organiser if possible specifying No Meat, No Dairy, No Eggs, No Honey, do not rely on people knowing what 'vegan' means, even if they claim to!\n\n## Resources\n\n- [HappyCow](https://happycow.com) Is a wonderful website and app helping you to find vegan restaurants and vegan options near you\n",
-          "relativePermalink": "/en/getting-started/eating-out/",
+          "friendlyName": "Dealing with Groups",
+          "rawContent": "\n# Dealing with Groups\n\nThe ease of eating out varies hugely depending on where you are in the world, and also who you're with.  \n\n## Scenarios\n\n### Attending a function you didn't organise\n\nIf you're going a restaurant, find the menu online, and email the restaurant in advance with any questions you have. A little preparation can go a long way to making the process smoother.\n\nIf you're attending a catered function, contact the organiser if possible specifying No Meat, No Dairy, No Eggs, No Honey, do not rely on people knowing what 'vegan' means, even if they claim to!\n\n## Resources\n\n- [HappyCow](https://happycow.com) Is a wonderful website and app helping you to find vegan restaurants and vegan options near you\n",
+          "relativePermalink": "/en/eating-out/dealing-with-groups/",
           "weight": null,
-          "permalink" : "https://talkveganto.me/en/getting-started/eating-out/",
+          "permalink" : "https://talkveganto.me/en/eating-out/dealing-with-groups/",
           "section": {
-            "friendlyName": "Getting Started",
-            "relativePermalink": "/en/getting-started/",
-            "weight": 1000
+            "friendlyName": "Eating Out",
+            "relativePermalink": "/en/eating-out/",
+            "weight": null
           }
 
       }
@@ -103,16 +117,32 @@
       {
           "friendlyName": "Shopping",
           "rawContent": "\n# Shopping\n\nShopping as a vegan requires a little more attention than shopping as an omnivore.  \n\nIn this section we will cover the major everyday shopping scenarios.\n\n## Food\n\nWhen you first start checking labels on products in the supermarket it can seem overwhelming to check for everything, especially when it comes to E numbers and obscure ingredients. Do the best you can, but try not to overwhelm yourself.\n\n### Vegetarian Products\n\nIt's easy to be lulled into a false sense of security by products made from vegetarian manufacturers like Quorn. But keep a watchful eye on the ingredients of these products as they commonly contain non-vegan ingredients even when you least expect!\n\n### E Numbers\n\n- E120 - Never vegan\n- E322 - Usually vegan\n- E422 - Usually vegan\n- E542 - Never vegan\n- E631 - Usually not vegan\n- E901 - Never vegan\n- E904 - Never vegan\n- E471 - Usually vegan\n- E920 - Check for further information\n\n**Source:** [Vegan Society](https://www.vegansociety.com/whats-new/blog/how-avoid-buying-non-vegan-products)\n\n### Gotchas\n\n- Honey\n- Beer/Wine\n- Bread (Regional. particularly in the UK often contains milk)\n- Smoothies (Often contain yogurt)\n- Chocolate (Dark chocolate is usually fine, but always check the packaging for milk!)\n\n## Clothes\n\nOften less thought about than food, the following products on clothes will not be vegan.\n\n- Leather (including Suede)\n- Wool\n- Silk\n- Fur\n- Feathers\n\n### Gotchas\n\nIt's advisable to patronise vegan shoe establishments in particular as glues used in the manufacturing process for shoes made of otherwise vegan materials will make the shoes not vegan.\n\n## Toiletries\n\nWith all items, but particularly makeup, some research is required to determine whether animal testing was involved in the research and development stages of the product.\n\n### Gotchas\n\n- Bar soap is usually made with animal fat\n- 'Cruelty free' does not mean it is free from animal products\n\n## Household items\n\nEverything from household cleansers to pillows may contain animal products, as always it's important to read the ingredients.  \n\n### Gotchas\n\n- Pillows often contain feathers\n\n## Resources\n\n- Beer [Barnivore](http://www.barnivore.com/) is a great source of information\n",
-          "relativePermalink": "/en/getting-started/shopping/",
+          "relativePermalink": "/en/shopping/shopping/",
           "weight": null,
-          "permalink" : "https://talkveganto.me/en/getting-started/shopping/",
+          "permalink" : "https://talkveganto.me/en/shopping/shopping/",
           "section": {
-            "friendlyName": "Getting Started",
-            "relativePermalink": "/en/getting-started/",
+            "friendlyName": "Shopping",
+            "relativePermalink": "/en/shopping/",
             "weight": 1000
           }
 
       }
 ],
-    "date": "2019-05-12T16:07:45.281077+01:00"
+    "languages": [
+        
+        {
+          "languageShortCode": "en",
+          "languageName": "English"
+        }
+      
+        , 
+        {
+          "languageShortCode": "fr",
+          "languageName": "French"
+        }
+      
+    ],
+    "languageName": "English",
+    "languageShortCode": "en",
+    "date": "2019-05-16T16:40:52.450534+01:00"
 }
