@@ -22,8 +22,11 @@ export class Storage {
     en: require('../assets/index.en.json'),
   })
   settings = {
-    helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
     language: 'en'
+  }
+  config = {
+    apiUrl: "https://talkveganto.me/",
+    helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
   }
 
   refreshFromStorage(){

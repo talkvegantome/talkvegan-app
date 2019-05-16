@@ -82,7 +82,7 @@ class Pages {
   }
 
   getLanguageDataUri(){
-    return 'https://talkveganto.me/' + this.settings.language + '/index.json'
+    return this.storage.config.apiUrl + this.settings.language + '/index.json'
   }
 
   async pullPageDataFromSite(){
