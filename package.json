@@ -14,8 +14,6 @@
     ]
   },
   "dependencies": {
-    "aws-amplify": "^1.1.28",
-    "aws-amplify-react-native": "^2.1.12",
     "expo": "^32.0.0",
     "fast-stringify": "^1.1.1",
     "lodash": "^4.17.11",

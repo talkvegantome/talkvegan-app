@@ -6,11 +6,6 @@ import { ListItem } from 'react-native-elements';
 import Pages from '../Pages.js'
 import _ from 'lodash';
 
-// AWS Amplify
-import Amplify, { Analytics } from 'aws-amplify';
-import awsmobile from '../../aws-exports';
-Amplify.configure(awsmobile);
-
 class SideMenu extends Component {
 
   constructor(props) {
@@ -39,8 +34,6 @@ class SideMenu extends Component {
     // Navigation is always to the 'Home' screen, but content changes based on the indexId
     this.props.navigation.navigate('Home', {indexId: indexId});
     this.props.navigation.closeDrawer();
-
-    Analytics.record({name: 'navigateToScreen', attributes: {indexId: indexId}})
   }
   toggleHeaderVisibility = (headerName) => {
     let headerVisibility = this.state.headerVisibility
