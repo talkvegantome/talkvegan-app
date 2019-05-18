@@ -5,7 +5,7 @@ before_script:
   - npm install -g eslint
   - yarn install
 script:
-  - echo -e "{\n\t\"apiKey\": \"$AMPLITUDE_API_KEY\"\n}" > assets/amplitudeSettings.json
+  - jq -n '{apiKey:env.AMPLITUDE_API_KEY}' > ./assets/amplitudeSettings.json
   - yarn test --ci --verbose --forceExit --detectOpenHandles
   - eslint .
 env:
