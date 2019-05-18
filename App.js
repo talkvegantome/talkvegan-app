@@ -70,7 +70,7 @@ class App extends React.Component {
   getPageContent(){
     let pageIndex = this.getPageIndex()
     if(!this.state.pages[pageIndex]){
-      errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
+      let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
       Amplitude.logEventWithProperties('error', {errorDetail: errorMessage})
       return errorMessage
     }
