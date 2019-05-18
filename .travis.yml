@@ -1,9 +1,13 @@
 language: node_js
 node_js:
-  - "10"
+  - '10'
 before_script:
   - npm install -g eslint
   - yarn install
+  - echo -e "{\n\t\"apiKey\": \"$AMPLITUDE_API_KEY\"\n}" > assets/amplitudeSettings.json
 script:
   - yarn test --ci --verbose --forceExit --detectOpenHandles
   - eslint .
+env:
+  global:
+    secure: qhSqhKG/jde2AiwCate62uQgSUPjG84sLScDTy+q+sCVLVST9YCXVurphpNkdYkLQ28lZL7YiTw0Buf1ZYuPqd8znAnUH2PC20rqowGxBfSufRN+3WdSMFv5n/loDEMcQ8FVbPGPA13aMppBYx7wxObA0eYte+uNho3jBaPsFreSSWtRYGZwQ9/EoqMx8VtjF7OfMEyoXgfoW4rASEuoIkJwfqaZS1rgRncapppbK2jBY7Pv7HciR9rq3rGSSVHJdNrbwLnzk1NijWtvU7Pi+IpJv9/AC0Fs33JvuwU1q4NFtpo54HpsZcHsIzqHe+Qw8pd/Sef6yP820ok1/SEpqJVSEZ9bjL9uFA281Vm17SgB4+9A3f6Fs5tfHkNlD4rADc2ydVHDBCclTEiZY+gGG8UAWmGEDgsINKrWR7xSrFk1dFhwofjPUFk9ndK5y1RNUXutseS33sH88UXVy+h+77W+TFofqVXjnLwB+SaCnrCzFjxCT1APL+PkC418BZWr5dMLnMvp4uvXtB3TiYPEd/U3tocd01bKxWp47XMv71/smASdp4n8LmKOL5rqFALU2qhisiCA5ClkvorV7c4rppuq0GmiBDwOd2G5rQgNEboH5uSuj7y/uKl/oNiDQ6qN27GETKdxy9HQEmi+Um+l7ytOs0syRCjLMHoWlaQETzw=
