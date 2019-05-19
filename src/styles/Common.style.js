@@ -1,4 +1,6 @@
-import {Platform} from 'react-native'
+import { Platform } from 'react-native'
+import { StatusBar } from 'react-native';
+StatusBar.setBarStyle('light-content', true);
 
 export const commonStyle = {
 	primary: '#235789',
@@ -12,5 +14,14 @@ export const commonStyle = {
     paddingLeft: 30,
     paddingRight: 30,
     paddingBottom: 20,
-  }
+  },
+	picker: {
+		width: Platform.OS === 'ios' ? 100 : 200,
+		height: 200
+	},
+	pickerItem: {
+		width: Platform.OS === 'ios' ? 100 : 200,
+		height: 200
+	}
+
 }

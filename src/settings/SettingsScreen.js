@@ -13,6 +13,7 @@ import { Amplitude } from 'expo';
 import amplitudeSettings from '../../assets/amplitudeSettings.json'
 Amplitude.initialize(amplitudeSettings.apiKey)
 
+import {commonStyle} from '../styles/Common.style.js'
 import Wrapper from '../navigation/Wrapper.js'
 import Pages from '../Pages.js';
 
@@ -87,7 +88,8 @@ class SettingsScreen extends React.Component {
           onClose={() => {this.setModalVisible(!this.state.modalVisible);}}>
           <Picker
             selectedValue={this.state.settings.language}
-            itemStyle={{width: 100, height: 200 }}
+            style={commonStyle.picker}
+            itemStyle={commonStyle.pickerItem}
             onValueChange={(itemValue) =>
               this.updateSetting('language', itemValue)
             }>
@@ -121,6 +123,9 @@ class SettingsModal extends React.Component {
           animationType="slide"
           transparent={false}
           visible={this.props.modalVisible}
+          onRequestClose={() => {
+            this.props.onClose()
+          }}
         >
         <SafeAreaView style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
           <View>
@@ -134,7 +139,7 @@ class SettingsModal extends React.Component {
               onPress={() => {
                 this.props.onClose()
               }}>
-              <Text>Done</Text>
+              <Text style={{fontSize: 22}}>Done</Text>
             </TouchableHighlight>
           </View>
         </SafeAreaView>

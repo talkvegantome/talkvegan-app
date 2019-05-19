@@ -1,6 +1,6 @@
+import { Platform } from 'react-native'
 import { commonStyle } from './Common.style.js'
-import { StatusBar } from 'react-native';
-StatusBar.setBarStyle('light-content', true);
+
 export default {
   container: {
     flex: 1,
@@ -15,6 +15,7 @@ export default {
     backgroundColor: commonStyle.light
   },
   navHeaderStyle: {
+    marginTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: commonStyle.primary,
   },
   navHeaderTitleStyle: {
