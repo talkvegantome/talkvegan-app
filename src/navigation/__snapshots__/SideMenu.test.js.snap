@@ -2,6 +2,7 @@
 
 exports[`SideMenu Renders Correctly 1`] = `
 <RCTSafeAreaView
+  emulateUnlessSupported={true}
   style={
     Object {
       "backgroundColor": "#235789",
@@ -36,7 +37,6 @@ exports[`SideMenu Renders Correctly 1`] = `
               "backgroundColor": "#235789",
               "borderColor": "#bcbbc1",
               "flexDirection": "row",
-              "marginTop": 0,
               "padding": 14,
             }
           }
@@ -180,7 +180,31 @@ exports[`SideMenu Renders Correctly 1`] = `
                 }
                 underlayColor="white"
               >
-                <Text />
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": null,
+                        "fontSize": 24,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "color": "#E8E9EB",
+                        "fontSize": 20,
+                      },
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                  testID="iconIcon"
+                >
+                  
+                </Text>
               </View>
             </View>
             <View
