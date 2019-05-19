@@ -1,4 +1,3 @@
-import { Platform } from 'react-native'
 import { commonStyle } from './Common.style.js'
 
 export default {
@@ -15,7 +14,6 @@ export default {
     backgroundColor: commonStyle.light
   },
   navHeaderStyle: {
-    marginTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: commonStyle.primary,
   },
   navHeaderTitleStyle: {

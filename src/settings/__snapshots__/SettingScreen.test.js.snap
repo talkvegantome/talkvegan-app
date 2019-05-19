@@ -19,6 +19,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
         "flexDirection": "row",
         "height": 64,
         "justifyContent": "space-around",
+        "marginTop": 0,
         "paddingHorizontal": 10,
         "paddingTop": 20,
       }
@@ -75,7 +76,30 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             }
           }
         >
-          <Text />
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#E8E9EB",
+                  "fontSize": 24,
+                },
+                Object {
+                  "backgroundColor": "transparent",
+                  "paddingLeft": 10,
+                },
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+            testID="iconIcon"
+          >
+            
+          </Text>
         </View>
       </View>
     </View>
@@ -171,12 +195,36 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             }
           }
         >
-          <Text />
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "#E8E9EB",
+                  "fontSize": 24,
+                },
+                Object {
+                  "backgroundColor": "transparent",
+                  "paddingRight": 10,
+                },
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+            testID="iconIcon"
+          >
+            
+          </Text>
         </View>
       </View>
     </View>
   </View>
   <RCTSafeAreaView
+    emulateUnlessSupported={true}
     style={
       Object {
         "backgroundColor": "#D3D3D3",
@@ -203,6 +251,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
           visible={false}
         >
           <RCTSafeAreaView
+            emulateUnlessSupported={true}
             style={
               Object {
                 "alignItems": "center",
@@ -489,7 +538,29 @@ exports[`SettingsScreen Renders Correctly 1`] = `
                   }
                   underlayColor="white"
                 >
-                  <Text />
+                  <Text
+                    allowFontScaling={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": null,
+                          "fontSize": 24,
+                        },
+                        Object {
+                          "backgroundColor": "transparent",
+                        },
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                    testID="iconIcon"
+                  >
+                    
+                  </Text>
                 </View>
               </View>
             </View>
@@ -685,7 +756,29 @@ exports[`SettingsScreen Renders Correctly 1`] = `
                   }
                   underlayColor="white"
                 >
-                  <Text />
+                  <Text
+                    allowFontScaling={false}
+                    style={
+                      Array [
+                        Object {
+                          "color": null,
+                          "fontSize": 24,
+                        },
+                        Object {
+                          "backgroundColor": "transparent",
+                        },
+                        Object {
+                          "fontFamily": "Material Icons",
+                          "fontStyle": "normal",
+                          "fontWeight": "normal",
+                        },
+                        Object {},
+                      ]
+                    }
+                    testID="iconIcon"
+                  >
+                    
+                  </Text>
                 </View>
               </View>
             </View>
@@ -763,7 +856,29 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             }
             underlayColor="white"
           >
-            <Text />
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": null,
+                    "fontSize": 24,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
           </View>
         </View>
         <View
