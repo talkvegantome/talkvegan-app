@@ -198,6 +198,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
         <Modal
           animationType="slide"
           hardwareAccelerated={false}
+          onRequestClose={[Function]}
           transparent={false}
           visible={false}
         >
@@ -229,7 +230,14 @@ exports[`SettingsScreen Renders Correctly 1`] = `
                 }
               }
             >
-              <View>
+              <View
+                style={
+                  Object {
+                    "height": 200,
+                    "width": 100,
+                  }
+                }
+              >
                 <RCTPicker
                   items={
                     Array [
@@ -271,7 +279,11 @@ exports[`SettingsScreen Renders Correctly 1`] = `
                 style={null}
               >
                 <Text
-                  style={null}
+                  style={
+                    Object {
+                      "fontSize": 22,
+                    }
+                  }
                 >
                   Done
                 </Text>

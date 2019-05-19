@@ -52,10 +52,9 @@ export class markdownRules {
     heading5: this.generateHeading,
     heading6: this.generateHeading,
     blockquote: (node, children, parent, styles) => {
-
       return (
          <View key={node.key} style={styles.blockquote}>
-           {_.map(children, (child, index) => this.styleChildren(child, styles.blockquoteText))}
+           {_.map(children, (child) => this.styleChildren(child, styles.blockquoteText))}
          </View>
        )
     },

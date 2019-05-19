@@ -36,6 +36,7 @@ exports[`SideMenu Renders Correctly 1`] = `
               "backgroundColor": "#235789",
               "borderColor": "#bcbbc1",
               "flexDirection": "row",
+              "marginTop": 0,
               "padding": 14,
             }
           }
