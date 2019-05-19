@@ -6,6 +6,7 @@ export const commonStyle = {
 	primary: '#235789',
 	secondary: '#3371AA',
 	light: '#E8E9EB',
+	lightText: '#999999',
 	highlight: '#161B33',
 	dark: '#313638',
 	headerFont: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',

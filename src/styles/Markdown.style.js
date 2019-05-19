@@ -60,4 +60,16 @@ export const markdownStyles =  StyleSheet.create({
     marginRight: 10,
     lineHeight: Platform.OS === 'ios' ? 15 : 15
   },
+  blockquote: {
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    borderLeftWidth: 4,
+    borderLeftColor: commonStyle.light
+  },
+  blockquoteText: {
+    fontFamily: commonStyle.paragraphFont,
+    fontSize: 16 * fontMultiplier,
+    lineHeight: 25 * fontMultiplier,
+    color: commonStyle.lightText
+  }
 });
