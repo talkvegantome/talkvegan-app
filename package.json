@@ -1,25 +1,23 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "eject": "expo eject",
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
     "test": "jest"
   },
   "jest": {
-    "preset": "jest-expo",
+    "preset": "react-native",
     "setupFiles": [
       "./mocks/scrollViewFix.js"
     ]
   },
   "dependencies": {
-    "expo": "^32.0.0",
+    "@babel/runtime": "^7.0.0",
     "fast-stringify": "^1.1.1",
     "lodash": "^4.17.11",
     "luxon": "^1.13.2",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native": "0.57.1",
     "react-native-elements": "^1.1.0",
     "react-native-markdown-renderer": "^3.2.8",
     "react-native-vector-icons": "^6.4.2",
@@ -34,7 +32,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
     "jest": "^24.8.0",
-    "jest-expo": "^32.0.0",
     "react-test-renderer": "^16.8.6"
   },
   "private": true

@@ -1,35 +1,4 @@
 {
-  "expo": {
-    "name": "TalkVeganToMe",
-    "slug": "talkvegantome",
-    "privacy": "public",
-    "sdkVersion": "32.0.0",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "version": "0.0.5",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000A44"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "bundleIdentifier": "me.talkveganto",
-      "supportsTablet": true,
-      "buildNumber": "5"
-    },
-    "android": {
-      "package": "me.talkveganto"
-    },
-    "description": "Provides everything you need to know about Veganism"
-  }
+  "displayName": "TalkVeganToMe",
+  "name": "TalkVeganToMe"
 }
