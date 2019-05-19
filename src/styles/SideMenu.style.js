@@ -15,7 +15,6 @@ export default {
     backgroundColor: commonStyle.light
   },
   navHeaderStyle: {
-    marginTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: commonStyle.primary,
   },
   navHeaderTitleStyle: {
