@@ -1,13 +1,27 @@
-language: node_js
-node_js:
-  - '10'
-before_script:
-  - npm install -g eslint
-  - yarn install
-script:
-  - jq -n '{apiKey:env.AMPLITUDE_API_KEY}' > ./assets/amplitudeSettings.json
-  - yarn test --ci --verbose --forceExit --detectOpenHandles
-  - eslint .
-env:
-  global:
-    secure: qhSqhKG/jde2AiwCate62uQgSUPjG84sLScDTy+q+sCVLVST9YCXVurphpNkdYkLQ28lZL7YiTw0Buf1ZYuPqd8znAnUH2PC20rqowGxBfSufRN+3WdSMFv5n/loDEMcQ8FVbPGPA13aMppBYx7wxObA0eYte+uNho3jBaPsFreSSWtRYGZwQ9/EoqMx8VtjF7OfMEyoXgfoW4rASEuoIkJwfqaZS1rgRncapppbK2jBY7Pv7HciR9rq3rGSSVHJdNrbwLnzk1NijWtvU7Pi+IpJv9/AC0Fs33JvuwU1q4NFtpo54HpsZcHsIzqHe+Qw8pd/Sef6yP820ok1/SEpqJVSEZ9bjL9uFA281Vm17SgB4+9A3f6Fs5tfHkNlD4rADc2ydVHDBCclTEiZY+gGG8UAWmGEDgsINKrWR7xSrFk1dFhwofjPUFk9ndK5y1RNUXutseS33sH88UXVy+h+77W+TFofqVXjnLwB+SaCnrCzFjxCT1APL+PkC418BZWr5dMLnMvp4uvXtB3TiYPEd/U3tocd01bKxWp47XMv71/smASdp4n8LmKOL5rqFALU2qhisiCA5ClkvorV7c4rppuq0GmiBDwOd2G5rQgNEboH5uSuj7y/uKl/oNiDQ6qN27GETKdxy9HQEmi+Um+l7ytOs0syRCjLMHoWlaQETzw=
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - '10'
+      before_script:
+        - npm install -g eslint
+        - yarn install
+      script:
+        - jq -n '{apiKey:env.AMPLITUDE_API_KEY}' > ./assets/amplitudeSettings.json
+        - yarn test --ci --verbose --forceExit --detectOpenHandles
+        - eslint .
+      env:
+        global:
+          secure: qhSqhKG/jde2AiwCate62uQgSUPjG84sLScDTy+q+sCVLVST9YCXVurphpNkdYkLQ28lZL7YiTw0Buf1ZYuPqd8znAnUH2PC20rqowGxBfSufRN+3WdSMFv5n/loDEMcQ8FVbPGPA13aMppBYx7wxObA0eYte+uNho3jBaPsFreSSWtRYGZwQ9/EoqMx8VtjF7OfMEyoXgfoW4rASEuoIkJwfqaZS1rgRncapppbK2jBY7Pv7HciR9rq3rGSSVHJdNrbwLnzk1NijWtvU7Pi+IpJv9/AC0Fs33JvuwU1q4NFtpo54HpsZcHsIzqHe+Qw8pd/Sef6yP820ok1/SEpqJVSEZ9bjL9uFA281Vm17SgB4+9A3f6Fs5tfHkNlD4rADc2ydVHDBCclTEiZY+gGG8UAWmGEDgsINKrWR7xSrFk1dFhwofjPUFk9ndK5y1RNUXutseS33sH88UXVy+h+77W+TFofqVXjnLwB+SaCnrCzFjxCT1APL+PkC418BZWr5dMLnMvp4uvXtB3TiYPEd/U3tocd01bKxWp47XMv71/smASdp4n8LmKOL5rqFALU2qhisiCA5ClkvorV7c4rppuq0GmiBDwOd2G5rQgNEboH5uSuj7y/uKl/oNiDQ6qN27GETKdxy9HQEmi+Um+l7ytOs0syRCjLMHoWlaQETzw=
+    - language: objective-c
+      osx_image: xcode8.3
+      install:
+        - bundle install
+      before_script: cd ios
+      script:
+        - fastlane beta
+      env:
+        global:
+          - secure: "NjC9bjdAookdRssw+5LURoScpDkLsmIoVUVQPhAkUMREY50uMgP3bYDN0pqz2RgYf9M7U49c8EnA0+KhdOmqUw54172w9ObO+uQCfH/NP7y/eXT7DhsNrLgFeXf+Iv5Kc1pZSOgQ7rp8pgZFuRQt+fWN9WtN+8yTuB3vcaiOZ3RREkng07aAybF57oCz6zwJcgFvPeB+ex4331EHhYEE8vqFX0vEziG8VTXjjyBh2eUGgWob/aWOjvL8Zsy55VB0voOqscwJ6JhpagYWZt3GNt54TuSjYCb5ScigUYjEggh5SnC+sOIoglLpqCUyv2SzXTpmO+8jH/Vw9XIiLl1igVe+btDxRDG1FqDhxFARh1dcH1siCHrEL83Ggcyc5MXbXrkiUdGKx0Ks57ZsjdUb9NI6bhpXngk4kzYRIv8mjACfbPPxQ5nLxWwKMWJNjgiuYOepdst2IbXo+X8RpwR1l6YiRjYF/WRj4RjLVM2fypi7JRDvDSoESg9SGyxD3ai4HOPZAyLD63o3Gd4gHt0H/iqlxDtjglLRggtarYNi01CDd1gUcvLvno/ahT1agcoBrFNn3a4dmY4hRw3DghmPQ1wsc+nI6jTbu+4RUyavXHSPVRAtSebG3bXQFdhvSfP+uQI3PTlpW1uYv6jae5NQ5kdZCaFp1IWVd++4cgnBTHg="
+          - secure: "i+UHBuWmRVgurh5PTuX7PTWQrLJnaxzOz5s+8vcyn53O6lkQXE8OGDTkyCTOeF66+ol8oMUzzI7nHU/2z2dYQPQmq4PuujduaDZBSrWio+cajWUVa8mj/GPBmgk5/XlsS0op4HE89u25Hg4EH9zQy1q8VqEcjAa5AmUvHFKXqiJ1TYqWQPF0I8X+VETKbZtgLnhGhv08CwDTZByx9OIhlSHaWTuSGBcFDGTv+O0Vj1ASoukwr+AB1fE7bwPeVFGNDzys1J8Yyx+KluiMk46XG0bE7AslEnf69qujKD8OIYn2lR7tGJdws6NjRgH+7vblrqvfzFmDEZsIO87MtFtsw67lKHqvooIsPOe5Tzd7aLBU4nUrC+CdfeiznpBCCoCmMWaQrrRsxymC1Ria3fYxi9b3oU5RrortjxRCSvfP8gnQ1SkXu93GKheByUAtbr7W2CVk1Dv+Fe4IvdtLafxvT2OCWHRdJcVVtEF18L9xomPIGC7NUx90ycXN7BmF/wL7inXF5biL49XQvOjsZBqR/L/A0CTr3kdNAic7pZFY4iPULO0awZW1Da7mypXHLf/vXQMbBJ+pABAr4YCmBXIFjt0GQYI7oSs8YViOuEnGpeVQ7egT3uWskfEil3koYLIeywuQ2tsdf4C8RxGe3Ndbj0asnlTUR22YC42nMTAOOx4="
+          - secure: "nYNVx352RnvQBfEOj4Zif1zLeU/Hor0JGPMt09DvffcP8kZf4anRvqTxjomljIApAMo0JbuuFTxj8o0FI92fudLaoC4Ch7ZFQtz3w86hkB5KB63/a1LTAt/yARsUH2oLhvgQ9mel0WkQ0pJraJ/9gR843ZlHVyzGFGAJKd8qaj09X85BgUF6sbpZvICSrV5MxsQ6dHuGahUx73UUyQ8NRYVQWJbEKBQeNRrSAt9CyhgSrkVOF5lYfDQLwdYeoRsRhFatFMHh+f8brpP6diWfV7WRdFzOprseKu2h7wEuiX3ZJH8sFlFF6Efx9DCBTNFzowcqWRMV+jQOa54Xh4MNHt9VEyCqsDauowsKO1oTOxo6dVnvzIgIWMHt5SxmwZHoSH4LYw/rU88LrWamtnbuOxxqhK7sk/6s2WmqxCVqOu0QbC4hD3NT3Jtx3NxnNb5eFdoniBiX6aHkAYAMhcL76HkRWKZz28D0HWS3DjQEIdo7xJAv+ccCQuPDbdGMBRNA6Ny+WCXW1f22ys2+Ex4Os3/airIjhD5i3m3AqyzCO95tq3FAWsk8bqLfv5KHjE5DrI4w7ehiB7rHxzUcYHrCGQ1KypHT4i3KRIxYGZeKxc7MKP4eukYW+W1RluMz7/N9FVhKDYnjT8QoOFbyILr3mVOJaI2E9BodDp72V6Eowl4="
