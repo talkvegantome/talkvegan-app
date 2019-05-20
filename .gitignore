@@ -12,4 +12,4 @@ ios/build/**
 android/.gradle/**
 
 ## Editors
-.idea/**
+*.idea/**
