@@ -9,13 +9,13 @@ import { SafeAreaView,
 import { ListItem } from 'react-native-elements';
 import _ from 'lodash';
 
-// import { Amplitude } from 'expo';
-// import amplitudeSettings from '../../assets/amplitudeSettings.json'
-// Amplitude.initialize(amplitudeSettings.apiKey)
+import Analytics from '../analytics'
 
 import {commonStyle} from '../styles/Common.style.js'
 import Wrapper from '../navigation/Wrapper.js'
 import Pages from '../Pages.js';
+import RNAmplitude from 'react-native-amplitude-analytics';
+jest.mock('react-native-amplitude-analytics');
 
 class SettingsScreen extends React.Component {
   constructor(props) {
@@ -30,8 +30,10 @@ class SettingsScreen extends React.Component {
     })
 
     let pagesObj = new Pages(this.props.storage)
+    let analytics = new Analytics(this.props.storage.settings)
     this.state = {
       modalVisible: false,
+      analytics: analytics,
       pagesObj: pagesObj,
       storage: this.props.storage,
       lastSync: pagesObj.getLastPageDataSync('auto'),
@@ -63,10 +65,8 @@ class SettingsScreen extends React.Component {
   updateSetting(settingName, value){
     this.setState({settings: {...this.state.settings, ...{[settingName]: value}}})
     this.props.storage.updateSetting(settingName, value)
-    // Amplitude.logEventWithProperties('updateSetting', {settingName: settingName, value: value})
+    this.state.analytics.logEvent('updateSetting', {settingName: settingName, value: value})
   }
-
-
   render(){
     let footer = (
       <ListItem

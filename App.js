@@ -15,39 +15,41 @@ import SideMenu from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
 import SettingsScreen  from './src/settings/SettingsScreen.js';
 
-// import { Amplitude } from 'expo';
-// import amplitudeSettings from './assets/amplitudeSettings.json'
-// Amplitude.initialize(amplitudeSettings.apiKey)
-
-
 import {Storage} from './src/Storage.js'
 import Wrapper from './src/navigation/Wrapper.js'
 import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
 import { markdownStyles } from './src/styles/Markdown.style.js';
 
+let storage = new Storage()
+
+import Analytics, {PrivacyDialog} from './src/analytics'
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.props.storage.triggerUpdateMethods.push((storage) => {
       let pagesObj = new Pages(storage)
+      let analytics = new Analytics(storage.settings)
       this.setState({
+        analytics: analytics,
         pagesObj: pagesObj,
         settings: storage.settings,
         pages: pagesObj.getPages(),
         splashPath: pagesObj.getSplashPath()
       })
     })
+    let analytics = new Analytics(storage.settings)
     let pagesObj = new Pages(this.props.storage)
     const markdownRulesObj = new markdownRules(props.navigation);
     this.state = {
+      analytics: analytics,
       pagesObj: pagesObj,
       pages: pagesObj.getPages(),
       splashPath: pagesObj.getSplashPath(),
       settings: this.props.storage.settings,
       markDownRules: markdownRulesObj.returnRules(),
     };
-    // Amplitude.logEvent('Loaded Application')
+    this.state.analytics.logEvent('Loaded Application')
   }
 
   static navigationOptions = {
@@ -71,7 +73,7 @@ class App extends React.Component {
     let pageIndex = this.getPageIndex()
     if(!this.state.pages[pageIndex]){
       let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
-      // Amplitude.logEventWithProperties('error', {errorDetail: errorMessage})
+      this.state.analytics.logEvent('error', {errorDetail: errorMessage})
       return errorMessage
     }
     return this.state.pages[pageIndex]
@@ -89,6 +91,8 @@ class App extends React.Component {
 
     return (
       <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
+        <PrivacyDialog storage={storage}>
+        </PrivacyDialog>
         <Markdown style={markdownStyles} rules={this.state.markDownRules}>
           {preProcessMarkDown(this.getPageContent(), this.state.settings)}
         </Markdown>
@@ -101,7 +105,6 @@ class App extends React.Component {
   }
 }
 
-let storage = new Storage()
 
 const DrawerNavigator = createDrawerNavigator({
   Home: {

@@ -5,9 +5,7 @@ import {ScrollView, View, SafeAreaView } from 'react-native';
 import { ListItem, Divider } from 'react-native-elements';
 import _ from 'lodash';
 
-// import { Amplitude } from 'expo';
-// import amplitudeSettings from '../../assets/amplitudeSettings.json'
-// Amplitude.initialize(amplitudeSettings.apiKey)
+import Analytics from '../analytics'
 
 import Pages from '../Pages.js'
 
@@ -19,8 +17,9 @@ class SideMenu extends Component {
       this.refreshStorage(storage)
     })
     let pages = new Pages(this.props.storage)
-
+    let analytics = new Analytics(this.props.storage.settings)
     this.state = {
+      analytics: analytics,
       settings: this.props.storage.settings,
       menu: pages.getMenu(),
       splashPath: pages.getSplashPath(),
@@ -29,7 +28,9 @@ class SideMenu extends Component {
   }
   refreshStorage(storage){
     let pages = new Pages(storage)
+    let analytics = new Analytics(storage.settings)
     this.setState({
+      analytics: analytics,
       settings: storage.settings,
       menu: pages.getMenu(storage),
       splashPath: pages.getSplashPath()
@@ -39,7 +40,7 @@ class SideMenu extends Component {
     // Navigation is always to the 'Home' screen, but content changes based on the indexId
     this.props.navigation.navigate('Home', {indexId: indexId});
     this.props.navigation.closeDrawer();
-    // Amplitude.logEventWithProperties('navigateToPage', {relPath: indexId})
+    this.state.analytics.logEvent('navigateToPage', {relPath: indexId})
   }
   toggleHeaderVisibility = (headerName) => {
     let headerVisibility = this.state.headerVisibility

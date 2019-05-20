@@ -5,8 +5,8 @@ let fontMultiplier = 1
 export const markdownStyles =  StyleSheet.create({
   heading1: {
     textAlign:'left',
-    fontSize: 25 * fontMultiplier,
-    lineHeight: 25 * fontMultiplier,
+    fontSize: 22 * fontMultiplier,
+    lineHeight: 22 * fontMultiplier,
     fontWeight: 'bold',
     color: commonStyle.primary,
     fontFamily: commonStyle.headerFont,
@@ -16,8 +16,8 @@ export const markdownStyles =  StyleSheet.create({
   },
   heading2: {
     textAlign: 'left',
-    fontSize: 22 * fontMultiplier,
-    lineHeight: 22 * fontMultiplier,
+    fontSize: 20 * fontMultiplier,
+    lineHeight: 20 * fontMultiplier,
     fontWeight: 'bold',
     color: commonStyle.primary,
     fontFamily: commonStyle.headerFont,
@@ -40,7 +40,7 @@ export const markdownStyles =  StyleSheet.create({
   },
   listUnorderedItem: {
     flexDirection: 'row',
-    margin: -7
+    margin: -10
   },
   listUnorderedItemIcon: {
     fontSize: 15,

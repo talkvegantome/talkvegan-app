@@ -3,12 +3,11 @@ import _ from 'lodash';
 import stringify from 'fast-stringify'
 import {DateTime} from 'luxon';
 
-// import { Amplitude } from 'expo';
-// import amplitudeSettings from '../assets/amplitudeSettings.json'
-// Amplitude.initialize(amplitudeSettings.apiKey)
+import Analytics from './analytics'
 
 class Pages {
   constructor(storage){
+    this.analytics = new Analytics(storage.settings)
     this.storage = storage
     this.settings = storage.settings
     this.pageData = storage.pageData
@@ -93,8 +92,8 @@ class Pages {
   }
 
   async pullPageDataFromSite(){
-    // Amplitude.logEventWithProperties('pullPageDataFromSite',
-    //   {language: this.settings.language})
+    this.analytics.logEvent('pullPageDataFromSite',
+      {language: this.settings.language})
     return fetch(this.getLanguageDataUri(), {
       method: 'GET',
     }).then((response) => response.json()).then((responseJson) => {

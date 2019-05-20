@@ -3,12 +3,14 @@ package com.talkvegantome;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.sudoplz.reactnativeamplitudeanalytics.RNAmplitudeSDKPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +28,9 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new VectorIconsPackage(),
-            new RNGestureHandlerPackage()
-      );
+            new RNGestureHandlerPackage(),
+            new RNAmplitudeSDKPackage(MainApplication.this)
+       );
     }
 
     @Override
