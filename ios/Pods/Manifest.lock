@@ -1,0 +1,16 @@
+PODS:
+  - Amplitude-iOS (4.6.0)
+
+DEPENDENCIES:
+  - Amplitude-iOS (~> 4.5)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Amplitude-iOS
+
+SPEC CHECKSUMS:
+  Amplitude-iOS: ac1715ae68104b7a51723209ad574f60ab22ae5f
+
+PODFILE CHECKSUM: de46782aa2ad1482cf290b6c9f530c8f5c6eb893
+
+COCOAPODS: 1.6.2
