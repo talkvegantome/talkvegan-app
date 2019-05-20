@@ -16,7 +16,6 @@ matrix:
       install:
         - gem install bundler
         - bundle install
-      before_script: cd ios
       script:
         - fastlane beta
 env:
