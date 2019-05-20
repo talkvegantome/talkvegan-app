@@ -14,7 +14,6 @@ import Analytics from '../analytics'
 import {commonStyle} from '../styles/Common.style.js'
 import Wrapper from '../navigation/Wrapper.js'
 import Pages from '../Pages.js';
-import RNAmplitude from 'react-native-amplitude-analytics';
 
 class SettingsScreen extends React.Component {
   constructor(props) {

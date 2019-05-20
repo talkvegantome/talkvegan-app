@@ -5,7 +5,6 @@ import renderer from 'react-test-renderer';
 import {MockStorage} from '../../mocks/MockStorage.js'
 let mockStorage = new MockStorage()
 
-import RNAmplitude from 'react-native-amplitude-analytics';
 jest.mock('react-native-amplitude-analytics');
 
 
