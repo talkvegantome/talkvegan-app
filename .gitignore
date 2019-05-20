@@ -10,3 +10,6 @@ assets/amplitudeSettings.json
 android/app/build/**
 ios/build/**
 android/.gradle/**
+
+## Editors
+.idea/**
