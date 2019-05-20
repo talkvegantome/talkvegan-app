@@ -5,6 +5,8 @@ yarn-error.log
 .expo-shared/**
 talkvegantome.app/**
 assets/amplitudeSettings.json
+*.ipa
+*.zip
 
 ## Build
 android/app/build/**
