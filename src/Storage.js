@@ -29,6 +29,7 @@ export class Storage {
   }
   config = {
     apiUrl: "https://talkveganto.me/",
+    gitHubUrl: "https://github.com/talkvegantome/talkvegan-hugo/",
     privacyPolicyUrl: 'https://talkveganto.me/en/privacy-policy',
     helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
   }

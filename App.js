@@ -7,8 +7,8 @@
  */
 
 import React from 'react';
-import { Dimensions, Share } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { Dimensions, Share, TouchableHighlight, Text, View, Linking } from 'react-native';
+import { Icon, Divider } from 'react-native-elements';
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import Markdown from 'react-native-markdown-renderer';
 import SideMenu from './src/navigation/SideMenu.js';
@@ -69,6 +69,18 @@ class App extends React.Component {
     let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
     return pageMetadata.permalink
   }
+  getPageGitHubLink() {
+    let pageIndex = this.getPageIndex()
+    let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
+    let languageName = this.props.storage.pageData[this.state.settings.language].languageName
+    let gitHubPath = pageMetadata.relativePermalink
+
+    // Replace the language shortcode with the full name
+    gitHubPath = gitHubPath.replace(/^\/[^\/]+\//, '/' + languageName.toLowerCase() + '/')
+    // Replace the trailing slash with .md
+    gitHubPath = gitHubPath.replace(/\/$/, '.md')
+    return this.props.storage.config.gitHubUrl + 'blob/master/content' + gitHubPath
+  }
   getPageContent() {
     let pageIndex = this.getPageIndex()
     if (!this.state.pages[pageIndex]) {
@@ -95,10 +107,21 @@ class App extends React.Component {
         <Markdown style={markdownStyles} rules={this.state.markDownRules}>
           {preProcessMarkDown(this.getPageContent(), this.state.settings)}
         </Markdown>
-        <ListItem leftIcon={{ name: 'share' }} title='Share Link to Page' topDivider={true}
-          containerStyle={{ marginTop: 10, paddingTop: 20 }}
-          onPress={() => { Share.share({ message: this.getPagePermalink() }) }}
-        />
+        <Divider style={{ marginVertical: 20 }} />
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <TouchableHighlight style={{ flex: 1 }} onPress={() => { Share.share({ message: this.getPagePermalink() }) }}>
+            <View style={{ alignSelf: 'flex-start' }}>
+              <Icon name='share' />
+              <Text style={markdownStyles.text}>Share</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.getPageGitHubLink()) }}>
+            <View style={{ alignSelf: 'flex-end' }}>
+              <Icon name='edit' />
+              <Text style={markdownStyles.text}>Edit</Text>
+            </View>
+          </TouchableHighlight>
+        </View>
       </Wrapper>
     );
   }
