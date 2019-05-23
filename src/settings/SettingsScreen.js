@@ -163,7 +163,7 @@ class SettingsItem extends React.Component {
   render() {
     return (
       <ListItem
-        onPress={() => { this.props.onPress() }}
+        onPress={this.props.onPress}
         title={this.props.label}
         rightTitle={this.props.value}
         rightIcon={{ name: this.props.icon }}

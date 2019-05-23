@@ -13,5 +13,8 @@ android/app/build/**
 ios/build/**
 android/.gradle/**
 
+## Fastlane
+report.xml
+
 ## Editors
 *.idea/**
