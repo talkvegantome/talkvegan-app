@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View, Text, Linking, TouchableHighlight } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text, TouchableHighlight } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import RNAmplitude from 'react-native-amplitude-analytics';
 import amplitudeSettings from '../../assets/amplitudeSettings.json'

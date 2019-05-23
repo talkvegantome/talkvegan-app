@@ -1,5 +1,5 @@
 import { commonStyle } from './Common.style.js'
-import { StyleSheet, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import _ from 'lodash';
 
 let fontMultiplier = 1
