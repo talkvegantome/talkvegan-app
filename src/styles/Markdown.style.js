@@ -1,8 +1,9 @@
 import { commonStyle } from './Common.style.js'
 import { StyleSheet, Platform } from 'react-native';
+import _ from 'lodash';
 
 let fontMultiplier = 1
-export const markdownStyles =  StyleSheet.create({
+export const markdownStyles =  {
   heading1: {
     textAlign:'left',
     fontSize: 22 * fontMultiplier,
@@ -72,4 +73,18 @@ export const markdownStyles =  StyleSheet.create({
     lineHeight: 25 * fontMultiplier,
     color: commonStyle.lightText
   }
-});
+};
+
+export const popUpmarkdownStyles = _.merge(_.cloneDeep(markdownStyles), {
+  heading1: {
+    fontSize: 16,
+    marginTop: 0
+  },
+  text: {
+    fontSize: 14,
+    lineHeight: 18
+  },
+  listUnorderedItemIcon: {
+    lineHeight: 10
+  }
+})

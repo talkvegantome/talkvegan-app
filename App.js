@@ -9,20 +9,20 @@
 import React from 'react';
 import { Dimensions, Share } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { createDrawerNavigator, createAppContainer} from 'react-navigation';
+import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import Markdown from 'react-native-markdown-renderer';
 import SideMenu from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
-import SettingsScreen  from './src/settings/SettingsScreen.js';
+import SettingsScreen from './src/settings/SettingsScreen.js';
 
-import {Storage} from './src/Storage.js'
+import { Storage } from './src/Storage.js'
 import Wrapper from './src/navigation/Wrapper.js'
 import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
 import { markdownStyles } from './src/styles/Markdown.style.js';
 
 let storage = new Storage()
 
-import Analytics, {PrivacyDialog} from './src/analytics'
+import Analytics, { PrivacyDialog } from './src/analytics'
 
 class App extends React.Component {
   constructor(props) {
@@ -60,29 +60,29 @@ class App extends React.Component {
     header: null,
   };
 
-  getPageIndex(){
+  getPageIndex() {
     let pageIndex = this.props.navigation.getParam('indexId')
     return pageIndex ? pageIndex : this.state.splashPath
   }
-  getPagePermalink(){
+  getPagePermalink() {
     let pageIndex = this.getPageIndex()
     let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
     return pageMetadata.permalink
   }
-  getPageContent(){
+  getPageContent() {
     let pageIndex = this.getPageIndex()
-    if(!this.state.pages[pageIndex]){
+    if (!this.state.pages[pageIndex]) {
       let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
-      this.state.analytics.logEvent('error', {errorDetail: errorMessage})
+      this.state.analytics.logEvent('error', { errorDetail: errorMessage })
       return errorMessage
     }
     return this.state.pages[pageIndex]
   }
-  getPageTitle(){
+  getPageTitle() {
     let pageMetadata = this.state.pagesObj.getPageMetadata(this.props.navigation.getParam('indexId'))
     let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
     // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
-    if(pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)){
+    if (pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)) {
       return 'TalkVeganToMe'
     }
     return pageTitle
@@ -91,14 +91,13 @@ class App extends React.Component {
 
     return (
       <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
-        <PrivacyDialog storage={storage}>
-        </PrivacyDialog>
+        <PrivacyDialog storage={storage}></PrivacyDialog>
         <Markdown style={markdownStyles} rules={this.state.markDownRules}>
           {preProcessMarkDown(this.getPageContent(), this.state.settings)}
         </Markdown>
-        <ListItem leftIcon={{name: 'share'}} title='Share Link to Page' topDivider={true}
-          containerStyle={{marginTop:10, paddingTop: 20}}
-          onPress={() => {Share.share({message: this.getPagePermalink()})}}
+        <ListItem leftIcon={{ name: 'share' }} title='Share Link to Page' topDivider={true}
+          containerStyle={{ marginTop: 10, paddingTop: 20 }}
+          onPress={() => { Share.share({ message: this.getPagePermalink() }) }}
         />
       </Wrapper>
     );
@@ -111,12 +110,12 @@ const DrawerNavigator = createDrawerNavigator({
     screen: ({ navigation }) => (<App storage={storage} navigation={navigation} />),
   },
   Settings: {
-    screen: ({ navigation }) => (<SettingsScreen storage={storage} navigation = {navigation} />)
+    screen: ({ navigation }) => (<SettingsScreen storage={storage} navigation={navigation} />)
   }
-  }, {
-  contentComponent: ({ navigation }) => (<SideMenu storage={storage} navigation={navigation} />
-  ),
-  drawerWidth: Dimensions.get('window').width - 120,
-});
+}, {
+    contentComponent: ({ navigation }) => (<SideMenu storage={storage} navigation={navigation} />
+    ),
+    drawerWidth: Dimensions.get('window').width - 120,
+  });
 const Main = createAppContainer(DrawerNavigator);
 export default Main;
