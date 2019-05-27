@@ -17,4 +17,6 @@ android/.gradle/**
 report.xml
 
 ## Editors
-*.idea/**
+*.iws
+**/.idea/workspace.xml 
+**/.idea/tasks.xml

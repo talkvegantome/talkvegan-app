@@ -56,6 +56,7 @@ For more information on how this data is used, see the [Privacy Policy](` + this
     return (
       <Overlay
         animationType="slide"
+        style={{overflow:'scroll'}}
         isVisible={!this.props.storage.loading && !this.props.storage.settings.analyticsPromptAnswered}
       >
         <SafeAreaView style={{ flex: 1, flexDirection: 'column' }}>
@@ -64,7 +65,7 @@ For more information on how this data is used, see the [Privacy Policy](` + this
               {this.telemetryBlurb}
             </Markdown>
           </ScrollView>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', minHeight: 50, marginTop: 20}}>
             <TouchableHighlight style={this.denyStyle} onPress={() => this.setConsent(false)}>
               <Text style={{ color: commonStyle.light, fontWeight: 'bold'}}>Opt Out</Text>
             </TouchableHighlight>

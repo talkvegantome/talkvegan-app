@@ -5,7 +5,7 @@
         android:drawable="@color/purple"/>
 
     <item
-        android:drawable="@mipmap/icon"
+        android:drawable="@mipmap/ic_launcher"
         android:width="200dp"
         android:height="200dp"
         android:gravity="center" />

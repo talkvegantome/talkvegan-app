@@ -1,0 +1,2 @@
+json_key_file("~/.google/api-7416746240957622741-203128-d541db30de41.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.talkvegantome") # e.g. com.krausefx.app
