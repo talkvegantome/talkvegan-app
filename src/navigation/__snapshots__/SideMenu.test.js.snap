@@ -55,6 +55,7 @@ exports[`SideMenu Renders Correctly 1`] = `
                   "backgroundColor": "transparent",
                   "color": "#E8E9EB",
                   "fontSize": 30,
+                  "lineHeight": 30,
                 }
               }
               testID="listItemTitle"
@@ -128,7 +129,7 @@ exports[`SideMenu Renders Correctly 1`] = `
                 "backgroundColor": "#3371AA",
                 "borderColor": "#bcbbc1",
                 "flexDirection": "row",
-                "padding": 14,
+                "padding": 15,
               }
             }
           >
@@ -192,6 +193,7 @@ exports[`SideMenu Renders Correctly 1`] = `
                         "backgroundColor": "transparent",
                         "color": "#E8E9EB",
                         "fontSize": 20,
+                        "lineHeight": 20,
                       },
                       Object {
                         "fontFamily": "Material Icons",
@@ -224,6 +226,7 @@ exports[`SideMenu Renders Correctly 1`] = `
                     "backgroundColor": "transparent",
                     "color": "#E8E9EB",
                     "fontSize": 20,
+                    "lineHeight": 20,
                   }
                 }
                 testID="listItemTitle"
