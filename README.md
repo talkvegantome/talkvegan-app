@@ -13,10 +13,9 @@ These json files contain the content that app displays rendered in MarkDown, whi
 
 ## Testing
 
-You can test the app locally using [Expo](https://expo.io/learn).
 ```
-yarn install
-yarn ios
+npm run ios
+npm run android
 ```
 
 ### Testing pre-reqs
@@ -34,13 +33,25 @@ rm assets/index.en.json* && wget -O assets/index.en.json http://talkveganto.me/e
 rm assets/index.fr.json* && wget -O assets/index.fr.json http://talkveganto.me/fr/index.json
 ```
 
+Now that the app reloads the latest content on launch this matters less and less.
+
 ## Building production iOS to test outside expo
 
 ```
-expo build:ios -t simulator
-wget https://expo.io/artifacts/<ARTIFACT_ID>
-tar -xvzf <ARTIFACT_ID>
-xcrun simctl install booted talkvegantome.app/
+npm run ios --variant=release
+npm run android --variant=release
 ```
 
 This will install the app within the simulator so you can test it actually works prior to pushing to appstoreconnect
+
+## Building Production to upload to Android Playstore
+1. Export the following environment variables
+```
+export ANDROID_KEYSTORE_FILE=
+export ANDROID_KEYSTORE_PASSWORD=
+export ANDROID_KEYSTORE_KEY_ALIAS=
+export ANDROID_KEYSTORE_KEY_PASSWORD=
+```
+2. Update version details in `android/app/build.gradle`
+3. `cd android`
+4. `fastlane beta`

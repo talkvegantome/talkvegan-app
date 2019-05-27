@@ -6,6 +6,7 @@ yarn-error.log
 talkvegantome.app/**
 assets/amplitudeSettings.json
 *.ipa
+*.apk
 *.zip
 
 ## Build
