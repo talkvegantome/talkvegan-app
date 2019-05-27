@@ -1,8 +1,7 @@
 import { commonStyle } from './Common.style.js'
 import { Platform } from 'react-native';
 import _ from 'lodash';
-
-let fontMultiplier = 1
+let fontMultiplier = commonStyle.fontMultiplier
 export const markdownStyles =  {
   heading1: {
     textAlign:'left',

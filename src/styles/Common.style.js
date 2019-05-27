@@ -3,6 +3,7 @@ import { StatusBar } from 'react-native';
 StatusBar.setBarStyle('light-content', true);
 
 export const commonStyle = {
+	fontMultiplier: Platform.OS === 'ios' ? 1 : 0.9,
 	primary: '#235789',
 	secondary: '#3371AA',
 	light: '#E8E9EB',
