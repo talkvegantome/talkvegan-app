@@ -20,6 +20,10 @@ test('preProcessMarkDown Catches Links', () => {
     {
       input: '[Google](http://google.com)',
       output: '[Google](http://google.com)'
+    },
+    {
+      input: '- [E-numbers]({{ ref: "shopping/e-numbers"}}) (Animal products hide behind some e numbers)',
+      output: '- [E-numbers](REF:/en/shopping/e-numbers/) (Animal products hide behind some e numbers)'
     }
   ]
 
