@@ -12,6 +12,7 @@ export const commonStyle = {
 	dark: '#313638',
 	headerFont: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
 	paragraphFont: Platform.OS === 'ios' ? 'system font' : 'sans-serif',
+	paragraphFontBold: Platform.OS === 'ios' ? 'ArialRoundedMTBold' : 'sans-serif-bold',
 	content: {
     paddingLeft: 30,
     paddingRight: 30,

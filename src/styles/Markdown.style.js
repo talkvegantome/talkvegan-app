@@ -71,6 +71,10 @@ export const markdownStyles =  {
     fontSize: 16 * fontMultiplier,
     lineHeight: 25 * fontMultiplier,
     color: commonStyle.lightText
+  },
+  strong: {
+    fontFamily: commonStyle.paragraphFontBold,
+    fontWeight: 'bold'
   }
 };
 
