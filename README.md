@@ -52,6 +52,6 @@ export ANDROID_KEYSTORE_PASSWORD=
 export ANDROID_KEYSTORE_KEY_ALIAS=
 export ANDROID_KEYSTORE_KEY_PASSWORD=
 ```
-2. Update version details in `android/app/build.gradle`
+2. Update version details in `android/fastlane/Fastfile`
 3. `cd android`
 4. `fastlane beta`

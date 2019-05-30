@@ -23,14 +23,20 @@ platform :android do
 
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
+    #sh('echo $PWD || false')
+    sh("find ../app/build/outputs/apk/ -name \\*.apk -exec rm {} \\;")
+    android_set_version_code(
+      version_code: "7"
+    )
+    android_set_version_name(
+      version_name: "0.0.1"
+    )
     gradle(
       task: "assemble",
       build_type: "Release",
       print_command: false,
       
       properties: {
-        "versionCode" => 3,
-        "versionName" => "0.0.1",
         "android.injected.signing.store.file" => ENV["ANDROID_KEYSTORE_FILE"],
         "android.injected.signing.store.password" => ENV["ANDROID_KEYSTORE_PASSWORD"],
         "android.injected.signing.key.alias" => ENV["ANDROID_KEYSTORE_KEY_ALIAS"],
