@@ -29,7 +29,7 @@ platform :android do
       version_code: "7"
     )
     android_set_version_name(
-      version_name: "0.0.1"
+      version_name: "0.0.2"
     )
     gradle(
       task: "assemble",

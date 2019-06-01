@@ -42,6 +42,13 @@ export const markdownStyles =  {
     flexDirection: 'row',
     margin: -10
   },
+  quotedListUnorderedItemIcon: {
+    fontSize: 15,
+    paddingTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    lineHeight: Platform.OS === 'ios' ? 15 : 15
+  },
   listUnorderedItemIcon: {
     fontSize: 15,
     paddingTop: 18,
@@ -52,6 +59,13 @@ export const markdownStyles =  {
   listOrderedItem: {
     flexDirection: 'row',
     margin: -7
+  },
+  quotedListOrderedItemIcon: {
+    fontSize: 15,
+    paddingTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    lineHeight: Platform.OS === 'ios' ? 15 : 15
   },
   listOrderedItemIcon: {
     fontSize: 15,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, Linking, View} from 'react-native';
 import _ from 'lodash';
-import {getUniqueID} from 'react-native-markdown-renderer';
+import {getUniqueID, hasParents} from 'react-native-markdown-renderer';
 import {normaliseRelPath} from './Pages.js'
 
 export class markdownRules {
@@ -27,6 +27,7 @@ export class markdownRules {
  }
  styleChildren(child, style){
    let grandChildren = []
+   let childStyle = {}
    if(_.isNil(child)){
      return child
    }
@@ -38,9 +39,14 @@ export class markdownRules {
          return this.styleChildren(grandChild, style)
        })
      }
+     if(child.props.style){
+      childStyle = child.props.style
+    }
    }
+   
    return React.cloneElement(child, {
-     style: style,
+     key: getUniqueID(),
+     style: {...childStyle, ...style},
      children: grandChildren
    })
  }
@@ -64,7 +70,36 @@ export class markdownRules {
           {children}
         </Text>
       );
-    }
+    }, 
+    list_item: (node, children, parent, styles) => {
+      if (hasParents(parent, 'bullet_list')) {
+        let listUnorderedItemIconStyle = hasParents(parent, 'blockquote') ? 
+          styles.quotedListUnorderedItemIcon : styles.listUnorderedItemIcon
+        return (
+          <View key={node.key} style={styles.listUnorderedItem}>
+            <Text style={listUnorderedItemIconStyle}>{'\u00B7'}</Text>
+            <View style={[styles.listItem]}>{children}</View>
+          </View>
+        );
+      }
+  
+      if (hasParents(parent, 'ordered_list')) {
+        let listOrderedItemIconStyle = hasParents(parent, 'blockquote') ? 
+          styles.quotedListOrderedItemIcon : styles.listOrderedItemIcon
+        return (
+          <View key={node.key} style={styles.listOrderedItem}>
+            <Text style={listOrderedItemIconStyle}>{node.index + 1}{node.markup}</Text>
+            <View style={[styles.listItem]}>{children}</View>
+          </View>
+        );
+      }
+  
+      return (
+        <View key={node.key} style={[styles.listItem]}>
+          {children}
+        </View>
+      );
+    },
   }
   returnRules(){
     return this.rules
