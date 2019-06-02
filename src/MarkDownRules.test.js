@@ -24,11 +24,15 @@ test('preProcessMarkDown Catches Links', () => {
     {
       input: '- [E-numbers]({{ ref: "shopping/e-numbers"}}) (Animal products hide behind some e numbers)',
       output: '- [E-numbers](REF:/en/shopping/e-numbers/) (Animal products hide behind some e numbers)'
+    },
+    {
+      input: '[acre for acre plants are on average 100 to 160 times more efficient]({{<ref "vegan-statistics/land-usage.md">}})',
+      output: '[acre for acre plants are on average 100 to 160 times more efficient](REF:/en/vegan-statistics/land-usage/)'
     }
   ]
 
   scenarios.forEach((scenario) => {
-      expect(preProcessMarkDown(scenario.input, mockStorage.settings)).toBe(scenario.output)
+      expect(preProcessMarkDown(scenario.input, mockStorage.settings)).toEqual(scenario.output)
   })
 
 });

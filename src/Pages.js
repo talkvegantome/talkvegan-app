@@ -153,6 +153,8 @@ class Pages {
 
 
 export function normaliseRelPath(relpath){
+  // clear any .md at the end
+  relpath = relpath.replace(/.md$/,'')
   // Ensure trailing and leading slashes
   relpath = _.first(relpath) === '/' ? relpath : '/' + relpath;
   relpath = _.last(relpath) === '/' ? relpath : relpath + '/';
