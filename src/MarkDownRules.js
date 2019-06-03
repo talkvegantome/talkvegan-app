@@ -57,6 +57,13 @@ export class markdownRules {
     heading4: this.generateHeading,
     heading5: this.generateHeading,
     heading6: this.generateHeading,
+    textgroup: (node, children, parent, styles) => {
+      return (
+        <Text key={node.key} style={styles.text} selectable={true}>
+          {children}
+        </Text>
+      );
+    },
     blockquote: (node, children, parent, styles) => {
       return (
          <View key={node.key} style={styles.blockquote}>
