@@ -109,7 +109,11 @@ class App extends React.Component {
         </Markdown>
         <Divider style={{ marginVertical: 20 }} />
         <View style={{ flex: 1, flexDirection: 'row' }}>
-          <TouchableHighlight style={{ flex: 1 }} onPress={() => { Share.share({ message: this.getPagePermalink() }) }}>
+          <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
+              Share.share({ message: this.getPagePermalink() }).then((result) => {
+                this.state.analytics.logEvent('sharedPage', {page: this.getPagePermalink(), activity: result.activityType})
+              }).catch((err) => {this.state.analytics.logEvent('error', {errorDetail: err})})
+            }}>
             <View style={{ alignSelf: 'flex-start' }}>
               <Icon name='share' />
               <Text style={markdownStyles.text}>Share</Text>
