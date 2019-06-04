@@ -29,8 +29,8 @@ class Pages {
           }
         }
       ]
-      // Amplitude.logEventWithProperties('error',
-      //   {errorDetail: "Failed to load page in language" + this.settings.language})
+      this.analytics.logEvent('error',
+        {errorDetail: "Failed to load page in language" + this.settings.language})
       this.pullPageDataFromSite()
     }
   }

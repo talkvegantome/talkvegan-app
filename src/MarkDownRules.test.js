@@ -1,6 +1,7 @@
-import {preProcessMarkDown} from './MarkDownRules.js';
+import {markdownRules} from './MarkDownRules.js';
 import {MockStorage} from '../mocks/MockStorage.js'
 
+jest.mock('./analytics')
 let mockStorage = new MockStorage()
 
 test('preProcessMarkDown Catches Links', () => {
@@ -30,9 +31,9 @@ test('preProcessMarkDown Catches Links', () => {
       output: '[acre for acre plants are on average 100 to 160 times more efficient](REF:/en/vegan-statistics/land-usage/)'
     }
   ]
-
+  let markdownRulesObj = new markdownRules({}, mockStorage.settings)
   scenarios.forEach((scenario) => {
-      expect(preProcessMarkDown(scenario.input, mockStorage.settings)).toEqual(scenario.output)
+      expect(markdownRulesObj.preProcessMarkDown(scenario.input, mockStorage.settings)).toEqual(scenario.output)
   })
 
 });
