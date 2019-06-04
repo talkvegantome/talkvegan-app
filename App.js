@@ -17,7 +17,7 @@ import SettingsScreen from './src/settings/SettingsScreen.js';
 
 import { Storage } from './src/Storage.js'
 import Wrapper from './src/navigation/Wrapper.js'
-import { markdownRules, preProcessMarkDown } from './src/MarkDownRules.js'
+import { markdownRules } from './src/MarkDownRules.js'
 import { markdownStyles } from './src/styles/Markdown.style.js';
 
 let storage = new Storage()
@@ -35,19 +35,19 @@ class App extends React.Component {
         pagesObj: pagesObj,
         settings: storage.settings,
         pages: pagesObj.getPages(),
-        splashPath: pagesObj.getSplashPath()
+        splashPath: pagesObj.getSplashPath(),
+        markdownRulesObj: new markdownRules(props.navigation, storage.settings)
       })
     })
     let analytics = new Analytics(storage.settings)
     let pagesObj = new Pages(this.props.storage)
-    const markdownRulesObj = new markdownRules(props.navigation);
     this.state = {
       analytics: analytics,
       pagesObj: pagesObj,
       pages: pagesObj.getPages(),
       splashPath: pagesObj.getSplashPath(),
       settings: this.props.storage.settings,
-      markDownRules: markdownRulesObj.returnRules(),
+      markdownRulesObj: new markdownRules(props.navigation, storage.settings),
     };
     this.state.analytics.logEvent('Loaded Application')
   }
@@ -104,8 +104,8 @@ class App extends React.Component {
     return (
       <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
         <PrivacyDialog storage={storage}></PrivacyDialog>
-        <Markdown style={markdownStyles} rules={this.state.markDownRules}>
-          {preProcessMarkDown(this.getPageContent(), this.state.settings)}
+        <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
+          {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
         </Markdown>
         <Divider style={{ marginVertical: 20 }} />
         <View style={{ flex: 1, flexDirection: 'row' }}>
