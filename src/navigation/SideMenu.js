@@ -82,7 +82,10 @@ class SideMenu extends Component {
             key={headerFriendlyName}
             containerStyle={styles.sectionHeadingStyle}
             titleStyle={styles.sectionHeadingTitleStyle}
-            leftIcon={{name: 'expand-more', iconStyle: styles.sectionHeadingTitleStyle}}
+            leftIcon={{
+                name: display == 'flex' ? 'expand-less': 'expand-more', 
+                iconStyle: styles.sectionHeadingTitleStyle
+            }}
             title={headerFriendlyName}
             onPress={()=>{this.toggleHeaderVisibility(headerFriendlyName)}}
           />
