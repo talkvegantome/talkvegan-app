@@ -17,7 +17,7 @@ class Wrapper extends React.Component {
         <Header
           leftComponent={{
             icon: 'menu',
-            color: commonStyle.light,
+            color: commonStyle.headerFontColor,
             iconStyle: {paddingLeft: 10},
             onPress: () => this.props.navigation.openDrawer()
           }}
@@ -27,7 +27,7 @@ class Wrapper extends React.Component {
           }}
           rightComponent={{
             icon: 'settings',
-            color: commonStyle.light,
+            color: commonStyle.headerFontColor,
             iconStyle: {paddingRight: 10},
             onPress: () => this.props.navigation.navigate('Settings')
           }}

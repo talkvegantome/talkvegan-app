@@ -3,35 +3,37 @@ let fontMultiplier = commonStyle.fontMultiplier
 export default {
   container: {
     flex: 1,
-    backgroundColor: commonStyle.light,
+    backgroundColor: '#FFFFFF',
   },
   safeContainer: {
-    backgroundColor: commonStyle.primary,
+    backgroundColor: commonStyle.navHeaderBackgroundColor,
     flex: 1
   },
   dividerStyle: {
     height: 1,
-    backgroundColor: commonStyle.light
+    backgroundColor: commonStyle.navDividerColor
   },
   navHeaderStyle: {
-    backgroundColor: commonStyle.primary,
+    backgroundColor: commonStyle.navHeaderBackgroundColor,
   },
   navHeaderTitleStyle: {
     fontSize: 30 * fontMultiplier,
     lineHeight: 30 * fontMultiplier,
-    color: commonStyle.light,
+    color: commonStyle.navHeaderFontColor,
   },
   sectionHeadingStyle: {
-    backgroundColor: commonStyle.secondary,
-    padding: 15 * fontMultiplier
+    backgroundColor: commonStyle.navSectionBackgroundColor,
+    padding: 15 * fontMultiplier,
+    borderTopWidth: 1,
+    borderTopColor: commonStyle.navSectionDividerColor,
   },
   sectionHeadingTitleStyle: {
-    fontSize: 20 * fontMultiplier,
+    fontSize: 18 * fontMultiplier,
     lineHeight: 20 * fontMultiplier,
-    color: commonStyle.light,
+    color: commonStyle.navSectionFontColor,
   },
   itemHeadingStyle: {
-    backgroundColor: commonStyle.light
+    backgroundColor: commonStyle.navItemBackgroundColor
   },
   itemHeadingTitleStyle: {
 
