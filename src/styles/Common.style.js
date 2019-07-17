@@ -33,7 +33,7 @@ export const commonStyle = {
 	navItemBackgroundColor: palette.light,
 
 	// Text
-	headingFontColor: palette.secondary,
+	headingFontColor: palette.primary,
 	paragraphFont: Platform.OS === 'ios' ? 'system font' : 'sans-serif',
 	paragraphFontBold: Platform.OS === 'ios' ? 'ArialRoundedMTBold' : 'sans-serif-bold',
 	content: {
