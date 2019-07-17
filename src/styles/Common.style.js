@@ -27,7 +27,7 @@ export const commonStyle = {
 	headerFont: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
 
 	// Nav
-	navDividerBackgroundColor: palette.light,
+	navDividerColor: palette.light,
 	navHeaderBackgroundColor: palette.primary,
 	navHeaderFontColor: palette.white,
 	navSectionBackgroundColor: palette.primary,

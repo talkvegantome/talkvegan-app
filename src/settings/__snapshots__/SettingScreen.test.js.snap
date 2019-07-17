@@ -13,7 +13,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#235789",
+        "backgroundColor": "#ff6c00",
         "borderBottomColor": "#f2f2f2",
         "borderBottomWidth": 0.5,
         "flexDirection": "row",
@@ -81,7 +81,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#E8E9EB",
+                  "color": "#FFFFFF",
                   "fontSize": 24,
                 },
                 Object {
@@ -115,7 +115,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
         numberOfLines={1}
         style={
           Object {
-            "color": "#E8E9EB",
+            "color": "#FFFFFF",
             "fontFamily": "Helvetica",
             "fontSize": 20,
             "lineHeight": 40,
@@ -200,7 +200,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#E8E9EB",
+                  "color": "#FFFFFF",
                   "fontSize": 24,
                 },
                 Object {

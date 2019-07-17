@@ -11,7 +11,7 @@ import { Dimensions, Share, TouchableHighlight, Text, View, ScrollView, Linking 
 import { Icon, Divider } from 'react-native-elements';
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import Markdown from 'react-native-markdown-renderer';
-import SideMenu from './src/navigation/SideMenu.js';
+import SideMenu, { MenuItems } from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
 import SettingsScreen from './src/settings/SettingsScreen.js';
 
@@ -50,6 +50,9 @@ class App extends React.Component {
       markdownRulesObj: new markdownRules(props.navigation, storage.settings),
     };
     this.state.analytics.logEvent('Loaded Application')
+  }
+  componentDidUpdate(){
+    this.refs.scroll.scrollTo({y: 0, animated: false})
   }
 
   static navigationOptions = {
@@ -102,7 +105,7 @@ class App extends React.Component {
   render() {
 
     return (
-      <ScrollView>
+      <ScrollView ref="scroll">
         <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
           <PrivacyDialog storage={storage}></PrivacyDialog>
           <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
@@ -128,7 +131,7 @@ class App extends React.Component {
             </TouchableHighlight>
           </View>
         </Wrapper>
-        <SideMenu storage={this.props.storage} navigation={this.props.navigation} title='Table of Contents'/>
+        <MenuItems storage={this.props.storage} navigation={this.props.navigation}/>
       </ScrollView>
     );
   }

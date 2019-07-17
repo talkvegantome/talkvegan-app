@@ -10,7 +10,24 @@ import Analytics from '../analytics'
 import Pages from '../Pages.js'
 
 class SideMenu extends Component {
+  render () {
+    return (
+      <SafeAreaView style={styles.safeContainer}>
+        <ScrollView style={styles.container}>
+          <ListItem
+            containerStyle={styles.navHeaderStyle}
+            titleStyle={styles.navHeaderTitleStyle}
+            // onPress={this.navigateToScreen('/'+this.state.settings.language+'/splash/')}
+            title={this.props.title}/>
+          <Divider style={{...styles.dividerStyle,...{height: 2}}} />
+          <MenuItems {...this.props}/>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+}
 
+export class MenuItems extends Component{
   constructor(props) {
     super(props);
     this.props.storage.triggerUpdateMethods.push((storage) => {
@@ -57,9 +74,9 @@ class SideMenu extends Component {
     this.setState({headerVisibility: headerVisibility})
   }
 
-  render () {
+  generateMenuObjects(){
     let menuSorted = _.sortBy(this.state.menu, ['weight', 'friendlyName'])
-    let menuObjects = _.map(menuSorted, (headerItem) => {
+    return _.map(menuSorted, (headerItem) => {
       let headerFriendlyName = headerItem.friendlyName
       let items = _.sortBy(headerItem.subItems, ['weight', 'friendlyName']).map((item) => {
         return(
@@ -97,22 +114,11 @@ class SideMenu extends Component {
         </View>
       )
     })
-
-
+  }
+  render(){
     return (
-
-      <SafeAreaView style={styles.safeContainer}>
-        <ScrollView style={styles.container}>
-          <ListItem
-            containerStyle={styles.navHeaderStyle}
-            titleStyle={styles.navHeaderTitleStyle}
-            onPress={this.navigateToScreen('/'+this.state.settings.language+'/splash/')}
-            title={this.props.title}/>
-          <Divider style={styles.dividerStyle} />
-          {menuObjects}
-        </ScrollView>
-      </SafeAreaView>
-    );
+      <View>{this.generateMenuObjects()}</View>
+    )
   }
 }
 
