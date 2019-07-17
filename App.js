@@ -27,6 +27,7 @@ import Analytics, { PrivacyDialog } from './src/analytics'
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.scrollRef= React.createRef();
     this.props.storage.triggerUpdateMethods.push((storage) => {
       let pagesObj = new Pages(storage)
       let analytics = new Analytics(storage.settings)
@@ -52,7 +53,7 @@ class App extends React.Component {
     this.state.analytics.logEvent('Loaded Application')
   }
   componentDidUpdate(){
-    this.refs.scroll.scrollTo({y: 0, animated: false})
+    this.scrollRef.current.scrollTo({y: 0, animated: false})
   }
 
   static navigationOptions = {
@@ -105,7 +106,7 @@ class App extends React.Component {
   render() {
 
     return (
-      <ScrollView ref="scroll">
+      <ScrollView ref={this.scrollRef}>
         <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
           <PrivacyDialog storage={storage}></PrivacyDialog>
           <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>

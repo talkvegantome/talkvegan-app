@@ -11,6 +11,7 @@ exports[`SideMenu Renders Correctly 1`] = `
   }
 >
   <RCTScrollView
+    bounces={false}
     style={
       Object {
         "backgroundColor": "#FFFFFF",

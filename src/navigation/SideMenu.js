@@ -13,7 +13,7 @@ class SideMenu extends Component {
   render () {
     return (
       <SafeAreaView style={styles.safeContainer}>
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} bounces={false}>
           <ListItem
             containerStyle={styles.navHeaderStyle}
             titleStyle={styles.navHeaderTitleStyle}
