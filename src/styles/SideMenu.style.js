@@ -24,8 +24,9 @@ export default {
   sectionHeadingStyle: {
     backgroundColor: commonStyle.navSectionBackgroundColor,
     padding: 15 * fontMultiplier,
-    borderTopWidth: 1,
-    borderTopColor: commonStyle.navSectionDividerColor,
+    margin:0,
+    borderBottomWidth: 1,
+    borderBottomColor: commonStyle.navSectionDividerColor,
   },
   sectionHeadingTitleStyle: {
     fontSize: 18 * fontMultiplier,
@@ -36,6 +37,6 @@ export default {
     backgroundColor: commonStyle.navItemBackgroundColor
   },
   itemHeadingTitleStyle: {
-
+    color: commonStyle.navItemFontColor
   }
 };

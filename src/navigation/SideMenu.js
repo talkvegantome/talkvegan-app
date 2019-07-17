@@ -26,6 +26,7 @@ class SideMenu extends Component {
       headerVisibility: {}
     };
   }
+
   refreshStorage(storage){
     let pages = new Pages(storage)
     let analytics = new Analytics(storage.settings)
@@ -106,7 +107,7 @@ class SideMenu extends Component {
             containerStyle={styles.navHeaderStyle}
             titleStyle={styles.navHeaderTitleStyle}
             onPress={this.navigateToScreen('/'+this.state.settings.language+'/splash/')}
-            title="TalkVeganToMe"/>
+            title={this.props.title}/>
           <Divider style={styles.dividerStyle} />
           {menuObjects}
         </ScrollView>

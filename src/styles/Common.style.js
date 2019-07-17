@@ -6,6 +6,7 @@ let palette = {
 	primary: '#ff6c00',
 	secondary: '#292f5a',
 	light: '#f9fbfc',
+	white: '#FFFFFF',
 	lightText: '#999999',
 	highlight: '#161B33',
 	dark: '#313638',
@@ -19,21 +20,24 @@ export const commonStyle = {
 	lightText: palette.lightText,
 	highlight: palette.highlight,
 	dark: palette.dark,
-	headerFontColor: palette.light,
+
+	// Header
+	headerFontColor: palette.white,
 	headerBackgroundColor: palette.primary,
 	headerFont: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
 
 	// Nav
 	navDividerBackgroundColor: palette.light,
 	navHeaderBackgroundColor: palette.primary,
-	navHeaderFontColor: palette.light,
+	navHeaderFontColor: palette.white,
 	navSectionBackgroundColor: palette.primary,
-	navSectionDividerColor: '#FFFFFF',
 	navSectionFontColor: palette.light,
+	navSectionDividerColor: '#FFFFFF',
 	navItemBackgroundColor: palette.light,
+	navItemFontColor: '#000000',
 
 	// Text
-	headingFontColor: palette.primary,
+	headingFontColor: palette.secondary,
 	paragraphFont: Platform.OS === 'ios' ? 'system font' : 'sans-serif',
 	paragraphFontBold: Platform.OS === 'ios' ? 'ArialRoundedMTBold' : 'sans-serif-bold',
 	content: {

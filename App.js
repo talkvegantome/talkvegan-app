@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Dimensions, Share, TouchableHighlight, Text, View, Linking } from 'react-native';
+import { Dimensions, Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import Markdown from 'react-native-markdown-renderer';
@@ -102,31 +102,34 @@ class App extends React.Component {
   render() {
 
     return (
-      <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
-        <PrivacyDialog storage={storage}></PrivacyDialog>
-        <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
-          {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
-        </Markdown>
-        <Divider style={{ marginVertical: 20 }} />
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
-              Share.share({ message: this.getPagePermalink() }).then((result) => {
-                this.state.analytics.logEvent('sharedPage', {page: this.getPagePermalink(), activity: result.activityType})
-              }).catch((err) => {this.state.analytics.logEvent('error', {errorDetail: err})})
-            }}>
-            <View style={{ alignSelf: 'flex-start' }}>
-              <Icon name='share' />
-              <Text style={markdownStyles.text}>Share</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.getPageGitHubLink()) }}>
-            <View style={{ alignSelf: 'flex-end' }}>
-              <Icon name='edit' />
-              <Text style={markdownStyles.text}>Edit</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-      </Wrapper>
+      <ScrollView>
+        <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
+          <PrivacyDialog storage={storage}></PrivacyDialog>
+          <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
+            {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
+          </Markdown>
+          <Divider style={{ marginVertical: 20 }} />
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
+                Share.share({ message: this.getPagePermalink() }).then((result) => {
+                  this.state.analytics.logEvent('sharedPage', {page: this.getPagePermalink(), activity: result.activityType})
+                }).catch((err) => {this.state.analytics.logEvent('error', {errorDetail: err})})
+              }}>
+              <View style={{ alignSelf: 'flex-start' }}>
+                <Icon name='share' />
+                <Text style={markdownStyles.text}>Share</Text>
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.getPageGitHubLink()) }}>
+              <View style={{ alignSelf: 'flex-end' }}>
+                <Icon name='edit' />
+                <Text style={markdownStyles.text}>Edit</Text>
+              </View>
+            </TouchableHighlight>
+          </View>
+        </Wrapper>
+        <SideMenu storage={this.props.storage} navigation={this.props.navigation} title='Table of Contents'/>
+      </ScrollView>
     );
   }
 }
@@ -140,7 +143,7 @@ const DrawerNavigator = createDrawerNavigator({
     screen: ({ navigation }) => (<SettingsScreen storage={storage} navigation={navigation} />)
   }
 }, {
-    contentComponent: ({ navigation }) => (<SideMenu storage={storage} navigation={navigation} />
+    contentComponent: ({ navigation }) => (<SideMenu storage={storage} navigation={navigation} title='TalkVeganToMe' />
     ),
     drawerWidth: Dimensions.get('window').width - 120,
   });
