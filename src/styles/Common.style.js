@@ -4,7 +4,7 @@ StatusBar.setBarStyle('light-content', true);
 
 let palette = {
 	primary: '#ff6c00',
-	secondary: '#292f5a',
+	secondary: '#143642',
 	light: '#f9fbfc',
 	white: '#FFFFFF',
 	lightText: '#999999',
@@ -23,12 +23,12 @@ export const commonStyle = {
 
 	// Header
 	headerFontColor: palette.white,
-	headerBackgroundColor: palette.primary,
+	headerBackgroundColor: palette.secondary,
 	headerFont: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
 
 	// Nav
 	navDividerColor: palette.light,
-	navHeaderBackgroundColor: palette.primary,
+	navHeaderBackgroundColor: palette.secondary,
 	navHeaderFontColor: palette.white,
 	navSectionBackgroundColor: palette.primary,
 	navSectionFontColor: palette.light,
