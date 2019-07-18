@@ -106,7 +106,7 @@ class App extends React.Component {
   render() {
 
     return (
-      <ScrollView ref={this.scrollRef}>
+      <ScrollView ref={this.scrollRef} bounces={false}>
         <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
           <PrivacyDialog storage={storage}></PrivacyDialog>
           <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>

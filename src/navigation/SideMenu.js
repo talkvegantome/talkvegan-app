@@ -79,6 +79,10 @@ export class MenuItems extends Component{
     return _.map(menuSorted, (headerItem) => {
       let headerFriendlyName = headerItem.friendlyName
       let items = _.sortBy(headerItem.subItems, ['weight', 'friendlyName']).map((item) => {
+        if(!_.isNil(item.displayInApp) && !item.displayInApp){
+          // Don't display this page if it has displayInApp=false
+          return 
+        }
         return(
           <ListItem
             bottomDivider={true}

@@ -5,7 +5,7 @@ exports[`SideMenu Renders Correctly 1`] = `
   emulateUnlessSupported={true}
   style={
     Object {
-      "backgroundColor": "#ff6c00",
+      "backgroundColor": "#143642",
       "flex": 1,
     }
   }
@@ -25,7 +25,7 @@ exports[`SideMenu Renders Correctly 1`] = `
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": "#ff6c00",
+              "backgroundColor": "#143642",
               "borderColor": "#bcbbc1",
               "flexDirection": "row",
               "padding": 14,
