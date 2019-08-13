@@ -42,10 +42,10 @@ export const commonStyle = {
 	paragraphFont: Platform.OS === 'ios' ? 'system font' : 'sans-serif',
 	paragraphFontBold: Platform.OS === 'ios' ? 'ArialRoundedMTBold' : 'sans-serif-bold',
 	content: {
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 20,
-  },
+		paddingLeft: 30,
+		paddingRight: 30,
+		paddingBottom: 20,
+	},
 	picker: {
 		width: Platform.OS === 'ios' ? 100 : 200,
 		height: 200

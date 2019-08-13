@@ -7,6 +7,8 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import SideMenu, { MenuItems } from './SideMenu.js';
 import Pages from '../Pages.js';
 import SettingsScreen from '../settings/SettingsScreen.js';
+import {_} from 'lodash'
+import CarouselNav from './CarouselNav'
 
 import { Storage } from '../Storage.js'
 import Wrapper from '../navigation/Wrapper.js'
@@ -98,36 +100,57 @@ export default class App extends React.Component {
     return pageTitle
   }
   render() {
-    
+    if(_.isNil(this.props.indexId)){
+      return (
+        <Wrapper 
+          navigation={this.props.navigation} 
+          title={this.getPageTitle()} 
+          style={{
+            flex: 1,
+            paddingLeft: 0,
+            paddingRight: 0,
+            paddingTop: 20,
+            paddingBottom: 20,
+            
+          }}>
+          <ScrollView ref={this.scrollRef}>
+            <CarouselNav></CarouselNav>
+          </ScrollView>
+        </Wrapper>
+      )
+    }
     return (
-        
       <Wrapper navigation={this.props.navigation} title={this.getPageTitle()} style={{flex:1}}>
           <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
           <ScrollView ref={this.scrollRef}>
-          <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
-              {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
-          </Markdown>
-          <Divider style={{ marginVertical: 20 }} />
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-              <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
-                  Share.share({ message: this.getPagePermalink() }).then((result) => {
-                  this.state.analytics.logEvent('sharedPage', {page: this.getPagePermalink(), activity: result.activityType})
-                  }).catch((err) => {this.state.analytics.logEvent('error', {errorDetail: err})})
-              }}>
-              <View style={{ alignSelf: 'flex-start' }}>
-                  <Icon name='share' />
-                  <Text style={markdownStyles.text}>Share</Text>
+            <View>
+              <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
+                {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
+              </Markdown>
+              <Divider style={{ marginVertical: 20 }} />
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                  <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
+                      Share.share({ message: this.getPagePermalink() }).then((result) => {
+                      this.state.analytics.logEvent('sharedPage', {page: this.getPagePermalink(), activity: result.activityType})
+                      }).catch((err) => {this.state.analytics.logEvent('error', {errorDetail: err})})
+                  }}>
+                  <View style={{ alignSelf: 'flex-start' }}>
+                      <Icon name='share' />
+                      <Text style={markdownStyles.text}>Share</Text>
+                  </View>
+                  </TouchableHighlight>
+                  <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.getPageGitHubLink()) }}>
+                  <View style={{ alignSelf: 'flex-end' }}>
+                      <Icon name='edit' />
+                      <Text style={markdownStyles.text}>Edit</Text>
+                  </View>
+                  </TouchableHighlight>
               </View>
-              </TouchableHighlight>
-              <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.getPageGitHubLink()) }}>
-              <View style={{ alignSelf: 'flex-end' }}>
-                  <Icon name='edit' />
-                  <Text style={markdownStyles.text}>Edit</Text>
-              </View>
-              </TouchableHighlight>
-          </View>
+            </View>
           </ScrollView>
       </Wrapper>
     );
+    
+          
   }
 }
