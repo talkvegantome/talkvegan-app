@@ -9,147 +9,100 @@
 import React from 'react';
 import { Dimensions, Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
-import { createDrawerNavigator, createAppContainer } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import Markdown from 'react-native-markdown-renderer';
 import SideMenu, { MenuItems } from './src/navigation/SideMenu.js';
 import Pages from './src/Pages.js';
 import SettingsScreen from './src/settings/SettingsScreen.js';
+import {_} from 'lodash'
 
 import { Storage } from './src/Storage.js'
-import Wrapper from './src/navigation/Wrapper.js'
-import { markdownRules } from './src/MarkDownRules.js'
-import { markdownStyles } from './src/styles/Markdown.style.js';
+
+import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
+import { Provider as PaperProvider, Appbar, BottomNavigation } from 'react-native-paper';
+import Home from './src/navigation/Home.js';
 
 let storage = new Storage()
 
 import Analytics, { PrivacyDialog } from './src/analytics'
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.scrollRef= React.createRef();
-    this.props.storage.triggerUpdateMethods.push((storage) => {
-      let pagesObj = new Pages(storage)
-      let analytics = new Analytics(storage.settings)
-      this.setState({
-        analytics: analytics,
-        pagesObj: pagesObj,
-        settings: storage.settings,
-        pages: pagesObj.getPages(),
-        splashPath: pagesObj.getSplashPath(),
-        markdownRulesObj: new markdownRules(props.navigation, storage.settings)
+class BottomDrawer extends React.Component {
+  static defaultProps = {
+    style: {}
+  }
+  state = {
+    storage: new Storage(),
+    index: 0,
+    routes: [
+      { key: 'home', title: 'Home', icon: 'home' },
+      { key: 'search', title: 'Search', icon: 'search' },
+      { key: 'settings', title: 'Settings', icon: 'settings' },
+    ],
+    navigationHistory: [{
+      index: 0,
+      routeParams: {}
+    }]
+  };
+
+  _handleIndexChange = index => this.setState({ index });
+
+  _renderScene = ({route, jumpTo}) => {
+    let page = null
+    if( route.key == 'home'){
+      page = <Home 
+        storage={this.state.storage} 
+        navigation={this}
+        {...this.state.routeParams} 
+      />
+    }
+    return page
+  }
+
+  navigate = (title, props) => {
+    index = _.findIndex(this.state.routes, ['title', title])
+    this.setState({
+      index: index,
+      routeParams: props,
+      navigationHistory: this.state.navigationHistory.concat({
+        index: index,
+        routeParams: props
       })
     })
-    let analytics = new Analytics(storage.settings)
-    let pagesObj = new Pages(this.props.storage)
-    this.state = {
-      analytics: analytics,
-      pagesObj: pagesObj,
-      pages: pagesObj.getPages(),
-      splashPath: pagesObj.getSplashPath(),
-      settings: this.props.storage.settings,
-      markdownRulesObj: new markdownRules(props.navigation, storage.settings),
-    };
-    this.state.analytics.logEvent('Loaded Application')
-  }
-  componentDidUpdate(){
-    this.scrollRef.current.scrollTo({y: 0, animated: false})
   }
 
-  static navigationOptions = {
-    drawerLabel: 'Home',
-  };
-
-  static navigationOptions = {
-    header: null,
-  };
-
-  getPageIndex() {
-    let pageIndex = this.props.navigation.getParam('indexId')
-    return pageIndex ? pageIndex : this.state.splashPath
-  }
-  getPagePermalink() {
-    let pageIndex = this.getPageIndex()
-    let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
-    return pageMetadata.permalink
-  }
-  getPageGitHubLink() {
-    let pageIndex = this.getPageIndex()
-    let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
-    let languageName = this.props.storage.pageData[this.state.settings.language].languageName
-    let gitHubPath = pageMetadata.relativePermalink
-
-    // Replace the language shortcode with the full name
-    gitHubPath = gitHubPath.replace(/^\/[^\/]+\//, '/' + languageName.toLowerCase() + '/')
-    // Replace the trailing slash with .md
-    gitHubPath = gitHubPath.replace(/\/$/, '.md')
-    return this.props.storage.config.gitHubUrl + 'blob/master/content' + gitHubPath
-  }
-  getPageContent() {
-    let pageIndex = this.getPageIndex()
-    if (!this.state.pages[pageIndex]) {
-      let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
-      this.state.analytics.logEvent('error', { errorDetail: errorMessage })
-      return errorMessage
+  goBack = () => {
+    console.log(this.state)
+    lastLocation = this.state.navigationHistory[this.state.navigationHistory.length-2]
+    
+    console.log(lastLocation)
+    if(_.isNil(lastLocation)){
+      return
     }
-    return this.state.pages[pageIndex]
+    navigationHistoryLessLastLocation = this.state.navigationHistory.slice(
+      0,
+      this.state.navigationHistory.length-1
+    )
+    this.setState({
+      index: lastLocation.index,
+      routeParams: lastLocation.routeParams,
+      navigationHistory: navigationHistoryLessLastLocation
+    })
   }
-  getPageTitle() {
-    let pageMetadata = this.state.pagesObj.getPageMetadata(this.props.navigation.getParam('indexId'))
-    let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
-    // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
-    if (pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)) {
-      return 'TalkVeganToMe'
-    }
-    return pageTitle
-  }
-  render() {
 
-    return (
-      <ScrollView ref={this.scrollRef} bounces={false}>
-        <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
-          <PrivacyDialog storage={storage}></PrivacyDialog>
-          <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
-            {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
-          </Markdown>
-          <Divider style={{ marginVertical: 20 }} />
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
-                Share.share({ message: this.getPagePermalink() }).then((result) => {
-                  this.state.analytics.logEvent('sharedPage', {page: this.getPagePermalink(), activity: result.activityType})
-                }).catch((err) => {this.state.analytics.logEvent('error', {errorDetail: err})})
-              }}>
-              <View style={{ alignSelf: 'flex-start' }}>
-                <Icon name='share' />
-                <Text style={markdownStyles.text}>Share</Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.getPageGitHubLink()) }}>
-              <View style={{ alignSelf: 'flex-end' }}>
-                <Icon name='edit' />
-                <Text style={markdownStyles.text}>Edit</Text>
-              </View>
-            </TouchableHighlight>
-          </View>
-        </Wrapper>
-        <MenuItems storage={this.props.storage} navigation={this.props.navigation}/>
-      </ScrollView>
-    );
+
+  render(){
+    return ( <BottomNavigation
+      theme={PaperTheme}
+      activeColor={commonStyle.headerFontColor}
+      inactiveColor={commonStyle.headerFontColor}
+      navigationState={this.state}
+      onIndexChange={this._handleIndexChange}
+      renderScene={this._renderScene}
+    />)
+    
   }
 }
 
 
-const DrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: ({ navigation }) => (<App storage={storage} navigation={navigation} />),
-  },
-  Settings: {
-    screen: ({ navigation }) => (<SettingsScreen storage={storage} navigation={navigation} />)
-  }
-}, {
-    contentComponent: ({ navigation }) => (<SideMenu storage={storage} navigation={navigation} title='TalkVeganToMe' />
-    ),
-    drawerWidth: Dimensions.get('window').width - 120,
-  });
-const Main = createAppContainer(DrawerNavigator);
-export default Main;
+export default BottomDrawer
+

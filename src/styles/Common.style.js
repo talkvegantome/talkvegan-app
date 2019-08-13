@@ -1,5 +1,6 @@
 import { Platform } from 'react-native'
 import { StatusBar } from 'react-native';
+import { DefaultTheme } from 'react-native-paper'
 StatusBar.setBarStyle('light-content', true);
 
 let palette = {
@@ -55,3 +56,12 @@ export const commonStyle = {
 	}
 
 }
+
+export const PaperTheme = {
+	...DefaultTheme,
+	colors: {
+	  ...DefaultTheme.colors,
+	  primary: commonStyle.primary,
+	  accent: commonStyle.secondary,
+	},
+  };

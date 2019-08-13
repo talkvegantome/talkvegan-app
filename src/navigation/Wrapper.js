@@ -1,48 +1,40 @@
 import React from 'react';
 import { Header } from 'react-native-elements';
-import { View, SafeAreaView, ScrollView } from 'react-native';
-import { commonStyle } from '../styles/Common.style.js';
+import { Text, View, SafeAreaView, ScrollView } from 'react-native';
+import { commonStyle, PaperTheme } from '../styles/Common.style.js';
 import { navContainerStyle, navHeaderStyle } from '../styles/Header.style.js'
+import { Provider as PaperProvider, Appbar, BottomNavigation } from 'react-native-paper';
+import { NavigationActions } from "react-navigation";
+import { Storage } from '../Storage.js'
+import Home from './Home.js';
 
 class Wrapper extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  static defaultProps = {
-    style: {}
-  }
+
+
   render(){
+
     return (
-      <View style={{ flex: 1 }}>
-        <Header
-          leftComponent={{
-            icon: 'menu',
-            color: commonStyle.headerFontColor,
-            iconStyle: {paddingLeft: 10},
-            onPress: () => this.props.navigation.openDrawer()
+      <View style={{flex: 1}}>
+      <PaperProvider theme={PaperTheme} >
+        <Appbar.Header style={{backgroundColor: commonStyle.headerBackgroundColor}}>
+          <Appbar.Action
+          icon='keyboard-arrow-left'
+          onPress={() => {
+            this.props.navigation.goBack()
           }}
-          centerComponent={{
-            text: this.props.title,
-            style: navHeaderStyle,
-          }}
-          rightComponent={{
-            icon: 'settings',
-            color: commonStyle.headerFontColor,
-            iconStyle: {paddingRight: 10},
-            onPress: () => this.props.navigation.navigate('Settings')
-          }}
-          containerStyle={navContainerStyle}
-        />
-        <SafeAreaView style={ {...{ flex: 1 }, ...this.props.safeAreaViewStyle}}>
-          <ScrollView style={{...commonStyle.content,...this.props.style}}>
-            {this.props.children}
-          </ScrollView>
-          {
-              this.props.footer && this.props.footer
-          }
-        </SafeAreaView>
+          />
+          <Appbar.Content
+            titleStyle={{
+              color: commonStyle.headerFontColor}}
+            title={this.props.title}
+          />
+        </Appbar.Header>
+        <ScrollView style={{...commonStyle.content,...this.props.style}}>
+          {this.props.children}
+        </ScrollView>
+      </PaperProvider>
       </View>
-    )
+    ) 
   }
 }
 
