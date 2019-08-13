@@ -5,7 +5,7 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 
 
 var {height, width} = Dimensions.get('window');
-export default class MyCarousel extends React.Component {
+export default class CarouselNav extends React.Component {
     
     state = {
         entries: [
@@ -28,15 +28,15 @@ export default class MyCarousel extends React.Component {
         ]
     }
     _renderItem ({item, index}) {
+        console.log(item)
         return (
             <Card>
-
-                <Card.Content>
+                <Card.Content style={{height: 150}}>
                 <Title>{item.title}</Title>
-                <Paragraph>{item.content}</Paragraph>
+                <Paragraph style={{height: 100}}>{item.content}</Paragraph>
                 </Card.Content>
                 <Card.Actions>
-                <Button>More...</Button>
+                <Button onPress={item.navigateTo}>More...</Button>
                 </Card.Actions>
             </Card>
         );
@@ -46,10 +46,10 @@ export default class MyCarousel extends React.Component {
         return (
             <Carousel
               ref={(c) => { this._carousel = c; }}
-              data={this.state.entries}
+              data={this.props.items}
               renderItem={this._renderItem}
               sliderWidth={width}
-              itemWidth={width-width/10}
+              itemWidth={width-width/5}
             />
         );
     }

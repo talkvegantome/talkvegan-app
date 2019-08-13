@@ -48,11 +48,17 @@ class BottomDrawer extends React.Component {
 
   _renderScene = ({route, jumpTo}) => {
     let page = null
-    if( route.key == 'home'){
-      page = <Home 
+    if (route.key == 'home'){
+      return <Home 
         storage={this.state.storage} 
         navigation={this}
         {...this.state.routeParams} 
+      />
+    }
+    if (route.key == 'settings'){
+      return <SettingsScreen
+        storage={this.state.storage} 
+        navigation={this}
       />
     }
     return page
@@ -61,7 +67,7 @@ class BottomDrawer extends React.Component {
   navigate = (title, props) => {
     index = _.findIndex(this.state.routes, ['title', title])
     this.setState({
-      index: index,
+      index: index, 
       routeParams: props,
       navigationHistory: this.state.navigationHistory.concat({
         index: index,
@@ -71,10 +77,8 @@ class BottomDrawer extends React.Component {
   }
 
   goBack = () => {
-    console.log(this.state)
+
     lastLocation = this.state.navigationHistory[this.state.navigationHistory.length-2]
-    
-    console.log(lastLocation)
     if(_.isNil(lastLocation)){
       return
     }

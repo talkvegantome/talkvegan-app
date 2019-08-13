@@ -8,7 +8,7 @@ import SideMenu, { MenuItems } from './SideMenu.js';
 import Pages from '../Pages.js';
 import SettingsScreen from '../settings/SettingsScreen.js';
 import {_} from 'lodash'
-import CarouselNav from './CarouselNav'
+import ContentIndex from './ContentIndex'
 
 import { Storage } from '../Storage.js'
 import Wrapper from '../navigation/Wrapper.js'
@@ -111,10 +111,9 @@ export default class App extends React.Component {
             paddingRight: 0,
             paddingTop: 20,
             paddingBottom: 20,
-            
           }}>
           <ScrollView ref={this.scrollRef}>
-            <CarouselNav></CarouselNav>
+            <ContentIndex storage={this.props.storage} navigation={this.props.navigation}/>
           </ScrollView>
         </Wrapper>
       )
