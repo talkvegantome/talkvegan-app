@@ -86,6 +86,11 @@ class Pages {
     })
     return friendlyName
   }
+  getPageTitle(indexId) {
+    let pageMetadata = this.getPageMetadata(indexId)
+    let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
+    return pageTitle
+  }
 
   getLanguageDataUri(){
     return this.storage.config.apiUrl + this.settings.language + '/index.json'

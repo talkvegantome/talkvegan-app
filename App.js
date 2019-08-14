@@ -7,24 +7,16 @@
  */
 
 import React from 'react';
-import { Dimensions, Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
-import { Icon, Divider } from 'react-native-elements';
-import { createAppContainer } from 'react-navigation';
-import Markdown from 'react-native-markdown-renderer';
-import SideMenu, { MenuItems } from './src/navigation/SideMenu.js';
-import Pages from './src/Pages.js';
 import SettingsScreen from './src/settings/SettingsScreen.js';
+import SearchScreen from './src/navigation/Search.js'
+import HomeScreen from './src/navigation/Home.js';
 import {_} from 'lodash'
 
 import { Storage } from './src/Storage.js'
 
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
 import { Provider as PaperProvider, Appbar, BottomNavigation } from 'react-native-paper';
-import Home from './src/navigation/Home.js';
 
-let storage = new Storage()
-
-import Analytics, { PrivacyDialog } from './src/analytics'
 
 class BottomDrawer extends React.Component {
   static defaultProps = {
@@ -44,11 +36,14 @@ class BottomDrawer extends React.Component {
     }]
   };
 
-  _handleIndexChange = index => this.setState({ index });
-  _handleTabPress = (index) => {
+  _handleIndexChange = (index) => {
+    this.setState({ index });
+  }
+  _handleTabPress = (route) => {
     this.setState({
+      routeParams: {},
       navigationHistory: this.state.navigationHistory.concat({
-        index: index,
+        index: _.findIndex(this.state.routes, ['key', route.route.key]),
         routeParams: {}
       })
     })
@@ -56,15 +51,24 @@ class BottomDrawer extends React.Component {
 
   _renderScene = ({route, jumpTo}) => {
     let page = null
-    if (route.key == 'home'){
-      return <Home 
+    if(route.key == 'home'){
+      console.log("Showing " + route.key)
+      return <HomeScreen
         storage={this.state.storage} 
         navigation={this}
         {...this.state.routeParams} 
       />
     }
-    if (route.key == 'settings'){
+    if(route.key == 'settings'){
+      console.log("Showing " + route.key)
       return <SettingsScreen
+        storage={this.state.storage} 
+        navigation={this}
+      />
+    }
+    if(route.key == 'search'){
+      console.log("Showing " + route.key)
+      return <SearchScreen 
         storage={this.state.storage} 
         navigation={this}
       />
@@ -85,8 +89,8 @@ class BottomDrawer extends React.Component {
   }
 
   goBack = () => {
-
     lastLocation = this.state.navigationHistory[this.state.navigationHistory.length-2]
+    console.log(lastLocation)
     if(_.isNil(lastLocation)){
       return
     }
@@ -94,6 +98,7 @@ class BottomDrawer extends React.Component {
       0,
       this.state.navigationHistory.length-1
     )
+    
     this.setState({
       index: lastLocation.index,
       routeParams: lastLocation.routeParams,

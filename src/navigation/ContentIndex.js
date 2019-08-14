@@ -44,19 +44,7 @@ export default class ContentIndex extends Component{
     this.props.navigation.navigate('Home', {indexId: indexId});
     this.state.analytics.logEvent('navigateToPage', {relPath: indexId})
   }
-  toggleHeaderVisibility = (headerName) => {
-    let headerVisibility = this.state.headerVisibility
-    if(headerVisibility[headerName]){
-      headerVisibility[headerName] = false
-    }else{
-        _.forEach(headerVisibility, (val, headerName) => {
-          headerVisibility[headerName] = false
-        })
-        headerVisibility[headerName] = true
-    }
 
-    this.setState({headerVisibility: headerVisibility})
-  }
   generateCardList(headerItem){
     return _.filter(_.sortBy(headerItem.subItems, ['weight', 'friendlyName']).map((item) => {
         if(!_.isNil(item.displayInApp) && !item.displayInApp){
