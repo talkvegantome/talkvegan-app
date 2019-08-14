@@ -11,7 +11,7 @@ import { commonStyle } from '../styles/Common.style.js';
 
 function multiIncludes(text, values){
     return _.map(values, (o) => {
-        var re = new RegExp('(?<before>.{0,100})(?<match>' + o +')(?<after>.{0,100})');
+        var re = new RegExp('(?<before>.{0,90})(?<match>' + o +')(?<after>.{0,200})', 'si');
         return text.match(re)
     })
     
@@ -59,6 +59,30 @@ export default class Search extends React.Component{
             results: results
         })
     }
+    renderMatch = (key, result) => {
+        return (
+            <Card key={key} style={{marginTop: 10}}
+                onPress={() => this.props.navigation.navigate('Home',{indexId: result.path})}>
+                <Card.Content style={{height: 150}}>
+                    <Title style={{height: 30}}>{this.state.pagesObj.getPageTitle(result.path)}</Title>
+                    <Paragraph style={{height: 110}}>
+                        <Text>{result.matches[0].groups.before.replace(/\n/gms,' ')}</Text>
+                        <Text 
+                            style={{
+                                color: commonStyle.primary
+                            }}
+                        >
+                            {result.matches[0].groups.match}
+                        </Text>
+                        <Text>{result.matches[0].groups.after.replace(/\n/gms,' ')}</Text>
+                    </Paragraph>
+                </Card.Content>
+                <Card.Actions>
+                    <Button>More...</Button>
+                </Card.Actions>
+            </Card>
+        )
+    }
     render() {
         return (
             <Wrapper navigation={this.props.navigation} title={'Search'} style={{flex:1}}>
@@ -73,30 +97,7 @@ export default class Search extends React.Component{
                         if(_.isNull(result.matches[0])){
                             return
                         }
-                        return(
-                            <Card key={i} style={{marginTop: 10}}>
-                                <Card.Content style={{height: 150}}>
-                                <Title>{this.state.pagesObj.getPageTitle(result.path)}</Title>
-                                <Paragraph style={{height: 100}}>
-                                <Text>
-                                    <Text>{result.matches[0].groups.before}</Text>
-                                    <Text 
-                                        style={{
-                                            color: commonStyle.primary
-                                        }}
-                                    >
-                                        {result.matches[0].groups.match}
-                                    </Text>
-                                    <Text>{result.matches[0].groups.after}</Text>
-                                </Text>
-                                </Paragraph>
-                                </Card.Content>
-                                <Card.Actions>
-                                <Button onPress={() => this.props.navigation.navigate('Home',{indexId: result.path})}>More...</Button>
-                                </Card.Actions>
-                            </Card>
-                            
-                        )
+                        return this.renderMatch(i, result)
                         
                     })
                 }

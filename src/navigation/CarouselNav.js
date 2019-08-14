@@ -9,13 +9,13 @@ export default class CarouselNav extends React.Component {
     
     _renderItem ({item, index}) {
         return (
-            <Card>
+            <Card onPress={item.navigateTo}>
                 <Card.Content style={{height: 150}}>
                 <Title>{item.title}</Title>
                 <Paragraph style={{height: 100}}>{item.content}</Paragraph>
                 </Card.Content>
                 <Card.Actions>
-                <Button onPress={item.navigateTo}>More...</Button>
+                <Button>More...</Button>
                 </Card.Actions>
             </Card>
         );
