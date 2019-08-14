@@ -29,7 +29,7 @@
     "react-navigation": "^3.9.1",
     "react-navigation-material-bottom-tabs": "^1.0.0",
     "remark": "^11.0.1",
-    "remove-markdown": "^0.3.0",
+    "remove-markdown": "https://github.com/talkvegantome/remove-markdown.git#bugfix/multiline-blockquotes",
     "strip-markdown": "^3.1.0"
   },
   "devDependencies": {

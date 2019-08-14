@@ -6407,10 +6407,9 @@ remark@^11.0.1:
     remark-stringify "^7.0.0"
     unified "^8.2.0"
 
-remove-markdown@^0.3.0:
+"remove-markdown@https://github.com/talkvegantome/remove-markdown.git#bugfix/multiline-blockquotes":
   version "0.3.0"
-  resolved "https://registry.yarnpkg.com/remove-markdown/-/remove-markdown-0.3.0.tgz#5e4b667493a93579728f3d52ecc1db9ca505dc98"
-  integrity sha1-XktmdJOpNXlyjz1S7MHbnKUF3Jg=
+  resolved "https://github.com/talkvegantome/remove-markdown.git#6fe681a0967c880aef37bbf07e1ab77bb2acd01f"
 
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
