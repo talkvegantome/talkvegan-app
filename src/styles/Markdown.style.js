@@ -77,8 +77,8 @@ export const markdownStyles =  {
   blockquote: {
     paddingHorizontal: 20,
     marginVertical: 10,
-    borderLeftWidth: 4,
-    borderLeftColor: commonStyle.light
+    borderLeftWidth: 2,
+    borderLeftColor: commonStyle.primary
   },
   blockquoteText: {
     fontFamily: commonStyle.paragraphFont,

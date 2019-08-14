@@ -119,37 +119,51 @@ export default class App extends React.Component {
       )
     }
     return (
-      <Wrapper navigation={this.props.navigation} title={this.getPageTitle()} style={{flex:1}}>
+      <Wrapper navigation={this.props.navigation} title={this.getPageTitle()} style={{flex:1, backgroundColor: commonStyle.contentBackgroundColor}}>
           <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
           <ScrollView ref={this.scrollRef}>
             <View>
               <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
                 {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
               </Markdown>
-              <Divider style={{ marginVertical: 20 }} />
-              <View style={{ flex: 1, flexDirection: 'row' }}>
-                  <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
-                      Share.share({ message: this.getPagePermalink() }).then((result) => {
-                      this.state.analytics.logEvent('sharedPage', {page: this.getPagePermalink(), activity: result.activityType})
-                      }).catch((err) => {this.state.analytics.logEvent('error', {errorDetail: err})})
-                  }}>
-                  <View style={{ alignSelf: 'flex-start' }}>
-                      <Icon name='share' />
-                      <Text style={markdownStyles.text}>Share</Text>
-                  </View>
-                  </TouchableHighlight>
-                  <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.getPageGitHubLink()) }}>
-                  <View style={{ alignSelf: 'flex-end' }}>
-                      <Icon name='edit' />
-                      <Text style={markdownStyles.text}>Edit</Text>
-                  </View>
-                  </TouchableHighlight>
-              </View>
+              <PageMenu 
+                pagePermalink={this.getPagePermalink()}
+                pageGitHubLink={this.getPageGitHubLink()}
+                analytics={this.state.analytics}
+              />
             </View>
           </ScrollView>
       </Wrapper>
     );
     
           
+  }
+}
+
+class PageMenu extends React.Component {
+  render() {
+    return (
+      <View>
+        <Divider style={{ marginVertical: 20 }} />
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+            <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
+                Share.share({ message: this.props.pagePermalink }).then((result) => {
+                this.props.analytics.logEvent('sharedPage', {page: this.props.pagePermalink, activity: result.activityType})
+                }).catch((err) => {this.props.analytics.logEvent('error', {errorDetail: err})})
+            }}>
+            <View style={{ alignSelf: 'flex-start' }}>
+                <Icon name='share' />
+                <Text style={markdownStyles.text}>Share</Text>
+            </View>
+            </TouchableHighlight>
+            <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.props.pageGitHubLink) }}>
+            <View style={{ alignSelf: 'flex-end' }}>
+                <Icon name='edit' />
+                <Text style={markdownStyles.text}>Edit</Text>
+            </View>
+            </TouchableHighlight>
+        </View>
+      </View>
+    )
   }
 }

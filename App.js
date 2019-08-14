@@ -45,6 +45,14 @@ class BottomDrawer extends React.Component {
   };
 
   _handleIndexChange = index => this.setState({ index });
+  _handleTabPress = (index) => {
+    this.setState({
+      navigationHistory: this.state.navigationHistory.concat({
+        index: index,
+        routeParams: {}
+      })
+    })
+  }
 
   _renderScene = ({route, jumpTo}) => {
     let page = null
@@ -100,6 +108,7 @@ class BottomDrawer extends React.Component {
       activeColor={commonStyle.headerFontColor}
       inactiveColor={commonStyle.headerFontColor}
       navigationState={this.state}
+      onTabPress={this._handleTabPress}
       onIndexChange={this._handleIndexChange}
       renderScene={this._renderScene}
     />)

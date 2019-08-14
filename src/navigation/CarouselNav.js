@@ -28,7 +28,6 @@ export default class CarouselNav extends React.Component {
         ]
     }
     _renderItem ({item, index}) {
-        console.log(item)
         return (
             <Card>
                 <Card.Content style={{height: 150}}>

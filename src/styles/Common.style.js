@@ -8,7 +8,7 @@ let palette = {
 	secondary: '#143642',
 	light: '#f9fbfc',
 	white: '#FFFFFF',
-	lightText: '#999999',
+	lightText: '#444444',
 	highlight: '#161B33',
 	dark: '#313638',
 }
@@ -41,6 +41,7 @@ export const commonStyle = {
 	headingFontColor: palette.secondary,
 	paragraphFont: Platform.OS === 'ios' ? 'system font' : 'sans-serif',
 	paragraphFontBold: Platform.OS === 'ios' ? 'ArialRoundedMTBold' : 'sans-serif-bold',
+	contentBackgroundColor: palette.white,
 	content: {
 		paddingLeft: 30,
 		paddingRight: 30,
