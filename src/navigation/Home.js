@@ -1,16 +1,10 @@
 import React from 'react';
-import { SafeAreaView, Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
+import { Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
-import { createAppContainer } from 'react-navigation';
 import Markdown from 'react-native-markdown-renderer';
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import SideMenu, { MenuItems } from './SideMenu.js';
 import Pages from '../Pages.js';
-import SettingsScreen from '../settings/SettingsScreen.js';
-import {_} from 'lodash'
+import { _ } from 'lodash'
 import ContentIndex from './ContentIndex'
-
-import { Storage } from '../Storage.js'
 import Wrapper from '../navigation/Wrapper.js'
 import { markdownRules } from '../MarkDownRules.js'
 import { markdownStyles } from '../styles/Markdown.style.js';

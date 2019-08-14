@@ -52,7 +52,6 @@ class BottomDrawer extends React.Component {
   _renderScene = ({route, jumpTo}) => {
     let page = null
     if(route.key == 'home'){
-      console.log("Showing " + route.key)
       return <HomeScreen
         storage={this.state.storage} 
         navigation={this}
@@ -60,14 +59,12 @@ class BottomDrawer extends React.Component {
       />
     }
     if(route.key == 'settings'){
-      console.log("Showing " + route.key)
       return <SettingsScreen
         storage={this.state.storage} 
         navigation={this}
       />
     }
     if(route.key == 'search'){
-      console.log("Showing " + route.key)
       return <SearchScreen 
         storage={this.state.storage} 
         navigation={this}
@@ -90,7 +87,6 @@ class BottomDrawer extends React.Component {
 
   goBack = () => {
     lastLocation = this.state.navigationHistory[this.state.navigationHistory.length-2]
-    console.log(lastLocation)
     if(_.isNil(lastLocation)){
       return
     }

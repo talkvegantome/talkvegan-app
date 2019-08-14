@@ -1,17 +1,17 @@
 import React from 'react';
 import { Text, View} from 'react-native'
 import { Searchbar, Button, Card, Title, Paragraph } from 'react-native-paper';
-
-
+import RemoveMarkdown from 'remove-markdown';
 import {_} from 'lodash';
 import Wrapper from './Wrapper.js';
 import Analytics, { PrivacyDialog } from '../analytics'
 import Pages from '../Pages.js';
 import { markdownRules } from '../MarkDownRules.js'
 import { commonStyle } from '../styles/Common.style.js';
+
 function multiIncludes(text, values){
     return _.map(values, (o) => {
-        var re = new RegExp('(?<before>.{0,20})(?<match>' + o +')(?<after>.{0,20})');
+        var re = new RegExp('(?<before>.{0,100})(?<match>' + o +')(?<after>.{0,100})');
         return text.match(re)
     })
     
@@ -50,7 +50,7 @@ export default class Search extends React.Component{
             results = _.map(this.state.pages, (o, i) => {  
                 return {
                     path: i,
-                    matches: multiIncludes(o, split_query)
+                    matches: multiIncludes(RemoveMarkdown(o), split_query)
                 }
             })
         }
