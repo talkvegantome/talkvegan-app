@@ -84,9 +84,8 @@ class SettingsScreen extends React.Component {
       <Wrapper
         navigation={this.props.navigation}
         title="Settings"
-        safeAreaViewStyle={{ backgroundColor: '#D3D3D3' }}
         footer={footer}
-        style={{ paddingRight: 0, paddingLeft: 0, backgroundColor: '#D3D3D3' }}>
+        style={{ paddingRight: 0, paddingLeft: 0, backgroundColor: '#E5' }}>
         <SettingsModal
           modalVisible={this.state.modalVisible}
           title={"Select Language"}

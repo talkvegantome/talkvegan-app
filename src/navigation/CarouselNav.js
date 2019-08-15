@@ -15,7 +15,7 @@ export default class CarouselNav extends React.Component {
                 <Paragraph style={{height: 100}}>{item.content}</Paragraph>
                 </Card.Content>
                 <Card.Actions>
-                <Button>More...</Button>
+                    <Button>More...</Button>
                 </Card.Actions>
             </Card>
         );

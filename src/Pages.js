@@ -63,6 +63,13 @@ class Pages {
   getPages(){
     return this.pageData[this.settings.language].pages
   }
+  getPageTitles(){
+    pageTitles = {}
+    _.forEach(this.getPages(), (content, index) => {
+      pageTitles[index] = this.getPageTitle(index)
+    })
+    return pageTitles
+  }
   getSplashPath(){
     return '/'+this.settings.language+'/splash/'
   }
