@@ -9,7 +9,7 @@
 import React from 'react';
 import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js'
-import HomeScreen from './src/navigation/Home.js';
+import HomeScreen from './src/home/Home.js';
 import {_} from 'lodash'
 
 import { Storage } from './src/Storage.js'

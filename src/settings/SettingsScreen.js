@@ -14,7 +14,7 @@ import _ from 'lodash';
 import Analytics from '../analytics'
 
 import { commonStyle } from '../styles/Common.style.js'
-import Wrapper from '../navigation/Wrapper.js'
+import Wrapper from '../wrapper/Wrapper.js'
 import Pages from '../Pages.js';
 
 class SettingsScreen extends React.Component {

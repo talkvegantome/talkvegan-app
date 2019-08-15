@@ -13,7 +13,6 @@ export default class SearchScoring {
     results = {}
     constructor(props){
         this.pages = props.pages
-        console.log("New SearchScoring with: " + _.keys(props.pages)[0])
         this.query = props.query
         this.pageTitles = props.pageTitles
         _.forEach(this.pages, (o, i) => this.results[i] = [])

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from '../styles/SideMenu.style.js';
 import {Text, View, SafeAreaView } from 'react-native';
-import { ListItem, Divider } from 'react-native-elements';
+import RemoveMarkdown from 'remove-markdown';
 import {commonStyle} from '../styles/Common.style'
 import {markdownStyles} from '../styles/Markdown.style'
 import _ from 'lodash';
@@ -53,31 +53,24 @@ export default class ContentIndex extends Component{
         }
         return {
             title: item.friendlyName,
-            content: item.description ? item.description : this.attemptToSanitiseMarkdown(item.rawContent),
+            content: item.description ? item.description : RemoveMarkdown(item.rawContent).replace(/\n/g, ' '),
             navigateTo: this.navigateToScreen(item.relativePermalink)
         }
         
     }), function(o){return !_.isNil(o)})
   }
-  attemptToSanitiseMarkdown(text){
-      return text.replace(/>|#/g,'')
-  }
+  
   render(){
     let menuSorted = _.sortBy(this.state.menu, ['weight', 'friendlyName'])
     return _.map(menuSorted, (headerItem) => {
       let headerFriendlyName = headerItem.friendlyName
       let items = this.generateCardList(headerItem)
-     
-
-      let headerVisibility = this.state.headerVisibility
-      let display = headerFriendlyName in headerVisibility && headerVisibility[headerFriendlyName]? 'flex': 'none'
       return (
         <View key={headerFriendlyName}>
             <View style={commonStyle.content}>
                 <Text style={markdownStyles.heading1}>{headerFriendlyName}</Text> 
             </View>
             <CarouselNav items={items} navigation={this.props.navigation}></CarouselNav>
-        
         </View>
       )
     })

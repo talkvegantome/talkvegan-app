@@ -1,12 +1,11 @@
 import React from 'react';
-import { Text, View} from 'react-native'
+import { Text } from 'react-native'
 import { Searchbar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import {_} from 'lodash';
-import Wrapper from '../navigation/Wrapper.js';
-import Analytics, { PrivacyDialog } from '../analytics'
+import { _ } from 'lodash';
+import Wrapper from '../wrapper/Wrapper.js';
+import Analytics from '../analytics'
 import Pages from '../Pages.js';
 import SearchScoring from './SearchScoring.js';
-import { markdownRules } from '../MarkDownRules.js'
 import { commonStyle } from '../styles/Common.style.js';
 
 function multiIncludes(text, values){
