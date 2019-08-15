@@ -69,14 +69,15 @@ export default class Search extends React.Component{
         })
     }
     renderMatch = (key, result) => {
-        console.log(result)
-        let contextMaxLength = result.topMatch.length == 1 ? {start: 90, end: 200} : {start: 20, end: 20}
+        let contextMaxLength = result.topMatch.matches.length == 1 ? {start: 90, end: 200} : {start: 20, end: 20}
         return (
             <Card key={key} style={{marginTop: 10}}
                 onPress={() => this.props.navigation.navigate('Home',{indexId: result.path})}>
                 <Card.Content style={{height: 150}}>
                     <Title style={{height: 30}}>{this.state.pagesObj.getPageTitle(result.path)}</Title>
-                    {_.map(result.topMatch.matches, (match) => this.renderMatchText(match, contextMaxLength))}
+                    <Paragraph style={{maxHeight: 110}} key={key}>
+                        {_.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index))}
+                        </Paragraph>
                 </Card.Content>
                 <Card.Actions>
                     <Button>More...</Button>
@@ -84,18 +85,17 @@ export default class Search extends React.Component{
             </Card>
         )
     }
-    renderMatchText = (match, contextMaxLength) => {
-        console.log(match)
+    renderMatchText = (match, contextMaxLength, key) => {
         let contextBefore = match.groups.contextBefore.replace(/\n/gms, ' ')
         let contextAfter = match.groups.contextAfter.replace(/\n/gms, ' ')
         contextBefore = contextBefore.slice(-contextMaxLength.start) // Limit length from the end
         contextAfter = contextAfter.slice(0, contextMaxLength.end) // Limit length from the beginning
         return (
-            <Paragraph style={{height: 110}}>
+            <Text>
                 <Text>{contextBefore}</Text>
                 <Text style={{color: commonStyle.primary}}>{match.groups.match}</Text>
                 <Text>{contextAfter}</Text>
-            </Paragraph>
+            </Text>
         )
     }
     render() {
@@ -121,7 +121,6 @@ class SearchScoring {
     matchScores = {
         'exactTitle': 200,
         'allWordsTitle': 40,
-
         'exactContent': 100,
         'allWordsContent': 20,
     }
@@ -145,12 +144,10 @@ class SearchScoring {
             matches: matches,
             score: score
         })
-        
     }
 
     getMatches = () => {
         this.createScores()
-        
         return this.aggregateScoresByPage()
     }
     
@@ -171,14 +168,14 @@ class SearchScoring {
 
     createScores = () => {
         _.forEach(this.pages, (pageContent, path) => {
-
+            pageContent = RemoveMarkdown(pageContent)
             // Match against page content
             this.scoreExactMatch(pageContent, path, this.matchScores.exactContent);
             this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent);
 
             // Match against titles
             this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle);
-            this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsTitle);
+            this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle);
         })
         
     }
@@ -194,17 +191,16 @@ class SearchScoring {
 
     scoreMatchAllWords = (content, path, score) => {
         let queryWords = this.query.split(' ');
-        let wordResults = {};
         if(queryWords.length < 2){
             return
         }
-
+        let wordResults = {};
         _.forEach(queryWords, (queryWord) => {
             wordResults[queryWord] = []
             re = this.contextRegexBuilder(queryWord, 'si')
             let match = content.match(re)
             if(!_.isNull(match)){
-                wordResults[queryWord].push()
+                wordResults[queryWord].push(match)
             }
         })
         if(_.every(wordResults, (val) => val.length)){
