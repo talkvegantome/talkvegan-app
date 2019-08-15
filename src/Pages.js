@@ -61,7 +61,10 @@ class Pages {
     return this.pageData[this.settings.language].menu
   }
   getPages(){
-    return this.pageData[this.settings.language].pages
+    if(!this.pages){
+      this.pages = this.pageData[this.settings.language].pages
+    }
+    return this.pages
   }
   getPageTitles(){
     pageTitles = {}
@@ -85,8 +88,7 @@ class Pages {
   }
   getFriendlyName(relPath){
     let friendlyName = null
-     this.pageData[this.settings.language].data.forEach((page) => {
-
+    this.pageData[this.settings.language].data.forEach((page) => {
       if(page.relativePermalink === relPath){
         friendlyName = page.friendlyName
       }
@@ -98,9 +100,40 @@ class Pages {
     let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
     return pageTitle
   }
-
   getLanguageDataUri(){
     return this.storage.config.apiUrl + this.settings.language + '/index.json'
+  }
+  getPagePermalink(pageIndex) {
+    return this.getPageMetadata(pageIndex).permalink
+  }
+  getPageGitHubLink(pageIndex) {
+    let pageMetadata = this.getPageMetadata(pageIndex)
+    let languageName = this.storage.pageData[this.settings.language].languageName
+    let gitHubPath = pageMetadata.relativePermalink
+
+    // Replace the language shortcode with the full name
+    gitHubPath = gitHubPath.replace(/^\/[^\/]+\//, '/' + languageName.toLowerCase() + '/')
+    // Replace the trailing slash with .md
+    gitHubPath = gitHubPath.replace(/\/$/, '.md')
+    return this.storage.config.gitHubUrl + 'blob/master/content' + gitHubPath
+  }
+  getPageContent(pageIndex) {
+    let pages = this.getPages()
+    if (!pages[pageIndex]) {
+      let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
+      this.state.analytics.logEvent('error', { errorDetail: errorMessage })
+      return errorMessage
+    }
+    return pages[pageIndex]
+  }
+  getPageTitle(pageIndex) {
+    let pageMetadata = this.getPageMetadata(pageIndex)
+    let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
+    // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
+    if (pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)) {
+      return 'TalkVeganToMe'
+    }
+    return pageTitle
   }
 
   async pullPageDataFromSite(){

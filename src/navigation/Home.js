@@ -16,89 +16,33 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.scrollRef= React.createRef();
-    this.props.storage.triggerUpdateMethods.push((storage) => {
-      let pagesObj = new Pages(storage)
-      let analytics = new Analytics(storage.settings)
-      this.setState({
-        analytics: analytics,
-        pagesObj: pagesObj,
-        settings: storage.settings,
-        pages: pagesObj.getPages(),
-        splashPath: pagesObj.getSplashPath(),
-        markdownRulesObj: new markdownRules(props.navigation, storage.settings),
-      })
-    })
-    let analytics = new Analytics(this.props.storage.settings)
-    let pagesObj = new Pages(this.props.storage)
-    this.state = {
-      analytics: analytics,
-      pagesObj: pagesObj,
-      pages: pagesObj.getPages(),
-      splashPath: pagesObj.getSplashPath(),
-      settings: this.props.storage.settings,
-      markdownRulesObj: new markdownRules(props.navigation, this.props.storage.settings),
-      indexHistory: []
-    };
-    this.state.analytics.logEvent('Loaded Application')
+    this.props.storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
+    this.state = this.returnState(this.props.storage)
   }
   componentDidUpdate(){
     this.scrollRef.current.scrollTo({y: 0, animated: false})
   }
+
+  returnState = (storage) => {
+    let pagesObj = new Pages(storage)
+    let analytics = new Analytics(storage.settings)
+    return {
+      analytics: analytics,
+      pagesObj: pagesObj,
+      settings: storage.settings,
+      pages: pagesObj.getPages(),
+      splashPath: pagesObj.getSplashPath(),
+      markdownRulesObj: new markdownRules(this.props.navigation, storage.settings),
+    }
+  }
   
-
-  static navigationOptions = {
-    drawerLabel: 'Home',
-  };
-
-  static navigationOptions = {
-    header: null,
-  };
-
-  getPageIndex() {
-    let pageIndex = this.props.indexId
-    return pageIndex ? pageIndex : this.state.splashPath
-  }
-  getPagePermalink() {
-    let pageIndex = this.getPageIndex()
-    let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
-    return pageMetadata.permalink
-  }
-  getPageGitHubLink() {
-    let pageIndex = this.getPageIndex()
-    let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
-    let languageName = this.props.storage.pageData[this.state.settings.language].languageName
-    let gitHubPath = pageMetadata.relativePermalink
-
-    // Replace the language shortcode with the full name
-    gitHubPath = gitHubPath.replace(/^\/[^\/]+\//, '/' + languageName.toLowerCase() + '/')
-    // Replace the trailing slash with .md
-    gitHubPath = gitHubPath.replace(/\/$/, '.md')
-    return this.props.storage.config.gitHubUrl + 'blob/master/content' + gitHubPath
-  }
-  getPageContent() {
-    let pageIndex = this.getPageIndex()
-    if (!this.state.pages[pageIndex]) {
-      let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
-      this.state.analytics.logEvent('error', { errorDetail: errorMessage })
-      return errorMessage
-    }
-    return this.state.pages[pageIndex]
-  }
-  getPageTitle() {
-    let pageMetadata = this.state.pagesObj.getPageMetadata(this.props.indexId)
-    let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
-    // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
-    if (pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)) {
-      return 'TalkVeganToMe'
-    }
-    return pageTitle
-  }
+  
   render() {
     if(_.isNil(this.props.indexId)){
       return (
         <Wrapper 
           navigation={this.props.navigation} 
-          title={this.getPageTitle()} 
+          title={this.state.pagesObj.getPageTitle()} 
           style={{
             flex: 1,
             paddingLeft: 0,
@@ -113,16 +57,16 @@ export default class App extends React.Component {
       )
     }
     return (
-      <Wrapper navigation={this.props.navigation} title={this.getPageTitle()} style={{flex:1, backgroundColor: commonStyle.contentBackgroundColor}}>
+      <Wrapper navigation={this.props.navigation} title={this.state.pagesObj.getPageTitle(this.props.indexId)} style={{flex:1, backgroundColor: commonStyle.contentBackgroundColor}}>
           <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
           <ScrollView ref={this.scrollRef}>
             <View>
               <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
-                {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
+                {this.state.markdownRulesObj.preProcessMarkDown(this.state.pagesObj.getPageContent(this.props.indexId))}
               </Markdown>
               <PageMenu 
-                pagePermalink={this.getPagePermalink()}
-                pageGitHubLink={this.getPageGitHubLink()}
+                pagePermalink={this.state.pagesObj.getPagePermalink(this.props.indexId)}
+                pageGitHubLink={this.state.pagesObj.getPageGitHubLink(this.props.indexId)}
                 analytics={this.state.analytics}
               />
             </View>

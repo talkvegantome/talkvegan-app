@@ -8,7 +8,7 @@
 
 import React from 'react';
 import SettingsScreen from './src/settings/SettingsScreen.js';
-import SearchScreen from './src/navigation/Search.js'
+import SearchScreen from './src/search/Search.js'
 import HomeScreen from './src/navigation/Home.js';
 import {_} from 'lodash'
 
@@ -35,6 +35,7 @@ class BottomDrawer extends React.Component {
       routeParams: {}
     }]
   };
+  
 
   _handleIndexChange = (index) => {
     this.setState({ index });
