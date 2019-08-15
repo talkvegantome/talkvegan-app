@@ -69,13 +69,15 @@ export default class Search extends React.Component{
         })
     }
     renderMatch = (key, result) => {
-        let contextMaxLength = result.topMatch.matches.length == 1 ? {start: 90, end: 200} : {start: 20, end: 20}
+        let numMatches = result.topMatch.matches.length
+        let contextMaxLength = numMatches == 1 ? {start: 90, end: 200} : {start: 100/numMatches, end: 100/numMatches}
         return (
             <Card key={key} style={{marginTop: 10}}
                 onPress={() => this.props.navigation.navigate('Home',{indexId: result.path})}>
                 <Card.Content style={{height: 150}}>
                     <Title style={{height: 30}}>{this.state.pagesObj.getPageTitle(result.path)}</Title>
-                    <Paragraph style={{maxHeight: 110}} key={key}>
+                    <Paragraph style={{maxHeight: 110}}>
+                        <Text> ...</Text>
                         {_.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index))}
                         </Paragraph>
                 </Card.Content>
@@ -91,10 +93,10 @@ export default class Search extends React.Component{
         contextBefore = contextBefore.slice(-contextMaxLength.start) // Limit length from the end
         contextAfter = contextAfter.slice(0, contextMaxLength.end) // Limit length from the beginning
         return (
-            <Text>
+            <Text key={key}>
                 <Text>{contextBefore}</Text>
                 <Text style={{color: commonStyle.primary}}>{match.groups.match}</Text>
-                <Text>{contextAfter}</Text>
+                <Text>{contextAfter} ... </Text>
             </Text>
         )
     }
