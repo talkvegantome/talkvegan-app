@@ -21,6 +21,7 @@ export default class SearchScoring {
     contextRegexBuilder = (needle, options='si') => {
         contextBeforePattern = '(?<contextBefore>.{0,' + this.contextBeforeLength + '})'
         contextAfterPattern = '(?<contextAfter>.{0,' + this.contextAfterLength + '})'
+        console.log(contextBeforePattern + '(?<match>' +  _.escapeRegExp(needle) +')' + contextAfterPattern)
         return new RegExp(contextBeforePattern + '(?<match>' +  _.escapeRegExp(needle) +')' + contextAfterPattern, options);
     }
 
@@ -67,7 +68,7 @@ export default class SearchScoring {
     }
 
     scoreExactMatch = (content, path, score) => {
-        re = this.contextRegexBuilder(this.query, 'sig')
+        re = this.contextRegexBuilder(this.query, 'ig')
         while (match = re.exec(content)) {
             if(!_.isNull(match[0])){
                 this.appendResult(path, [match], score)
@@ -82,6 +83,7 @@ export default class SearchScoring {
         }
         let wordResults = {};
         _.forEach(queryWords, (queryWord) => {
+            if(_.isNull(queryWord)){return}
             wordResults[queryWord] = []
             re = this.contextRegexBuilder(queryWord, 'si')
             let match = content.match(re)
