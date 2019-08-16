@@ -66,7 +66,6 @@ export default class Search extends React.Component{
         })
     }
     renderMatch = (key, result) => {
-        console.log(result.totalScore + ' ' + result.topMatch.type + ' ' + result.path)
         let numMatches = result.topMatch.matches.length
         let contextMaxLength = numMatches == 1 ? {start: 90, end: 200} : {start: 100/numMatches, end: 100/numMatches}
         let title, body = ''
@@ -99,7 +98,7 @@ export default class Search extends React.Component{
         contextBefore = contextBefore.slice(-contextMaxLength.start) // Limit length from the end
         contextAfter = contextAfter.slice(0, contextMaxLength.end) // Limit length from the beginning
         return (
-            <Text>
+            <Text key={key}>
                 {showEllipsis && <Text> ...</Text>}
                 <Text key={key}>
                     <Text>{contextBefore}</Text>
