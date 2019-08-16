@@ -1,4 +1,5 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
+
 import _ from 'lodash'
 import Pages from './Pages.js'
 

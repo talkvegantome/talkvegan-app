@@ -184,6 +184,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-vector-icons')
     compile 'com.amplitude:android-sdk:2.19.1' // native sdk of amplitude
     compile project(':react-native-amplitude-analytics') // our react-native module
