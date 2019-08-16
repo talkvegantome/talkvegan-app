@@ -2,19 +2,13 @@ import React from 'react';
 import { Text } from 'react-native'
 import { Searchbar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { _ } from 'lodash';
+import RemoveMarkdown from 'remove-markdown';
+
 import Wrapper from '../wrapper/Wrapper.js';
 import Analytics from '../analytics'
 import Pages from '../Pages.js';
 import SearchScoring from './SearchScoring.js';
 import { commonStyle } from '../styles/Common.style.js';
-
-function multiIncludes(text, values){
-    return _.map(values, (o) => {
-        var re = new RegExp('(?<before>.{0,90})(?<match>' + o +')(?<after>.{0,200})', 'si');
-        return text.match(re)
-    })
-    
-}
 
 export default class Search extends React.Component{
     constructor(props) {
@@ -72,17 +66,26 @@ export default class Search extends React.Component{
         })
     }
     renderMatch = (key, result) => {
+        console.log(result.totalScore + ' ' + result.topMatch.type + ' ' + result.path)
         let numMatches = result.topMatch.matches.length
         let contextMaxLength = numMatches == 1 ? {start: 90, end: 200} : {start: 100/numMatches, end: 100/numMatches}
+        let title, body = ''
+        if(result.topMatch.type === 'Title'){
+            title = _.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index, false))
+            body = RemoveMarkdown(this.state.pagesObj.getPageContent(result.path))
+        }else{
+            title = this.state.pagesObj.getPageTitle(result.path)
+            body = _.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index))
+        }
+        
         return (
             <Card key={key} style={{marginTop: 10}}
                 onPress={() => this.props.navigation.navigate('Home',{indexId: result.path})}>
                 <Card.Content style={{height: 150}}>
-                    <Title style={{height: 30}}>{this.state.pagesObj.getPageTitle(result.path)}</Title>
+                    <Title style={{height: 30}}>{title}</Title>
                     <Paragraph style={{maxHeight: 110}}>
-                        <Text> ...</Text>
-                        {_.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index))}
-                        </Paragraph>
+                        {body}
+                    </Paragraph>
                 </Card.Content>
                 <Card.Actions>
                     <Button>More...</Button>
@@ -90,16 +93,19 @@ export default class Search extends React.Component{
             </Card>
         )
     }
-    renderMatchText = (match, contextMaxLength, key) => {
+    renderMatchText = (match, contextMaxLength, key, showEllipsis=true) => {
         let contextBefore = match.groups.contextBefore.replace(/\n/gms, ' ')
         let contextAfter = match.groups.contextAfter.replace(/\n/gms, ' ')
         contextBefore = contextBefore.slice(-contextMaxLength.start) // Limit length from the end
         contextAfter = contextAfter.slice(0, contextMaxLength.end) // Limit length from the beginning
         return (
-            <Text key={key}>
-                <Text>{contextBefore}</Text>
-                <Text style={{color: commonStyle.primary}}>{match.groups.match}</Text>
-                <Text>{contextAfter} ... </Text>
+            <Text>
+                {showEllipsis && <Text> ...</Text>}
+                <Text key={key}>
+                    <Text>{contextBefore}</Text>
+                    <Text style={{color: commonStyle.primary}}>{match.groups.match}</Text>
+                    <Text>{contextAfter} {showEllipsis && '...'} </Text>
+                </Text>
             </Text>
         )
     }

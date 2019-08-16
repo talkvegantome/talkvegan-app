@@ -21,15 +21,15 @@ export default class SearchScoring {
     contextRegexBuilder = (needle, options='si') => {
         contextBeforePattern = '(?<contextBefore>.{0,' + this.contextBeforeLength + '})'
         contextAfterPattern = '(?<contextAfter>.{0,' + this.contextAfterLength + '})'
-        console.log(contextBeforePattern + '(?<match>' +  _.escapeRegExp(needle) +')' + contextAfterPattern)
         return new RegExp(contextBeforePattern + '(?<match>' +  _.escapeRegExp(needle) +')' + contextAfterPattern, options);
     }
 
-    appendResult = (path, matches, score) => {
+    appendResult = (path, matches, score, type) => {
         // matches is expected to be [{contextBefore: '', contextAfter: '', match: ''}]
         this.results[path].push({    
             matches: matches,
-            score: score
+            score: score,
+            type: type
         })
     }
 
@@ -57,26 +57,26 @@ export default class SearchScoring {
         _.forEach(this.pages, (pageContent, path) => {
             pageContent = RemoveMarkdown(pageContent)
             // Match against page content
-            this.scoreExactMatch(pageContent, path, this.matchScores.exactContent);
-            this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent);
+            this.scoreExactMatch(pageContent, path, this.matchScores.exactContent, 'Content');
+            this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent, 'Content');
 
             // Match against titles
-            this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle);
-            this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle);
+            this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle, 'Title');
+            this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle, 'Title');
         })
         
     }
 
-    scoreExactMatch = (content, path, score) => {
+    scoreExactMatch = (content, path, score, type) => {
         re = this.contextRegexBuilder(this.query, 'ig')
         while (match = re.exec(content)) {
             if(!_.isNull(match[0])){
-                this.appendResult(path, [match], score)
+                this.appendResult(path, [match], score, type)
             }
         }
     }
 
-    scoreMatchAllWords = (content, path, score) => {
+    scoreMatchAllWords = (content, path, score, type) => {
         let queryWords = this.query.split(' ');
         if(queryWords.length < 2){
             return
@@ -92,7 +92,7 @@ export default class SearchScoring {
             }
         })
         if(_.every(wordResults, (val) => val.length)){
-            this.appendResult(path, _.map(wordResults, (o) => o[0]), score)
+            this.appendResult(path, _.map(wordResults, (o) => o[0]), score, type)
         }
     }
 }
