@@ -40,6 +40,10 @@ class Pages {
       language.pages = {}
       language.menu = {}
       _.forEach(language['data'], (page) => {
+        if(!_.isNil(page.displayInApp) && !page.displayInApp){
+          // Don't display this page if it has displayInApp=false
+          return 
+        }
         language.pages[page.relativePermalink] = page.rawContent
 
         // If it's a top level page (e.g. splash, we don't want it appearing on the menu)
