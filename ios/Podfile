@@ -3,4 +3,6 @@ use_frameworks!
 
 target 'TalkVeganToMe' do
   pod 'Amplitude-iOS', '~> 4.5'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
 end

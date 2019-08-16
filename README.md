@@ -55,3 +55,6 @@ export ANDROID_KEYSTORE_KEY_PASSWORD=
 2. Update version details in `android/fastlane/Fastfile`
 3. `cd android`
 4. `fastlane beta`
+
+## react native upgrade guide
+check `build.gradle` in https://react-native-community.github.io/upgrade-helper/?from=0.60.0&to=0.60.5 against your version
