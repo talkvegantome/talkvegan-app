@@ -71,7 +71,7 @@ export default class Search extends React.Component{
         let title, body = ''
         if(result.topMatch.type === 'Title'){
             title = _.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index, false))
-            body = RemoveMarkdown(this.state.pagesObj.getPageContent(result.path))
+            body = RemoveMarkdown(this.state.pagesObj.getPageContent(result.path)).replace(/\n/g, ' ')
         }else{
             title = this.state.pagesObj.getPageTitle(result.path)
             body = _.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index))

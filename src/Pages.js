@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 import stringify from 'fast-stringify'
 import {DateTime} from 'luxon';
+import RemoveMarkdown from 'remove-markdown';
 
 import Analytics from './analytics'
 
@@ -103,6 +104,12 @@ class Pages {
     let pageMetadata = this.getPageMetadata(indexId)
     let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
     return pageTitle
+  }
+  getPageDescription(indexId){
+    let pageMetadata = this.getPageMetadata(indexId)
+    return pageMetadata.description ? 
+            pageMetadata.description : 
+            RemoveMarkdown(pageMetadata.rawContent).replace(/\n/g, ' ')
   }
   getLanguageDataUri(){
     return this.storage.config.apiUrl + this.settings.language + '/index.json'

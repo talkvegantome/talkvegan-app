@@ -18,9 +18,9 @@ export default class SearchScoring {
         _.forEach(this.pages, (o, i) => this.results[i] = [])
     }
 
-    contextRegexBuilder = (needle, options='i') => {
-        contextBeforePattern = '(?<contextBefore>.{0,' + this.contextBeforeLength + '})'
-        contextAfterPattern = '(?<contextAfter>.{0,' + this.contextAfterLength + '})'
+    contextRegexBuilder = (needle, options='im') => {
+        contextBeforePattern = '(?<contextBefore>(.|\n)*)'
+        contextAfterPattern = '(?<contextAfter>(.|\n)*)'
         return new RegExp(contextBeforePattern + '(?<match>' +  _.escapeRegExp(needle) +')' + contextAfterPattern, options);
     }
 
@@ -68,7 +68,7 @@ export default class SearchScoring {
     }
 
     scoreExactMatch = (content, path, score, type) => {
-        re = this.contextRegexBuilder(this.query, 'ig')
+        re = this.contextRegexBuilder(this.query, 'igm')
         while (match = re.exec(content)) {
             if(!_.isNull(match[0])){
                 this.appendResult(path, [match], score, type)
@@ -85,7 +85,7 @@ export default class SearchScoring {
         _.forEach(queryWords, (queryWord) => {
             if(_.isNull(queryWord)){return}
             wordResults[queryWord] = []
-            re = this.contextRegexBuilder(queryWord, 'i')
+            re = this.contextRegexBuilder(queryWord, 'im')
             let match = content.match(re)
             if(!_.isNull(match)){
                 wordResults[queryWord].push(match)
