@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text } from 'react-native'
-import { Searchbar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Text, View } from 'react-native'
+import { Searchbar, Card, Title, Paragraph, Button, IconButton} from 'react-native-paper';
 import { _ } from 'lodash';
 import RemoveMarkdown from 'remove-markdown';
 
@@ -13,6 +13,7 @@ import { commonStyle } from '../styles/Common.style.js';
 export default class Search extends React.Component{
     constructor(props) {
         super(props);
+        
         this.props.storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
         this.state = this.returnState(this.props.storage)
     }
@@ -20,61 +21,69 @@ export default class Search extends React.Component{
         let analytics = new Analytics(storage.settings)
         let pagesObj = new Pages(storage)
         return {
+            searchPending: false,
+            query: '',
+            results: [],
+            resultsPlaceholder: '',
             storage: storage,
+            ticksSinceQueryUpdated: 0,
             analytics: analytics,
             pagesObj: pagesObj,
-        }
-    }
-    componentDidMount() {
-        let timer = setInterval(() => {
-            this._searchTimer()
-        }, 200);
-        this.setState({ timer: timer });
-    }
-    componentWillUnmount() {
-        this.clearInterval(this.state.timer);
-    }
-    state = {
-        query: '',
-        searchPending: false
-    }
-    _searchTimer = () => {
-        if(!this.state.searchPending){
-            return
-        }
-        if(this.state.query.length < 2){
-            this.setState({
-                results: [],
-                searchPending: false
+            searchScoring: new SearchScoring({
+                pages: pagesObj.getPages(), 
+                pageTitles: pagesObj.getPageTitles(), 
             })
-            return
         }
-        this.setState({searchPending: false})
-        let searchScoring = new SearchScoring({
-            pages: this.state.pagesObj.getPages(), 
-            pageTitles: this.state.pagesObj.getPageTitles(), 
-            query: this.state.query
-        })
+    }
+
+    _search = () =>  {
+        results = this.state.searchScoring.getMatches(this.state.query)
         this.setState({
-            results: searchScoring.getMatches(),
-            searchPending: false
+            results: results,
+            resultsPlaceholder: results.length == 0 ? 'No Results for: ' + this.state.query: '',
+            searchInProgress: false,
         })
     }
-    _search = (query) => {
-        this.setState({
-            query: query, 
-            searchPending: true
-        })
+    _searchQueryUpdate = (query) => this.setState({query: query})
+
+    
+    render() {
+        return (
+            <Wrapper navigation={this.props.navigation} title={'Search'} style={{flex:1}}>
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                    <Searchbar
+                        style={{marginTop: 10, width: '100%'}}
+                        placeholder="Search"
+                        onChangeText={this._searchQueryUpdate}
+                        onSubmitEditing={() => {
+                            this.setState({
+                                searchInProgress: true
+                            });
+                            this._search()
+                        }}
+                        value={this.state.query}
+                    />
+                </View>
+                <Results 
+                    resultsPlaceholder={this.state.resultsPlaceholder} 
+                    results={this.state.results}
+                    pagesObj={this.state.pagesObj}
+                />
+            </Wrapper>
+        )
     }
+}
+
+class Results extends React.Component {
     renderMatch = (key, result) => {
         let numMatches = result.topMatch.matches.length
         let contextMaxLength = numMatches == 1 ? {start: 90, end: 200} : {start: 100/numMatches, end: 100/numMatches}
         let title, body = ''
         if(result.topMatch.type === 'Title'){
             title = _.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index, false))
-            body = RemoveMarkdown(this.state.pagesObj.getPageContent(result.path)).replace(/\n/g, ' ')
+            body = RemoveMarkdown(this.props.pagesObj.getPageContent(result.path)).replace(/\n/g, ' ')
         }else{
-            title = this.state.pagesObj.getPageTitle(result.path)
+            title = this.props.pagesObj.getPageTitle(result.path)
             body = _.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index))
         }
         
@@ -110,18 +119,13 @@ export default class Search extends React.Component{
         )
     }
     render() {
-        return (
-            <Wrapper navigation={this.props.navigation} title={'Search'} style={{flex:1}}>
-                <Searchbar
-                    style={{marginTop: 10}}
-                    placeholder="Search"
-                    onChangeText={this._search}
-                    value={this.state.query}
-                />
-                {
-                    _.map(this.state.results, (result, i) => this.renderMatch(i, result))
-                }
-            </Wrapper>
-        )
+
+        if(this.props.resultsPlaceholder){
+            return (
+                <Text style={{marginTop: 20}}>{this.props.resultsPlaceholder}</Text>
+            )
+        }
+        return _.map(this.props.results, (result, i) => this.renderMatch(i, result))
+            
     }
 }

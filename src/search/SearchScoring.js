@@ -13,11 +13,12 @@ export default class SearchScoring {
     results = {}
     constructor(props){
         this.pages = props.pages
-        this.query = props.query
         this.pageTitles = props.pageTitles
+        results = this.resetResults()
+    }
+    resetResults() {
         _.forEach(this.pages, (o, i) => this.results[i] = [])
     }
-
     contextRegexBuilder = (needle, options='i') => {
         contextBeforePattern = '(.*)'
         contextAfterPattern = '(.*)'
@@ -52,7 +53,9 @@ export default class SearchScoring {
         })
     }
 
-    getMatches = () => {
+    getMatches = (query) => {
+        this.resetResults()
+        this.query = query;
         this.createScores()
         return this.aggregateScoresByPage()
     }
@@ -77,11 +80,11 @@ export default class SearchScoring {
             pageContent = RemoveMarkdown(pageContent).replace(/\n/g,'')
             // Match against page content
             this.scoreExactMatch(pageContent, path, this.matchScores.exactContent, 'Content');
-            //this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent, 'Content');
+            this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent, 'Content');
 
             // Match against titles
-            this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle, 'Title');
-            //this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle, 'Title');
+            // this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle, 'Title');
+            // this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle, 'Title');
         })
         
     }
