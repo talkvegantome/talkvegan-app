@@ -58,17 +58,17 @@ export default class SearchScoring {
             pageContent = RemoveMarkdown(pageContent)
             // Match against page content
             this.scoreExactMatch(pageContent, path, this.matchScores.exactContent, 'Content');
-            this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent, 'Content');
+            //this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent, 'Content');
 
             // Match against titles
             this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle, 'Title');
-            this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle, 'Title');
+            //this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle, 'Title');
         })
         
     }
 
     scoreExactMatch = (content, path, score, type) => {
-        re = this.contextRegexBuilder(this.query, 'igm')
+        re = this.contextRegexBuilder(this.query, 'ig')
         while (match = re.exec(content)) {
             if(!_.isNull(match[0])){
                 this.appendResult(path, [match], score, type)
@@ -77,7 +77,7 @@ export default class SearchScoring {
     }
 
     scoreMatchAllWords = (content, path, score, type) => {
-        let queryWords = this.query.split(' ');
+        let queryWords = _.filter(this.query.split(' '), (o) => o.length > 0);
         if(queryWords.length < 2){
             return
         }
@@ -85,7 +85,7 @@ export default class SearchScoring {
         _.forEach(queryWords, (queryWord) => {
             if(_.isNull(queryWord)){return}
             wordResults[queryWord] = []
-            re = this.contextRegexBuilder(queryWord, 'im')
+            re = this.contextRegexBuilder(queryWord, 'i')
             let match = content.match(re)
             if(!_.isNull(match)){
                 wordResults[queryWord].push(match)

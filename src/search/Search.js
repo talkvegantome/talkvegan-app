@@ -28,7 +28,7 @@ export default class Search extends React.Component{
     componentDidMount() {
         let timer = setInterval(() => {
             this._searchTimer()
-        }, 200);
+        }, 1000);
         this.setState({ timer: timer });
     }
     componentWillUnmount() {
