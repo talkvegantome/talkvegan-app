@@ -28,7 +28,7 @@ export default class Search extends React.Component{
     componentDidMount() {
         let timer = setInterval(() => {
             this._searchTimer()
-        }, 1000);
+        }, 200);
         this.setState({ timer: timer });
     }
     componentWillUnmount() {
@@ -49,6 +49,7 @@ export default class Search extends React.Component{
             })
             return
         }
+        this.setState({searchPending: false})
         let searchScoring = new SearchScoring({
             pages: this.state.pagesObj.getPages(), 
             pageTitles: this.state.pagesObj.getPageTitles(), 
@@ -93,8 +94,8 @@ export default class Search extends React.Component{
         )
     }
     renderMatchText = (match, contextMaxLength, key, showEllipsis=true) => {
-        let contextBefore = match.groups.contextBefore.replace(/\n/gms, ' ')
-        let contextAfter = match.groups.contextAfter.replace(/\n/gms, ' ')
+        let contextBefore = match.groups.contextBefore.replace(/\n/gm, ' ')
+        let contextAfter = match.groups.contextAfter.replace(/\n/gm, ' ')
         contextBefore = contextBefore.slice(-contextMaxLength.start) // Limit length from the end
         contextAfter = contextAfter.slice(0, contextMaxLength.end) // Limit length from the beginning
         return (

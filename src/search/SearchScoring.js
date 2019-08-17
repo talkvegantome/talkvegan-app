@@ -18,16 +18,35 @@ export default class SearchScoring {
         _.forEach(this.pages, (o, i) => this.results[i] = [])
     }
 
-    contextRegexBuilder = (needle, options='im') => {
-        contextBeforePattern = '(?<contextBefore>(.|\n)*)'
-        contextAfterPattern = '(?<contextAfter>(.|\n)*)'
-        return new RegExp(contextBeforePattern + '(?<match>' +  _.escapeRegExp(needle) +')' + contextAfterPattern, options);
+    contextRegexBuilder = (needle, options='i') => {
+        contextBeforePattern = '(.*)'
+        contextAfterPattern = '(.*)'
+        let regexString = contextBeforePattern + '(' + _.escapeRegExp(needle) +')' + contextAfterPattern
+        try{
+            regex = new RegExp(regexString, options)
+        }catch(e){
+            throw "Some error about " + regexString + "\n" + e
+        }
+        return regex;
+    }
+
+    simulateNameGroups(matches){
+        // At the time of writing it seems like hermes doesn't support regex named matching
+        // groups, seeing the question mark in the ?<name pattern as a repeater and throwing an error
+        return _.map(matches, (match) => {
+            return {
+                groups: {
+                    contextBefore: match[1],
+                    match: match[2],
+                    contextAfter: match[3]
+                }
+            }
+        })
     }
 
     appendResult = (path, matches, score, type) => {
-        // matches is expected to be [{contextBefore: '', contextAfter: '', match: ''}]
         this.results[path].push({    
-            matches: matches,
+            matches: this.simulateNameGroups(matches),
             score: score,
             type: type
         })
@@ -55,7 +74,7 @@ export default class SearchScoring {
 
     createScores = () => {
         _.forEach(this.pages, (pageContent, path) => {
-            pageContent = RemoveMarkdown(pageContent)
+            pageContent = RemoveMarkdown(pageContent).replace(/\n/g,'')
             // Match against page content
             this.scoreExactMatch(pageContent, path, this.matchScores.exactContent, 'Content');
             //this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent, 'Content');
@@ -68,7 +87,7 @@ export default class SearchScoring {
     }
 
     scoreExactMatch = (content, path, score, type) => {
-        re = this.contextRegexBuilder(this.query, 'ig')
+        re = this.contextRegexBuilder(this.query, 'gi')
         while (match = re.exec(content)) {
             if(!_.isNull(match[0])){
                 this.appendResult(path, [match], score, type)
