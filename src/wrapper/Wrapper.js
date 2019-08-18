@@ -1,9 +1,17 @@
 import React from 'react';
-import { Text, View, SafeAreaView, ScrollView } from 'react-native';
+import { _ } from 'lodash';
+import { View, ScrollView } from 'react-native';
 import { commonStyle, PaperTheme } from '../styles/Common.style.js';
 import { Provider as PaperProvider, Appbar, BottomNavigation } from 'react-native-paper';
 
 class Wrapper extends React.Component {
+  constructor(props){
+    super(props)
+    this.scrollRef = React.createRef();
+  }
+  componentDidUpdate(){
+    this.scrollRef.current.scrollTo({y: 0, animated: false})
+  }
   render(){
     return (
       <View style={{flex: 1}}>
@@ -21,7 +29,7 @@ class Wrapper extends React.Component {
             title={this.props.title}
           />
         </Appbar.Header>
-        <ScrollView style={{...commonStyle.content,...this.props.style}}>
+        <ScrollView ref={this.scrollRef} style={{...commonStyle.content,...this.props.style}}>
           {this.props.children}
         </ScrollView>
       </PaperProvider>

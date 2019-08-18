@@ -15,12 +15,9 @@ import Analytics, { PrivacyDialog } from '../analytics'
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.scrollRef= React.createRef();
+    this.scrollRef = React.createRef();
     this.props.storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
     this.state = this.returnState(this.props.storage)
-  }
-  componentDidUpdate(){
-    this.scrollRef.current.scrollTo({y: 0, animated: false})
   }
 
   returnState = (storage) => {
@@ -36,11 +33,10 @@ export default class App extends React.Component {
     }
   }
   
-  
   render() {
     if(_.isNil(this.props.indexId)){
       return (
-        <Wrapper 
+        <Wrapper
           navigation={this.props.navigation} 
           title={this.state.pagesObj.getPageTitle()} 
           style={{
@@ -49,7 +45,8 @@ export default class App extends React.Component {
             paddingRight: 0,
             paddingTop: 20,
             paddingBottom: 20,
-          }}>
+          }}
+        >
           <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
           <ScrollView ref={this.scrollRef}>
             <ContentIndex storage={this.props.storage} navigation={this.props.navigation}/>
@@ -58,8 +55,11 @@ export default class App extends React.Component {
       )
     }
     return (
-      <Wrapper navigation={this.props.navigation} title={this.state.pagesObj.getPageTitle(this.props.indexId)} style={{flex:1, backgroundColor: commonStyle.contentBackgroundColor}}>
-          <ScrollView ref={this.scrollRef}>
+      <Wrapper
+        navigation={this.props.navigation} 
+        title={this.state.pagesObj.getPageTitle(this.props.indexId)} 
+        style={{flex:1, backgroundColor: commonStyle.contentBackgroundColor}}
+      >
             <View>
               <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
                 {this.state.markdownRulesObj.preProcessMarkDown(this.state.pagesObj.getPageContent(this.props.indexId))}
@@ -70,7 +70,6 @@ export default class App extends React.Component {
                 analytics={this.state.analytics}
               />
             </View>
-          </ScrollView>
       </Wrapper>
     );
     

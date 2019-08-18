@@ -74,6 +74,7 @@ export default class Search extends React.Component{
                 </View>
                 <Results 
                     resultsPlaceholder={this.state.resultsPlaceholder} 
+                    navigation={this.props.navigation}
                     results={this.state.results}
                     pagesObj={this.state.pagesObj}
                 />
@@ -133,6 +134,5 @@ class Results extends React.Component {
             )
         }
         return _.map(this.props.results, (result, i) => this.renderMatch(i, result))
-            
     }
 }
