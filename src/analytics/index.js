@@ -15,9 +15,7 @@ class analytics {
     this.amplitude = new RNAmplitude(amplitudeSettings.apiKey, false);
   }
   logEvent(eventName, data) {
-    if (!this.settings.analyticsEnabled) {
-      return
-    }
+    if (!this.settings.analyticsEnabled) { return }
     this.amplitude.logEvent(eventName, data)
   }
 }

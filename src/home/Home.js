@@ -83,7 +83,7 @@ class PageMenu extends React.Component {
       <View>
         <Divider style={{ marginVertical: 20 }} />
         <View style={{ flex: 1, flexDirection: 'row' }}>
-            <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
+            <TouchableHighlight style={{ flex: 1 }} onPress={() => {
                 Share.share({ message: this.props.pagePermalink }).then((result) => {
                 this.props.analytics.logEvent('sharedPage', {page: this.props.pagePermalink, activity: result.activityType})
                 }).catch((err) => {this.props.analytics.logEvent('error', {errorDetail: err})})
@@ -93,7 +93,10 @@ class PageMenu extends React.Component {
                 <Text style={markdownStyles.text}>Share</Text>
             </View>
             </TouchableHighlight>
-            <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.props.pageGitHubLink) }}>
+            <TouchableHighlight style={{ flex: 1 }} onPress={() => {
+              this.props.analytics.logEvent('openedGitHubLink', {page: this.props.pagePermalink})
+              Linking.openURL(this.props.pageGitHubLink)
+            }}>
             <View style={{ alignSelf: 'flex-end' }}>
                 <Icon name='edit' />
                 <Text style={markdownStyles.text}>Edit</Text>

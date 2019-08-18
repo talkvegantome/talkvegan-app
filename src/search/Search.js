@@ -13,7 +13,6 @@ import { commonStyle } from '../styles/Common.style.js';
 export default class Search extends React.Component{
     constructor(props) {
         super(props);
-        
         this.props.storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
         this.state = this.returnState(this.props.storage)
     }
@@ -21,6 +20,7 @@ export default class Search extends React.Component{
         let analytics = new Analytics(storage.settings)
         let pagesObj = new Pages(storage)
         return {
+            analytics: new Analytics(storage.settings),
             searchPending: false,
             query: '',
             results: [],
@@ -41,6 +41,7 @@ export default class Search extends React.Component{
         if(this.state.query.length < 2){
             return
         }
+        this.state.analytics.logEvent('search', {query: this.state.query})
         this.setState({resultsPlaceholder: "Searching..."})
 
         setTimeout(() => {

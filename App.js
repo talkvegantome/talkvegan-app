@@ -7,14 +7,13 @@
  */
 
 import React from 'react';
-import { View } from 'react-native';
 import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js'
 import HomeScreen from './src/home/Home.js';
 import {_} from 'lodash'
 
 import { Storage } from './src/Storage.js'
-import { PrivacyDialog }  from './src/analytics'
+import Analytics from './src/analytics'
 
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
 import { BottomNavigation } from 'react-native-paper';
@@ -24,25 +23,35 @@ class BottomDrawer extends React.Component {
   static defaultProps = {
     style: {}
   }
-  state = {
-    storage: new Storage(),
-    index: 0,
-    routes: [
-      { key: 'home', title: 'Home', icon: 'home' },
-      { key: 'search', title: 'Search', icon: 'search' },
-      { key: 'settings', title: 'Settings', icon: 'settings' },
-    ],
-    navigationHistory: [{
+  constructor(props){
+    super(props)
+    let storage = new Storage()
+    storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
+    this.state = this.returnState(storage)
+  }
+  returnState(storage) {
+    return {
+      analytics: new Analytics(storage.settings),
+      storage: storage,
       index: 0,
-      routeParams: {}
-    }]
-  };
+      routes: [
+        { key: 'home', title: 'Home', icon: 'home' },
+        { key: 'search', title: 'Search', icon: 'search' },
+        { key: 'settings', title: 'Settings', icon: 'settings' },
+      ],
+      navigationHistory: [{
+        index: 0,
+        routeParams: {}
+      }]
+    };
+  }
   
 
   _handleIndexChange = (index) => {
     this.setState({ index });
   }
   _handleTabPress = (route) => {
+    this.state.analytics.logEvent('navigateToPage', {page: route.route.key, params: {}})
     this.setState({
       routeParams: {},
       navigationHistory: this.state.navigationHistory.concat({
@@ -78,6 +87,7 @@ class BottomDrawer extends React.Component {
 
   navigate = (title, props) => {
     index = _.findIndex(this.state.routes, ['title', title])
+    this.state.analytics.logEvent('navigateToPage', {page: title, params: props})
     this.setState({
       index: index, 
       routeParams: props,

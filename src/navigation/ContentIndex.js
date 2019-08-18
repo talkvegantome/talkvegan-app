@@ -42,7 +42,6 @@ export default class ContentIndex extends Component{
   navigateToScreen = (indexId) => () => {
     // Navigation is always to the 'Home' screen, but content changes based on the indexId
     this.props.navigation.navigate('Home', {indexId: indexId});
-    this.state.analytics.logEvent('navigateToPage', {relPath: indexId})
   }
 
   generateCardList(headerItem){

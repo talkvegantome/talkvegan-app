@@ -22,7 +22,9 @@ class SettingsScreen extends React.Component {
     super(props);
     this.props.storage.triggerUpdateMethods.push((storage) => {
       let pagesObj = new Pages(this.props.storage)
+      let analytics = new Analytics(this.props.storage.settings)
       this.setState({
+        analytics: analytics,
         settings: storage.settings,
         pageObj: pagesObj,
         lastSync: pagesObj.getLastPageDataSync('auto')
@@ -68,23 +70,10 @@ class SettingsScreen extends React.Component {
     this.state.analytics.logEvent('updateSetting', { settingName: settingName, value: value })
   }
   render() {
-    let footer = (
-      <View> 
-        <SettingsItem label='Analytics' icon={null}
-            switch={{ value: this.state.storage.settings.analyticsEnabled, onValueChange: (value) => this.updateSetting('analyticsEnabled', value) }} />
-        <ListItem
-          topDivider={true}
-          onPress={() => Linking.openURL(this.state.storage.config.helpDeskUrl)}
-          leftIcon={{ name: "help-outline" }}
-          title="Contact Us"
-        />
-      </View>
-    )
     return (
       <Wrapper
         navigation={this.props.navigation}
         title="Settings"
-        footer={footer}
         style={{ paddingRight: 0, paddingLeft: 0, backgroundColor: '#E5' }}>
         <SettingsModal
           modalVisible={this.state.modalVisible}
@@ -110,6 +99,14 @@ class SettingsScreen extends React.Component {
             onPress={() => { this.pullPageDataFromSite() }} />
           <SettingsItem label='Language' value={this.state.storage.pageData[this.state.settings.language].languageName}
             onPress={() => { this.setModalVisible(!this.state.modalVisible) }} />
+             <SettingsItem label='Analytics' icon={null}
+            switch={{ value: this.state.storage.settings.analyticsEnabled, onValueChange: (value) => this.updateSetting('analyticsEnabled', value) }} />
+          <ListItem
+            topDivider={true}
+            onPress={() => Linking.openURL(this.state.storage.config.helpDeskUrl)}
+            leftIcon={{ name: "help-outline" }}
+            title="Contact Us"
+          />
         </View>
       </Wrapper>
     )
