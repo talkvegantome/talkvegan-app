@@ -12,7 +12,10 @@ export default class SearchScoring {
     }
     results = {}
     constructor(props){
-        this.pages = props.pages
+        this.pages = {}
+        _.forEach(props.pages, (p, i) => {
+            this.pages[i]=RemoveMarkdown(p).replace(/\n/g,' ')
+        });
         this.pageTitles = props.pageTitles
         results = this.resetResults()
     }
@@ -53,7 +56,7 @@ export default class SearchScoring {
         })
     }
 
-    getMatches = (query) => {
+    getMatches = async (query) => {
         this.resetResults()
         this.query = query;
         this.createScores()
@@ -77,16 +80,15 @@ export default class SearchScoring {
 
     createScores = () => {
         _.forEach(this.pages, (pageContent, path) => {
-            pageContent = RemoveMarkdown(pageContent).replace(/\n/g,'')
+
             // Match against page content
             this.scoreExactMatch(pageContent, path, this.matchScores.exactContent, 'Content');
             this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent, 'Content');
 
             // Match against titles
-            // this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle, 'Title');
-            // this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle, 'Title');
+            this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle, 'Title');
+            this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle, 'Title');
         })
-        
     }
 
     scoreExactMatch = (content, path, score, type) => {
@@ -118,3 +120,4 @@ export default class SearchScoring {
         }
     }
 }
+

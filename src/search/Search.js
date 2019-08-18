@@ -36,13 +36,21 @@ export default class Search extends React.Component{
         }
     }
 
-    _search = () =>  {
-        results = this.state.searchScoring.getMatches(this.state.query)
-        this.setState({
-            results: results,
-            resultsPlaceholder: results.length == 0 ? 'No Results for: ' + this.state.query: '',
-            searchInProgress: false,
-        })
+    _search = async () =>  {
+        this.setState({results:[]})
+        if(this.state.query.length < 2){
+            return
+        }
+        this.setState({resultsPlaceholder: "Searching..."})
+
+        setTimeout(() => {
+            this.state.searchScoring.getMatches(this.state.query).then((results)=> {
+                this.setState({
+                    results: results,
+                    resultsPlaceholder: results.length == 0 ? 'No Results for: ' + this.state.query: '',
+                })
+            })
+        }, 10)
     }
     _searchQueryUpdate = (query) => this.setState({query: query})
 
@@ -119,7 +127,6 @@ class Results extends React.Component {
         )
     }
     render() {
-
         if(this.props.resultsPlaceholder){
             return (
                 <Text style={{marginTop: 20}}>{this.props.resultsPlaceholder}</Text>
