@@ -7,15 +7,17 @@
  */
 
 import React from 'react';
+import { View } from 'react-native';
 import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js'
 import HomeScreen from './src/home/Home.js';
 import {_} from 'lodash'
 
 import { Storage } from './src/Storage.js'
+import { PrivacyDialog }  from './src/analytics'
 
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
-import { Provider as PaperProvider, Appbar, BottomNavigation } from 'react-native-paper';
+import { BottomNavigation } from 'react-native-paper';
 
 
 class BottomDrawer extends React.Component {
@@ -103,18 +105,18 @@ class BottomDrawer extends React.Component {
     })
   }
 
-
   render(){
-    return ( <BottomNavigation
-      theme={PaperTheme}
-      activeColor={commonStyle.headerFontColor}
-      inactiveColor={commonStyle.headerFontColor}
-      navigationState={this.state}
-      onTabPress={this._handleTabPress}
-      onIndexChange={this._handleIndexChange}
-      renderScene={this._renderScene}
-    />)
-    
+    return ( 
+      <BottomNavigation
+        theme={PaperTheme}
+        activeColor={commonStyle.headerFontColor}
+        inactiveColor={commonStyle.headerFontColor}
+        navigationState={this.state}
+        onTabPress={this._handleTabPress}
+        onIndexChange={this._handleIndexChange}
+        renderScene={this._renderScene}
+      />
+    )
   }
 }
 

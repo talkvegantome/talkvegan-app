@@ -50,6 +50,7 @@ export default class App extends React.Component {
             paddingTop: 20,
             paddingBottom: 20,
           }}>
+          <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
           <ScrollView ref={this.scrollRef}>
             <ContentIndex storage={this.props.storage} navigation={this.props.navigation}/>
           </ScrollView>
@@ -58,7 +59,6 @@ export default class App extends React.Component {
     }
     return (
       <Wrapper navigation={this.props.navigation} title={this.state.pagesObj.getPageTitle(this.props.indexId)} style={{flex:1, backgroundColor: commonStyle.contentBackgroundColor}}>
-          <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
           <ScrollView ref={this.scrollRef}>
             <View>
               <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>

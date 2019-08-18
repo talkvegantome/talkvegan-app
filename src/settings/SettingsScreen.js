@@ -50,7 +50,7 @@ class SettingsScreen extends React.Component {
     this.setState({ timer: timer });
   }
   componentWillUnmount() {
-    this.clearInterval(this.state.timer);
+    clearInterval(this.state.timer);
   }
 
   setModalVisible(visible) {
