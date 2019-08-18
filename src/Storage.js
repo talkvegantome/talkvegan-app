@@ -9,8 +9,7 @@ export class Storage {
     this.refreshFromStorage().then(() => {
       // If it's been over a day since we loaded new data, load on start
       let pagesObj = new Pages(this)
-      let daysSinceLastSync = 99
-      daysSinceLastSync = pagesObj.getLastPageDataSync().diffNow('days').days * -1
+      let daysSinceLastSync = pagesObj.getLastPageDataSync().diffNow('days').days * -1
       if (daysSinceLastSync > 1) {
         pagesObj.pullPageDataFromSite()
       }

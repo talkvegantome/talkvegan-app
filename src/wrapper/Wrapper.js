@@ -31,6 +31,7 @@ class Wrapper extends React.Component {
         </Appbar.Header>
         <ScrollView ref={this.scrollRef} style={{...commonStyle.content,...this.props.style}}>
           {this.props.children}
+          <View style={{height:50}}></View>
         </ScrollView>
       </PaperProvider>
       </View>

@@ -12,14 +12,16 @@ class Pages {
     this.storage = storage
     this.settings = storage.settings
     this.pageData = storage.pageData
-    this.setDefault()
     this.generateMaps()
   }
 
-  setDefault(){
+  getPageData(){
     // if the language's data hasn't loaded yet return a default
     if(!('data' in this.pageData[this.settings.language])){
-      this.pageData[this.settings.language].data = [
+      this.analytics.logEvent('error',
+        {errorDetail: "Failed to load page in language" + this.settings.language})
+      this.pullPageDataFromSite()
+      return [
         {
           friendlyName: 'Home',
           rawContent: 'Sorry the page data for ' + this.settings.language + " hasn\'t loaded yet.",
@@ -30,10 +32,8 @@ class Pages {
           }
         }
       ]
-      this.analytics.logEvent('error',
-        {errorDetail: "Failed to load page in language" + this.settings.language})
-      this.pullPageDataFromSite()
     }
+    return this.pageData[this.settings.language].data
   }
 
   generateMaps(){
@@ -83,7 +83,7 @@ class Pages {
   }
   getPageMetadata(relPath){
     let pageMetadata = null
-    this.pageData[this.settings.language].data.forEach((page) => {
+    this.getPageData().forEach((page) => {
 
      if(page.relativePermalink === relPath){
        pageMetadata = page
@@ -93,7 +93,7 @@ class Pages {
   }
   getFriendlyName(relPath){
     let friendlyName = null
-    this.pageData[this.settings.language].data.forEach((page) => {
+    this.getPageData().forEach((page) => {
       if(page.relativePermalink === relPath){
         friendlyName = page.friendlyName
       }
@@ -180,10 +180,10 @@ class Pages {
   }
 
   getLastPageDataSync(duration){
-    // If never synced default to content generation date
+    // If never synced default to epoch start
     let lastSyncDate = this.pageData[this.settings.language].lastSyncDate ?
       DateTime.fromISO(this.pageData[this.settings.language].lastSyncDate) :
-      DateTime.fromISO(this.pageData[this.settings.language].date)
+      DateTime.fromISO('1970-01-01')
     if(duration==='auto'){
       let diff = DateTime.local().diff(lastSyncDate, ['years','months','days','hours', 'minutes'])
       if(isNaN(diff.minutes)){
