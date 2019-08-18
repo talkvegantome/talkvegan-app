@@ -31,6 +31,7 @@ export class Storage {
     gitHubUrl: "https://github.com/talkvegantome/talkvegan-hugo/",
     privacyPolicyUrl: 'https://talkveganto.me/en/privacy-policy',
     helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
+    twitterUrl: 'https://twitter.com/TalkVeganApp'
   }
 
   refreshFromStorage(keysToRefresh = ['pageData', 'settings']) {

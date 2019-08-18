@@ -199,9 +199,9 @@ class Pages {
         return Math.round(diff.days) + ' days'
       }
       if(diff.hours > 1){
-        return Math.round(diff.hours) + ' hours'
+        return Math.round(diff.hours) + ' hrs'
       }
-      return Math.round(diff.minutes) + ' minutes'
+      return Math.round(diff.minutes) + ' mins'
     }
     return lastSyncDate
   }

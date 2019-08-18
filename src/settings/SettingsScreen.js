@@ -94,18 +94,31 @@ class SettingsScreen extends React.Component {
         <View style={{ marginTop: 20 }}>
           <SettingsItem
             label='Last Synced Data'
+            leftIcon={{ name: "access-time", color: commonStyle.secondary}}
             value={this.state.lastSync}
             icon={this.state.pageDataIsLoading ? 'hourglass-empty' : 'refresh'}
             onPress={() => { this.pullPageDataFromSite() }} />
-          <SettingsItem label='Language' value={this.state.storage.pageData[this.state.settings.language].languageName}
+          <SettingsItem 
+            label='Language' 
+            leftIcon={{ name: "language", color: commonStyle.secondary}}
+            value={this.state.storage.pageData[this.state.settings.language].languageName}
             onPress={() => { this.setModalVisible(!this.state.modalVisible) }} />
-             <SettingsItem label='Analytics' icon={null}
+          <SettingsItem 
+            label='Analytics' 
+            leftIcon={{ name: "chart-areaspline", type: 'material-community', color: commonStyle.secondary}}
+            icon={null}
             switch={{ value: this.state.storage.settings.analyticsEnabled, onValueChange: (value) => this.updateSetting('analyticsEnabled', value) }} />
+        </View>
+        <View style={{ marginTop: 20 }}><ListItem
+            onPress={() => Linking.openURL(this.state.storage.config.helpDeskUrl)}
+            leftIcon={{ name: "chat-bubble",  color: commonStyle.secondary }}
+            title="Contact Us"
+          />
           <ListItem
             topDivider={true}
-            onPress={() => Linking.openURL(this.state.storage.config.helpDeskUrl)}
-            leftIcon={{ name: "help-outline" }}
-            title="Contact Us"
+            onPress={() => Linking.openURL(this.state.storage.config.twitterUrl)}
+            leftIcon={{ name: "twitter", type: 'material-community', color: commonStyle.secondary}}
+            title="Twitter"
           />
         </View>
       </Wrapper>
@@ -160,6 +173,7 @@ class SettingsItem extends React.Component {
     return (
       <ListItem
         onPress={this.props.onPress}
+        leftIcon={this.props.leftIcon}
         title={this.props.label}
         rightTitle={this.props.value}
         rightIcon={{ name: this.props.icon }}
