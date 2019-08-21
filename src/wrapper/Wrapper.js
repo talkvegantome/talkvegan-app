@@ -17,7 +17,11 @@ class Wrapper extends React.Component {
       <View style={{flex: 1}}>
       <PaperProvider theme={PaperTheme} >
         <Appbar.Header style={{backgroundColor: commonStyle.headerBackgroundColor}}>
-          <Appbar.Action
+          <Appbar.Action 
+          style={
+            // Hide back button if there's no back to go to.
+            this.props.navigation.state.navigationHistory.length == 1 ? {display: 'none'} : {}
+          }
           icon='keyboard-arrow-left'
           onPress={() => {
             this.props.navigation.goBack()

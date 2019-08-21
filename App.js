@@ -27,11 +27,17 @@ class BottomDrawer extends React.Component {
     super(props)
     this.state.storage = new Storage()
     this.state.storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
-    this.state['analytics'] = this.returnState(this.state.storage).analytics
+    this.state = {...this.state, ...this.returnState(this.state.storage)}
   }
 
   returnState(storage){
-    return { analytics: new Analytics(storage.settings)}
+    return { 
+      analytics: new Analytics(storage.settings),
+      navigationHistory: [{
+        index: 0,
+        routeParams: {}
+      }]
+    }
   }
   state = {
     index: 0,
@@ -39,11 +45,7 @@ class BottomDrawer extends React.Component {
       { key: 'home', title: 'Home', icon: 'home' },
       { key: 'search', title: 'Search', icon: 'search' },
       { key: 'settings', title: 'Settings', icon: 'settings' },
-    ],
-    navigationHistory: [{
-      index: 0,
-      routeParams: {}
-    }]
+    ]
   }
   
 
