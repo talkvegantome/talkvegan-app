@@ -32,6 +32,7 @@ class BottomDrawer extends React.Component {
 
   returnState(storage){
     return { 
+      storage: storage,
       analytics: new Analytics(storage.settings),
       navigationHistory: [{
         index: 0,
