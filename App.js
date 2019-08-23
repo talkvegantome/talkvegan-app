@@ -49,19 +49,30 @@ class BottomDrawer extends React.Component {
     ]
   }
   
+  _appendToHistory(index, params){
+    let lastLocation = _.nth(this.state.navigationHistory, -1)
+    if(lastLocation.index === index && _.isEqual(lastLocation.routeParams,params)){
+      return
+    }
+    this.setState({
+      routeParams: {},
+      navigationHistory: this.state.navigationHistory.concat({
+        index: index,
+        routeParams: params
+      })
+    })
+  }
 
   _handleIndexChange = (index) => {
     this.setState({ index });
   }
   _handleTabPress = (route) => {
     this.state.analytics.logEvent('navigateToPage', {page: route.route.key, params: {}})
-    this.setState({
-      routeParams: {},
-      navigationHistory: this.state.navigationHistory.concat({
-        index: _.findIndex(this.state.routes, ['key', route.route.key]),
-        routeParams: {}
-      })
-    })
+    this._appendToHistory(
+      _.findIndex(this.state.routes, ['key', route.route.key]),
+      {}
+    )
+    this.setState({routeParams: {}})
   }
 
   _renderScene = ({route}) => {
@@ -91,18 +102,15 @@ class BottomDrawer extends React.Component {
   navigate = (title, props) => {
     let index = _.findIndex(this.state.routes, ['title', title])
     this.state.analytics.logEvent('navigateToPage', {page: title, params: props})
+    this._appendToHistory(index, props)
     this.setState({
       index: index, 
-      routeParams: props,
-      navigationHistory: this.state.navigationHistory.concat({
-        index: index,
-        routeParams: props
-      })
+      routeParams: props
     })
   }
 
   goBack = () => {
-    let lastLocation = this.state.navigationHistory[this.state.navigationHistory.length-2]
+    let lastLocation = _.nth(this.state.navigationHistory, -2) // current location is -1
     if(_.isNil(lastLocation)){
       return
     }
