@@ -26,10 +26,10 @@ platform :android do
     #sh('echo $PWD || false')
     sh("find ../app/build/outputs/apk/ -name \\*.apk -exec rm {} \\;")
     android_set_version_code(
-      version_code: "34"
+      version_code: "35"
     )
     android_set_version_name(
-      version_name: "0.0.6"
+      version_name: "0.0.7"
     )
     gradle(
       task: "assemble",

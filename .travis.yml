@@ -9,7 +9,7 @@ matrix:
       script:
         - jq -n '{apiKey:env.AMPLITUDE_API_KEY}' > ./assets/amplitudeSettings.json
         - yarn test --ci --verbose --forceExit --detectOpenHandles
-        - eslint .
+        - yarn eslint .
     # - language: objective-c
     #   osx_image: xcode10.2
     #   before_install: cd ios
