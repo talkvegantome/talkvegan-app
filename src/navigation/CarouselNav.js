@@ -18,7 +18,7 @@ export default class CarouselNav extends React.Component {
         this.setState(Dimensions.get('window'))
     }
     
-    _renderItem = ({item, index}, fontScale) => {
+    _renderItem = ({item}, fontScale) => {
         return (
             <Card onPress={item.navigateTo}>
                 <Card.Content style={{height: 140 * fontScale*fontScaleHelper}}>

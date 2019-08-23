@@ -17,15 +17,14 @@ export default class SearchScoring {
             this.pages[i]=RemoveMarkdown(p).replace(/\n/g,' ')
         });
         this.pageTitles = props.pageTitles
-        results = this.resetResults()
+        this.results = this.resetResults()
     }
     resetResults() {
         _.forEach(this.pages, (o, i) => this.results[i] = [])
     }
     contextRegexBuilder = (needle, options='i') => {
-        contextBeforePattern = '(.*)'
-        contextAfterPattern = '(.*)'
-        let regexString = contextBeforePattern + '(' + _.escapeRegExp(needle) +')' + contextAfterPattern
+        let regexString = '(.*)' + '(' + _.escapeRegExp(needle) +')' + '(.*)'
+        let regex
         try{
             regex = new RegExp(regexString, options)
         }catch(e){
@@ -92,8 +91,9 @@ export default class SearchScoring {
     }
 
     scoreExactMatch = (content, path, score, type) => {
-        re = this.contextRegexBuilder(this.query, 'gi')
-        while (match = re.exec(content)) {
+        let regex = this.contextRegexBuilder(this.query, 'gi')
+        let match
+        while (match = regex.exec(content)) { // eslint-disable-line no-cond-assign
             if(!_.isNull(match[0])){
                 this.appendResult(path, [match], score, type)
             }
@@ -109,8 +109,8 @@ export default class SearchScoring {
         _.forEach(queryWords, (queryWord) => {
             if(_.isNull(queryWord)){return}
             wordResults[queryWord] = []
-            re = this.contextRegexBuilder(queryWord, 'i')
-            let match = content.match(re)
+            let regex = this.contextRegexBuilder(queryWord, 'i')
+            let match = content.match(regex)
             if(!_.isNull(match)){
                 wordResults[queryWord].push(match)
             }

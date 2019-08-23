@@ -61,8 +61,8 @@ export const commonStyle = {
 export const PaperTheme = {
 	...DefaultTheme,
 	colors: {
-	  ...DefaultTheme.colors,
-	  primary: commonStyle.primary,
-	  accent: commonStyle.secondary,
+		...DefaultTheme.colors,
+		primary: commonStyle.primary,
+		accent: commonStyle.secondary,
 	},
-  };
+};

@@ -8,7 +8,7 @@ import ContentIndex from '../navigation/ContentIndex'
 import Wrapper from '../wrapper/Wrapper.js'
 import { markdownRules } from '../MarkDownRules.js'
 import { markdownStyles } from '../styles/Markdown.style.js';
-import { commonStyle, PaperTheme } from '../styles/Common.style.js';
+import { commonStyle } from '../styles/Common.style.js';
 
 import Analytics, { PrivacyDialog } from '../analytics'
 

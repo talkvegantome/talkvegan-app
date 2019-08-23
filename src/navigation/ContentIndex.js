@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import styles from '../styles/SideMenu.style.js';
-import {Text, View, SafeAreaView } from 'react-native';
+import {Text, View } from 'react-native';
 import RemoveMarkdown from 'remove-markdown';
 import {commonStyle} from '../styles/Common.style'
 import {markdownStyles} from '../styles/Markdown.style'

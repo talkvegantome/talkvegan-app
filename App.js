@@ -64,7 +64,7 @@ class BottomDrawer extends React.Component {
     })
   }
 
-  _renderScene = ({route, jumpTo}) => {
+  _renderScene = ({route}) => {
     let page = null
     if(route.key == 'home'){
       return <HomeScreen
@@ -89,7 +89,7 @@ class BottomDrawer extends React.Component {
   }
 
   navigate = (title, props) => {
-    index = _.findIndex(this.state.routes, ['title', title])
+    let index = _.findIndex(this.state.routes, ['title', title])
     this.state.analytics.logEvent('navigateToPage', {page: title, params: props})
     this.setState({
       index: index, 
@@ -102,11 +102,11 @@ class BottomDrawer extends React.Component {
   }
 
   goBack = () => {
-    lastLocation = this.state.navigationHistory[this.state.navigationHistory.length-2]
+    let lastLocation = this.state.navigationHistory[this.state.navigationHistory.length-2]
     if(_.isNil(lastLocation)){
       return
     }
-    navigationHistoryLessLastLocation = this.state.navigationHistory.slice(
+    let navigationHistoryLessLastLocation = this.state.navigationHistory.slice(
       0,
       this.state.navigationHistory.length-1
     )

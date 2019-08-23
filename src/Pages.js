@@ -72,7 +72,7 @@ class Pages {
     return this.pages
   }
   getPageTitles(){
-    pageTitles = {}
+    let pageTitles = {}
     _.forEach(this.getPages(), (content, index) => {
       pageTitles[index] = this.getPageTitle(index)
     })
@@ -100,9 +100,13 @@ class Pages {
     })
     return friendlyName
   }
-  getPageTitle(indexId) {
-    let pageMetadata = this.getPageMetadata(indexId)
+  getPageTitle(pageIndex) {
+    let pageMetadata = this.getPageMetadata(pageIndex)
     let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
+    // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
+    if (pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)) {
+      return 'TalkVeganToMe'
+    }
     return pageTitle
   }
   getPageDescription(indexId){
@@ -136,15 +140,6 @@ class Pages {
       return errorMessage
     }
     return pages[pageIndex]
-  }
-  getPageTitle(pageIndex) {
-    let pageMetadata = this.getPageMetadata(pageIndex)
-    let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
-    // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
-    if (pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)) {
-      return 'TalkVeganToMe'
-    }
-    return pageTitle
   }
 
   async pullPageDataFromSite(){

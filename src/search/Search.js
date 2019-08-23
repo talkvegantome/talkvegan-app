@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native'
-import { Searchbar, Card, Title, Paragraph, Button, IconButton} from 'react-native-paper';
+import { Searchbar, Card, Title, Paragraph, Button} from 'react-native-paper';
 import { _ } from 'lodash';
 import RemoveMarkdown from 'remove-markdown';
 
@@ -17,7 +17,6 @@ export default class Search extends React.Component{
         this.state = this.returnState(this.props.storage)
     }
     returnState = (storage) => {
-        let analytics = new Analytics(storage.settings)
         let pagesObj = new Pages(storage)
         return {
             analytics: new Analytics(storage.settings),
@@ -27,7 +26,6 @@ export default class Search extends React.Component{
             resultsPlaceholder: '',
             storage: storage,
             ticksSinceQueryUpdated: 0,
-            analytics: analytics,
             pagesObj: pagesObj,
             searchScoring: new SearchScoring({
                 pages: pagesObj.getPages(), 

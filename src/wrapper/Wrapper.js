@@ -1,8 +1,7 @@
 import React from 'react';
-import { _ } from 'lodash';
 import { View, ScrollView } from 'react-native';
 import { commonStyle, PaperTheme } from '../styles/Common.style.js';
-import { Provider as PaperProvider, Appbar, BottomNavigation } from 'react-native-paper';
+import { Provider as PaperProvider, Appbar } from 'react-native-paper';
 
 class Wrapper extends React.Component {
   constructor(props){
