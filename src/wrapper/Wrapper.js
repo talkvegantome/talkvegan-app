@@ -7,10 +7,11 @@ class Wrapper extends React.Component {
   constructor(props){
     super(props)
     this.scrollRef = React.createRef();
+    this.props.navigation.addOnNavigateListener(() => {
+      this.scrollRef.current.scrollTo({y: 0, animated: false})
+    })
   }
-  componentDidUpdate(){
-    this.scrollRef.current.scrollTo({y: 0, animated: false})
-  }
+
   render(){
     return (
       <View style={{flex: 1}}>

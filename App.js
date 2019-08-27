@@ -41,6 +41,7 @@ class BottomDrawer extends React.Component {
     }
   }
   state = {
+    onNavigationListeners: [],
     index: 0,
     routes: [
       { key: 'home', title: 'Home', icon: 'home' },
@@ -72,6 +73,7 @@ class BottomDrawer extends React.Component {
       _.findIndex(this.state.routes, ['key', route.route.key]),
       {}
     )
+    this._triggerNavigationListeners()
     this.setState({routeParams: {}})
   }
 
@@ -98,11 +100,14 @@ class BottomDrawer extends React.Component {
     }
     return page
   }
-
+  _triggerNavigationListeners(){
+    _.forEach(this.state.onNavigationListeners, (method) => method(this))
+  }
   navigate = (title, props) => {
     let index = _.findIndex(this.state.routes, ['title', title])
     this.state.analytics.logEvent('navigateToPage', {page: title, params: props})
     this._appendToHistory(index, props)
+    this._triggerNavigationListeners()
     this.setState({
       index: index, 
       routeParams: props
@@ -123,6 +128,12 @@ class BottomDrawer extends React.Component {
       index: lastLocation.index,
       routeParams: lastLocation.routeParams,
       navigationHistory: navigationHistoryLessLastLocation
+    })
+  }
+
+  addOnNavigateListener = (func) => {
+    this.setState({
+      onNavigationListeners: this.state.onNavigationListeners.concat(func)
     })
   }
 
