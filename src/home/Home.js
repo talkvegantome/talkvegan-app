@@ -20,14 +20,19 @@ export default class App extends React.Component {
     this.scrollRef = React.createRef();
     this.props.storage.addOnRefreshListener((storage) => this.setState(this.returnState(storage)))
     this.props.storage.addOnRefreshListener(
-      (storage) => {
-        console.log(storage.isFavourite(this.props.indexId))
-        this.setState({isFavourite: storage.isFavourite(this.props.indexId)})
-        console.log(this.state.isFavourite)
-      },
-        
+      (storage) => this.setState({isFavourite: storage.isFavourite({
+        indexId: this.props.indexId,
+        pageKey: 'home'
+      })}),  
       ['favourites']
     )
+    this.props.navigation.addOnNavigateListener((key, props) => {
+      console.log('indexid: ' + props.indexId)
+      this.setState({isFavourite: this.props.storage.isFavourite({
+        indexId: props.indexId,
+        pageKey: 'home'
+      })})
+    })
     this.state = this.returnState(this.props.storage)
   }
 
@@ -36,7 +41,10 @@ export default class App extends React.Component {
     let analytics = new Analytics(storage.settings)
     return {
       analytics: analytics,
-      isFavourite: storage.isFavourite(this.props.indexId),
+      isFavourite: storage.isFavourite({
+        indexId: this.props.indexId,
+        page: 'home'
+      }),
       pagesObj: pagesObj,
       settings: storage.settings,
       pages: pagesObj.getPages(),
@@ -75,7 +83,11 @@ export default class App extends React.Component {
           <Appbar.Action 
           icon={this.state.isFavourite ? 'favorite' : 'favorite-border'}
           onPress={() => {
-            this.props.storage.addFavourite(this.props.indexId)
+            this.props.storage.toggleFavourite({
+              pageKey: 'home',
+              indexId: this.props.indexId, 
+              displayName: this.state.pagesObj.getPageTitle(this.props.indexId)
+            })
           }}
           />
         }

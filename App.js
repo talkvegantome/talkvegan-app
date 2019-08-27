@@ -10,6 +10,7 @@ import React from 'react';
 import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js'
 import HomeScreen from './src/home/Home.js';
+import FavouritesScreen from './src/navigation/Favourites'
 import { _ } from 'lodash'
 
 import { Storage } from './src/Storage.js'
@@ -40,12 +41,14 @@ class BottomDrawer extends React.Component {
       }]
     }
   }
+  onNavigationListeners = []
   state = {
-    onNavigationListeners: [],
+    
     index: 0,
     routes: [
       { key: 'home', title: 'Home', icon: 'home' },
       { key: 'search', title: 'Search', icon: 'search' },
+      { key: 'favourites', title: 'Favourites', icon: 'favorite' },
       { key: 'settings', title: 'Settings', icon: 'settings' },
     ]
   }
@@ -73,6 +76,7 @@ class BottomDrawer extends React.Component {
       _.findIndex(this.state.routes, ['key', route.route.key]),
       {}
     )
+    console.log('navigated in APP.js')
     this._triggerNavigationListeners()
     this.setState({routeParams: {}})
   }
@@ -98,16 +102,22 @@ class BottomDrawer extends React.Component {
         navigation={this}
       />
     }
+    if(route.key == 'favourites'){
+      return <FavouritesScreen 
+        storage={this.state.storage} 
+        navigation={this}
+      />
+    }
     return page
   }
-  _triggerNavigationListeners(){
-    _.forEach(this.state.onNavigationListeners, (method) => method(this))
+  _triggerNavigationListeners(key, props={}){
+    _.forEach(this.onNavigationListeners, (method) => method(key, props))
   }
-  navigate = (title, props) => {
-    let index = _.findIndex(this.state.routes, ['title', title])
-    this.state.analytics.logEvent('navigateToPage', {page: title, params: props})
+  navigate = (key, props) => {
+    let index = _.findIndex(this.state.routes, ['key', key])
+    this.state.analytics.logEvent('navigateToPage', {page: key, params: props})
     this._appendToHistory(index, props)
-    this._triggerNavigationListeners()
+    this._triggerNavigationListeners(key, props)
     this.setState({
       index: index, 
       routeParams: props
@@ -132,9 +142,10 @@ class BottomDrawer extends React.Component {
   }
 
   addOnNavigateListener = (func) => {
-    this.setState({
-      onNavigationListeners: this.state.onNavigationListeners.concat(func)
-    })
+    console.log("adding navigation listener" + func)
+    this.onNavigationListeners = this.onNavigationListeners.concat(func)
+    
+    console.log(this.onNavigationListeners)
   }
 
   render(){

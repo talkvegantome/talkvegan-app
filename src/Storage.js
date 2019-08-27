@@ -16,7 +16,7 @@ export class Storage {
     })
   }
 
-  favourites = []
+  favourites = {}
   pageData = {
     en: require('../assets/index.en.json'),
   }
@@ -52,8 +52,6 @@ export class Storage {
       _.forEach(this.onRefreshListeners, (methodObj) => {
         // If the listener cares about the keys we refreshed, call it!
         if(_.intersectionWith(methodObj['listenForKeys'], keysToRefresh).length > 0){
-          console.log(methodObj['listenForKeys'])
-          console.log(_.intersectionWith(methodObj['listenForKeys'], keysToRefresh))
           methodObj['method'](this)
         }
       })
@@ -73,17 +71,39 @@ export class Storage {
       listenForKeys: listenForKeys
     })
   }
-  addFavourite(indexId) {
-    if(this.isFavourite(indexId)){ 
-      this.favourites = _.filter(this.favourites, (o) => o.indexId !== indexId)
+  toggleFavourite(props) {
+    if(this.isFavourite(props)){ 
+      this.favourites[this.settings.language] = _.filter(
+        this.getFavourites(), (o) => {
+          return !(o.indexId === props.indexId && o.pageKey === props.pageKey)
+        })
     }else{
-      this.favourites.push({indexId: indexId})
+      this.favourites[this.settings.language].push({
+        pageKey: props.pageKey,
+        indexId: props.indexId,
+        displayName: props.displayName
+      })
     }
     return AsyncStorage.setItem('favourites', JSON.stringify(this.favourites)).then(() => {
       this.refreshFromStorage(['favourites'])
     });
   }
-  isFavourite(indexId){
-    return _.filter(this.favourites, {indexId: indexId}).length > 0
+  getFavourites(){
+    this._initialiseLanguage('favourites', [])
+    return this.favourites[this.settings.language]
+  }
+  isFavourite(props){
+    return _.filter(this.getFavourites(), {
+      indexId: props.indexId,
+      pageKey: props.pageKey
+    }).length > 0
+  }
+  _initialiseLanguage(key, value){
+    if(_.isNil(this[key])){
+      this[key] = {}
+    }
+    if(_.isNil(this[key][this.settings.language])){
+      this[key][this.settings.language] = value
+    }
   }
 }

@@ -97,7 +97,7 @@ class Results extends React.Component {
         
         return (
             <Card key={key} style={{marginTop: 10}}
-                onPress={() => this.props.navigation.navigate('Home',{indexId: result.path})}>
+                onPress={() => this.props.navigation.navigate('home',{indexId: result.path})}>
                 <Card.Content style={{height: 150}}>
                     <Title style={{height: 30}}>{title}</Title>
                     <Paragraph style={{maxHeight: 110}}>
