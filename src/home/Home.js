@@ -1,9 +1,11 @@
 import React from 'react';
 import { Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
+import { Appbar } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import Pages from '../Pages.js';
 import { _ } from 'lodash'
+
 import ContentIndex from '../navigation/ContentIndex'
 import Wrapper from '../wrapper/Wrapper.js'
 import { markdownRules } from '../MarkDownRules.js'
@@ -16,7 +18,16 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.scrollRef = React.createRef();
-    this.props.storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
+    this.props.storage.addOnRefreshListener((storage) => this.setState(this.returnState(storage)))
+    this.props.storage.addOnRefreshListener(
+      (storage) => {
+        console.log(storage.isFavourite(this.props.indexId))
+        this.setState({isFavourite: storage.isFavourite(this.props.indexId)})
+        console.log(this.state.isFavourite)
+      },
+        
+      ['favourites']
+    )
     this.state = this.returnState(this.props.storage)
   }
 
@@ -25,6 +36,7 @@ export default class App extends React.Component {
     let analytics = new Analytics(storage.settings)
     return {
       analytics: analytics,
+      isFavourite: storage.isFavourite(this.props.indexId),
       pagesObj: pagesObj,
       settings: storage.settings,
       pages: pagesObj.getPages(),
@@ -59,6 +71,14 @@ export default class App extends React.Component {
         navigation={this.props.navigation} 
         title={this.state.pagesObj.getPageTitle(this.props.indexId)} 
         style={{flex:1, backgroundColor: commonStyle.contentBackgroundColor}}
+        rightComponent={
+          <Appbar.Action 
+          icon={this.state.isFavourite ? 'favorite' : 'favorite-border'}
+          onPress={() => {
+            this.props.storage.addFavourite(this.props.indexId)
+          }}
+          />
+        }
       >
             <View>
               <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>

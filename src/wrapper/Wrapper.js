@@ -32,6 +32,7 @@ class Wrapper extends React.Component {
               color: commonStyle.headerFontColor}}
             title={this.props.title}
           />
+          {this.props.rightComponent}
         </Appbar.Header>
         <ScrollView ref={this.scrollRef} style={{...commonStyle.content,...this.props.style}}>
           {this.props.children}

@@ -20,7 +20,7 @@ import Pages from '../Pages.js';
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.props.storage.triggerUpdateMethods.push((storage) => {
+    this.props.storage.addOnRefreshListener((storage) => {
       let pagesObj = new Pages(this.props.storage)
       let analytics = new Analytics(this.props.storage.settings)
       this.setState({

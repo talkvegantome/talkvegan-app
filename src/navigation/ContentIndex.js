@@ -15,7 +15,7 @@ import Pages from '../Pages.js'
 export default class ContentIndex extends Component{
   constructor(props) {
     super(props);
-    this.props.storage.triggerUpdateMethods.push((storage) => this.refreshStorage(storage))
+    this.props.storage.addOnRefreshListener((storage) => this.refreshStorage(storage))
     let pages = new Pages(this.props.storage)
     let analytics = new Analytics(this.props.storage.settings)
     this.state = {

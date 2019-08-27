@@ -5,7 +5,7 @@ import Pages from './Pages.js'
 export class Storage {
   constructor() {
     //AsyncStorage.clear()
-    this.triggerUpdateMethods = []
+    this.onRefreshListeners = []
     this.refreshFromStorage().then(() => {
       // If it's been over a day since we loaded new data, load on start
       let pagesObj = new Pages(this)
@@ -16,7 +16,7 @@ export class Storage {
     })
   }
 
-
+  favourites = []
   pageData = {
     en: require('../assets/index.en.json'),
   }
@@ -34,8 +34,7 @@ export class Storage {
     twitterUrl: 'https://twitter.com/TalkVeganApp'
   }
 
-  refreshFromStorage(keysToRefresh = ['pageData', 'settings']) {
-
+  refreshFromStorage(keysToRefresh = ['pageData', 'settings', 'favourites']) {
     let promises = []
     this.loading = true
     _.forEach(keysToRefresh, (propertyName) => {
@@ -50,8 +49,13 @@ export class Storage {
     })
     return Promise.all(promises).then(() => {
       this.loading = false
-      _.forEach(this.triggerUpdateMethods, (method) => {
-        method(this)
+      _.forEach(this.onRefreshListeners, (methodObj) => {
+        // If the listener cares about the keys we refreshed, call it!
+        if(_.intersectionWith(methodObj['listenForKeys'], keysToRefresh).length > 0){
+          console.log(methodObj['listenForKeys'])
+          console.log(_.intersectionWith(methodObj['listenForKeys'], keysToRefresh))
+          methodObj['method'](this)
+        }
       })
     })
   }
@@ -61,6 +65,25 @@ export class Storage {
     return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(() => {
       this.refreshFromStorage()
     });
+  }
 
+  addOnRefreshListener(method,listenForKeys=['settings', 'pageData']){
+    this.onRefreshListeners.push({
+      method: method,
+      listenForKeys: listenForKeys
+    })
+  }
+  addFavourite(indexId) {
+    if(this.isFavourite(indexId)){ 
+      this.favourites = _.filter(this.favourites, (o) => o.indexId !== indexId)
+    }else{
+      this.favourites.push({indexId: indexId})
+    }
+    return AsyncStorage.setItem('favourites', JSON.stringify(this.favourites)).then(() => {
+      this.refreshFromStorage(['favourites'])
+    });
+  }
+  isFavourite(indexId){
+    return _.filter(this.favourites, {indexId: indexId}).length > 0
   }
 }

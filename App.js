@@ -10,7 +10,7 @@ import React from 'react';
 import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js'
 import HomeScreen from './src/home/Home.js';
-import {_} from 'lodash'
+import { _ } from 'lodash'
 
 import { Storage } from './src/Storage.js'
 import Analytics from './src/analytics'
@@ -26,7 +26,7 @@ class BottomDrawer extends React.Component {
   constructor(props){
     super(props)
     this.state.storage = new Storage()
-    this.state.storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
+    this.state.storage.addOnRefreshListener((storage) => this.setState(this.returnState(storage)))
     this.state = {...this.state, ...this.returnState(this.state.storage)}
   }
 

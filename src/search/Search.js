@@ -13,7 +13,7 @@ import { commonStyle } from '../styles/Common.style.js';
 export default class Search extends React.Component{
     constructor(props) {
         super(props);
-        this.props.storage.triggerUpdateMethods.push((storage) => this.setState(this.returnState(storage)))
+        this.props.storage.addOnRefreshListener((storage) => this.setState(this.returnState(storage)))
         this.state = this.returnState(this.props.storage)
     }
     returnState = (storage) => {
