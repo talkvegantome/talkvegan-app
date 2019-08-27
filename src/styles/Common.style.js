@@ -64,5 +64,6 @@ export const PaperTheme = {
 		...DefaultTheme.colors,
 		primary: commonStyle.primary,
 		accent: commonStyle.secondary,
+		onSurface: '#FFFFFF'
 	},
 };

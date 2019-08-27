@@ -20,10 +20,11 @@ export default class SearchScoring {
         this.results = this.resetResults()
     }
     resetResults() {
+        this.results = {}
         _.forEach(this.pages, (o, i) => this.results[i] = [])
     }
     contextRegexBuilder = (needle, options='i') => {
-        let regexString = '(.*)' + '(' + _.escapeRegExp(needle) +')' + '(.*)'
+        let regexString = '(.{0,200})' + '(' + _.escapeRegExp(needle) +')' + '(.{0,200})'
         let regex
         try{
             regex = new RegExp(regexString, options)

@@ -39,14 +39,18 @@ export default class Search extends React.Component{
         if(this.state.query.length < 2){
             return
         }
-        this.state.analytics.logEvent('search', {query: this.state.query})
         this.setState({resultsPlaceholder: "Searching..."})
-
+        let startTime = new Date()
         setTimeout(() => {
             this.state.searchScoring.getMatches(this.state.query).then((results)=> {
                 this.setState({
                     results: results,
                     resultsPlaceholder: results.length == 0 ? 'No Results for: ' + this.state.query: '',
+                })
+                let endTime = new Date()
+                this.state.analytics.logEvent('search', {
+                    query: this.state.query,
+                    duration: endTime.getTime() - startTime.getTime()
                 })
             })
         }, 10)

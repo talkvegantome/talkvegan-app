@@ -27,7 +27,6 @@ export default class App extends React.Component {
       ['favourites']
     )
     this.props.navigation.addOnNavigateListener((key, props) => {
-      console.log('indexid: ' + props.indexId)
       this.setState({isFavourite: this.props.storage.isFavourite({
         indexId: props.indexId,
         pageKey: 'home'

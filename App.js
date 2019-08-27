@@ -76,7 +76,6 @@ class BottomDrawer extends React.Component {
       _.findIndex(this.state.routes, ['key', route.route.key]),
       {}
     )
-    console.log('navigated in APP.js')
     this._triggerNavigationListeners()
     this.setState({routeParams: {}})
   }
@@ -142,10 +141,7 @@ class BottomDrawer extends React.Component {
   }
 
   addOnNavigateListener = (func) => {
-    console.log("adding navigation listener" + func)
     this.onNavigationListeners = this.onNavigationListeners.concat(func)
-    
-    console.log(this.onNavigationListeners)
   }
 
   render(){
