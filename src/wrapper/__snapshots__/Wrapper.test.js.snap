@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Wrapper Renders Correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    collapsable={false}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <RCTSafeAreaView
+      emulateUnlessSupported={true}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#143642",
+            "zIndex": 0,
+          },
+          Object {
+            "shadowColor": "#000000",
+            "shadowOffset": Object {
+              "height": 3,
+              "width": 0,
+            },
+            "shadowOpacity": 0.24,
+            "shadowRadius": 4,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#143642",
+            "elevation": 0,
+            "flexDirection": "row",
+            "height": 56,
+            "marginTop": 0,
+            "paddingHorizontal": 4,
+          }
+        }
+      >
+        <View
+          accessibilityRole="button"
+          accessible={true}
+          clickable={true}
+          hitSlop={
+            Object {
+              "bottom": 6,
+              "left": 6,
+              "right": 6,
+              "top": 6,
+            }
+          }
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "borderRadius": 18,
+                  "height": 36,
+                  "justifyContent": "center",
+                  "margin": 6,
+                  "overflow": "visible",
+                  "width": 36,
+                },
+                undefined,
+                Object {},
+              ],
+            ]
+          }
+        >
+          <View
+            style={null}
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                  },
+                  Object {
+                    "height": 24,
+                    "width": 24,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "bottom": 0,
+                    "left": 0,
+                    "opacity": 1,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                    "transform": Array [
+                      Object {
+                        "rotate": "0deg",
+                      },
+                    ],
+                  }
+                }
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  allowFontScaling={false}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  style={
+                    Array [
+                      Object {
+                        "color": "#ffffff",
+                        "fontSize": 24,
+                      },
+                      Array [
+                        Object {
+                          "transform": Array [
+                            Object {
+                              "scaleX": 1,
+                            },
+                          ],
+                        },
+                        Object {
+                          "backgroundColor": "transparent",
+                        },
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          accessible={true}
+          clickable={false}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "flex": 1,
+                "paddingHorizontal": 12,
+              },
+              Array [
+                Object {
+                  "marginLeft": 8,
+                },
+                Object {
+                  "alignItems": "center",
+                },
+                undefined,
+              ],
+            ]
+          }
+        >
+          <Text
+            accessibilityRole="header"
+            accessibilityTraits="header"
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "color": "#000000",
+                  "fontFamily": "Helvetica Neue",
+                  "textAlign": "left",
+                  "writingDirection": "ltr",
+                },
+                Array [
+                  Object {
+                    "color": "#ffffff",
+                    "fontFamily": "Helvetica Neue",
+                  },
+                  Object {
+                    "fontSize": 17,
+                  },
+                  Object {
+                    "color": "#FFFFFF",
+                  },
+                ],
+              ]
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "width": 48,
+            }
+          }
+        />
+      </View>
+    </RCTSafeAreaView>
+    <RCTScrollView
+      style={
+        Object {
+          "paddingBottom": 20,
+          "paddingLeft": 30,
+          "paddingRight": 30,
+        }
+      }
+    >
+      <View>
+        <View
+          style={
+            Object {
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;

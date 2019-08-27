@@ -7,149 +7,158 @@
  */
 
 import React from 'react';
-import { Dimensions, Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
-import { Icon, Divider } from 'react-native-elements';
-import { createDrawerNavigator, createAppContainer } from 'react-navigation';
-import Markdown from 'react-native-markdown-renderer';
-import SideMenu, { MenuItems } from './src/navigation/SideMenu.js';
-import Pages from './src/Pages.js';
 import SettingsScreen from './src/settings/SettingsScreen.js';
+import SearchScreen from './src/search/Search.js'
+import HomeScreen from './src/home/Home.js';
+import FavouritesScreen from './src/navigation/Favourites'
+import { _ } from 'lodash'
 
 import { Storage } from './src/Storage.js'
-import Wrapper from './src/navigation/Wrapper.js'
-import { markdownRules } from './src/MarkDownRules.js'
-import { markdownStyles } from './src/styles/Markdown.style.js';
+import Analytics from './src/analytics'
 
-let storage = new Storage()
+import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
+import { BottomNavigation } from 'react-native-paper';
 
-import Analytics, { PrivacyDialog } from './src/analytics'
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.scrollRef= React.createRef();
-    this.props.storage.triggerUpdateMethods.push((storage) => {
-      let pagesObj = new Pages(storage)
-      let analytics = new Analytics(storage.settings)
-      this.setState({
-        analytics: analytics,
-        pagesObj: pagesObj,
-        settings: storage.settings,
-        pages: pagesObj.getPages(),
-        splashPath: pagesObj.getSplashPath(),
-        markdownRulesObj: new markdownRules(props.navigation, storage.settings)
+class BottomDrawer extends React.Component {
+  static defaultProps = {
+    style: {}
+  }
+  constructor(props){
+    super(props)
+    this.state.storage = new Storage()
+    this.state.storage.addOnRefreshListener((storage) => this.setState(this.returnState(storage)))
+    this.state = {...this.state, ...this.returnState(this.state.storage)}
+  }
+
+  returnState(storage){
+    return { 
+      storage: storage,
+      analytics: new Analytics(storage.settings),
+      navigationHistory: [{
+        index: 0,
+        routeParams: {}
+      }]
+    }
+  }
+  onNavigationListeners = []
+  state = {
+    
+    index: 0,
+    routes: [
+      { key: 'home', title: 'Home', icon: 'home' },
+      { key: 'search', title: 'Search', icon: 'search' },
+      { key: 'favourites', title: 'Favourites', icon: 'favorite' },
+      { key: 'settings', title: 'Settings', icon: 'settings' },
+    ]
+  }
+  
+  _appendToHistory(index, params){
+    let lastLocation = _.nth(this.state.navigationHistory, -1)
+    if(lastLocation.index === index && _.isEqual(lastLocation.routeParams,params)){
+      return
+    }
+    this.setState({
+      routeParams: {},
+      navigationHistory: this.state.navigationHistory.concat({
+        index: index,
+        routeParams: params
       })
     })
-    let analytics = new Analytics(storage.settings)
-    let pagesObj = new Pages(this.props.storage)
-    this.state = {
-      analytics: analytics,
-      pagesObj: pagesObj,
-      pages: pagesObj.getPages(),
-      splashPath: pagesObj.getSplashPath(),
-      settings: this.props.storage.settings,
-      markdownRulesObj: new markdownRules(props.navigation, storage.settings),
-    };
-    this.state.analytics.logEvent('Loaded Application')
-  }
-  componentDidUpdate(){
-    this.scrollRef.current.scrollTo({y: 0, animated: false})
   }
 
-  static navigationOptions = {
-    drawerLabel: 'Home',
-  };
-
-  static navigationOptions = {
-    header: null,
-  };
-
-  getPageIndex() {
-    let pageIndex = this.props.navigation.getParam('indexId')
-    return pageIndex ? pageIndex : this.state.splashPath
+  _handleIndexChange = (index) => {
+    this.setState({ index });
   }
-  getPagePermalink() {
-    let pageIndex = this.getPageIndex()
-    let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
-    return pageMetadata.permalink
+  _handleTabPress = (route) => {
+    this.state.analytics.logEvent('navigateToPage', {page: route.route.key, params: {}})
+    this._appendToHistory(
+      _.findIndex(this.state.routes, ['key', route.route.key]),
+      {}
+    )
+    this._triggerNavigationListeners()
+    this.setState({routeParams: {}})
   }
-  getPageGitHubLink() {
-    let pageIndex = this.getPageIndex()
-    let pageMetadata = this.state.pagesObj.getPageMetadata(pageIndex)
-    let languageName = this.props.storage.pageData[this.state.settings.language].languageName
-    let gitHubPath = pageMetadata.relativePermalink
 
-    // Replace the language shortcode with the full name
-    gitHubPath = gitHubPath.replace(/^\/[^\/]+\//, '/' + languageName.toLowerCase() + '/')
-    // Replace the trailing slash with .md
-    gitHubPath = gitHubPath.replace(/\/$/, '.md')
-    return this.props.storage.config.gitHubUrl + 'blob/master/content' + gitHubPath
-  }
-  getPageContent() {
-    let pageIndex = this.getPageIndex()
-    if (!this.state.pages[pageIndex]) {
-      let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
-      this.state.analytics.logEvent('error', { errorDetail: errorMessage })
-      return errorMessage
+  _renderScene = ({route}) => {
+    let page = null
+    if(route.key == 'home'){
+      return <HomeScreen
+        storage={this.state.storage} 
+        navigation={this}
+        {...this.state.routeParams} 
+      />
     }
-    return this.state.pages[pageIndex]
-  }
-  getPageTitle() {
-    let pageMetadata = this.state.pagesObj.getPageMetadata(this.props.navigation.getParam('indexId'))
-    let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
-    // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
-    if (pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)) {
-      return 'TalkVeganToMe'
+    if(route.key == 'settings'){
+      return <SettingsScreen
+        storage={this.state.storage} 
+        navigation={this}
+      />
     }
-    return pageTitle
+    if(route.key == 'search'){
+      return <SearchScreen 
+        storage={this.state.storage} 
+        navigation={this}
+      />
+    }
+    if(route.key == 'favourites'){
+      return <FavouritesScreen 
+        storage={this.state.storage} 
+        navigation={this}
+      />
+    }
+    return page
   }
-  render() {
+  _triggerNavigationListeners(key, props={}){
+    _.forEach(this.onNavigationListeners, (method) => method(key, props))
+  }
+  navigate = (key, props) => {
+    let index = _.findIndex(this.state.routes, ['key', key])
+    this.state.analytics.logEvent('navigateToPage', {page: key, params: props})
+    this._appendToHistory(index, props)
+    this._triggerNavigationListeners(key, props)
+    this.setState({
+      index: index, 
+      routeParams: props
+    })
+  }
 
-    return (
-      <ScrollView ref={this.scrollRef} bounces={false}>
-        <Wrapper navigation={this.props.navigation} title={this.getPageTitle()}>
-          <PrivacyDialog storage={storage}></PrivacyDialog>
-          <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
-            {this.state.markdownRulesObj.preProcessMarkDown(this.getPageContent())}
-          </Markdown>
-          <Divider style={{ marginVertical: 20 }} />
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <TouchableHighlight style={{ flex: 1 }} onPress={() => { 
-                Share.share({ message: this.getPagePermalink() }).then((result) => {
-                  this.state.analytics.logEvent('sharedPage', {page: this.getPagePermalink(), activity: result.activityType})
-                }).catch((err) => {this.state.analytics.logEvent('error', {errorDetail: err})})
-              }}>
-              <View style={{ alignSelf: 'flex-start' }}>
-                <Icon name='share' />
-                <Text style={markdownStyles.text}>Share</Text>
-              </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={{ flex: 1 }} onPress={() => { Linking.openURL(this.getPageGitHubLink()) }}>
-              <View style={{ alignSelf: 'flex-end' }}>
-                <Icon name='edit' />
-                <Text style={markdownStyles.text}>Edit</Text>
-              </View>
-            </TouchableHighlight>
-          </View>
-        </Wrapper>
-        <MenuItems storage={this.props.storage} navigation={this.props.navigation}/>
-      </ScrollView>
-    );
+  goBack = () => {
+    let lastLocation = _.nth(this.state.navigationHistory, -2) // current location is -1
+    if(_.isNil(lastLocation)){
+      return
+    }
+    let navigationHistoryLessLastLocation = this.state.navigationHistory.slice(
+      0,
+      this.state.navigationHistory.length-1
+    )
+    
+    this.setState({
+      index: lastLocation.index,
+      routeParams: lastLocation.routeParams,
+      navigationHistory: navigationHistoryLessLastLocation
+    })
+  }
+
+  addOnNavigateListener = (func) => {
+    this.onNavigationListeners = this.onNavigationListeners.concat(func)
+  }
+
+  render(){
+    return ( 
+      <BottomNavigation
+        theme={PaperTheme}
+        activeColor={commonStyle.headerFontColor}
+        inactiveColor={commonStyle.headerFontColor}
+        navigationState={this.state}
+        onTabPress={this._handleTabPress}
+        onIndexChange={this._handleIndexChange}
+        renderScene={this._renderScene}
+      />
+    )
   }
 }
 
 
-const DrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: ({ navigation }) => (<App storage={storage} navigation={navigation} />),
-  },
-  Settings: {
-    screen: ({ navigation }) => (<SettingsScreen storage={storage} navigation={navigation} />)
-  }
-}, {
-    contentComponent: ({ navigation }) => (<SideMenu storage={storage} navigation={navigation} title='TalkVeganToMe' />
-    ),
-    drawerWidth: Dimensions.get('window').width - 120,
-  });
-const Main = createAppContainer(DrawerNavigator);
-export default Main;
+export default BottomDrawer
+

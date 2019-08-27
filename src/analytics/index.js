@@ -15,9 +15,7 @@ class analytics {
     this.amplitude = new RNAmplitude(amplitudeSettings.apiKey, false);
   }
   logEvent(eventName, data) {
-    if (!this.settings.analyticsEnabled) {
-      return
-    }
+    if (!this.settings.analyticsEnabled) { return }
     this.amplitude.logEvent(eventName, data)
   }
 }
@@ -48,7 +46,7 @@ Welcome to TalkVeganToMe! Before you get started we&lsquo;d like to ask your per
 - OS
 - Language
 
-It also provides us with a warm fuzzy feeling to know our app is beinfg used!
+It also provides us with a warm fuzzy feeling to know our app is being used!
 For more information on how this data is used, see the [Privacy Policy](` + this.props.storage.config.privacyPolicyUrl + `)
 `
 

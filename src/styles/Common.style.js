@@ -1,5 +1,6 @@
 import { Platform } from 'react-native'
 import { StatusBar } from 'react-native';
+import { DefaultTheme } from 'react-native-paper'
 StatusBar.setBarStyle('light-content', true);
 
 let palette = {
@@ -7,7 +8,7 @@ let palette = {
 	secondary: '#143642',
 	light: '#f9fbfc',
 	white: '#FFFFFF',
-	lightText: '#999999',
+	lightText: '#444444',
 	highlight: '#161B33',
 	dark: '#313638',
 }
@@ -40,11 +41,12 @@ export const commonStyle = {
 	headingFontColor: palette.secondary,
 	paragraphFont: Platform.OS === 'ios' ? 'system font' : 'sans-serif',
 	paragraphFontBold: Platform.OS === 'ios' ? 'ArialRoundedMTBold' : 'sans-serif-bold',
+	contentBackgroundColor: '#f6f6f6',
 	content: {
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingBottom: 20,
-  },
+		paddingLeft: 30,
+		paddingRight: 30,
+		paddingBottom: 20,
+	},
 	picker: {
 		width: Platform.OS === 'ios' ? 100 : 200,
 		height: 200
@@ -55,3 +57,13 @@ export const commonStyle = {
 	}
 
 }
+
+export const PaperTheme = {
+	...DefaultTheme,
+	colors: {
+		...DefaultTheme.colors,
+		primary: commonStyle.primary,
+		accent: commonStyle.secondary,
+		onSurface: '#FFFFFF'
+	},
+};

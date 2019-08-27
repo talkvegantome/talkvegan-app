@@ -2,11 +2,12 @@ import { commonStyle } from './Common.style.js'
 import { Platform } from 'react-native';
 import _ from 'lodash';
 let fontMultiplier = commonStyle.fontMultiplier
+let lineHeightMultiplier = 1.3
 export const markdownStyles =  {
   heading1: {
     textAlign:'left',
     fontSize: 22 * fontMultiplier,
-    lineHeight: 22 * fontMultiplier,
+    lineHeight: (22 * lineHeightMultiplier) * fontMultiplier,
     fontWeight: 'bold',
     color: commonStyle.headingFontColor,
     fontFamily: commonStyle.headerFont,
@@ -17,7 +18,7 @@ export const markdownStyles =  {
   heading2: {
     textAlign: 'left',
     fontSize: 20 * fontMultiplier,
-    lineHeight: 20 * fontMultiplier,
+    lineHeight: (20 * lineHeightMultiplier)  * fontMultiplier,
     fontWeight: 'bold',
     color: commonStyle.headingFontColor,
     fontFamily: commonStyle.headerFont,
@@ -27,7 +28,7 @@ export const markdownStyles =  {
   heading3: {
     textAlign: 'left',
     fontSize: 18 * fontMultiplier,
-    lineHeight: 28 * fontMultiplier,
+    lineHeight: (18 * lineHeightMultiplier)  * fontMultiplier,
     fontWeight: 'bold',
     color: commonStyle.headingFontColor,
     fontFamily: commonStyle.headerFont,
@@ -40,6 +41,7 @@ export const markdownStyles =  {
   },
   listUnorderedItem: {
     flexDirection: 'row',
+    paddingRight: 30,
     margin: -10
   },
   quotedListUnorderedItemIcon: {
@@ -58,6 +60,7 @@ export const markdownStyles =  {
   },
   listOrderedItem: {
     flexDirection: 'row',
+    paddingRight: 30,
     margin: -7
   },
   quotedListOrderedItemIcon: {
@@ -75,10 +78,14 @@ export const markdownStyles =  {
     lineHeight: Platform.OS === 'ios' ? 15 : 15
   },
   blockquote: {
-    paddingHorizontal: 20,
     marginVertical: 10,
-    borderLeftWidth: 4,
-    borderLeftColor: commonStyle.light
+    borderLeftWidth: 2,
+    borderLeftColor: commonStyle.primary,
+    backgroundColor: 'white',
+    paddingTop: 10,
+    paddingBottom: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   blockquoteText: {
     fontFamily: commonStyle.paragraphFont,

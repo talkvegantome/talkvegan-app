@@ -1,7 +1,8 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
 import stringify from 'fast-stringify'
 import {DateTime} from 'luxon';
+import RemoveMarkdown from 'remove-markdown';
 
 import Analytics from './analytics'
 
@@ -11,14 +12,16 @@ class Pages {
     this.storage = storage
     this.settings = storage.settings
     this.pageData = storage.pageData
-    this.setDefault()
     this.generateMaps()
   }
 
-  setDefault(){
+  getPageData(){
     // if the language's data hasn't loaded yet return a default
     if(!('data' in this.pageData[this.settings.language])){
-      this.pageData[this.settings.language].data = [
+      this.analytics.logEvent('error',
+        {errorDetail: "Failed to load page in language" + this.settings.language})
+      this.pullPageDataFromSite()
+      return [
         {
           friendlyName: 'Home',
           rawContent: 'Sorry the page data for ' + this.settings.language + " hasn\'t loaded yet.",
@@ -29,10 +32,8 @@ class Pages {
           }
         }
       ]
-      this.analytics.logEvent('error',
-        {errorDetail: "Failed to load page in language" + this.settings.language})
-      this.pullPageDataFromSite()
     }
+    return this.pageData[this.settings.language].data
   }
 
   generateMaps(){
@@ -40,6 +41,10 @@ class Pages {
       language.pages = {}
       language.menu = {}
       _.forEach(language['data'], (page) => {
+        if(!_.isNil(page.displayInApp) && !page.displayInApp){
+          // Don't display this page if it has displayInApp=false
+          return 
+        }
         language.pages[page.relativePermalink] = page.rawContent
 
         // If it's a top level page (e.g. splash, we don't want it appearing on the menu)
@@ -61,14 +66,24 @@ class Pages {
     return this.pageData[this.settings.language].menu
   }
   getPages(){
-    return this.pageData[this.settings.language].pages
+    if(!this.pages){
+      this.pages = this.pageData[this.settings.language].pages
+    }
+    return this.pages
+  }
+  getPageTitles(){
+    let pageTitles = {}
+    _.forEach(this.getPages(), (content, index) => {
+      pageTitles[index] = this.getPageTitle(index)
+    })
+    return pageTitles
   }
   getSplashPath(){
     return '/'+this.settings.language+'/splash/'
   }
   getPageMetadata(relPath){
     let pageMetadata = null
-    this.pageData[this.settings.language].data.forEach((page) => {
+    this.getPageData().forEach((page) => {
 
      if(page.relativePermalink === relPath){
        pageMetadata = page
@@ -78,17 +93,53 @@ class Pages {
   }
   getFriendlyName(relPath){
     let friendlyName = null
-     this.pageData[this.settings.language].data.forEach((page) => {
-
+    this.getPageData().forEach((page) => {
       if(page.relativePermalink === relPath){
         friendlyName = page.friendlyName
       }
     })
     return friendlyName
   }
-
+  getPageTitle(pageIndex) {
+    let pageMetadata = this.getPageMetadata(pageIndex)
+    let pageTitle = pageMetadata ? pageMetadata['friendlyName'] : 'TalkVeganToMe'
+    // Exclude top level pages (e.g. /en/ or 'splash' pages) from having their friendlyName as header
+    if (pageMetadata && pageMetadata['section']['relativePermalink'].match(/^\/[^\/]+\/$/)) {
+      return 'TalkVeganToMe'
+    }
+    return pageTitle
+  }
+  getPageDescription(indexId){
+    let pageMetadata = this.getPageMetadata(indexId)
+    return pageMetadata.description ? 
+            pageMetadata.description : 
+            RemoveMarkdown(pageMetadata.rawContent).replace(/\n/g, ' ')
+  }
   getLanguageDataUri(){
     return this.storage.config.apiUrl + this.settings.language + '/index.json'
+  }
+  getPagePermalink(pageIndex) {
+    return this.getPageMetadata(pageIndex).permalink
+  }
+  getPageGitHubLink(pageIndex) {
+    let pageMetadata = this.getPageMetadata(pageIndex)
+    let languageName = this.storage.pageData[this.settings.language].languageName
+    let gitHubPath = pageMetadata.relativePermalink
+
+    // Replace the language shortcode with the full name
+    gitHubPath = gitHubPath.replace(/^\/[^\/]+\//, '/' + languageName.toLowerCase() + '/')
+    // Replace the trailing slash with .md
+    gitHubPath = gitHubPath.replace(/\/$/, '.md')
+    return this.storage.config.gitHubUrl + 'blob/master/content' + gitHubPath
+  }
+  getPageContent(pageIndex) {
+    let pages = this.getPages()
+    if (!pages[pageIndex]) {
+      let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
+      this.state.analytics.logEvent('error', { errorDetail: errorMessage })
+      return errorMessage
+    }
+    return pages[pageIndex]
   }
 
   async pullPageDataFromSite(){
@@ -124,10 +175,10 @@ class Pages {
   }
 
   getLastPageDataSync(duration){
-    // If never synced default to content generation date
+    // If never synced default to epoch start
     let lastSyncDate = this.pageData[this.settings.language].lastSyncDate ?
       DateTime.fromISO(this.pageData[this.settings.language].lastSyncDate) :
-      DateTime.fromISO(this.pageData[this.settings.language].date)
+      DateTime.fromISO('1970-01-01')
     if(duration==='auto'){
       let diff = DateTime.local().diff(lastSyncDate, ['years','months','days','hours', 'minutes'])
       if(isNaN(diff.minutes)){
@@ -143,9 +194,9 @@ class Pages {
         return Math.round(diff.days) + ' days'
       }
       if(diff.hours > 1){
-        return Math.round(diff.hours) + ' hours'
+        return Math.round(diff.hours) + ' hrs'
       }
-      return Math.round(diff.minutes) + ' minutes'
+      return Math.round(diff.minutes) + ' mins'
     }
     return lastSyncDate
   }

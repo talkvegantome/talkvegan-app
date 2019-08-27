@@ -14,17 +14,23 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "@react-native-community/async-storage": "1.2.4",
     "fast-stringify": "^1.1.1",
     "lodash": "^4.17.11",
     "luxon": "^1.13.2",
-    "react": "16.5.0",
-    "react-native": "0.59.8",
-    "react-native-amplitude-analytics": "^0.2.6",
+    "react": "16.8.6",
+    "react-native": "0.60.5",
+    "react-native-amplitude-analytics": "^0.2.7",
     "react-native-elements": "^1.1.0",
-    "react-native-gesture-handler": "^1.2.1",
     "react-native-markdown-renderer": "^3.2.8",
-    "react-native-vector-icons": "^6.4.2",
-    "react-navigation": "^3.9.1"
+    "react-native-paper": "^2.16.0",
+    "react-native-snap-carousel": "^3.8.0",
+    "react-native-vector-icons": "^6.6.0",
+    "react-navigation": "^3.9.1",
+    "react-navigation-material-bottom-tabs": "^1.0.0",
+    "remark": "^11.0.1",
+    "remove-markdown": "https://github.com/talkvegantome/remove-markdown.git#bugfix/multiline-blockquotes",
+    "strip-markdown": "^3.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -34,6 +40,7 @@
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
+    "hermes-engine": "^0.1.1",
     "jest": "^24.8.0",
     "react-test-renderer": "^16.8.6"
   },

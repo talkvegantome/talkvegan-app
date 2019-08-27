@@ -14,15 +14,17 @@ import _ from 'lodash';
 import Analytics from '../analytics'
 
 import { commonStyle } from '../styles/Common.style.js'
-import Wrapper from '../navigation/Wrapper.js'
+import Wrapper from '../wrapper/Wrapper.js'
 import Pages from '../Pages.js';
 
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.props.storage.triggerUpdateMethods.push((storage) => {
+    this.props.storage.addOnRefreshListener((storage) => {
       let pagesObj = new Pages(this.props.storage)
+      let analytics = new Analytics(this.props.storage.settings)
       this.setState({
+        analytics: analytics,
         settings: storage.settings,
         pageObj: pagesObj,
         lastSync: pagesObj.getLastPageDataSync('auto')
@@ -50,7 +52,7 @@ class SettingsScreen extends React.Component {
     this.setState({ timer: timer });
   }
   componentWillUnmount() {
-    this.clearInterval(this.state.timer);
+    clearInterval(this.state.timer);
   }
 
   setModalVisible(visible) {
@@ -68,25 +70,11 @@ class SettingsScreen extends React.Component {
     this.state.analytics.logEvent('updateSetting', { settingName: settingName, value: value })
   }
   render() {
-    let footer = (
-      <View> 
-        <SettingsItem label='Analytics' icon={null}
-            switch={{ value: this.state.storage.settings.analyticsEnabled, onValueChange: (value) => this.updateSetting('analyticsEnabled', value) }} />
-        <ListItem
-          topDivider={true}
-          onPress={() => Linking.openURL(this.state.storage.config.helpDeskUrl)}
-          leftIcon={{ name: "help-outline" }}
-          title="Contact Us"
-        />
-      </View>
-    )
     return (
       <Wrapper
         navigation={this.props.navigation}
         title="Settings"
-        safeAreaViewStyle={{ backgroundColor: '#D3D3D3' }}
-        footer={footer}
-        style={{ paddingRight: 0, paddingLeft: 0, backgroundColor: '#D3D3D3' }}>
+        style={{ paddingRight: 0, paddingLeft: 0, backgroundColor: '#E5' }}>
         <SettingsModal
           modalVisible={this.state.modalVisible}
           title={"Select Language"}
@@ -106,11 +94,32 @@ class SettingsScreen extends React.Component {
         <View style={{ marginTop: 20 }}>
           <SettingsItem
             label='Last Synced Data'
+            leftIcon={{ name: "access-time", color: commonStyle.secondary}}
             value={this.state.lastSync}
             icon={this.state.pageDataIsLoading ? 'hourglass-empty' : 'refresh'}
             onPress={() => { this.pullPageDataFromSite() }} />
-          <SettingsItem label='Language' value={this.state.storage.pageData[this.state.settings.language].languageName}
+          <SettingsItem 
+            label='Language' 
+            leftIcon={{ name: "language", color: commonStyle.secondary}}
+            value={this.state.storage.pageData[this.state.settings.language].languageName}
             onPress={() => { this.setModalVisible(!this.state.modalVisible) }} />
+          <SettingsItem 
+            label='Analytics' 
+            leftIcon={{ name: "chart-areaspline", type: 'material-community', color: commonStyle.secondary}}
+            icon={null}
+            switch={{ value: this.state.storage.settings.analyticsEnabled, onValueChange: (value) => this.updateSetting('analyticsEnabled', value) }} />
+        </View>
+        <View style={{ marginTop: 20 }}><ListItem
+            onPress={() => Linking.openURL(this.state.storage.config.helpDeskUrl)}
+            leftIcon={{ name: "chat-bubble",  color: commonStyle.secondary }}
+            title="Contact Us"
+          />
+          <ListItem
+            topDivider={true}
+            onPress={() => Linking.openURL(this.state.storage.config.twitterUrl)}
+            leftIcon={{ name: "twitter", type: 'material-community', color: commonStyle.secondary}}
+            title="Twitter"
+          />
         </View>
       </Wrapper>
     )
@@ -164,6 +173,7 @@ class SettingsItem extends React.Component {
     return (
       <ListItem
         onPress={this.props.onPress}
+        leftIcon={this.props.leftIcon}
         title={this.props.label}
         rightTitle={this.props.value}
         rightIcon={{ name: this.props.icon }}
