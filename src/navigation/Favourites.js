@@ -84,7 +84,6 @@ export default class Favourites extends React.Component {
                     action={{
                         label: 'Undo',
                         onPress: () => {
-                            console.log(this.state.lastUnfavourite)
                             this.props.storage.toggleFavourite(this.state.lastUnfavourite)
                         },
                       }}

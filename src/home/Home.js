@@ -91,16 +91,16 @@ export default class App extends React.Component {
           />
         }
       >
-            <View>
-              <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
-                {this.state.markdownRulesObj.preProcessMarkDown(this.state.pagesObj.getPageContent(this.props.indexId))}
-              </Markdown>
-              <PageMenu 
-                pagePermalink={this.state.pagesObj.getPagePermalink(this.props.indexId)}
-                pageGitHubLink={this.state.pagesObj.getPageGitHubLink(this.props.indexId)}
-                analytics={this.state.analytics}
-              />
-            </View>
+        <View>
+          <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
+            {this.state.markdownRulesObj.preProcessMarkDown(this.state.pagesObj.getPageContent(this.props.indexId))}
+          </Markdown>
+          <PageMenu 
+            pagePermalink={this.state.pagesObj.getPagePermalink(this.props.indexId)}
+            pageGitHubLink={this.state.pagesObj.getPageGitHubLink(this.props.indexId)}
+            analytics={this.state.analytics}
+          />
+        </View>
       </Wrapper>
     );
     
