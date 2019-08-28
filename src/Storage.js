@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash'
 import Pages from './Pages.js'
+import Analytics from './analytics'
 
 export class Storage {
   constructor() {
@@ -14,6 +15,8 @@ export class Storage {
         pagesObj.pullPageDataFromSite()
       }
     })
+    this.addOnRefreshListener(this.onRefresh, ['settings'])
+    this.onRefresh()
   }
 
   favourites = {}
@@ -32,6 +35,10 @@ export class Storage {
     privacyPolicyUrl: 'https://talkveganto.me/en/privacy-policy',
     helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
     twitterUrl: 'https://twitter.com/TalkVeganApp'
+  }
+
+  onRefresh = () => {
+    this.analytics = new Analytics(this.settings)
   }
 
   refreshFromStorage(keysToRefresh = ['pageData', 'settings', 'favourites']) {
@@ -71,22 +78,34 @@ export class Storage {
       listenForKeys: listenForKeys
     })
   }
-  toggleFavourite(props) {
-    if(this.isFavourite(props)){ 
-      this.favourites[this.settings.language] = _.filter(
-        this.getFavourites(), (o) => {
-          return !(o.indexId === props.indexId && o.pageKey === props.pageKey)
-        })
-    }else{
-      this.favourites[this.settings.language].push({
-        pageKey: props.pageKey,
-        indexId: props.indexId,
-        displayName: props.displayName
-      })
-    }
+  addFavourite(props){
+    this.favourites[this.settings.language].push({
+      pageKey: props.pageKey,
+      indexId: props.indexId,
+      displayName: props.displayName
+    })
+    this.analytics.logEvent('addedFavourite', props)
+    this.syncFavourites()
+  }
+  removeFavourite(props){
+    this.favourites[this.settings.language] = _.filter(
+      this.getFavourites(), (o) => {
+        return !(o.indexId === props.indexId && o.pageKey === props.pageKey)
+      }
+    )
+    this.analytics.logEvent('removedFavourite', props)
+    return this.syncFavourites()
+  }
+  syncFavourites(){
     return AsyncStorage.setItem('favourites', JSON.stringify(this.favourites)).then(() => {
       this.refreshFromStorage(['favourites'])
     });
+  }
+  toggleFavourite(props){
+    if(this.isFavourite(props)){
+      return this.removeFavourite(props)
+    }
+    return this.addFavourite(props)
   }
   getFavourites(){
     this._initialiseLanguage('favourites', [])
