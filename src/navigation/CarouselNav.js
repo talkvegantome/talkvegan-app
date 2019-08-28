@@ -8,31 +8,16 @@ var fontScaleHelper = 1.2
 
 export default class CarouselNav extends React.Component {
     state = Dimensions.get('window');
-    
+
+    _handleAppStateChange = () => {
+        this.setState(Dimensions.get('window'))
+    }
+
     componentDidMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
     }
     componentWillUnmount() {
         AppState.removeEventListener('change', this._handleAppStateChange);
-    }
-    _handleAppStateChange = () => {
-        this.setState(Dimensions.get('window'))
-    }
-    
-    _renderItem = ({item}, fontScale) => {
-        return (
-            <Card onPress={item.navigateTo}>
-                <Card.Content style={{height: 140 * fontScale*fontScaleHelper}}>
-                <Title numberOfLines={2}>{item.title}</Title>
-                    <Paragraph numberOfLines={5} style={{height: 110 * fontScale*fontScaleHelper}}>
-                        {item.content}
-                    </Paragraph>
-                </Card.Content>
-                <Card.Actions style={{height: 50 * fontScale*fontScaleHelper}}>
-                    <Button>More...</Button>
-                </Card.Actions>
-            </Card>
-        );
     }
 
     render () {
@@ -42,10 +27,39 @@ export default class CarouselNav extends React.Component {
               firstItem={ this.props.randomiseHomepage ? _.random(0,this.props.items.length-1): 0}
               ref={(c) => { this._carousel = c; }}
               data={this.props.items}
-              renderItem={(props) => this._renderItem(props, this.state.fontScale)}
+              renderItem={(props) => <NavigationCard item={props.item} />}
               sliderWidth={this.state.width}
               itemWidth={this.state.width-this.state.width/5}
             />
         );
+    }
+}
+
+export class NavigationCard extends React.Component{
+    state = Dimensions.get('window');
+
+    _handleAppStateChange = () => {
+        this.setState(Dimensions.get('window'))
+    }
+    componentDidMount() {
+        AppState.addEventListener('change', this._handleAppStateChange);
+    }
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this._handleAppStateChange);
+    }
+    render(){
+        return (
+            <Card onPress={this.props.item.navigateTo} style={this.props.style}>
+                <Card.Content style={{height: 140 * this.state.fontScale*fontScaleHelper}}>
+                <Title numberOfLines={2}>{this.props.item.title}</Title>
+                    <Paragraph numberOfLines={5} style={{height: 110 * this.state.fontScale*fontScaleHelper}}>
+                        {this.props.item.content}
+                    </Paragraph>
+                </Card.Content>
+                <Card.Actions style={{height: 50 * this.state.fontScale*fontScaleHelper}}>
+                    <Button>More...</Button>
+                </Card.Actions>
+            </Card>
+        )
     }
 }
