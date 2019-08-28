@@ -103,6 +103,11 @@ class SettingsScreen extends React.Component {
             leftIcon={{ name: "language", color: commonStyle.secondary}}
             value={this.state.storage.pageData[this.state.settings.language].languageName}
             onPress={() => { this.setModalVisible(!this.state.modalVisible) }} />
+           <SettingsItem 
+            label='Randomise Homepage' 
+            leftIcon={{ name: "shuffle", color: commonStyle.secondary}}
+            icon={null}
+            switch={{ value: this.state.storage.settings.randomiseHomepage, onValueChange: (value) => this.updateSetting('randomiseHomepage', value) }} />
           <SettingsItem 
             label='Analytics' 
             leftIcon={{ name: "chart-areaspline", type: 'material-community', color: commonStyle.secondary}}

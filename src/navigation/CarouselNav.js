@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions, AppState } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { Button, Card, Title, Paragraph } from 'react-native-paper';
+import { _ } from 'lodash';
 
 var fontScaleHelper = 1.2
 
@@ -37,6 +38,8 @@ export default class CarouselNav extends React.Component {
     render () {
         return (
             <Carousel
+              enableMomentum={true}
+              firstItem={ this.props.randomiseHomepage ? _.random(0,this.props.items.length-1): 0}
               ref={(c) => { this._carousel = c; }}
               data={this.props.items}
               renderItem={(props) => this._renderItem(props, this.state.fontScale)}

@@ -36,18 +36,15 @@ export default class App extends React.Component {
   }
 
   returnState = (storage) => {
-    let pagesObj = new Pages(storage)
-    let analytics = new Analytics(storage.settings)
     return {
-      analytics: analytics,
+      analytics: new Analytics(storage.settings),
+      randomiseHomepage: storage.settings.randomiseHomepage,
       isFavourite: storage.isFavourite({
         indexId: this.props.indexId,
         page: 'home'
       }),
-      pagesObj: pagesObj,
       settings: storage.settings,
-      pages: pagesObj.getPages(),
-      splashPath: pagesObj.getSplashPath(),
+      pagesObj: new Pages(storage),
       markdownRulesObj: new markdownRules(this.props.navigation, storage.settings),
     }
   }
@@ -65,10 +62,27 @@ export default class App extends React.Component {
             paddingTop: 20,
             paddingBottom: 20,
           }}
+          rightComponent={
+            <Appbar.Action 
+              icon={({ size, color }) => (
+                <Icon
+                  name={this.state.randomiseHomepage ? 'shuffle' : 'shuffle-disabled'}
+                  type="material-community"
+                  color={color}
+                  style={{ width: size, height: size }}
+                />
+              )}
+              color={commonStyle.navHeaderFontColor}
+              onPress={() => {
+                this.props.storage.updateSetting('randomiseHomepage', !this.state.randomiseHomepage ) 
+              }} 
+            />
+          }
         >
           <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
           <ScrollView ref={this.scrollRef}>
-            <ContentIndex storage={this.props.storage} navigation={this.props.navigation}/>
+            <View style={{ marginBottom: -20}}/>
+            <ContentIndex storage={this.props.storage} randomiseHomepage={this.state.randomiseHomepage} navigation={this.props.navigation}/>
           </ScrollView>
         </Wrapper>
       )

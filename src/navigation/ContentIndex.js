@@ -65,9 +65,9 @@ export default class ContentIndex extends Component{
       return (
         <View key={headerFriendlyName}>
             <View style={commonStyle.content}>
-                <Text style={markdownStyles.heading1}>{headerFriendlyName}</Text> 
+                <Text style={markdownStyles.heading1}>{headerFriendlyName}</Text>
             </View>
-            <CarouselNav items={items} navigation={this.props.navigation}></CarouselNav>
+            <CarouselNav items={items} randomiseHomepage={this.props.randomiseHomepage} navigation={this.props.navigation}></CarouselNav>
         </View>
       )
     })

@@ -28,6 +28,7 @@ export class Storage {
     analyticsPromptAnswered: false,
     analyticsEnabled: false,
     loading: true,
+    randomiseHomepage: true,
   }
   config = {
     apiUrl: "https://talkveganto.me/",
