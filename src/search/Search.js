@@ -92,7 +92,7 @@ class Results extends React.Component {
         let contextMaxLength = numMatches == 1 ? {start: 90, end: 200} : {start: 100/numMatches, end: 100/numMatches}
         let title, body = ''
         if(result.topMatch.type === 'Title'){
-            title = _.map(result.topMatch.matches, (match, index) => this.renderMatchText(match, contextMaxLength, index, false))
+            title = this.renderMatchText(result.topMatch.matches[0], contextMaxLength, 0, false)
             body = RemoveMarkdown(this.props.pagesObj.getPageContent(result.path)).replace(/\n/g, ' ')
         }else{
             title = this.props.pagesObj.getPageTitle(result.path)

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 import RemoveMarkdown from 'remove-markdown';
 import {commonStyle} from '../styles/Common.style'

@@ -7,8 +7,10 @@ export default class SearchScoring {
     matchScores = {
         'exactTitle': 200,
         'allWordsTitle': 40,
+        'eachWordTitle': 10,
         'exactContent': 100,
         'allWordsContent': 20,
+        'eachWordContent': 1,
     }
     results = {}
     constructor(props){
@@ -49,8 +51,10 @@ export default class SearchScoring {
     }
 
     appendResult = (path, matches, score, type) => {
+        // Remove null results
+        let filteredMatches = _.filter(matches, (o) => o)
         this.results[path].push({    
-            matches: this.simulateNameGroups(matches),
+            matches: this.simulateNameGroups(filteredMatches),
             score: score,
             type: type
         })
@@ -83,11 +87,27 @@ export default class SearchScoring {
 
             // Match against page content
             this.scoreExactMatch(pageContent, path, this.matchScores.exactContent, 'Content');
-            this.scoreMatchAllWords(pageContent, path, this.matchScores.allWordsContent, 'Content');
+            this.scoreMatchFuzzy({
+                content: pageContent, 
+                path: path, 
+                scores: {
+                    allWords: this.matchScores.allWordsContent, 
+                    eachWord: this.matchScores.eachWordContent
+                },
+                type: 'Content'
+            });
 
             // Match against titles
             this.scoreExactMatch(this.pageTitles[path], path, this.matchScores.exactTitle, 'Title');
-            this.scoreMatchAllWords(this.pageTitles[path], path, this.matchScores.allWordsTitle, 'Title');
+            this.scoreMatchFuzzy({
+                content: this.pageTitles[path], 
+                path: path, 
+                scores: {
+                    allWords: this.matchScores.allWordsTitle, 
+                    eachWord: this.matchScores.eachWordTitle
+                },
+                type: 'Title'
+            });
         })
     }
 
@@ -101,9 +121,10 @@ export default class SearchScoring {
         }
     }
 
-    scoreMatchAllWords = (content, path, score, type) => {
+    scoreMatchFuzzy = (props) => {
         let queryWords = _.filter(this.query.split(' '), (o) => o.length > 0);
         if(queryWords.length < 2){
+            // If it's only one word, it will be covered by scoreExactMatch
             return
         }
         let wordResults = {};
@@ -111,14 +132,33 @@ export default class SearchScoring {
             if(_.isNull(queryWord)){return}
             wordResults[queryWord] = []
             let regex = this.contextRegexBuilder(queryWord, 'i')
-            let match = content.match(regex)
+            let match = props.content.match(regex)
             if(!_.isNull(match)){
                 wordResults[queryWord].push(match)
             }
         })
         if(_.every(wordResults, (val) => val.length)){
-            this.appendResult(path, _.map(wordResults, (o) => o[0]), score, type)
+            this.appendResult(
+                props.path, 
+                _.map(wordResults, 
+                (o) => o[0]), 
+                props.scores.allWords,
+                props.type
+            )
+            return
         }
+        if(_.some(wordResults, (val) => val.length)){
+            this.appendResult(
+                props.path, 
+                _.map(
+                    wordResults, 
+                    (o) => o[0]
+                ), 
+                props.scores.eachWord,
+                props.type
+            )
+        }
+        return wordResults
     }
 }
 

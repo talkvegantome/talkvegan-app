@@ -1,5 +1,5 @@
 import React from 'react';
-import { Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
+import { Share, TouchableHighlight, Text, View, Linking } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
 import { Appbar, FAB } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
