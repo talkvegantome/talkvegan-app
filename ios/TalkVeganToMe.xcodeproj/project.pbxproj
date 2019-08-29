@@ -25,7 +25,6 @@
 		17BBA583E76E4407A953F88B /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 155A839585094BDCB9C05B71 /* Ionicons.ttf */; };
 		1E252B6710BD497D82762357 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1039ACD519143D38A86A2DF /* AntDesign.ttf */; };
 		2CC48F55FD5E47428A1759BB /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DA5133F35F34874AECB423D /* MaterialCommunityIcons.ttf */; };
-		3A652DF5DC4B0595604F8302 /* Pods_TalkVeganToMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D87C219E358DFDACE985A67 /* Pods_TalkVeganToMe.framework */; };
 		40BC5D16E5C4450686B9BE50 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4606B65E1DEB469CB89FA3AE /* EvilIcons.ttf */; };
 		416EF3AAF3DC4FC3935C4B38 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 49061EB510E04201955EBD65 /* Zocial.ttf */; };
 		4AFA73D79A3244599F354DF3 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 534683EDA0224160B2B34222 /* SimpleLineIcons.ttf */; };
@@ -34,13 +33,13 @@
 		7248341C587B4364A2FB50B2 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E977C38A7E542BAB70ED70C /* Foundation.ttf */; };
 		74C23E9290574B9580359EFF /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B257751D23F48FC82C0A11B /* FontAwesome.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		8FE3F05D231834180018B058 /* libRNAmplitudeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2567452292DA4B0044F945 /* libRNAmplitudeSDK.a */; };
 		AC37FA8A0AA1433BBFA5A695 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17229FCD8C974B338D4A16AB /* Octicons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B91DFFC8B5EE4EB385047E44 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 68E277E2C7874F9EA2857D77 /* MaterialIcons.ttf */; };
 		C2982602B2314B75B8CB5C03 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1420087C3BE441DE8F4ED27C /* Fontisto.ttf */; };
 		C6020B36214B4B2693F553F9 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 468E28E052CA4DAA95FD382E /* Feather.ttf */; };
 		CB6C5857D57841E584D3730B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E19E097C249414892936970 /* Entypo.ttf */; };
-		CC31E76F5F3A4A26B28566F1 /* libRNAmplitudeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2142BA34D69E4D808F7B06DC /* libRNAmplitudeSDK.a */; };
 		D28D9416056A495AAFAED0BD /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C74A57BDBDE04D4B98793453 /* FontAwesome5_Solid.ttf */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 /* End PBXBuildFile section */
@@ -338,8 +337,8 @@
 		68E277E2C7874F9EA2857D77 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8FE3F038231833EE0018B058 /* Amplitude_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Amplitude_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		926DB8B27F0946B1B2F2D82F /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		9D87C219E358DFDACE985A67 /* Pods_TalkVeganToMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TalkVeganToMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB084ADA7E2CAC8E67C29742 /* Pods-TalkVeganToMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TalkVeganToMe.release.xcconfig"; path = "Target Support Files/Pods-TalkVeganToMe/Pods-TalkVeganToMe.release.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		C1039ACD519143D38A86A2DF /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
@@ -363,8 +362,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE3F05D231834180018B058 /* libRNAmplitudeSDK.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
-				CC31E76F5F3A4A26B28566F1 /* libRNAmplitudeSDK.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -376,7 +375,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				3A652DF5DC4B0595604F8302 /* Pods_TalkVeganToMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,9 +490,9 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8FE3F038231833EE0018B058 /* Amplitude_iOS.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				9D87C219E358DFDACE985A67 /* Pods_TalkVeganToMe.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1200,7 +1198,7 @@
 			baseConfigurationReference = 5335F76266A393CCE36912F4 /* Pods-TalkVeganToMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 56;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = H39FV9FN4L;
 				HEADER_SEARCH_PATHS = (
@@ -1209,7 +1207,7 @@
 					"$(SRCROOT)/../node_modules/react-native-amplitude-analytics/ios",
 				);
 				INFOPLIST_FILE = TalkVeganToMe/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1232,7 +1230,7 @@
 			baseConfigurationReference = AB084ADA7E2CAC8E67C29742 /* Pods-TalkVeganToMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 56;
 				DEVELOPMENT_TEAM = H39FV9FN4L;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1240,7 +1238,7 @@
 					"$(SRCROOT)/../node_modules/react-native-amplitude-analytics/ios",
 				);
 				INFOPLIST_FILE = TalkVeganToMe/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
