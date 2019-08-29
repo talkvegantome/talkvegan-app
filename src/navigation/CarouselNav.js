@@ -7,7 +7,14 @@ import { _ } from 'lodash';
 var fontScaleHelper = 1.2
 
 export default class CarouselNav extends React.Component {
+    
+    constructor(props){
+        super(props)
+        this.state['itemWidth'] = this.state.width < 500 ? this.state.width-this.state.width/5 : 500
+    }
     state = Dimensions.get('window');
+    
+    
 
     _handleAppStateChange = () => {
         this.setState(Dimensions.get('window'))
@@ -21,15 +28,18 @@ export default class CarouselNav extends React.Component {
     }
 
     render () {
+        
+        
         return (
             <Carousel
               enableMomentum={true}
+              enableSnap={false}
               firstItem={ this.props.randomiseHomepage ? _.random(0,this.props.items.length-1): 0}
               ref={(c) => { this._carousel = c; }}
               data={this.props.items}
               renderItem={(props) => <NavigationCard item={props.item} />}
               sliderWidth={this.state.width}
-              itemWidth={this.state.width-this.state.width/5}
+              itemWidth={this.state.itemWidth}
             />
         );
     }

@@ -7,4 +7,6 @@ target 'TalkVeganToMe' do
 
   pod 'react-native-async-storage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'react-native-amplitude-analytics', :path => '../node_modules/react-native-amplitude-analytics'
+
 end

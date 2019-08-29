@@ -1,16 +1,35 @@
 PODS:
   - Amplitude-iOS (4.6.0)
+  - React (0.11.0):
+    - React/Core (= 0.11.0)
+  - react-native-async-storage (1.2.4):
+    - React
+  - React/Core (0.11.0)
+  - RNVectorIcons (6.6.0):
+    - React
 
 DEPENDENCIES:
   - Amplitude-iOS (~> 4.5)
+  - "react-native-async-storage (from `../node_modules/@react-native-community/async-storage`)"
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Amplitude-iOS
+    - React
+
+EXTERNAL SOURCES:
+  react-native-async-storage:
+    :path: "../node_modules/@react-native-community/async-storage"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
 
 SPEC CHECKSUMS:
   Amplitude-iOS: ac1715ae68104b7a51723209ad574f60ab22ae5f
+  React: ab1a2e21deb34965c38328d5ec40cc7d12c6050a
+  react-native-async-storage: fa98f9a2857afb12128c50c59e506f1925d7bd5b
+  RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
 
-PODFILE CHECKSUM: db12278187cfca8b65510bc50383493a00851bdf
+PODFILE CHECKSUM: 44949430237180de5cd07c23495dda6fe332e761
 
 COCOAPODS: 1.6.2
