@@ -61,36 +61,36 @@ export default class Favourites extends React.Component {
                 flexDirection: 'column',
                 justifyContent: 'space-between'}}
             >
-            <Wrapper
-                navigation={this.props.navigation} 
-                title="Favourites"
-                style={{ paddingTop:20, paddingRight: 0, paddingLeft: 0 }}
-            >
-                {favouritesList}
-            </Wrapper>
-            <Snackbar
-                    visible={this.state.undoVisible}
-                    onDismiss={() => this.setState({ undoVisible: false })}
-                    style={{
-                        alignSelf: 'flex-end',
-                        backgroundColor: commonStyle.secondary,
-                        color: commonStyle.headerFontColor
-                    }}
-                    theme={{
-                        colors: {
-                            accent: commonStyle.headerFontColor
-                        }
-                    }}
-                    action={{
-                        label: 'Undo',
-                        onPress: () => {
-                            this.props.storage.toggleFavourite(this.state.lastUnfavourite)
-                        },
-                      }}
+                <Wrapper
+                    navigation={this.props.navigation} 
+                    title="Favourites"
+                    style={{ paddingTop:20, paddingRight: 0, paddingLeft: 0 }}
                 >
+                    {favouritesList}
+                </Wrapper>
+                <Snackbar
+                        visible={this.state.undoVisible}
+                        onDismiss={() => this.setState({ undoVisible: false })}
+                        style={{
+                            alignSelf: 'flex-end',
+                            backgroundColor: commonStyle.secondary,
+                            color: commonStyle.headerFontColor
+                        }}
+                        theme={{
+                            colors: {
+                                accent: commonStyle.headerFontColor
+                            }
+                        }}
+                        action={{
+                            label: 'Undo',
+                            onPress: () => {
+                                this.props.storage.toggleFavourite(this.state.lastUnfavourite)
+                            },
+                        }}
+                    >
                     Unfavourited &apos;{!_.isNil(this.state.lastUnfavourite) ? this.state.lastUnfavourite.displayName : ''}&apos;
                 </Snackbar>
-                </View>
+            </View>
         )
     }
 }

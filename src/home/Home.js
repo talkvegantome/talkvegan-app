@@ -1,7 +1,7 @@
 import React from 'react';
 import { Share, TouchableHighlight, Text, View, ScrollView, Linking } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
-import { Appbar } from 'react-native-paper';
+import { Appbar, FAB } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import Pages from '../Pages.js';
 import { _ } from 'lodash'
@@ -52,9 +52,16 @@ export default class App extends React.Component {
   render() {
     if(_.isNil(this.props.indexId)){
       return (
+        <View
+        style={{
+          flex: 1, 
+          flexDirection: 'column',
+          justifyContent: 'space-between'}}
+        >
         <Wrapper
           navigation={this.props.navigation} 
           title={this.state.pagesObj.getPageTitle()} 
+          scrollRefPopulator={(scrollRef) => {this.scrollRef = scrollRef}}
           style={{
             flex: 1,
             paddingLeft: 0,
@@ -80,17 +87,34 @@ export default class App extends React.Component {
           }
         >
           <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
-          <ScrollView ref={this.scrollRef}>
             <View style={{ marginBottom: -20}}/>
             <ContentIndex storage={this.props.storage} randomiseHomepage={this.state.randomiseHomepage} navigation={this.props.navigation}/>
-          </ScrollView>
         </Wrapper>
+        <FAB
+          style={{
+            position: 'absolute',
+            margin: 16,
+            right: 0,
+            bottom: 0,
+          }}
+          small
+          icon="arrow-upward"
+          onPress={() => this.scrollRef.current.scrollTo({y: 0, animated: true})}
+        />
+        </View>
       )
     }
     return (
+      <View
+        style={{
+          flex: 1, 
+          flexDirection: 'column',
+          justifyContent: 'space-between'}}
+        >
       <Wrapper
         navigation={this.props.navigation} 
         title={this.state.pagesObj.getPageTitle(this.props.indexId)} 
+        scrollRefPopulator={(scrollRef) => {this.scrollRef = scrollRef}}
         style={{flex:1, backgroundColor: commonStyle.contentBackgroundColor}}
         rightComponent={
           <Appbar.Action 
@@ -116,6 +140,18 @@ export default class App extends React.Component {
           />
         </View>
       </Wrapper>
+      <FAB
+        style={{
+          position: 'absolute',
+          margin: 16,
+          right: 0,
+          bottom: 0,
+        }}
+        small
+        icon="arrow-upward"
+        onPress={() => this.scrollRef.current.scrollTo({y: 0, animated: true})}
+      />
+      </View>
     );
     
           

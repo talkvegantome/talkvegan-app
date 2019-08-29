@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import RemoveMarkdown from 'remove-markdown';
 import {commonStyle} from '../styles/Common.style'
 import {markdownStyles} from '../styles/Markdown.style'
@@ -82,23 +82,33 @@ class CarouselNavWrapper extends React.Component{
     return (
       <View key={headerFriendlyName}>
           <View style={{...commonStyle.content,...{flex: 1, flexDirection: 'row'}}}>
-            <IconButton
-              icon={this.state.expanded ? 'expand-less' : "expand-more"}
-              style={{marginTop: markdownStyles.heading1.marginTop}}
+            <Button
+              mode='contained'
+              dark={true}
+              color={commonStyle.secondary}
+              icon={this.state.expanded ? 'expand-more' : "chevron-right"}
+              style={markdownStyles.heading1}
               size={20}
               onPress={() => this.setState({expanded: !this.state.expanded})}
-            />
-            <Text style={markdownStyles.heading1} onPress={() => this.setState({expanded: !this.state.expanded})}>
-              {headerFriendlyName}
-            </Text>  
+            >{headerFriendlyName}</Button>
+            
           </View>
           {!this.state.expanded && 
             <CarouselNav items={items} randomiseHomepage={this.props.randomiseHomepage} navigation={this.props.navigation}></CarouselNav>
           }
-          {this.state.expanded && 
-            _.map(items, (item, i) => <NavigationCard key={i} item={item} style={{marginLeft: 40, marginRight: 40, marginTop: 10, marginBottom: 10}} />)
-          }
-          
+          <View
+            style={{
+              borderLeftColor: commonStyle.primary,
+              borderLeftWidth: 2,
+              marginLeft: 30, 
+              marginRight: 40, 
+            }}
+          >
+            <View style={{marginTop:-10}}></View>
+            {this.state.expanded && 
+              _.map(items, (item, i) => <NavigationCard key={i} item={item} style={{marginLeft: 10, marginTop: 10, marginBottom: 10}} />)
+            }
+          </View>
       </View>
     )
   }
