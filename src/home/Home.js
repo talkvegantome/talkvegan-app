@@ -36,6 +36,7 @@ export default class App extends React.Component {
   }
 
   returnState = (storage, loading=false) => {
+    console.log('loading: '+ loading)
     return {
       analytics: new Analytics(storage.settings),
       randomiseHomepage: storage.settings.randomiseHomepage,

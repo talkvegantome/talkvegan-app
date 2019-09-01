@@ -11,9 +11,17 @@ class Wrapper extends React.Component {
     if(!_.isNil(this.props.scrollRefPopulator)){
       this.props.scrollRefPopulator(this.scrollRef)
     }
-    this.props.navigation.addOnNavigateListener(() => {
-      this.scrollRef.current.scrollTo({y: 0, animated: false})
-    })
+    
+  }
+
+  componentDidMount(){
+    this.props.navigation.addOnNavigateListener(this._scrollToZero)
+  }
+  componentWillUnmount(){
+    this.props.navigation.removeOnNavigateListener(this._scrollToZero)
+  }
+  _scrollToZero = () => {
+    this.scrollRef.current.scrollTo({y: 0, animated: false})
   }
 
   render(){

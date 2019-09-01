@@ -137,6 +137,9 @@ class BottomDrawer extends React.Component {
   addOnNavigateListener = (func) => {
     this.onNavigationListeners = this.onNavigationListeners.concat(func)
   }
+  removeOnNavigateListener = (func) => {
+    this.onNavigationListeners = _.filter(this.onNavigationListeners, o => o !== func)
+  }
 
   render(){
     return ( 
