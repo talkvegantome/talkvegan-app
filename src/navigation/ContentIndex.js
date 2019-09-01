@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-paper';
 import RemoveMarkdown from 'remove-markdown';
 import {commonStyle} from '../styles/Common.style'
 import {markdownStyles} from '../styles/Markdown.style'
 import _ from 'lodash';
 
 import CarouselNav, {NavigationCard} from './CarouselNav'
+import NavHeader from './NavHeader.js'
 import Analytics from '../analytics'
 
 import Pages from '../Pages.js'
@@ -81,18 +81,30 @@ class CarouselNavWrapper extends React.Component{
     let items = this.generateCardList(this.props.headerItem)
     return (
       <View key={headerFriendlyName}>
-          <View style={{...commonStyle.content,...{flex: 1, flexDirection: 'row'}}}>
-            <Button
+        <View style={{marginLeft: 20, marginRight: 20, marginBottom: 20}}>
+            <NavHeader
               mode='contained'
               dark={true}
-              color={commonStyle.secondary}
               icon={this.state.expanded ? 'expand-more' : "chevron-right"}
-              style={markdownStyles.heading1}
+              backgroundColor={commonStyle.secondary}
+              iconSize={20}
+              style={{ 
+                alignItems: 'flex-start',
+                
+                marginTop: markdownStyles.heading1.marginTop,
+                width: '100%'
+              }}
+              textStyle={{
+                color: 'white',
+                fontSize: 15
+              }}
               size={20}
               onPress={() => this.setState({expanded: !this.state.expanded})}
-            >{headerFriendlyName}</Button>
-            
+            >
+                  {headerFriendlyName}
+            </NavHeader>
           </View>
+          
           {!this.state.expanded && 
             <CarouselNav items={items} randomiseHomepage={this.props.randomiseHomepage} navigation={this.props.navigation}></CarouselNav>
           }
@@ -104,12 +116,12 @@ class CarouselNavWrapper extends React.Component{
               marginRight: 40, 
             }}
           >
-            <View style={{marginTop:-10}}></View>
             {this.state.expanded && 
-              _.map(items, (item, i) => <NavigationCard key={i} item={item} style={{marginLeft: 10, marginTop: 10, marginBottom: 10}} />)
+              _.map(items, (item, i) => <NavigationCard key={i} item={item} style={{marginLeft: 10, marginBottom: 20}} />)
             }
           </View>
       </View>
     )
   }
 }
+

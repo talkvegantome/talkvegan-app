@@ -4,6 +4,7 @@ import Carousel from 'react-native-snap-carousel';
 import { Button, Card, Title, Paragraph } from 'react-native-paper';
 import { _ } from 'lodash';
 
+
 var fontScaleHelper = 1.2
 
 export default class CarouselNav extends React.Component {

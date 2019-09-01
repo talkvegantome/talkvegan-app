@@ -1,7 +1,7 @@
 import React from 'react';
 import { Share, TouchableHighlight, Text, View, Linking } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
-import { Appbar, FAB } from 'react-native-paper';
+import { Appbar, FAB, ActivityIndicator } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import Pages from '../Pages.js';
 import { _ } from 'lodash'
@@ -32,10 +32,10 @@ export default class App extends React.Component {
         pageKey: 'home'
       })})
     })
-    this.state = this.returnState(this.props.storage)
+    this.state = this.returnState(this.props.storage, true)
   }
 
-  returnState = (storage) => {
+  returnState = (storage, loading=false) => {
     return {
       analytics: new Analytics(storage.settings),
       randomiseHomepage: storage.settings.randomiseHomepage,
@@ -43,6 +43,7 @@ export default class App extends React.Component {
         indexId: this.props.indexId,
         page: 'home'
       }),
+      loading: loading,
       settings: storage.settings,
       pagesObj: new Pages(storage),
       markdownRulesObj: new markdownRules(this.props.navigation, storage.settings),
@@ -50,6 +51,25 @@ export default class App extends React.Component {
   }
   
   render() {
+
+    if(this.state.loading){
+      return (
+        <Wrapper
+          navigation={this.props.navigation} 
+          title={this.state.pagesObj.getPageTitle()} 
+          scrollRefPopulator={(scrollRef) => {this.scrollRef = scrollRef}}
+          style={{
+            flex: 1,
+            paddingLeft: 0,
+            paddingRight: 0,
+            paddingTop: 20,
+            paddingBottom: 20,
+          }}
+        >
+          <ActivityIndicator animating={true} color={commonStyle.primary} size='large'/>
+        </Wrapper>
+      )
+    }
     if(_.isNil(this.props.indexId)){
       return (
         <View
@@ -69,22 +89,6 @@ export default class App extends React.Component {
             paddingTop: 20,
             paddingBottom: 20,
           }}
-          rightComponent={
-            <Appbar.Action 
-              icon={({ size, color }) => (
-                <Icon
-                  name={this.state.randomiseHomepage ? 'shuffle' : 'shuffle-disabled'}
-                  type="material-community"
-                  color={color}
-                  style={{ width: size, height: size }}
-                />
-              )}
-              color={commonStyle.navHeaderFontColor}
-              onPress={() => {
-                this.props.storage.updateSetting('randomiseHomepage', !this.state.randomiseHomepage ) 
-              }} 
-            />
-          }
         >
           <PrivacyDialog storage={this.props.storage}></PrivacyDialog>
             <View style={{ marginBottom: -20}}/>
