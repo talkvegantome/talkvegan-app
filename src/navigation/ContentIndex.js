@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {Text, View } from 'react-native';
+import { View } from 'react-native';
 import RemoveMarkdown from 'remove-markdown';
 import {commonStyle} from '../styles/Common.style'
 import {markdownStyles} from '../styles/Markdown.style'
 import _ from 'lodash';
 
-import CarouselNav from './CarouselNav'
+import CarouselNav, {NavigationCard} from './CarouselNav'
+import NavHeader from './NavHeader.js'
 import Analytics from '../analytics'
 
 import Pages from '../Pages.js'
@@ -37,11 +38,30 @@ export default class ContentIndex extends Component{
       splashPath: pages.getSplashPath()
     })
   }
+  
+
+  render(){
+    let menuSorted = _.sortBy(this.state.menu, ['weight', 'friendlyName'])
+    return _.map(menuSorted, (headerItem, i) => 
+      <CarouselNavWrapper 
+        headerItem={headerItem} 
+        key={i}
+        randomiseHomepage={this.props.randomiseHomepage}
+        navigation={this.props.navigation}
+      />
+    )
+  }
+  
+}
+
+class CarouselNavWrapper extends React.Component{
+  state = {
+    expanded: false
+  }
   navigateToScreen = (indexId) => () => {
     // Navigation is always to the 'Home' screen, but content changes based on the indexId
     this.props.navigation.navigate('home', {indexId: indexId});
   }
-
   generateCardList(headerItem){
     return _.filter(_.sortBy(headerItem.subItems, ['weight', 'friendlyName']).map((item) => {
         if(!_.isNil(item.displayInApp) && !item.displayInApp){
@@ -56,22 +76,52 @@ export default class ContentIndex extends Component{
         
     }), function(o){return !_.isNil(o)})
   }
-  
-  render(){
-    let menuSorted = _.sortBy(this.state.menu, ['weight', 'friendlyName'])
-    return _.map(menuSorted, (headerItem) => {
-      let headerFriendlyName = headerItem.friendlyName
-      let items = this.generateCardList(headerItem)
-      return (
-        <View key={headerFriendlyName}>
-            <View style={commonStyle.content}>
-                <Text style={markdownStyles.heading1}>{headerFriendlyName}</Text> 
-            </View>
-            <CarouselNav items={items} navigation={this.props.navigation}></CarouselNav>
-        </View>
-      )
-    })
+  render() {
+    let headerFriendlyName = this.props.headerItem.friendlyName
+    let items = this.generateCardList(this.props.headerItem)
+    return (
+      <View key={headerFriendlyName}>
+        <View style={{marginLeft: 20, marginRight: 20, marginBottom: 20}}>
+            <NavHeader
+              mode='contained'
+              dark={true}
+              icon={this.state.expanded ? 'expand-more' : "chevron-right"}
+              backgroundColor={commonStyle.secondary}
+              iconSize={20}
+              style={{ 
+                alignItems: 'flex-start',
+                
+                marginTop: markdownStyles.heading1.marginTop,
+                width: '100%'
+              }}
+              textStyle={{
+                color: 'white',
+                fontSize: 15
+              }}
+              size={20}
+              onPress={() => this.setState({expanded: !this.state.expanded})}
+            >
+                  {headerFriendlyName}
+            </NavHeader>
+          </View>
+          
+          {!this.state.expanded && 
+            <CarouselNav items={items} randomiseHomepage={this.props.randomiseHomepage} navigation={this.props.navigation}></CarouselNav>
+          }
+          <View
+            style={{
+              borderLeftColor: commonStyle.primary,
+              borderLeftWidth: 2,
+              marginLeft: 30, 
+              marginRight: 40, 
+            }}
+          >
+            {this.state.expanded && 
+              _.map(items, (item, i) => <NavigationCard key={i} item={item} style={{marginLeft: 10, marginBottom: 20}} />)
+            }
+          </View>
+      </View>
+    )
   }
-  
 }
 

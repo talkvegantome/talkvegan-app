@@ -4,7 +4,7 @@
 #import "AMPConstants.h"
 
 NSString *const kAMPLibrary = @"amplitude-ios";
-NSString *const kAMPVersion = @"4.6.0";
+NSString *const kAMPVersion = @"4.3.1";
 NSString *const kAMPEventLogDomain = @"api.amplitude.com";
 NSString *const kAMPEventLogUrl = @"https://api.amplitude.com/";
 NSString *const kAMPDefaultInstance = @"$default_instance";
@@ -33,7 +33,6 @@ const int kAMPMaxStringLength = 1024;
 const int kAMPMaxPropertyKeys = 1000;
 
 NSString *const IDENTIFY_EVENT = @"$identify";
-NSString *const GROUP_IDENTIFY_EVENT = @"$groupidentify";
 NSString *const AMP_OP_ADD = @"$add";
 NSString *const AMP_OP_APPEND = @"$append";
 NSString *const AMP_OP_CLEAR_ALL = @"$clearAll";

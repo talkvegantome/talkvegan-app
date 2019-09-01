@@ -2,14 +2,26 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { commonStyle, PaperTheme } from '../styles/Common.style.js';
 import { Provider as PaperProvider, Appbar } from 'react-native-paper';
+import { _ } from 'lodash';
 
 class Wrapper extends React.Component {
   constructor(props){
     super(props)
     this.scrollRef = React.createRef();
-    this.props.navigation.addOnNavigateListener(() => {
-      this.scrollRef.current.scrollTo({y: 0, animated: false})
-    })
+    if(!_.isNil(this.props.scrollRefPopulator)){
+      this.props.scrollRefPopulator(this.scrollRef)
+    }
+    
+  }
+
+  componentDidMount(){
+    this.props.navigation.addOnNavigateListener(this._scrollToZero)
+  }
+  componentWillUnmount(){
+    this.props.navigation.removeOnNavigateListener(this._scrollToZero)
+  }
+  _scrollToZero = () => {
+    this.scrollRef.current.scrollTo({y: 0, animated: false})
   }
 
   render(){

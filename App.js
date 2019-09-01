@@ -21,9 +21,6 @@ import { BottomNavigation } from 'react-native-paper';
 
 
 class BottomDrawer extends React.Component {
-  static defaultProps = {
-    style: {}
-  }
   constructor(props){
     super(props)
     this.state.storage = new Storage()
@@ -33,7 +30,6 @@ class BottomDrawer extends React.Component {
 
   returnState(storage){
     return { 
-      storage: storage,
       analytics: new Analytics(storage.settings),
       navigationHistory: [{
         index: 0,
@@ -81,7 +77,6 @@ class BottomDrawer extends React.Component {
   }
 
   _renderScene = ({route}) => {
-    let page = null
     if(route.key == 'home'){
       return <HomeScreen
         storage={this.state.storage} 
@@ -107,7 +102,6 @@ class BottomDrawer extends React.Component {
         navigation={this}
       />
     }
-    return page
   }
   _triggerNavigationListeners(key, props={}){
     _.forEach(this.onNavigationListeners, (method) => method(key, props))
@@ -142,6 +136,9 @@ class BottomDrawer extends React.Component {
 
   addOnNavigateListener = (func) => {
     this.onNavigationListeners = this.onNavigationListeners.concat(func)
+  }
+  removeOnNavigateListener = (func) => {
+    this.onNavigationListeners = _.filter(this.onNavigationListeners, o => o !== func)
   }
 
   render(){

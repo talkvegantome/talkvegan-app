@@ -2,9 +2,12 @@ platform :ios, '12.2'
 use_frameworks!
 
 target 'TalkVeganToMe' do
-  pod 'Amplitude-iOS', '~> 4.5'
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  #pod 'Amplitude-iOS', '~> 4.3.1'
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+  #pod 'react-native-async-storage', :path => '../node_modules/@react-native-community/async-storage'
+
+  #pod 'react-native-amplitude-analytics', :path => '../node_modules/react-native-amplitude-analytics'
+  pod 'Amplitude-iOS', '~> 4.3.1'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 end
