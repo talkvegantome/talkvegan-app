@@ -159,6 +159,32 @@ class Pages {
       //   {errorDetail: "Failed to fetch page in language" + this.settings.language})
     })
   }
+  getPagesInCategory(categoryItem){
+    return _.filter(_.sortBy(categoryItem.subItems, ['weight', 'friendlyName']).map((item) => {
+      if(!_.isNil(item.displayInApp) && !item.displayInApp){
+          // Don't display this page if it has displayInApp=false
+          return 
+      }
+      return item
+   }), function(o){return !_.isNil(o)})
+  }
+  getPageOffsetInCategory(indexId, offset){
+    // Get the page's parent menu item
+    const categoryIndexId = this.getPageMetadata(indexId).section.relativePermalink
+    const categoryItem = this.getMenu()[categoryIndexId]
+    const pagesInCategory = this.getPagesInCategory(categoryItem)
+    const curItemIndex = _.findIndex(pagesInCategory, {'relativePermalink': indexId})
+    let indexToReturn = curItemIndex+offset
+
+    // Wrap around the array by returning elements from the end/beginning if the index is smaller/larger than the array
+    if(indexToReturn > pagesInCategory.length-1){
+      indexToReturn = indexToReturn - pagesInCategory.length
+    }
+    if(indexToReturn < 0){
+      indexToReturn = pagesInCategory.length -1 + indexToReturn
+    }
+    return pagesInCategory[indexToReturn]
+  }
 
   async mergePageDataToStorage(language, pageData){
     this.pageData[language] = pageData

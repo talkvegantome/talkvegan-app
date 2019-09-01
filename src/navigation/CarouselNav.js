@@ -14,8 +14,6 @@ export default class CarouselNav extends React.Component {
         this.state['itemWidth'] = this.state.width < 500 ? this.state.width-this.state.width/5 : 500
     }
     state = Dimensions.get('window');
-    
-    
 
     _handleAppStateChange = () => {
         this.setState(Dimensions.get('window'))
@@ -29,12 +27,11 @@ export default class CarouselNav extends React.Component {
     }
 
     render () {
-        
-        
         return (
             <Carousel
               enableMomentum={true}
               enableSnap={false}
+              decelerationRate={0.9}
               firstItem={ this.props.randomiseHomepage ? _.random(0,this.props.items.length-1): 0}
               ref={(c) => { this._carousel = c; }}
               data={this.props.items}

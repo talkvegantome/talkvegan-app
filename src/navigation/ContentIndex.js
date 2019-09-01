@@ -20,6 +20,7 @@ export default class ContentIndex extends Component{
     let pages = new Pages(this.props.storage)
     let analytics = new Analytics(this.props.storage.settings)
     this.state = {
+      pagesObj: pages,
       analytics: analytics,
       settings: this.props.storage.settings,
       menu: pages.getMenu(),
@@ -32,6 +33,7 @@ export default class ContentIndex extends Component{
     let pages = new Pages(storage)
     let analytics = new Analytics(storage.settings)
     this.setState({
+      pagesObj: pages,
       analytics: analytics,
       settings: storage.settings,
       menu: pages.getMenu(storage),
@@ -45,6 +47,7 @@ export default class ContentIndex extends Component{
     return _.map(menuSorted, (headerItem, i) => 
       <CarouselNavWrapper 
         headerItem={headerItem} 
+        pagesObj={this.state.pagesObj}
         key={i}
         randomiseHomepage={this.props.randomiseHomepage}
         navigation={this.props.navigation}
@@ -63,18 +66,14 @@ class CarouselNavWrapper extends React.Component{
     this.props.navigation.navigate('home', {indexId: indexId});
   }
   generateCardList(headerItem){
-    return _.filter(_.sortBy(headerItem.subItems, ['weight', 'friendlyName']).map((item) => {
-        if(!_.isNil(item.displayInApp) && !item.displayInApp){
-            // Don't display this page if it has displayInApp=false
-            return 
-        }
+    return _.map(
+      this.props.pagesObj.getPagesInCategory(headerItem), (item) => {
         return {
-            title: item.friendlyName,
-            content: item.description ? item.description : RemoveMarkdown(item.rawContent).replace(/\n/g, ' '),
-            navigateTo: this.navigateToScreen(item.relativePermalink)
+          title: item.friendlyName,
+          content: item.description ? item.description : RemoveMarkdown(item.rawContent).replace(/\n/g, ' '),
+          navigateTo: this.navigateToScreen(item.relativePermalink)
         }
-        
-    }), function(o){return !_.isNil(o)})
+      })
   }
   render() {
     let headerFriendlyName = this.props.headerItem.friendlyName
