@@ -135,26 +135,15 @@ export default class App extends React.Component {
         <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
           {this.state.markdownRulesObj.preProcessMarkDown(this.state.pagesObj.getPageContent(this.props.indexId))}
         </Markdown>
-        <PageMenu
-          previousPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, -1)['relativePermalink']} 
-          nextPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, 1)['relativePermalink']} 
-          navigation={this.props.navigation}
-          pagePermalink={this.state.pagesObj.getPagePermalink(this.props.indexId)}
-          pageGitHubLink={this.state.pagesObj.getPageGitHubLink(this.props.indexId)}
-          analytics={this.state.analytics}
-        />
-    
       </Wrapper>
-      <FAB
-        style={{
-          position: 'absolute',
-          margin: 16,
-          right: 0,
-          bottom: 0,
-        }}
-        small
-        icon="arrow-upward"
-        onPress={() => this.scrollRef.current.scrollTo({y: 0, animated: true})}
+      <PageMenu
+        previousPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, -1)['relativePermalink']} 
+        nextPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, 1)['relativePermalink']} 
+        navigation={this.props.navigation}
+        pagePermalink={this.state.pagesObj.getPagePermalink(this.props.indexId)}
+        pageGitHubLink={this.state.pagesObj.getPageGitHubLink(this.props.indexId)}
+        analytics={this.state.analytics}
+        scrollRef={this.scrollRef}
       />
       </View>
     );
@@ -187,6 +176,8 @@ class PageMenu extends React.Component {
               this.props.analytics.logEvent('openedGitHubLink', {page: this.props.pagePermalink})
               Linking.openURL(this.props.pageGitHubLink)
             }} />
+        <Appbar.Action icon="arrow-upward"
+        onPress={() => this.props.scrollRef.current.scrollTo({y: 0, animated: true})} />
         <Appbar.Action icon="arrow-forward" onPress={() => this._navigateForward()} />
       </Appbar>
     )
@@ -195,11 +186,12 @@ class PageMenu extends React.Component {
 
 const styles = StyleSheet.create({
   PageMenu: {
-    marginHorizontal: -30,
-    marginTop: 20,
-    marginBottom: 20,
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    position: 'absolute',
+    width: "100%",
+    right: 0,
+    bottom: 0,
   },
 });
 

@@ -181,7 +181,7 @@ class Pages {
       indexToReturn = indexToReturn - pagesInCategory.length
     }
     if(indexToReturn < 0){
-      indexToReturn = pagesInCategory.length -1 + indexToReturn
+      indexToReturn = pagesInCategory.length + indexToReturn
     }
     return pagesInCategory[indexToReturn]
   }
