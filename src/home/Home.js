@@ -1,7 +1,6 @@
 import React from 'react';
-import { Share, TouchableHighlight, Text, View, Linking } from 'react-native';
-import { Icon, Divider } from 'react-native-elements';
-import { Appbar, FAB, ActivityIndicator } from 'react-native-paper';
+import { Share, StyleSheet, View, Linking } from 'react-native';
+import { Appbar, FAB, ActivityIndicator, DefaultTheme } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import Pages from '../Pages.js';
 import { _ } from 'lodash'
@@ -36,7 +35,6 @@ export default class App extends React.Component {
   }
 
   returnState = (storage, loading=false) => {
-    console.log('loading: '+ loading)
     return {
       analytics: new Analytics(storage.settings),
       randomiseHomepage: storage.settings.randomiseHomepage,
@@ -134,27 +132,18 @@ export default class App extends React.Component {
           />
         }
       >
-        <View>
-          <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
-            {this.state.markdownRulesObj.preProcessMarkDown(this.state.pagesObj.getPageContent(this.props.indexId))}
-          </Markdown>
-          <PageMenu 
-            pagePermalink={this.state.pagesObj.getPagePermalink(this.props.indexId)}
-            pageGitHubLink={this.state.pagesObj.getPageGitHubLink(this.props.indexId)}
-            analytics={this.state.analytics}
-          />
-        </View>
+        <Markdown style={markdownStyles} rules={this.state.markdownRulesObj.returnRules()}>
+          {this.state.markdownRulesObj.preProcessMarkDown(this.state.pagesObj.getPageContent(this.props.indexId))}
+        </Markdown>
       </Wrapper>
-      <FAB
-        style={{
-          position: 'absolute',
-          margin: 16,
-          right: 0,
-          bottom: 0,
-        }}
-        small
-        icon="arrow-upward"
-        onPress={() => this.scrollRef.current.scrollTo({y: 0, animated: true})}
+      <PageMenu
+        previousPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, -1)['relativePermalink']} 
+        nextPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, 1)['relativePermalink']} 
+        navigation={this.props.navigation}
+        pagePermalink={this.state.pagesObj.getPagePermalink(this.props.indexId)}
+        pageGitHubLink={this.state.pagesObj.getPageGitHubLink(this.props.indexId)}
+        analytics={this.state.analytics}
+        scrollRef={this.scrollRef}
       />
       </View>
     );
@@ -164,32 +153,54 @@ export default class App extends React.Component {
 }
 
 class PageMenu extends React.Component {
+  _navigateForward(){
+    this.props.navigation.navigate('home', {
+      indexId: this.props.nextPage,
+      from: this.props.thisPage
+    })
+  }
+  _navigateBackward(){
+    this.props.navigation.navigate('home', {
+      indexId: this.props.previousPage,
+      from: this.props.thisPage
+    })
+  }
   render() {
     return (
-      <View>
-        <Divider style={{ marginVertical: 20 }} />
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-            <TouchableHighlight style={{ flex: 1 }} onPress={() => {
-                Share.share({ message: this.props.pagePermalink }).then((result) => {
+      <Appbar style={styles.PageMenu} theme={pageMenuTheme}>
+        <Appbar.Action icon="arrow-back" onPress={() => this._navigateBackward()} />
+        <Appbar.Action icon="share" onPress={() => { Share.share({ message: this.props.pagePermalink }).then((result) => {
                 this.props.analytics.logEvent('sharedPage', {page: this.props.pagePermalink, activity: result.activityType})
-                }).catch((err) => {this.props.analytics.logEvent('error', {errorDetail: err})})
-            }}>
-            <View style={{ alignSelf: 'flex-start' }}>
-                <Icon name='share' />
-                <Text style={markdownStyles.text}>Share</Text>
-            </View>
-            </TouchableHighlight>
-            <TouchableHighlight style={{ flex: 1 }} onPress={() => {
+                }).catch((err) => {this.props.analytics.logEvent('error', {errorDetail: err})})}} />
+        <Appbar.Action icon="edit" onPress={() => {
               this.props.analytics.logEvent('openedGitHubLink', {page: this.props.pagePermalink})
               Linking.openURL(this.props.pageGitHubLink)
-            }}>
-            <View style={{ alignSelf: 'flex-end' }}>
-                <Icon name='edit' />
-                <Text style={markdownStyles.text}>Edit</Text>
-            </View>
-            </TouchableHighlight>
-        </View>
-      </View>
+            }} />
+        <Appbar.Action icon="arrow-upward"
+        onPress={() => this.props.scrollRef.current.scrollTo({y: 0, animated: true})} />
+        <Appbar.Action icon="arrow-forward" onPress={() => this._navigateForward()} />
+      </Appbar>
     )
+  }
+}
+
+const styles = StyleSheet.create({
+  PageMenu: {
+    flex: 1,
+    justifyContent: 'space-between',
+    position: 'absolute',
+    width: "100%",
+    right: 0,
+    bottom: 0,
+  },
+});
+
+const pageMenuTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: commonStyle.secondary,
+    accent: commonStyle.white,
+    onSurface: '#FFFFFF'
   }
 }
