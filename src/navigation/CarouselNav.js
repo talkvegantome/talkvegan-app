@@ -15,7 +15,6 @@ export default class CarouselNav extends React.Component {
     state = Dimensions.get('window');
 
     _handleAppStateChange = () => {
-        console.log('App state change')
         this.setState(Dimensions.get('window'))
     }
 

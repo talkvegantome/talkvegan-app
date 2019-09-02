@@ -166,19 +166,20 @@ class PageMenu extends React.Component {
     })
   }
   render() {
+    const iconSize = 18
     return (
       <Appbar style={styles.PageMenu} theme={pageMenuTheme}>
-        <Appbar.Action icon="arrow-back" onPress={() => this._navigateBackward()} />
-        <Appbar.Action icon="share" onPress={() => { Share.share({ message: this.props.pagePermalink }).then((result) => {
+        <Appbar.Action icon="arrow-back" size={iconSize} style={styles.PageMenuItem} onPress={() => this._navigateBackward()} />
+        <Appbar.Action icon="share" size={iconSize} style={styles.PageMenuItem} onPress={() => { Share.share({ message: this.props.pagePermalink }).then((result) => {
                 this.props.analytics.logEvent('sharedPage', {page: this.props.pagePermalink, activity: result.activityType})
                 }).catch((err) => {this.props.analytics.logEvent('error', {errorDetail: err})})}} />
-        <Appbar.Action icon="edit" onPress={() => {
+        <Appbar.Action icon="arrow-upward" size={iconSize} style={styles.PageMenuItem}
+        onPress={() => this.props.scrollRef.current.scrollTo({y: 0, animated: true})} />
+        <Appbar.Action icon="edit" size={iconSize} style={styles.PageMenuItem} onPress={() => {
               this.props.analytics.logEvent('openedGitHubLink', {page: this.props.pagePermalink})
               Linking.openURL(this.props.pageGitHubLink)
             }} />
-        <Appbar.Action icon="arrow-upward"
-        onPress={() => this.props.scrollRef.current.scrollTo({y: 0, animated: true})} />
-        <Appbar.Action icon="arrow-forward" onPress={() => this._navigateForward()} />
+        <Appbar.Action icon="arrow-forward" size={iconSize} style={styles.PageMenuItem} onPress={() => this._navigateForward()} />
       </Appbar>
     )
   }
@@ -189,10 +190,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     position: 'absolute',
+    height: 50,
     width: "100%",
     right: 0,
     bottom: 0,
   },
+  PageMenuItem: {
+    margin: 0
+  }
 });
 
 const pageMenuTheme = {
