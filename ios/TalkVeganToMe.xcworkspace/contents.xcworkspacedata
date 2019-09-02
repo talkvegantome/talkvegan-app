@@ -1,6 +1,441 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:Amplitude-iOS"
+      name = "Amplitude-iOS">
+      <Group
+         location = "group:documentation"
+         name = "documentation">
+         <Group
+            location = "group:html"
+            name = "html">
+            <FileRef
+               location = "group:index.html">
+            </FileRef>
+            <Group
+               location = "group:css"
+               name = "css">
+               <Group
+                  location = "group:scss"
+                  name = "scss">
+                  <FileRef
+                     location = "group:_index.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_variables.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_xcode.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_print.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_layout.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_object.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:style.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_normalize.scss">
+                  </FileRef>
+               </Group>
+               <FileRef
+                  location = "group:style.css">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:Classes"
+               name = "Classes">
+               <FileRef
+                  location = "group:AMPIdentify.html">
+               </FileRef>
+               <FileRef
+                  location = "group:AMPRevenue.html">
+               </FileRef>
+               <FileRef
+                  location = "group:Amplitude.html">
+               </FileRef>
+            </Group>
+            <FileRef
+               location = "group:hierarchy.html">
+            </FileRef>
+            <Group
+               location = "group:js"
+               name = "js">
+               <FileRef
+                  location = "group:script.js">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:img"
+               name = "img">
+               <FileRef
+                  location = "group:library_background.png">
+               </FileRef>
+               <FileRef
+                  location = "group:disclosure.png">
+               </FileRef>
+               <FileRef
+                  location = "group:disclosure_open.png">
+               </FileRef>
+               <FileRef
+                  location = "group:button_bar_background.png">
+               </FileRef>
+               <FileRef
+                  location = "group:title_background.png">
+               </FileRef>
+            </Group>
+         </Group>
+      </Group>
+      <Group
+         location = "group:appledoc-templates"
+         name = "appledoc-templates">
+         <Group
+            location = "group:docset"
+            name = "docset">
+            <Group
+               location = "group:Contents"
+               name = "Contents">
+               <Group
+                  location = "group:Resources"
+                  name = "Resources">
+                  <FileRef
+                     location = "group:nodes-template.xml">
+                  </FileRef>
+                  <FileRef
+                     location = "group:tokens-template.xml">
+                  </FileRef>
+                  <Group
+                     location = "group:Documents"
+                     name = "Documents">
+                     <FileRef
+                        location = "group:documents-template">
+                     </FileRef>
+                  </Group>
+               </Group>
+               <FileRef
+                  location = "group:info-template.plist">
+               </FileRef>
+            </Group>
+         </Group>
+         <Group
+            location = "group:html"
+            name = "html">
+            <FileRef
+               location = "group:object-template.html">
+            </FileRef>
+            <FileRef
+               location = "group:index-template.html">
+            </FileRef>
+            <FileRef
+               location = "group:document-template.html">
+            </FileRef>
+            <Group
+               location = "group:css"
+               name = "css">
+               <Group
+                  location = "group:scss"
+                  name = "scss">
+                  <FileRef
+                     location = "group:_index.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_variables.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_xcode.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_print.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_layout.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_object.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:style.scss">
+                  </FileRef>
+                  <FileRef
+                     location = "group:_normalize.scss">
+                  </FileRef>
+               </Group>
+               <FileRef
+                  location = "group:style.css">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:js"
+               name = "js">
+               <FileRef
+                  location = "group:script.js">
+               </FileRef>
+            </Group>
+            <FileRef
+               location = "group:hierarchy-template.html">
+            </FileRef>
+            <Group
+               location = "group:img"
+               name = "img">
+               <FileRef
+                  location = "group:library_background.png">
+               </FileRef>
+               <FileRef
+                  location = "group:disclosure.png">
+               </FileRef>
+               <FileRef
+                  location = "group:disclosure_open.png">
+               </FileRef>
+               <FileRef
+                  location = "group:button_bar_background.png">
+               </FileRef>
+               <FileRef
+                  location = "group:title_background.png">
+               </FileRef>
+            </Group>
+         </Group>
+         <Group
+            location = "group:publish"
+            name = "publish">
+            <FileRef
+               location = "group:xml-template.xml">
+            </FileRef>
+         </Group>
+      </Group>
+      <FileRef
+         location = "group:LICENSE">
+      </FileRef>
+      <FileRef
+         location = "group:CHANGELOG.md">
+      </FileRef>
+      <FileRef
+         location = "group:Amplitude.xcworkspace">
+      </FileRef>
+      <FileRef
+         location = "group:AppledocSettings.plist">
+      </FileRef>
+      <Group
+         location = "group:Amplitude"
+         name = "Amplitude">
+         <FileRef
+            location = "group:AMPURLConnection.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPIdentify.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPLocationManagerDelegate.m">
+         </FileRef>
+         <FileRef
+            location = "group:AMPDeviceInfo.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPDatabaseHelper.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPUtils.m">
+         </FileRef>
+         <FileRef
+            location = "group:ComodoCaLimitedRsaCertificationAuthority.der">
+         </FileRef>
+         <FileRef
+            location = "group:AMPConstants.h">
+         </FileRef>
+         <Group
+            location = "group:SSLCertificatePinning"
+            name = "SSLCertificatePinning">
+            <FileRef
+               location = "group:ISPPinnedNSURLSessionDelegate.h">
+            </FileRef>
+            <FileRef
+               location = "group:ISPPinnedNSURLConnectionDelegate.h">
+            </FileRef>
+            <FileRef
+               location = "group:ISPCertificatePinning.m">
+            </FileRef>
+            <FileRef
+               location = "group:SSLCertificatePinning-Prefix.pch">
+            </FileRef>
+            <FileRef
+               location = "group:ISPPinnedNSURLSessionDelegate.m">
+            </FileRef>
+            <FileRef
+               location = "group:ISPPinnedNSURLConnectionDelegate.m">
+            </FileRef>
+            <FileRef
+               location = "group:ISPCertificatePinning.h">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:AMPRevenue.m">
+         </FileRef>
+         <FileRef
+            location = "group:api.amplitude.com.der">
+         </FileRef>
+         <FileRef
+            location = "group:AMPTrackingOptions.m">
+         </FileRef>
+         <FileRef
+            location = "group:ComodoRsaDomainValidationCA.der">
+         </FileRef>
+         <FileRef
+            location = "group:AMPURLSession.m">
+         </FileRef>
+         <FileRef
+            location = "group:AppledocSettings.plist">
+         </FileRef>
+         <FileRef
+            location = "group:Amplitude.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPDatabaseHelper.m">
+         </FileRef>
+         <FileRef
+            location = "group:AMPDeviceInfo.m">
+         </FileRef>
+         <FileRef
+            location = "group:AMPIdentify.m">
+         </FileRef>
+         <FileRef
+            location = "group:AMPLocationManagerDelegate.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPURLConnection.m">
+         </FileRef>
+         <FileRef
+            location = "group:ComodoRsaCA.der">
+         </FileRef>
+         <FileRef
+            location = "group:Amplitude+SSLPinning.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPRevenue.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPConstants.m">
+         </FileRef>
+         <FileRef
+            location = "group:AMPARCMacros.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPUtils.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPURLSession.h">
+         </FileRef>
+         <FileRef
+            location = "group:AMPTrackingOptions.h">
+         </FileRef>
+         <FileRef
+            location = "group:Amplitude.m">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
+         location = "group:Amplitude-iOS.podspec">
+      </FileRef>
+      <FileRef
+         location = "group:circle.yml">
+      </FileRef>
+      <Group
+         location = "group:AmplitudeTests"
+         name = "AmplitudeTests">
+         <FileRef
+            location = "group:SSLPinningTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:DeviceInfoTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:Amplitude+Test.m">
+         </FileRef>
+         <FileRef
+            location = "group:AmplitudeTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:AMPDatabaseHelperTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:RevenueTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:InvalidCertificationAuthority.der">
+         </FileRef>
+         <FileRef
+            location = "group:SetupTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:BaseTestCase.h">
+         </FileRef>
+         <FileRef
+            location = "group:Amplitude+Test.h">
+         </FileRef>
+         <FileRef
+            location = "group:AmplitudeiOSTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:SessionTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:TrackingOptionsTest.m">
+         </FileRef>
+         <FileRef
+            location = "group:IdentifyTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:BaseTestCase.m">
+         </FileRef>
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+         <FileRef
+            location = "group:AmplitudeTVOSTests.m">
+         </FileRef>
+         <FileRef
+            location = "group:AMPLocationManagerDelegateTests.m">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:Amplitude.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Podfile">
+      </FileRef>
+      <Group
+         location = "group:AmplitudeTVOS"
+         name = "AmplitudeTVOS">
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+         <FileRef
+            location = "group:AmplitudeTVOS.h">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:Podfile.lock">
+      </FileRef>
+      <Group
+         location = "group:AmplitudeFramework"
+         name = "AmplitudeFramework">
+         <FileRef
+            location = "group:AmplitudeFramework.h">
+         </FileRef>
+         <FileRef
+            location = "group:Amplitude.modulemap">
+         </FileRef>
+         <FileRef
+            location = "group:Info.plist">
+         </FileRef>
+      </Group>
+   </Group>
    <FileRef
       location = "group:TalkVeganToMe.xcodeproj">
    </FileRef>
