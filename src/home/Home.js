@@ -5,7 +5,6 @@ import {
   FAB,
   ActivityIndicator,
   DefaultTheme,
-  Button,
 } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import Pages from '../Pages.js';
