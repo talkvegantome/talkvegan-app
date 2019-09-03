@@ -67,7 +67,14 @@ class Pages {
   }
   getPages(){
     if(!this.pages){
-      this.pages = this.pageData[this.settings.language].pages
+      this.pages = _.pickBy(
+        this.pageData[this.settings.language].pages,
+        (o,i) => {
+          o=this.getPageMetadata(i);
+          let isTopLevel = o.relativePermalink.match(/^\/[^\/]*\/[^\/]*\/$/)
+          return !isTopLevel && (_.isNil(o.displayInApp) || o.displayInApp)
+        }
+      )
     }
     return this.pages
   }

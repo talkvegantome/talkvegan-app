@@ -16,40 +16,38 @@ import Pages from '../Pages.js'
 export default class ContentIndex extends Component{
   constructor(props) {
     super(props);
-    this.props.storage.addOnRefreshListener((storage) => this.refreshStorage(storage))
-    let pages = new Pages(this.props.storage)
-    let analytics = new Analytics(this.props.storage.settings)
-    this.state = {
-      pagesObj: pages,
+    this.props.storage.addOnRefreshListener((storage) => this.setState(this.returnState(storage)))
+    this.state = this.returnState(props.storage)
+  }
+  
+  returnState(storage){
+    let pagesObj = new Pages(storage)
+    let analytics = new Analytics(storage.settings)
+    return {
       analytics: analytics,
-      settings: this.props.storage.settings,
-      menu: pages.getMenu(),
-      splashPath: pages.getSplashPath(),
-      headerVisibility: {}
+      settings: storage.settings,
+      headerVisibility: {},
+      pagesList: this.generatePagesList(pagesObj)
     };
   }
 
-  refreshStorage(storage){
-    let pages = new Pages(storage)
-    let analytics = new Analytics(storage.settings)
-    this.setState({
-      pagesObj: pages,
-      analytics: analytics,
-      settings: storage.settings,
-      menu: pages.getMenu(storage),
-      splashPath: pages.getSplashPath()
+  generatePagesList(pagesObj){
+    let menuSorted = _.sortBy(pagesObj.getMenu(), ['weight', 'friendlyName'])
+    return _.map(menuSorted, (headerItem) => {
+      return {
+        headerItem: headerItem,
+        pagesInCategory: pagesObj.getPagesInCategory(headerItem)
+      }
     })
   }
-  
 
   render(){
-    let menuSorted = _.sortBy(this.state.menu, ['weight', 'friendlyName'])
-    return _.map(menuSorted, (headerItem, i) => 
+    
+    return _.map(this.state.pagesList, (menuItem, i) => 
       <CarouselNavWrapper 
-        headerItem={headerItem} 
-        pagesObj={this.state.pagesObj}
+        headerItem={menuItem.headerItem} 
+        pagesInCategory={menuItem.pagesInCategory}
         key={i}
-        randomiseHomepage={this.props.randomiseHomepage}
         navigation={this.props.navigation}
       />
     )
@@ -61,13 +59,16 @@ class CarouselNavWrapper extends React.Component{
   state = {
     expanded: false
   }
+  constructor(props){
+    super(props)
+  }
   navigateToScreen = (indexId) => () => {
     // Navigation is always to the 'Home' screen, but content changes based on the indexId
-    this.props.navigation.navigate('home', {indexId: indexId});
+    this.props.navigation.navigate('home', {indexId: indexId}, 'carouselNavCard');
   }
-  generateCardList(headerItem){
+  generateCardList(){
     return _.map(
-      this.props.pagesObj.getPagesInCategory(headerItem), (item) => {
+      this.props.pagesInCategory, (item) => {
         return {
           title: item.friendlyName,
           content: item.description ? item.description : RemoveMarkdown(item.rawContent).replace(/\n/g, ' '),
@@ -75,9 +76,11 @@ class CarouselNavWrapper extends React.Component{
         }
       })
   }
+  
   render() {
     let headerFriendlyName = this.props.headerItem.friendlyName
-    let items = this.generateCardList(this.props.headerItem)
+    this.items = this.generateCardList()
+    this.index = _.random(0,this.items.length-1)
     return (
       <View key={headerFriendlyName}>
         <View style={{marginLeft: 20, marginRight: 20, marginBottom: 20}}>
@@ -105,7 +108,7 @@ class CarouselNavWrapper extends React.Component{
           </View>
           
           {!this.state.expanded && 
-            <CarouselNav items={items} randomiseHomepage={this.props.randomiseHomepage} navigation={this.props.navigation}></CarouselNav>
+            <CarouselNav items={this.items} firstItem={this.index} navigation={this.props.navigation}></CarouselNav>
           }
           <View
             style={{
@@ -116,7 +119,7 @@ class CarouselNavWrapper extends React.Component{
             }}
           >
             {this.state.expanded && 
-              _.map(items, (item, i) => <NavigationCard key={i} item={item} style={{marginLeft: 10, marginBottom: 20}} />)
+              _.map(this.items, (item, i) => <NavigationCard key={i} item={item} style={{marginLeft: 10, marginBottom: 20}} />)
             }
           </View>
       </View>

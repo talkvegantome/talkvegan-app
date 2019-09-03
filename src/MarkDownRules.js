@@ -24,7 +24,7 @@ export class markdownRules {
      // If it's an internal link reformatted by preProcessMarkDown, navigate!
      if(url.match(/^REF:/)){
        let indexId = url.replace(/REF:/,'')
-       this.navigation.navigate('home', {indexId: normaliseRelPath(indexId)});
+       this.navigation.navigate('home', {indexId: normaliseRelPath(indexId)}, 'markdownLink');
        return
      }
      Linking.openURL(url).catch((err) => {this.analytics.logEvent('error', { errorDetail: err })})

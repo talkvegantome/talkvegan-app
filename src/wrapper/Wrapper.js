@@ -46,7 +46,16 @@ class Wrapper extends React.Component {
           />
           {this.props.rightComponent}
         </Appbar.Header>
-        <ScrollView ref={this.scrollRef} style={{...commonStyle.content,...this.props.style}}>
+        <ScrollView 
+          ref={this.scrollRef} 
+          style={{...commonStyle.content,...this.props.style}}
+          scrollEventThrottle={0} // DO NOT SET TO ANYTHING OTHER THAN 0 YOUR CPU WILL EXPLODE
+          onScroll={(e) => {
+            if(!_.isNil(this.props.scrollListener)){
+              this.props.scrollListener(e)
+            }
+          }}
+        >
           {this.props.children}
           <View style={{height:50}}></View>
         </ScrollView>

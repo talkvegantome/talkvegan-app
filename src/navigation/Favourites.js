@@ -46,7 +46,8 @@ export default class Favourites extends React.Component {
                         onPress={()=>{
                             this.props.navigation.navigate(
                                 favourite.pageKey,
-                                {indexId: favourite.indexId}
+                                {indexId: favourite.indexId},
+                                'favourites'
                             )
                         }}
                     />

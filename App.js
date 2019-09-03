@@ -106,9 +106,9 @@ class BottomDrawer extends React.Component {
   _triggerNavigationListeners(key, props={}){
     _.forEach(this.onNavigationListeners, (method) => method(key, props))
   }
-  navigate = (key, props) => {
+  navigate = (key, props, type='unknown') => {
     let index = _.findIndex(this.state.routes, ['key', key])
-    this.state.analytics.logEvent('navigateToPage', {page: key, params: props})
+    this.state.analytics.logEvent('navigateToPage', {page: key, params: props, type: type})
     this._appendToHistory(index, props)
     this._triggerNavigationListeners(key, props)
     this.setState({
