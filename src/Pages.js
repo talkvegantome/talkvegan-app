@@ -126,9 +126,13 @@ class Pages {
     return this.storage.config.apiUrl + this.settings.language + '/index.json'
   }
   getPagePermalink(pageIndex) {
-    return this.getPageMetadata(pageIndex).permalink
+    
+    return this.pageExists(pageIndex) ?  this.getPageMetadata(pageIndex).permalink : false;
   }
   getPageGitHubLink(pageIndex) {
+    if(!this.pageExists(pageIndex)){
+      return false
+    }
     let pageMetadata = this.getPageMetadata(pageIndex)
     let languageName = this.storage.pageData[this.settings.language].languageName
     let gitHubPath = pageMetadata.relativePermalink
@@ -139,11 +143,14 @@ class Pages {
     gitHubPath = gitHubPath.replace(/\/$/, '.md')
     return this.storage.config.gitHubUrl + 'blob/master/content' + gitHubPath
   }
+  pageExists(pageIndex){
+    return Boolean(this.getPages()[pageIndex])
+  }
   getPageContent(pageIndex) {
     let pages = this.getPages()
-    if (!pages[pageIndex]) {
+    if(!this.pageExists(pageIndex)){
       let errorMessage = 'Error loading ' + pageIndex + '. Try refreshing data from the Settings page.'
-      this.state.analytics.logEvent('error', { errorDetail: errorMessage })
+      this.analytics.logEvent('error', { errorDetail: errorMessage })
       return errorMessage
     }
     return pages[pageIndex]
@@ -175,12 +182,15 @@ class Pages {
       return item
    }), function(o){return !_.isNil(o)})
   }
-  getPageOffsetInCategory(indexId, offset){
+  getPageOffsetInCategory(pageIndex, offset){
+    if(!this.pageExists(pageIndex)){
+      return false
+    }
     // Get the page's parent menu item
-    const categoryIndexId = this.getPageMetadata(indexId).section.relativePermalink
+    const categoryIndexId = this.getPageMetadata(pageIndex).section.relativePermalink
     const categoryItem = this.getMenu()[categoryIndexId]
     const pagesInCategory = this.getPagesInCategory(categoryItem)
-    const curItemIndex = _.findIndex(pagesInCategory, {'relativePermalink': indexId})
+    const curItemIndex = _.findIndex(pagesInCategory, {'relativePermalink': pageIndex})
     let indexToReturn = curItemIndex+offset
 
     // Wrap around the array by returning elements from the end/beginning if the index is smaller/larger than the array

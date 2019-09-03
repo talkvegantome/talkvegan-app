@@ -1,6 +1,6 @@
 import React from 'react';
 import { Share, StyleSheet, View, Linking } from 'react-native';
-import { Appbar, FAB, ActivityIndicator, DefaultTheme } from 'react-native-paper';
+import { Appbar, FAB, ActivityIndicator, DefaultTheme, Button } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import Pages from '../Pages.js';
 import { _ } from 'lodash'
@@ -143,8 +143,8 @@ export default class App extends React.Component {
         </Markdown>
       </Wrapper>
       <PageMenu
-        previousPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, -1)['relativePermalink']} 
-        nextPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, 1)['relativePermalink']} 
+        previousPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, -1)} 
+        nextPage={this.state.pagesObj.getPageOffsetInCategory(this.props.indexId, 1)} 
         navigation={this.props.navigation}
         pagePermalink={this.state.pagesObj.getPagePermalink(this.props.indexId)}
         pageGitHubLink={this.state.pagesObj.getPageGitHubLink(this.props.indexId)}
@@ -170,23 +170,28 @@ class PageMenu extends React.Component {
   }
   _navigateForward(){
     this.props.navigation.navigate('home', {
-      indexId: this.props.nextPage,
+      indexId: this.props.nextPage['relativePermalink'],
       from: this.props.thisPage
     }, 
     'articleNextButton')
   }
   _navigateBackward(){
     this.props.navigation.navigate('home', {
-      indexId: this.props.previousPage
+      indexId: this.props.previousPage['relativePermalink']
     }, 
     'articlePreviousButton')
   }
   render() {
     const iconSize = 18
-    
     return (
       <Appbar style={styles.PageMenu} theme={pageMenuTheme}>
-        <Appbar.Action icon="arrow-back" size={iconSize} style={styles.PageMenuItem} onPress={() => this._navigateBackward()} />
+        <Appbar.Action 
+          icon="arrow-back" 
+          size={iconSize} 
+          disabled={this.props.previousPage === false}
+          style={styles.PageMenuItem} 
+          onPress={() => this._navigateBackward()} 
+        />
         <Appbar.Action 
         icon="share" 
         size={iconSize} 
@@ -210,7 +215,13 @@ class PageMenu extends React.Component {
               this.props.analytics.logEvent('openedGitHubLink', {page: this.props.pagePermalink})
               Linking.openURL(this.props.pageGitHubLink)
         }} />
-        <Appbar.Action icon="arrow-forward" size={iconSize} style={styles.PageMenuItem} onPress={() => this._navigateForward()} />
+        <Appbar.Action 
+          icon="arrow-forward" 
+          size={iconSize} 
+          disabled={this.props.nextPage === false}
+          style={styles.PageMenuItem} 
+          onPress={() => this._navigateForward()} 
+        />
       </Appbar>
     )
   }
