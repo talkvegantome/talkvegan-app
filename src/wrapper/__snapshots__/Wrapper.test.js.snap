@@ -228,6 +228,8 @@ exports[`Wrapper Renders Correctly 1`] = `
       </View>
     </RCTSafeAreaView>
     <RCTScrollView
+      onScroll={[Function]}
+      scrollEventThrottle={0}
       style={
         Object {
           "paddingBottom": 20,

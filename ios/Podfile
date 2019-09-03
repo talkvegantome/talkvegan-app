@@ -7,7 +7,8 @@ target 'TalkVeganToMe' do
   #pod 'react-native-async-storage', :path => '../node_modules/@react-native-community/async-storage'
 
   #pod 'react-native-amplitude-analytics', :path => '../node_modules/react-native-amplitude-analytics'
+  #pod 'Amplitude-iOS', '~> 4.3.1'
   pod 'Amplitude-iOS', '~> 4.3.1'
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  #pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 end

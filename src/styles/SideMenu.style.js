@@ -1,5 +1,5 @@
-import { commonStyle } from './Common.style.js'
-let fontMultiplier = commonStyle.fontMultiplier
+import { commonStyle } from './Common.style.js';
+let fontMultiplier = commonStyle.fontMultiplier;
 export default {
   container: {
     flex: 1,
@@ -7,11 +7,11 @@ export default {
   },
   safeContainer: {
     backgroundColor: commonStyle.navHeaderBackgroundColor,
-    flex: 1
+    flex: 1,
   },
   dividerStyle: {
     height: 1,
-    backgroundColor: commonStyle.navDividerColor
+    backgroundColor: commonStyle.navDividerColor,
   },
   navHeaderStyle: {
     backgroundColor: commonStyle.navHeaderBackgroundColor,
@@ -24,7 +24,7 @@ export default {
   sectionHeadingStyle: {
     backgroundColor: commonStyle.navSectionBackgroundColor,
     padding: 15 * fontMultiplier,
-    margin:0,
+    margin: 0,
   },
   sectionHeadingTitleStyle: {
     fontSize: 18 * fontMultiplier,
@@ -32,9 +32,9 @@ export default {
     color: commonStyle.navSectionFontColor,
   },
   itemHeadingStyle: {
-    backgroundColor: commonStyle.navItemBackgroundColor
+    backgroundColor: commonStyle.navItemBackgroundColor,
   },
   itemHeadingTitleStyle: {
-    color: commonStyle.navItemFontColor
-  }
+    color: commonStyle.navItemFontColor,
+  },
 };

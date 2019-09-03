@@ -17,7 +17,7 @@
     "@react-native-community/async-storage": "1.2.4",
     "fast-stringify": "^1.1.1",
     "lodash": "^4.17.13",
-    "luxon": "^1.13.2",
+    "luxon": "^1.17.2",
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-amplitude-analytics": "^0.2.7",
@@ -37,11 +37,14 @@
     "babel-preset-expo": "^5.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^6.2.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.13.0",
     "hermes-engine": "^0.1.1",
     "jest": "^24.8.0",
+    "prettier": "^1.18.2",
     "react-test-renderer": "^16.8.6"
   },
   "private": true
