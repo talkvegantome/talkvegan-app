@@ -1,60 +1,66 @@
 import React from 'react';
-import { Text, Linking, View} from 'react-native';
+import { Text, Linking, View } from 'react-native';
 import _ from 'lodash';
-import {getUniqueID, hasParents} from 'react-native-markdown-renderer';
+import { getUniqueID, hasParents } from 'react-native-markdown-renderer';
 
-import {normaliseRelPath} from './Pages.js'
-import Analytics from './analytics'
+import { normaliseRelPath } from './Pages.js';
+import Analytics from './analytics';
 
 export class markdownRules {
   constructor(navigation, settings) {
-    this.navigation = navigation
-    this.settings = settings
-    this.analytics = new Analytics(settings)
+    this.navigation = navigation;
+    this.settings = settings;
+    this.analytics = new Analytics(settings);
   }
-  generateHeading(node, children, parent, styles){
-     return (
-       <Text key={getUniqueID()} style={styles[node.type]}>
-          {children[0].props.children}
-       </Text>
-     )
- }
- openUrl(url){
-     this.analytics.logEvent('openUrl', { url: url })
-     // If it's an internal link reformatted by preProcessMarkDown, navigate!
-     if(url.match(/^REF:/)){
-       let indexId = url.replace(/REF:/,'')
-       this.navigation.navigate('home', {indexId: normaliseRelPath(indexId)}, 'markdownLink');
-       return
-     }
-     Linking.openURL(url).catch((err) => {this.analytics.logEvent('error', { errorDetail: err })})
- }
- styleChildren(child, style){
-   let grandChildren = []
-   let childStyle = {}
-   if(_.isNil(child)){
-     return child
-   }
-   if('props' in child && 'children' in child.props){
-     if(typeof(child.props.children) != 'object'){
-       grandChildren = child.props.children
-     }else{
-       grandChildren = _.map(child.props.children, (grandChild) => {
-         return this.styleChildren(grandChild, style)
-       })
-     }
-     if(child.props.style){
-      childStyle = child.props.style
+  generateHeading(node, children, parent, styles) {
+    return (
+      <Text key={getUniqueID()} style={styles[node.type]}>
+        {children[0].props.children}
+      </Text>
+    );
+  }
+  openUrl(url) {
+    this.analytics.logEvent('openUrl', { url: url });
+    // If it's an internal link reformatted by preProcessMarkDown, navigate!
+    if (url.match(/^REF:/)) {
+      let indexId = url.replace(/REF:/, '');
+      this.navigation.navigate(
+        'home',
+        { indexId: normaliseRelPath(indexId) },
+        'markdownLink'
+      );
+      return;
     }
-   }
-   
-   return React.cloneElement(child, {
-     key: getUniqueID(),
-     style: {...childStyle, ...style},
-     children: grandChildren
-   })
- }
- rules = {
+    Linking.openURL(url).catch((err) => {
+      this.analytics.logEvent('error', { errorDetail: err });
+    });
+  }
+  styleChildren(child, style) {
+    let grandChildren = [];
+    let childStyle = {};
+    if (_.isNil(child)) {
+      return child;
+    }
+    if ('props' in child && 'children' in child.props) {
+      if (typeof child.props.children != 'object') {
+        grandChildren = child.props.children;
+      } else {
+        grandChildren = _.map(child.props.children, (grandChild) => {
+          return this.styleChildren(grandChild, style);
+        });
+      }
+      if (child.props.style) {
+        childStyle = child.props.style;
+      }
+    }
+
+    return React.cloneElement(child, {
+      key: getUniqueID(),
+      style: { ...childStyle, ...style },
+      children: grandChildren,
+    });
+  }
+  rules = {
     heading1: this.generateHeading,
     heading2: this.generateHeading,
     heading3: this.generateHeading,
@@ -70,22 +76,28 @@ export class markdownRules {
     },
     blockquote: (node, children, parent, styles) => {
       return (
-         <View key={node.key} style={styles.blockquote}>
-           {_.map(children, (child) => this.styleChildren(child, styles.blockquoteText))}
-         </View>
-       )
+        <View key={node.key} style={styles.blockquote}>
+          {_.map(children, (child) =>
+            this.styleChildren(child, styles.blockquoteText)
+          )}
+        </View>
+      );
     },
     link: (node, children, parent, styles) => {
       return (
-        <Text key={node.key} style={styles.link} onPress={() => this.openUrl(node.attributes.href)}>
+        <Text
+          key={node.key}
+          style={styles.link}
+          onPress={() => this.openUrl(node.attributes.href)}>
           {children}
         </Text>
       );
-    }, 
+    },
     list_item: (node, children, parent, styles) => {
       if (hasParents(parent, 'bullet_list')) {
-        let listUnorderedItemIconStyle = hasParents(parent, 'blockquote') ? 
-          styles.quotedListUnorderedItemIcon : styles.listUnorderedItemIcon
+        let listUnorderedItemIconStyle = hasParents(parent, 'blockquote')
+          ? styles.quotedListUnorderedItemIcon
+          : styles.listUnorderedItemIcon;
         return (
           <View key={node.key} style={styles.listUnorderedItem}>
             <Text style={listUnorderedItemIconStyle}>{'\u00B7'}</Text>
@@ -93,44 +105,48 @@ export class markdownRules {
           </View>
         );
       }
-  
+
       if (hasParents(parent, 'ordered_list')) {
-        let listOrderedItemIconStyle = hasParents(parent, 'blockquote') ? 
-          styles.quotedListOrderedItemIcon : styles.listOrderedItemIcon
+        let listOrderedItemIconStyle = hasParents(parent, 'blockquote')
+          ? styles.quotedListOrderedItemIcon
+          : styles.listOrderedItemIcon;
         return (
           <View key={node.key} style={styles.listOrderedItem}>
-            <Text style={listOrderedItemIconStyle}>{node.index + 1}{node.markup}</Text>
+            <Text style={listOrderedItemIconStyle}>
+              {node.index + 1}
+              {node.markup}
+            </Text>
             <View style={[styles.listItem]}>{children}</View>
           </View>
         );
       }
-  
+
       return (
         <View key={node.key} style={[styles.listItem]}>
           {children}
         </View>
       );
     },
-  }
-  preProcessMarkDown(markdown){
+  };
+  preProcessMarkDown(markdown) {
     let patterns = [
       {
         // Replace hugo cross reference links' inner {{<ref>}} syntax as it prevents them from being recognised by
         //   the markdown formatter
         find: /\[([^\]\]]+)\]\([\s\{<]{2,}\s*ref[:]*\s*"([^"]+)"[\}>\s]{2,}\)/g,
         replacement: (match, p1, p2) => {
-          let relPath = '/' + this.settings.language + normaliseRelPath(p2)
-          return "["+p1+"](REF:"+relPath+")"
-        }
-      }
-    ]
-    patterns.forEach((pattern) =>{
-      markdown = markdown.replace(pattern.find, pattern.replacement)
-    })
-    return markdown
+          let relPath = '/' + this.settings.language + normaliseRelPath(p2);
+          return '[' + p1 + '](REF:' + relPath + ')';
+        },
+      },
+    ];
+    patterns.forEach((pattern) => {
+      markdown = markdown.replace(pattern.find, pattern.replacement);
+    });
+    return markdown;
   }
-  
-  returnRules(){
-    return this.rules
+
+  returnRules() {
+    return this.rules;
   }
 }

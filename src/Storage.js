@@ -1,129 +1,143 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import _ from 'lodash'
-import Pages from './Pages.js'
-import Analytics from './analytics'
+import _ from 'lodash';
+import Pages from './Pages.js';
+import Analytics from './analytics';
 
 export class Storage {
   constructor() {
     //AsyncStorage.clear()
-    this.onRefreshListeners = []
+    this.onRefreshListeners = [];
     this.refreshFromStorage().then(() => {
       // If it's been over a day since we loaded new data, load on start
-      let pagesObj = new Pages(this)
-      let daysSinceLastSync = pagesObj.getLastPageDataSync().diffNow('days').days * -1
+      let pagesObj = new Pages(this);
+      let daysSinceLastSync =
+        pagesObj.getLastPageDataSync().diffNow('days').days * -1;
       if (daysSinceLastSync > 1) {
-        pagesObj.pullPageDataFromSite()
+        pagesObj.pullPageDataFromSite();
       }
-    })
-    this.addOnRefreshListener(this.onRefresh, ['settings'])
-    this.onRefresh()
+    });
+    this.addOnRefreshListener(this.onRefresh, ['settings']);
+    this.onRefresh();
   }
 
-  favourites = {}
+  favourites = {};
   pageData = {
     en: require('../assets/index.en.json'),
-  }
+  };
   settings = {
     language: 'en',
     analyticsPromptAnswered: false,
     analyticsEnabled: false,
     loading: true,
     randomiseHomepage: true,
-  }
+  };
   config = {
-    apiUrl: "https://talkveganto.me/",
-    gitHubUrl: "https://github.com/talkvegantome/talkvegan-hugo/",
+    apiUrl: 'https://talkveganto.me/',
+    gitHubUrl: 'https://github.com/talkvegantome/talkvegan-hugo/',
     privacyPolicyUrl: 'https://talkveganto.me/en/privacy-policy',
     helpDeskUrl: 'https://talkvegantome.freshdesk.com/support/tickets/new',
-    twitterUrl: 'https://twitter.com/TalkVeganApp'
-  }
+    twitterUrl: 'https://twitter.com/TalkVeganApp',
+  };
 
   onRefresh = () => {
-    this.analytics = new Analytics(this.settings)
-  }
+    this.analytics = new Analytics(this.settings);
+  };
 
   refreshFromStorage(keysToRefresh = ['pageData', 'settings', 'favourites']) {
-    let promises = []
-    this.loading = true
+    let promises = [];
+    this.loading = true;
     _.forEach(keysToRefresh, (propertyName) => {
-      let promise = AsyncStorage.getItem(propertyName).then(asyncStorageRes => {
-        // Don't overwrite defaults with null if nothing exists in AsyncStorage!
-        if (JSON.parse(asyncStorageRes)) {
-          this[propertyName] = JSON.parse(asyncStorageRes)
-          return
+      let promise = AsyncStorage.getItem(propertyName).then(
+        (asyncStorageRes) => {
+          // Don't overwrite defaults with null if nothing exists in AsyncStorage!
+          if (JSON.parse(asyncStorageRes)) {
+            this[propertyName] = JSON.parse(asyncStorageRes);
+            return;
+          }
         }
-      })
-      promises.push(promise)
-    })
+      );
+      promises.push(promise);
+    });
     return Promise.all(promises).then(() => {
-      this.loading = false
+      this.loading = false;
       _.forEach(this.onRefreshListeners, (methodObj) => {
         // If the listener cares about the keys we refreshed, call it!
-        if(_.intersectionWith(methodObj['listenForKeys'], keysToRefresh).length > 0){
-          methodObj['method'](this)
+        if (
+          _.intersectionWith(methodObj['listenForKeys'], keysToRefresh).length >
+          0
+        ) {
+          methodObj['method'](this);
         }
-      })
-    })
+      });
+    });
   }
 
   updateSetting(settingName, value) {
-    this.settings[settingName] = value
-    return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(() => {
-      this.refreshFromStorage()
-    });
+    this.settings[settingName] = value;
+    return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(
+      () => {
+        this.refreshFromStorage();
+      }
+    );
   }
 
-  addOnRefreshListener(method,listenForKeys=['settings', 'pageData']){
+  addOnRefreshListener(method, listenForKeys = ['settings', 'pageData']) {
     this.onRefreshListeners.push({
       method: method,
-      listenForKeys: listenForKeys
-    })
+      listenForKeys: listenForKeys,
+    });
   }
-  addFavourite(props){
+  addFavourite(props) {
     this.favourites[this.settings.language].push({
       pageKey: props.pageKey,
       indexId: props.indexId,
-      displayName: props.displayName
-    })
-    this.analytics.logEvent('addedFavourite', props)
-    this.syncFavourites()
+      displayName: props.displayName,
+    });
+    this.analytics.logEvent('addedFavourite', props);
+    this.syncFavourites();
   }
-  removeFavourite(props){
+  removeFavourite(props) {
     this.favourites[this.settings.language] = _.filter(
-      this.getFavourites(), (o) => {
-        return !(o.indexId === props.indexId && o.pageKey === props.pageKey)
+      this.getFavourites(),
+      (o) => {
+        return !(o.indexId === props.indexId && o.pageKey === props.pageKey);
       }
-    )
-    this.analytics.logEvent('removedFavourite', props)
-    return this.syncFavourites()
+    );
+    this.analytics.logEvent('removedFavourite', props);
+    return this.syncFavourites();
   }
-  syncFavourites(){
-    return AsyncStorage.setItem('favourites', JSON.stringify(this.favourites)).then(() => {
-      this.refreshFromStorage(['favourites'])
+  syncFavourites() {
+    return AsyncStorage.setItem(
+      'favourites',
+      JSON.stringify(this.favourites)
+    ).then(() => {
+      this.refreshFromStorage(['favourites']);
     });
   }
-  toggleFavourite(props){
-    if(this.isFavourite(props)){
-      return this.removeFavourite(props)
+  toggleFavourite(props) {
+    if (this.isFavourite(props)) {
+      return this.removeFavourite(props);
     }
-    return this.addFavourite(props)
+    return this.addFavourite(props);
   }
-  getFavourites(){
-    this._initialiseLanguage('favourites', [])
-    return this.favourites[this.settings.language]
+  getFavourites() {
+    this._initialiseLanguage('favourites', []);
+    return this.favourites[this.settings.language];
   }
-  isFavourite(props){
-    return _.filter(this.getFavourites(), {
-      indexId: props.indexId,
-      pageKey: props.pageKey
-    }).length > 0
+  isFavourite(props) {
+    return (
+      _.filter(this.getFavourites(), {
+        indexId: props.indexId,
+        pageKey: props.pageKey,
+      }).length > 0
+    );
   }
-  _initialiseLanguage(key, value){
-    if(_.isNil(this[key])){
-      this[key] = {}
+  _initialiseLanguage(key, value) {
+    if (_.isNil(this[key])) {
+      this[key] = {};
     }
-    if(_.isNil(this[key][this.settings.language])){
-      this[key][this.settings.language] = value
+    if (_.isNil(this[key][this.settings.language])) {
+      this[key][this.settings.language] = value;
     }
   }
 }
