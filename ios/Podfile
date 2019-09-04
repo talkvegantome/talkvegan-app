@@ -11,4 +11,6 @@ target 'TalkVeganToMe' do
   pod 'Amplitude-iOS', '~> 4.3.1'
   #pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNRate', :path => '../node_modules/react-native-rate'
+
 end

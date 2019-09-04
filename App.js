@@ -7,17 +7,19 @@
  */
 
 import React from 'react';
+
 import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js';
 import HomeScreen from './src/home/Home.js';
 import FavouritesScreen from './src/navigation/Favourites';
+import { RateModal } from './src/rateApp';
 import { _ } from 'lodash';
 
 import { Storage } from './src/Storage.js';
 import Analytics from './src/analytics';
 
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
-import { BottomNavigation } from 'react-native-paper';
+import { BottomNavigation, Portal } from 'react-native-paper';
 
 class BottomDrawer extends React.Component {
   constructor(props) {
@@ -153,15 +155,18 @@ class BottomDrawer extends React.Component {
 
   render() {
     return (
-      <BottomNavigation
-        theme={PaperTheme}
-        activeColor={commonStyle.headerFontColor}
-        inactiveColor={commonStyle.headerFontColor}
-        navigationState={this.state}
-        onTabPress={this._handleTabPress}
-        onIndexChange={this._handleIndexChange}
-        renderScene={this._renderScene}
-      />
+      <Portal.Host>
+        <RateModal storage={this.state.storage} />
+        <BottomNavigation
+          theme={PaperTheme}
+          activeColor={commonStyle.headerFontColor}
+          inactiveColor={commonStyle.headerFontColor}
+          navigationState={this.state}
+          onTabPress={this._handleTabPress}
+          onIndexChange={this._handleIndexChange}
+          renderScene={this._renderScene}
+        />
+      </Portal.Host>
     );
   }
 }
