@@ -1,17 +1,10 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  TouchableHighlight,
-} from 'react-native';
-import { Overlay } from 'react-native-elements';
+import { View } from 'react-native';
 import RNAmplitude from 'react-native-amplitude-analytics';
 import amplitudeSettings from '../../assets/amplitudeSettings.json';
 import Markdown from 'react-native-markdown-renderer';
 
-import { commonStyle } from '../styles/Common.style.js';
+import Modal from '../modal';
 import { popUpmarkdownStyles } from '../styles/Markdown.style.js';
 
 class analytics {
@@ -77,45 +70,17 @@ For more information on how this data is used, see the [Privacy Policy](` +
 
   render() {
     return (
-      <Overlay
-        animationType="slide"
-        style={{ overflow: 'scroll' }}
-        isVisible={
+      <Modal
+        dismissText="Opt Out"
+        actionText="Opt In"
+        onDismiss={() => this.setConsent(false)}
+        onAction={() => this.setConsent(true)}
+        visible={
           !this.props.storage.loading &&
           !this.props.storage.settings.analyticsPromptAnswered
         }>
-        <SafeAreaView style={{ flex: 1, flexDirection: 'column' }}>
-          <ScrollView style={{ padding: 10 }}>
-            <Markdown style={popUpmarkdownStyles}>
-              {this.telemetryBlurb}
-            </Markdown>
-          </ScrollView>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-evenly',
-              minHeight: 50,
-              marginTop: 20,
-            }}>
-            <TouchableHighlight
-              style={this.denyStyle}
-              onPress={() => this.setConsent(false)}>
-              <Text style={{ color: commonStyle.light, fontWeight: 'bold' }}>
-                Opt Out
-              </Text>
-            </TouchableHighlight>
-
-            <TouchableHighlight
-              style={this.acceptStyle}
-              onPress={() => this.setConsent(true)}>
-              <Text style={{ color: commonStyle.light, fontWeight: 'bold' }}>
-                Opt In
-              </Text>
-            </TouchableHighlight>
-          </View>
-        </SafeAreaView>
-      </Overlay>
+        <Markdown style={popUpmarkdownStyles}>{this.telemetryBlurb}</Markdown>
+      </Modal>
     );
   }
 }

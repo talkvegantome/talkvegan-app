@@ -4,14 +4,12 @@ import { DateTime } from 'luxon';
 import Duration from 'luxon/src/duration.js';
 import { _ } from 'lodash';
 import Rate, { AndroidMarket } from 'react-native-rate';
-import { Modal, Portal, Text, Button, Surface } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import Analytics from '../analytics';
 
 import { markdownRules } from '../MarkDownRules.js';
 import { popUpmarkdownStyles } from '../styles/Markdown.style.js';
-
-import { commonStyle, PaperTheme } from '../styles/Common.style';
+import Modal from '../modal';
 
 export default class RateApp {
   constructor(props) {
@@ -50,7 +48,7 @@ export default class RateApp {
     let lastPrompted = DateTime.fromISO(
       this.storage.settings.lastPromptedForAppRating
     );
-    // lastPrompted = DateTime.utc().plus({ days: -1 });
+    //lastPrompted = DateTime.utc().plus({ days: -1 });
     return DateTime.utc().diff(lastPrompted) > durationRequired;
   }
   promptForRating(callback) {
@@ -59,7 +57,7 @@ export default class RateApp {
   }
   readyToPrompt() {
     let timesPrompted = this.storage.settings.timesPromptedForAppRating;
-    // timesPrompted = 0;
+    timesPrompted = 0;
     let durationRequired;
     if (!_.isNil(this.ratingIntervals[timesPrompted])) {
       durationRequired = this.ratingIntervals[timesPrompted].duration;
@@ -111,14 +109,14 @@ export class RateModal extends React.Component {
     this.rateApp = new RateApp({ storage: this.storage });
     this.readyToPrompt();
   }
-  onDismiss() {
+  onDismiss = () => {
     this.rateApp.dismissPrompt(false);
     this.setState({ visible: false });
-  }
-  onRate() {
+  };
+  onRate = () => {
     this.rateApp.promptForRating();
     this.onDismiss();
-  }
+  };
   readyToPrompt() {
     if (this.rateApp.readyToPrompt()) {
       this.setState({ visible: true });
@@ -126,49 +124,19 @@ export class RateModal extends React.Component {
   }
   render() {
     return (
-      <Portal>
-        <Modal visible={this.state.visible}>
-          <Surface
-            style={{
-              width: '80%',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              padding: 20,
-            }}>
-            <View style={{ marginTop: -20 }} />
-            <Markdown
-              style={popUpmarkdownStyles}
-              rules={this.markdownRules.returnRules()}>
-              {this.promptBlurb}
-            </Markdown>
-
-            <View
-              style={{
-                marginTop: 20,
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <Button
-                theme={PaperTheme}
-                mode="outlined"
-                style={{ width: '40%' }}
-                onPress={() => this.onDismiss()}>
-                <Text>Later</Text>
-              </Button>
-              <Button
-                mode="contained"
-                theme={PaperTheme}
-                onPress={() => this.onRate()}
-                style={{ width: '40%' }}>
-                <Text style={{ color: commonStyle.headerFontColor }}>
-                  Sure!
-                </Text>
-              </Button>
-            </View>
-          </Surface>
-        </Modal>
-      </Portal>
+      <Modal
+        dismissText="Later"
+        actionText="Sure!"
+        onDismiss={this.onDismiss}
+        onAction={this.onRate}
+        visible={this.state.visible}>
+        <View style={{ marginTop: -20 }} />
+        <Markdown
+          style={popUpmarkdownStyles}
+          rules={this.markdownRules.returnRules()}>
+          {this.promptBlurb}
+        </Markdown>
+      </Modal>
     );
   }
 }
