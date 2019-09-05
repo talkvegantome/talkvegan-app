@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import RNAmplitude from 'react-native-amplitude-analytics';
 import amplitudeSettings from '../../assets/amplitudeSettings.json';
 import Markdown from 'react-native-markdown-renderer';
