@@ -99,11 +99,13 @@ export class Storage {
     );
   }
 
-  updateSettings(settings) {
+  updateSettings(settings, triggerRefreshListeners = true) {
     this.settings = { ...this.settings, ...settings };
     return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(
       () => {
-        this.refreshFromStorage();
+        if (triggerRefreshListeners) {
+          this.refreshFromStorage();
+        }
       }
     );
   }

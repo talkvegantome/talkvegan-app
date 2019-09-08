@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { DateTime } from 'luxon';
 import Duration from 'luxon/src/duration.js';
-import { _ } from 'lodash';
 import Rate, { AndroidMarket } from 'react-native-rate';
 import Markdown from 'react-native-markdown-renderer';
 import Analytics from '../analytics';
@@ -14,6 +13,11 @@ import Modal from '../modal';
 export default class RateApp {
   constructor(props) {
     this.props = props;
+    this.debug = {
+      timesPrompted: 0,
+      lastPrompted: DateTime.utc().plus({ minutes: -11 }),
+    };
+    this.debug = false;
     this.analytics = new Analytics(props.storage.settings);
     this.storage = props.storage;
   }
@@ -45,10 +49,9 @@ export default class RateApp {
     fallbackPlatformURL: 'http://talkveganto.me',
   };
   durationPassed(durationRequired) {
-    let lastPrompted = DateTime.fromISO(
-      this.storage.settings.lastPromptedForAppRating
-    );
-    //lastPrompted = DateTime.utc().plus({ days: -1 });
+    let lastPrompted = this.debug
+      ? this.debug.lastPrompted
+      : DateTime.fromISO(this.storage.settings.lastPromptedForAppRating);
     return DateTime.utc().diff(lastPrompted) > durationRequired;
   }
   promptForRating(callback) {
@@ -56,26 +59,33 @@ export default class RateApp {
     Rate.rate(this.ratingOptions, callback);
   }
   readyToPrompt() {
-    let timesPrompted = this.storage.settings.timesPromptedForAppRating;
-    timesPrompted = 0;
-    let durationRequired;
-    if (!_.isNil(this.ratingIntervals[timesPrompted])) {
-      durationRequired = this.ratingIntervals[timesPrompted].duration;
-      return this.durationPassed(durationRequired);
+    if (this.storage.settings.hasRatedApp) {
+      return false;
     }
-    durationRequired = this.ratingIntervals['default'].duration;
+    let timesPrompted = this.debug
+      ? this.debug.timesPrompted
+      : this.storage.settings.timesPromptedForAppRating;
+    let durationRequired =
+      timesPrompted in this.ratingIntervals
+        ? this.ratingIntervals[timesPrompted].duration
+        : this.ratingIntervals['default'].duration;
+
     return this.durationPassed(durationRequired);
   }
   dismissPrompt(hasRatedApp) {
-    this.storage.updateSettings({
-      lastPromptedForAppRating: DateTime.utc(),
-      timesPromptedForAppRating:
-        this.storage.settings.timesPromptedForAppRating + 1,
-      hasRatedApp: hasRatedApp,
-    });
+    this.storage.updateSettings(
+      {
+        lastPromptedForAppRating: DateTime.utc(),
+        timesPromptedForAppRating:
+          this.storage.settings.timesPromptedForAppRating + 1,
+        hasRatedApp: hasRatedApp,
+      },
+      false
+    );
 
     this.analytics.logEvent('dismissAppRatingDialog', {
       hasRatedApp: hasRatedApp,
+      debug: this.debug,
     });
   }
 }
@@ -115,7 +125,7 @@ export class RateModal extends React.Component {
   };
   onRate = () => {
     this.rateApp.promptForRating();
-    this.onDismiss();
+    this.rateApp.dismissPrompt(true);
   };
   readyToPrompt() {
     if (this.rateApp.readyToPrompt()) {
