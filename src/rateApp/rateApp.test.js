@@ -1,14 +1,12 @@
-import React from 'react';
 import { DateTime } from 'luxon';
 import RateApp from './index.js';
 import { MockStorage } from '../../mocks/MockStorage.js';
-import { MockNavigation } from '../../mocks/MockNavigation.js';
 let mockStorage = new MockStorage();
 
 jest.mock('react-native-amplitude-analytics');
 
 test('Does not prompt on first open', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 0,
     lastPrompted: DateTime.utc().plus({ minutes: 0 }),
@@ -17,7 +15,7 @@ test('Does not prompt on first open', () => {
 });
 
 test('Prompts first after 10 minutes', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 0,
     lastPrompted: DateTime.utc().plus({ minutes: -10, seconds: -1 }),
@@ -26,7 +24,7 @@ test('Prompts first after 10 minutes', () => {
 });
 
 test('Does not prompt second before 1 week', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 1,
     lastPrompted: DateTime.utc().plus({ days: -6 }),
@@ -35,7 +33,7 @@ test('Does not prompt second before 1 week', () => {
 });
 
 test('Prompts second after 1 week', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 1,
     lastPrompted: DateTime.utc().plus({ days: -8 }),
@@ -44,7 +42,7 @@ test('Prompts second after 1 week', () => {
 });
 
 test('Does not prompt third before 1 week', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 2,
     lastPrompted: DateTime.utc().plus({ days: -6 }),
@@ -53,7 +51,7 @@ test('Does not prompt third before 1 week', () => {
 });
 
 test('Prompts third after 1 week', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 2,
     lastPrompted: DateTime.utc().plus({ days: -8 }),
@@ -62,7 +60,7 @@ test('Prompts third after 1 week', () => {
 });
 
 test('Does not prompt fourth before 1 month', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 3,
     lastPrompted: DateTime.utc().plus({ days: -27 }),
@@ -71,7 +69,7 @@ test('Does not prompt fourth before 1 month', () => {
 });
 
 test('Prompts fourth after 1 month', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 3,
     lastPrompted: DateTime.utc().plus({ days: -32 }),
@@ -80,7 +78,7 @@ test('Prompts fourth after 1 month', () => {
 });
 
 test('Does not prompt fifth before 3 months', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 4,
     lastPrompted: DateTime.utc().plus({ days: -80 }),
@@ -89,7 +87,7 @@ test('Does not prompt fifth before 3 months', () => {
 });
 
 test('Prompts fifth after 3 months', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 4,
     lastPrompted: DateTime.utc().plus({ days: -93 }),
@@ -98,7 +96,7 @@ test('Prompts fifth after 3 months', () => {
 });
 
 test('Does not prompt sixth before 6 months', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 5,
     lastPrompted: DateTime.utc().plus({ months: -5 }),
@@ -107,7 +105,7 @@ test('Does not prompt sixth before 6 months', () => {
 });
 
 test('Prompts sixth after 6 month', () => {
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 5,
     lastPrompted: DateTime.utc().plus({ months: -6, days: -1 }),
@@ -117,7 +115,7 @@ test('Prompts sixth after 6 month', () => {
 
 test('Does not prompt if rated', () => {
   mockStorage.settings.hasRatedApp = true;
-  r = new RateApp({ storage: mockStorage });
+  let r = new RateApp({ storage: mockStorage });
   r.debug = {
     timesPrompted: 0,
     lastPrompted: DateTime.utc().plus({ months: -6, days: -1 }),
