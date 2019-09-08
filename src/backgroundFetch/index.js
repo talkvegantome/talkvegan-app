@@ -1,4 +1,8 @@
 import BackgroundFetch from 'react-native-background-fetch';
+import NotificationsIOS, {
+  NotificationsAndroid,
+} from 'react-native-notifications';
+
 import { DateTime } from 'luxon';
 
 import Analytics from '../analytics';
@@ -11,6 +15,9 @@ export default class BackgroundFetchHelper {
     this.debug = {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
+    if (Platform.OS === 'ios') {
+        NotificationsIOS.requestPermissions()
+    }
     BackgroundFetch.configure(
       {
         minimumFetchInterval: 15,
@@ -28,6 +35,20 @@ export default class BackgroundFetchHelper {
     );
   }
 
+  triggerNotification(props) {
+    if (Platform.OS === 'ios') {
+      NotificationsIOS.localNotification({
+        fireDate: DateTime.local().plus({seconds: 5}),
+        body: props.body,
+        title: props.title,
+        sound: 'chime.aiff',
+        silent: false,
+        category: 'SOME_CATEGORY',
+        userInfo: {},
+      });
+    }
+  }
+
   checkForNotifications = async () => {
     return fetch(this.pages.getNotificationsUri(), {
       method: 'GET',
@@ -40,11 +61,12 @@ export default class BackgroundFetchHelper {
         let lastNotification = this.debug
           ? this.debug.lastNotification
           : this.storage.settings.lastNotification;
-        if (
-          DateTime.fromISO(responseJson.Date) >
-          lastNotification
-        ) {
+        if (DateTime.fromISO(responseJson.Date) > lastNotification) {
           console.log(responseJson.Title);
+          this.triggerNotification({
+            title: responseJson.Title,
+            body: responseJson.Title,
+          });
         }
       })
       .catch((err) => {

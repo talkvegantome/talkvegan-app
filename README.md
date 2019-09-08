@@ -59,3 +59,7 @@ export ANDROID_KEYSTORE_KEY_PASSWORD=
 ## react native upgrade guide
 upgrade gradle, gradle plugin, upgrade android studio...
 check `build.gradle` in https://react-native-community.github.io/upgrade-helper/?from=0.60.0&to=0.60.5 against your version
+
+## Manual linking  
+https://facebook.github.io/react-native/docs/linking-libraries-ios.html#manual-linking  
+Automatic linking and cocoapods seem a bit... flakey
