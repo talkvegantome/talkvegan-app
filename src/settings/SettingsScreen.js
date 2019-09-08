@@ -16,17 +16,19 @@ import Analytics from '../analytics';
 import { commonStyle } from '../styles/Common.style.js';
 import Wrapper from '../wrapper/Wrapper.js';
 import Pages from '../Pages.js';
+import RateApp from '../rateApp';
 
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.props.storage.addOnRefreshListener((storage) => {
-      let pagesObj = new Pages(this.props.storage);
-      let analytics = new Analytics(this.props.storage.settings);
+      let pagesObj = new Pages(storage);
+      let analytics = new Analytics(storage.settings);
       this.setState({
         analytics: analytics,
         settings: storage.settings,
         pageObj: pagesObj,
+        rateApp: new RateApp({ storage: storage }),
         lastSync: pagesObj.getLastPageDataSync('auto'),
       });
     });
@@ -38,6 +40,7 @@ class SettingsScreen extends React.Component {
       analytics: analytics,
       pagesObj: pagesObj,
       storage: this.props.storage,
+      rateApp: new RateApp({ storage: this.props.storage }),
       lastSync: pagesObj.getLastPageDataSync('auto'),
       settings: this.props.storage.settings,
     };
@@ -159,6 +162,15 @@ class SettingsScreen extends React.Component {
               color: commonStyle.secondary,
             }}
             title="Twitter"
+          />
+          <ListItem
+            topDivider={true}
+            onPress={() => this.state.rateApp.promptForRating()}
+            leftIcon={{
+              name: 'rate-review',
+              color: commonStyle.secondary,
+            }}
+            title="Rate App"
           />
         </View>
       </Wrapper>

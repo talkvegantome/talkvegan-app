@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
+import { DateTime } from 'luxon';
 import Pages from './Pages.js';
 import Analytics from './analytics';
 
 export class Storage {
   constructor() {
-    //AsyncStorage.clear()
+    // AsyncStorage.clear()
     this.onRefreshListeners = [];
     this.refreshFromStorage().then(() => {
       // If it's been over a day since we loaded new data, load on start
@@ -30,6 +31,9 @@ export class Storage {
     analyticsEnabled: false,
     loading: true,
     randomiseHomepage: true,
+    lastPromptedForAppRating: DateTime.utc(),
+    timesPromptedForAppRating: 0,
+    hasRatedApp: false,
   };
   config = {
     apiUrl: 'https://talkveganto.me/',
@@ -42,7 +46,24 @@ export class Storage {
   onRefresh = () => {
     this.analytics = new Analytics(this.settings);
   };
-
+  mergeStorage(propertyName, storageValue) {
+    if (!storageValue) {
+      return;
+    }
+    this[propertyName] = {
+      ...this[propertyName],
+      ...storageValue,
+    };
+    // If there were new defaults (i.e. keys in this[propertyName] that were not in storageValue)
+    // Save them back so they persist into storage
+    const keysNotStored = _.difference(
+      _.keys(this[propertyName]),
+      _.keys(storageValue)
+    );
+    if (!_.isEmpty(keysNotStored)) {
+      AsyncStorage.setItem(propertyName, JSON.stringify(this[propertyName]));
+    }
+  }
   refreshFromStorage(keysToRefresh = ['pageData', 'settings', 'favourites']) {
     let promises = [];
     this.loading = true;
@@ -50,10 +71,7 @@ export class Storage {
       let promise = AsyncStorage.getItem(propertyName).then(
         (asyncStorageRes) => {
           // Don't overwrite defaults with null if nothing exists in AsyncStorage!
-          if (JSON.parse(asyncStorageRes)) {
-            this[propertyName] = JSON.parse(asyncStorageRes);
-            return;
-          }
+          this.mergeStorage(propertyName, JSON.parse(asyncStorageRes));
         }
       );
       promises.push(promise);
@@ -77,6 +95,17 @@ export class Storage {
     return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(
       () => {
         this.refreshFromStorage();
+      }
+    );
+  }
+
+  updateSettings(settings, triggerRefreshListeners = true) {
+    this.settings = { ...this.settings, ...settings };
+    return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(
+      () => {
+        if (triggerRefreshListeners) {
+          this.refreshFromStorage();
+        }
       }
     );
   }
