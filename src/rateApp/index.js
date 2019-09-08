@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { DateTime } from 'luxon';
-import Duration from 'luxon/src/duration.js';
+import { DateTime, Duration } from 'luxon';
 import Rate, { AndroidMarket } from 'react-native-rate';
 import Markdown from 'react-native-markdown-renderer';
 import Analytics from '../analytics';
