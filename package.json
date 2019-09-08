@@ -21,6 +21,7 @@
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-amplitude-analytics": "^0.2.7",
+    "react-native-background-fetch": "^2.7.0",
     "react-native-elements": "^1.1.0",
     "react-native-markdown-renderer": "^3.2.8",
     "react-native-paper": "^2.16.0",

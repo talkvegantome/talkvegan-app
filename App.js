@@ -12,11 +12,12 @@ import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js';
 import HomeScreen from './src/home/Home.js';
 import FavouritesScreen from './src/navigation/Favourites';
-import { RateModal } from './src/rateApp';
 import { _ } from 'lodash';
 
+import BackgroundFetch from './src/backgroundFetch';
 import { Storage } from './src/Storage.js';
 import Analytics from './src/analytics';
+import { RateModal } from './src/rateApp';
 
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
 import { BottomNavigation, Portal } from 'react-native-paper';
@@ -40,6 +41,7 @@ class BottomDrawer extends React.Component {
           routeParams: {},
         },
       ],
+      backgroundFetch: new BackgroundFetch({ storage: storage }),
     };
   }
   onNavigationListeners = [];

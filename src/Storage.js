@@ -31,9 +31,14 @@ export class Storage {
     analyticsEnabled: false,
     loading: true,
     randomiseHomepage: true,
+
+    // App rating
     lastPromptedForAppRating: DateTime.utc(),
     timesPromptedForAppRating: 0,
     hasRatedApp: false,
+
+    // Notifications
+    lastNotification: DateTime.utc(),
   };
   config = {
     apiUrl: 'https://talkveganto.me/',
