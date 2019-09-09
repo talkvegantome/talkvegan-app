@@ -44,7 +44,7 @@
 		8F6AD2A323256E4F0044259C /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6AD2A123256E300044259C /* libRNBackgroundFetch.a */; };
 		8F6AD2A523256E900044259C /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6AD2A423256E900044259C /* TSBackgroundFetch.framework */; };
 		8F6AD2A723256F3A0044259C /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AD2A623256F3A0044259C /* RNBackgroundFetch+AppDelegate.m */; };
-		8F6DE06C2326D4D60062BA68 /* libRNCPushNotificationIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6DE0462326D47C0062BA68 /* libRNCPushNotificationIOS.a */; };
+		8FA327332326EFA4002E55C3 /* libRNCPushNotificationIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6DE0462326D47C0062BA68 /* libRNCPushNotificationIOS.a */; };
 		8FA65E602320295A00884AF3 /* libRNRate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FA65E5F2320292C00884AF3 /* libRNRate.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
@@ -389,7 +389,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F6DE06C2326D4D60062BA68 /* libRNCPushNotificationIOS.a in Frameworks */,
+				8FA327332326EFA4002E55C3 /* libRNCPushNotificationIOS.a in Frameworks */,
 				8F6AD2A523256E900044259C /* TSBackgroundFetch.framework in Frameworks */,
 				8F6AD2A323256E4F0044259C /* libRNBackgroundFetch.a in Frameworks */,
 				8FA65E602320295A00884AF3 /* libRNRate.a in Frameworks */,
@@ -1257,12 +1257,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TalkVeganToMe/TalkVeganToMe.entitlements;
-				CURRENT_PROJECT_VERSION = 89;
+				CURRENT_PROJECT_VERSION = 90;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = H39FV9FN4L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/push-notification-ios/ios/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1295,11 +1296,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = TalkVeganToMe/TalkVeganToMe.entitlements;
-				CURRENT_PROJECT_VERSION = 89;
+				CURRENT_PROJECT_VERSION = 90;
 				DEVELOPMENT_TEAM = H39FV9FN4L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/push-notification-ios/ios/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

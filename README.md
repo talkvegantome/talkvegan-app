@@ -63,3 +63,9 @@ check `build.gradle` in https://react-native-community.github.io/upgrade-helper/
 ## Manual linking  
 https://facebook.github.io/react-native/docs/linking-libraries-ios.html#manual-linking  
 Automatic linking and cocoapods seem a bit... flakey
+
+Check iOS deployment target of the library if you get errors along the lines of 
+```
+❌  clang: error: no such file or directory: '/Users/sammartin/Library/Developer/Xcode/DerivedData/TalkVeganToMe-catqungazfyhcjgonexjnkhooktj/Build/Intermediates.noindex/ArchiveIntermediates/TalkVeganToMe/BuildProductsPath/Release-iphoneos/libRNCPushNotificationIOS.a'
+
+```
