@@ -6,7 +6,7 @@ import Analytics from './analytics';
 
 export class Storage {
   constructor() {
-    // AsyncStorage.clear()
+    //AsyncStorage.clear()
     this.onRefreshListeners = [];
     this.refreshFromStorage().then(() => {
       // If it's been over a day since we loaded new data, load on start
@@ -38,7 +38,6 @@ export class Storage {
     hasRatedApp: false,
 
     // Notifications
-    promptedForNotification: false,
     lastNotification: DateTime.utc(),
   };
   config = {

@@ -9,10 +9,11 @@ import {
   Picker,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import PushNotification from 'react-native-push-notification';
+
 import _ from 'lodash';
 
 import Analytics from '../analytics';
-
 import { commonStyle } from '../styles/Common.style.js';
 import Wrapper from '../wrapper/Wrapper.js';
 import Pages from '../Pages.js';
@@ -37,6 +38,7 @@ class SettingsScreen extends React.Component {
     let analytics = new Analytics(this.props.storage.settings);
     this.state = {
       modalVisible: false,
+      notificationPermissions: { alert: false },
       analytics: analytics,
       pagesObj: pagesObj,
       storage: this.props.storage,
@@ -45,12 +47,17 @@ class SettingsScreen extends React.Component {
       settings: this.props.storage.settings,
     };
   }
-
+  checkNotificationPermissions = () => {
+    PushNotification.checkPermissions((permissions) =>
+      this.setState({ notificationPermissions: permissions })
+    );
+  };
   componentDidMount() {
     let timer = setInterval(() => {
       this.setState({
         lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
       });
+      this.checkNotificationPermissions();
     }, 1000);
     this.setState({ timer: timer });
   }
@@ -140,6 +147,21 @@ class SettingsScreen extends React.Component {
               value: this.state.storage.settings.analyticsEnabled,
               onValueChange: (value) =>
                 this.updateSetting('analyticsEnabled', value),
+            }}
+          />
+          <SettingsItem
+            label="Notifications"
+            leftIcon={{
+              name: this.state.notificationPermissions.alert ? 'notifications-active' : 'notifications',
+              color: commonStyle.secondary,
+            }}
+            icon={null}
+            switch={{
+              value: Boolean(this.state.notificationPermissions.alert),
+              onValueChange: (value) => {
+                PushNotification.requestPermissions();
+                Linking.openURL('app-settings:');
+              },
             }}
           />
         </View>
