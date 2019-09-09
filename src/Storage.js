@@ -38,6 +38,7 @@ export class Storage {
     hasRatedApp: false,
 
     // Notifications
+    notificationsEnabled: true, // Android only as iOS maintains its own permissions
     lastNotification: DateTime.utc(),
   };
   config = {

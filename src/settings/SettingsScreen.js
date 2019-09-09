@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import {
   SafeAreaView,
   View,
@@ -38,7 +39,9 @@ class SettingsScreen extends React.Component {
     let analytics = new Analytics(this.props.storage.settings);
     this.state = {
       modalVisible: false,
-      notificationPermissions: { alert: false },
+      notificationPermissions: {
+        alert: this.props.storage.settings.notificationsEnabled,
+      },
       analytics: analytics,
       pagesObj: pagesObj,
       storage: this.props.storage,
@@ -48,9 +51,11 @@ class SettingsScreen extends React.Component {
     };
   }
   checkNotificationPermissions = () => {
-    PushNotification.checkPermissions((permissions) =>
-      this.setState({ notificationPermissions: permissions })
-    );
+    if (Platform.OS === 'ios') {
+      PushNotification.checkPermissions((permissions) =>
+        this.setState({ notificationPermissions: permissions })
+      );
+    }
   };
   componentDidMount() {
     let timer = setInterval(() => {
@@ -58,7 +63,7 @@ class SettingsScreen extends React.Component {
         lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
       });
       this.checkNotificationPermissions();
-    }, 1000);
+    }, 100);
     this.setState({ timer: timer });
   }
   componentWillUnmount() {
@@ -152,15 +157,28 @@ class SettingsScreen extends React.Component {
           <SettingsItem
             label="Notifications"
             leftIcon={{
-              name: this.state.notificationPermissions.alert ? 'notifications-active' : 'notifications',
+              name: this.state.notificationPermissions.alert
+                ? 'notifications-active'
+                : 'notifications',
               color: commonStyle.secondary,
             }}
             icon={null}
             switch={{
               value: Boolean(this.state.notificationPermissions.alert),
-              onValueChange: (value) => {
-                PushNotification.requestPermissions();
-                Linking.openURL('app-settings:');
+              onValueChange: () => {
+                if (Platform.OS === 'ios') {
+                  Linking.openURL('app-settings://');
+                  return;
+                }
+                let toggledAlertPermission = !this.state.notificationPermissions
+                  .alert;
+                this.state.storage.updateSettings(
+                  { notificationsEnabled: toggledAlertPermission },
+                  false
+                );
+                this.setState({
+                  notificationPermissions: { alert: toggledAlertPermission },
+                });
               },
             }}
           />

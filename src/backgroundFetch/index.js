@@ -11,20 +11,29 @@ import Pages from '../Pages.js';
 export default class BackgroundFetchHelper {
   constructor(props) {
     this.storage = props.storage;
-    if(_.isNil(props.storage) || props.storage.loading){
-      return
+    if (_.isNil(props.storage) || props.storage.loading) {
+      return;
     }
     this.analytics = new Analytics(props.storage.settings);
     this.pages = new Pages(props.storage);
     this.debug = {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
-    this.debug = false;
+    //this.debug = false;
     PushNotification.requestPermissions();
+    this.getPermissionToAlert();
     this.configureBackgroundFetch();
   }
 
-
+  getPermissionToAlert() {
+    if (Platform.OS === 'ios') {
+      PushNotification.checkPermissions(
+        (permissions) => (this.havePermissionToAlert = permissions.alert)
+      );
+      return;
+    }
+    this.havePermissionToAlert = this.storage.settings.notificationsEnabled;
+  }
 
   configureBackgroundFetch() {
     BackgroundFetch.configure(
@@ -35,7 +44,9 @@ export default class BackgroundFetchHelper {
         startOnBoot: true,
       },
       async () => {
-        await this.checkForNotifications();
+        if (this.havePermissionToAlert) {
+          await this.checkForNotifications();
+        }
         BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
       },
       (error) => {
