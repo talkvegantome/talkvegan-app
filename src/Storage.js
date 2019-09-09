@@ -38,6 +38,7 @@ export class Storage {
     hasRatedApp: false,
 
     // Notifications
+    promptedForNotification: false,
     lastNotification: DateTime.utc(),
   };
   config = {

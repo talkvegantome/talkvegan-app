@@ -44,7 +44,7 @@
 		8F6AD2A323256E4F0044259C /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6AD2A123256E300044259C /* libRNBackgroundFetch.a */; };
 		8F6AD2A523256E900044259C /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6AD2A423256E900044259C /* TSBackgroundFetch.framework */; };
 		8F6AD2A723256F3A0044259C /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AD2A623256F3A0044259C /* RNBackgroundFetch+AppDelegate.m */; };
-		8F6AD2B123257B3A0044259C /* libRNNotifications.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6AD2AE23257A880044259C /* libRNNotifications.a */; };
+		8F6DE06C2326D4D60062BA68 /* libRNCPushNotificationIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6DE0462326D47C0062BA68 /* libRNCPushNotificationIOS.a */; };
 		8FA65E602320295A00884AF3 /* libRNRate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FA65E5F2320292C00884AF3 /* libRNRate.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
@@ -275,19 +275,12 @@
 			remoteGlobalIDString = 835318541D52293F005738CD;
 			remoteInfo = RNBackgroundFetch;
 		};
-		8F6AD2AD23257A880044259C /* PBXContainerItemProxy */ = {
+		8F6DE0452326D47C0062BA68 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8F6AD2A823257A870044259C /* RNNotifications.xcodeproj */;
+			containerPortal = 8F6DE0412326D47C0062BA68 /* PushNotificationIOS.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNNotifications;
-		};
-		8F6AD2AF23257A880044259C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8F6AD2A823257A870044259C /* RNNotifications.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 50E4164622E4C98B0048367F;
-			remoteInfo = RNNotificationsTests;
+			remoteGlobalIDString = 9B97F66B220DEC6000B61540;
+			remoteInfo = RNCPushNotificationIOS;
 		};
 		8F998E742291DFEC000F22C1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -376,8 +369,8 @@
 		8F6AD27923256E2F0044259C /* RNBackgroundFetch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundFetch.xcodeproj; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch.xcodeproj"; sourceTree = "<group>"; };
 		8F6AD2A423256E900044259C /* TSBackgroundFetch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TSBackgroundFetch.framework; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/TSBackgroundFetch.framework"; sourceTree = "<group>"; };
 		8F6AD2A623256F3A0044259C /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
-		8F6AD2A823257A870044259C /* RNNotifications.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNNotifications.xcodeproj; path = "../node_modules/react-native-notifications/RNNotifications/RNNotifications.xcodeproj"; sourceTree = "<group>"; };
 		8F6AD2B223257EEB0044259C /* TalkVeganToMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = TalkVeganToMe.entitlements; path = TalkVeganToMe/TalkVeganToMe.entitlements; sourceTree = "<group>"; };
+		8F6DE0412326D47C0062BA68 /* PushNotificationIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PushNotificationIOS.xcodeproj; path = "../node_modules/@react-native-community/push-notification-ios/ios/PushNotificationIOS.xcodeproj"; sourceTree = "<group>"; };
 		8FA65E372320292C00884AF3 /* RNRate.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNRate.xcodeproj; path = "../node_modules/react-native-rate/ios/RNRate.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -396,7 +389,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F6AD2B123257B3A0044259C /* libRNNotifications.a in Frameworks */,
+				8F6DE06C2326D4D60062BA68 /* libRNCPushNotificationIOS.a in Frameworks */,
 				8F6AD2A523256E900044259C /* TSBackgroundFetch.framework in Frameworks */,
 				8F6AD2A323256E4F0044259C /* libRNBackgroundFetch.a in Frameworks */,
 				8FA65E602320295A00884AF3 /* libRNRate.a in Frameworks */,
@@ -573,7 +566,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8F6AD2A823257A870044259C /* RNNotifications.xcodeproj */,
+				8F6DE0412326D47C0062BA68 /* PushNotificationIOS.xcodeproj */,
 				8F6AD27923256E2F0044259C /* RNBackgroundFetch.xcodeproj */,
 				8FA65E372320292C00884AF3 /* RNRate.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -668,11 +661,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8F6AD2A923257A870044259C /* Products */ = {
+		8F6DE0422326D47C0062BA68 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8F6AD2AE23257A880044259C /* libRNNotifications.a */,
-				8F6AD2B023257A880044259C /* RNNotificationsTests.xctest */,
+				8F6DE0462326D47C0062BA68 /* libRNCPushNotificationIOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -760,7 +752,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -779,6 +771,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 8F6DE0422326D47C0062BA68 /* Products */;
+					ProjectRef = 8F6DE0412326D47C0062BA68 /* PushNotificationIOS.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -830,10 +826,6 @@
 				{
 					ProductGroup = 8F6AD27A23256E2F0044259C /* Products */;
 					ProjectRef = 8F6AD27923256E2F0044259C /* RNBackgroundFetch.xcodeproj */;
-				},
-				{
-					ProductGroup = 8F6AD2A923257A870044259C /* Products */;
-					ProjectRef = 8F6AD2A823257A870044259C /* RNNotifications.xcodeproj */;
 				},
 				{
 					ProductGroup = 8FA65E382320292C00884AF3 /* Products */;
@@ -1066,18 +1058,11 @@
 			remoteRef = 8F6AD2A023256E300044259C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8F6AD2AE23257A880044259C /* libRNNotifications.a */ = {
+		8F6DE0462326D47C0062BA68 /* libRNCPushNotificationIOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libRNNotifications.a;
-			remoteRef = 8F6AD2AD23257A880044259C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8F6AD2B023257A880044259C /* RNNotificationsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RNNotificationsTests.xctest;
-			remoteRef = 8F6AD2AF23257A880044259C /* PBXContainerItemProxy */;
+			path = libRNCPushNotificationIOS.a;
+			remoteRef = 8F6DE0452326D47C0062BA68 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8F998E752291DFEC000F22C1 /* libjsi.a */ = {
@@ -1271,7 +1256,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 81;
+				CODE_SIGN_ENTITLEMENTS = TalkVeganToMe/TalkVeganToMe.entitlements;
+				CURRENT_PROJECT_VERSION = 88;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = H39FV9FN4L;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1282,6 +1268,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/push-notification-ios/ios/**",
 				);
 				INFOPLIST_FILE = TalkVeganToMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -1307,7 +1294,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 81;
+				CODE_SIGN_ENTITLEMENTS = TalkVeganToMe/TalkVeganToMe.entitlements;
+				CURRENT_PROJECT_VERSION = 88;
 				DEVELOPMENT_TEAM = H39FV9FN4L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1317,6 +1305,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/**",
+					"$(SRCROOT)/../node_modules/@react-native-community/push-notification-ios/ios/**",
 				);
 				INFOPLIST_FILE = TalkVeganToMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;

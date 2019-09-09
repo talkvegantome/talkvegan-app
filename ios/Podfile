@@ -13,4 +13,6 @@ target 'TalkVeganToMe' do
 
   pod 'RNRate', :path => '../node_modules/react-native-rate'
 
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
 end

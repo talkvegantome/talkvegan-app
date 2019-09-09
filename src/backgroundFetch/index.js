@@ -1,7 +1,6 @@
+import { Platform } from 'react-native';
 import BackgroundFetch from 'react-native-background-fetch';
-import NotificationsIOS, {
-  NotificationsAndroid,
-} from 'react-native-notifications';
+import PushNotification from 'react-native-push-notification';
 
 import { DateTime } from 'luxon';
 
@@ -15,9 +14,7 @@ export default class BackgroundFetchHelper {
     this.debug = {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
-    if (Platform.OS === 'ios') {
-        NotificationsIOS.requestPermissions()
-    }
+    PushNotification.requestPermissions();
     BackgroundFetch.configure(
       {
         minimumFetchInterval: 15,
@@ -26,27 +23,38 @@ export default class BackgroundFetchHelper {
         startOnBoot: true,
       },
       async () => {
-        this.checkForNotifications();
+        console.log('checking for notifications');
+        await this.checkForNotifications();
         BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
       },
       (error) => {
-        console.log('[js] RNBackgroundFetch failed to start');
+        this.analytics.logEvent('error', {
+          action: 'backgroundNotification',
+          errorDetail: error,
+        });
       }
     );
   }
 
   triggerNotification(props) {
-    if (Platform.OS === 'ios') {
-      NotificationsIOS.localNotification({
-        fireDate: DateTime.local().plus({seconds: 5}),
-        body: props.body,
-        title: props.title,
-        sound: 'chime.aiff',
-        silent: false,
-        category: 'SOME_CATEGORY',
-        userInfo: {},
-      });
-    }
+    PushNotification.localNotification({
+      //fireDate: DateTime.local().plus({ seconds: 5 }),
+      message: props.body,
+      title: props.title,
+      category: 'SOME_CATEGORY',
+      userInfo: {},
+    });
+
+    this.updateLastNotification();
+  }
+
+  updateLastNotification() {
+    this.storage.updateSettings(
+      {
+        lastNotification: DateTime.utc(),
+      },
+      (triggerRefreshListeners = true)
+    );
   }
 
   checkForNotifications = async () => {
@@ -61,13 +69,17 @@ export default class BackgroundFetchHelper {
         let lastNotification = this.debug
           ? this.debug.lastNotification
           : this.storage.settings.lastNotification;
-        if (DateTime.fromISO(responseJson.Date) > lastNotification) {
-          console.log(responseJson.Title);
-          this.triggerNotification({
-            title: responseJson.Title,
-            body: responseJson.Title,
-          });
-        }
+        this.analytics.logEvent('checkForNotification', {
+          fired: DateTime.fromISO(responseJson.Date) > lastNotification,
+          json: responseJson,
+          lastNotification: lastNotification,
+        });
+        // if (DateTime.fromISO(responseJson.Date) > lastNotification) {
+        this.triggerNotification({
+          title: responseJson.Title,
+          body: responseJson.Body,
+        });
+        // }
       })
       .catch((err) => {
         this.analytics.logEvent('error', {
