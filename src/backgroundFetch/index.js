@@ -25,6 +25,17 @@ export default class BackgroundFetchHelper {
     this.configureBackgroundFetch();
   }
 
+  componentDidMount() {
+    this.props.storage.addOnRefreshListener(this.getPermissionToAlert, {
+      key: 'settings',
+      onlySubKeys: ['notificationsEnabled'],
+    });
+  }
+  componentWillUnmount() {
+    this.props.storage.removeOnRefreshListener(this.getPermissionToAlert);
+  }
+  _refreshPermissions = (storage) => this.setState(this.returnState(storage));
+
   getPermissionToAlert() {
     if (Platform.OS === 'ios') {
       PushNotification.checkPermissions(
