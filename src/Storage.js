@@ -153,6 +153,13 @@ export class Storage {
       listenForKeys: listenForKeys,
     });
   }
+
+  removeOnRefreshListener(method) {
+    _.remove(this.onRefreshListeners, (listener) => {
+      return listener.method == method;
+    });
+  }
+
   addFavourite(props) {
     this.favourites[this.settings.language].push({
       pageKey: props.pageKey,

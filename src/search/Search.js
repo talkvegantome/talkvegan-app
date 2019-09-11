@@ -13,11 +13,15 @@ import { commonStyle } from '../styles/Common.style.js';
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.props.storage.addOnRefreshListener((storage) =>
-      this.setState(this.returnState(storage))
-    );
     this.state = this.returnState(this.props.storage);
   }
+  componentDidMount() {
+    this.props.storage.addOnRefreshListener(this._refreshPages);
+  }
+  componentWillUnmount() {
+    this.props.storage.removeOnRefreshListener(this._refreshPages);
+  }
+  _refreshPages = (storage) => this.setState(this.returnState(storage));
   returnState = (storage) => {
     let pagesObj = new Pages(storage);
     return {

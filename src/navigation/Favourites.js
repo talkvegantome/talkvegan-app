@@ -9,18 +9,23 @@ import { commonStyle } from '../styles/Common.style.js';
 export default class Favourites extends React.Component {
   constructor(props) {
     super(props);
-    this.props.storage.addOnRefreshListener(
-      (storage) => {
-        this.setState({ favourites: storage.getFavourites() });
-      },
-      [{ key: 'favourites' }]
-    );
+
     this.state = {
       undoVisible: false,
       favourites: this.props.storage.getFavourites(),
       lastUnfavourite: null,
     };
   }
+  componentDidMount() {
+    this.props.storage.addOnRefreshListener(this._refreshFavourites, [
+      { key: 'favourites' },
+    ]);
+  }
+  componentWillUnmount() {
+    this.props.storage.removeOnRefreshListener(this._refreshFavourites);
+  }
+  _refreshFavourites = (storage) =>
+    this.setState({ favourites: storage.getFavourites() });
   render() {
     let favouritesList;
     if (this.state.favourites.length > 0) {

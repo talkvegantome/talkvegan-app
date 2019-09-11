@@ -14,11 +14,15 @@ import Pages from '../Pages.js';
 export default class ContentIndex extends Component {
   constructor(props) {
     super(props);
-    this.props.storage.addOnRefreshListener((storage) =>
-      this.setState(this.returnState(storage))
-    );
     this.state = this.returnState(props.storage);
   }
+  componentDidMount() {
+    this.props.storage.addOnRefreshListener(this._refreshPages);
+  }
+  componentWillUnmount() {
+    this.props.storage.removeOnRefreshListener(this._refreshPages);
+  }
+  _refreshPages = (storage) => this.setState(this.returnState(storage));
 
   returnState(storage) {
     let pagesObj = new Pages(storage);
