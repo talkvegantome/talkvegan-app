@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import {
   SafeAreaView,
   View,
@@ -9,10 +10,12 @@ import {
   Picker,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import BackgroundFetch from 'react-native-background-fetch';
+import PushNotification from 'react-native-push-notification';
+
 import _ from 'lodash';
 
 import Analytics from '../analytics';
-
 import { commonStyle } from '../styles/Common.style.js';
 import Wrapper from '../wrapper/Wrapper.js';
 import Pages from '../Pages.js';
@@ -37,6 +40,7 @@ class SettingsScreen extends React.Component {
     let analytics = new Analytics(this.props.storage.settings);
     this.state = {
       modalVisible: false,
+      notificationPermission: this.props.storage.settings.notificationsEnabled,
       analytics: analytics,
       pagesObj: pagesObj,
       storage: this.props.storage,
@@ -45,13 +49,26 @@ class SettingsScreen extends React.Component {
       settings: this.props.storage.settings,
     };
   }
-
+  checknotificationPermission = () => {
+    if (Platform.OS === 'ios') {
+      PushNotification.checkPermissions((permissions) =>
+        this.setState({ notificationPermission: Boolean(permissions.alert) })
+      );
+      BackgroundFetch.status((status) => {
+        this.setState({
+          backgroundFetchPermission:
+            status == BackgroundFetch.STATUS_AVAILABLE ? true : false,
+        });
+      });
+    }
+  };
   componentDidMount() {
     let timer = setInterval(() => {
       this.setState({
         lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
       });
-    }, 1000);
+      this.checknotificationPermission();
+    }, 100);
     this.setState({ timer: timer });
   }
   componentWillUnmount() {
@@ -77,6 +94,22 @@ class SettingsScreen extends React.Component {
       value: value,
     });
   }
+  changeNotificationPermission = () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL('app-settings://');
+      return;
+    }
+    this.state.storage.updateSettings(
+      { notificationsEnabled: !this.state.notificationPermission },
+      false
+    );
+    this.setState({
+      notificationPermission: !this.state.notificationPermission,
+    });
+  };
+  changebackgroundFetchPermission = () => {
+    Linking.openURL('app-settings://');
+  };
   render() {
     return (
       <Wrapper
@@ -140,6 +173,38 @@ class SettingsScreen extends React.Component {
               value: this.state.storage.settings.analyticsEnabled,
               onValueChange: (value) =>
                 this.updateSetting('analyticsEnabled', value),
+            }}
+          />
+          <SettingsItem
+            label="Notifications"
+            leftIcon={{
+              name: this.state.notificationPermission
+                ? 'notifications-active'
+                : 'notifications',
+              color: commonStyle.secondary,
+            }}
+            icon={null}
+            switch={{
+              value: this.state.notificationPermission,
+              onValueChange: () => this.changeNotificationPermission(),
+            }}
+          />
+          <SettingsItem
+            label="Background Fetch"
+            style={{
+              display:
+                this.state.notificationPermission && Platform.OS == 'ios'
+                  ? 'flex'
+                  : 'none',
+            }}
+            leftIcon={{
+              name: 'av-timer',
+              color: commonStyle.secondary,
+            }}
+            icon={null}
+            switch={{
+              value: this.state.backgroundFetchPermission,
+              onValueChange: () => this.changebackgroundFetchPermission(),
             }}
           />
         </View>
@@ -233,6 +298,7 @@ class SettingsItem extends React.Component {
         rightTitle={this.props.value}
         rightIcon={{ name: this.props.icon }}
         switch={this.props.switch}
+        containerStyle={this.props.style}
       />
     );
   }

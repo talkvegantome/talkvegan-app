@@ -134,7 +134,7 @@ android {
         applicationId "com.talkvegantome"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 39
+        versionCode 90
         versionName "0.0.11"
     }
     splits {
@@ -184,12 +184,14 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-push-notification')
     implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-vector-icons')
     compile 'com.amplitude:android-sdk:2.19.1' // native sdk of amplitude
     compile project(':react-native-amplitude-analytics') // our react-native module
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-background-fetch')
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermesvm/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

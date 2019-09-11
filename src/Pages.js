@@ -138,6 +138,13 @@ class Pages {
   getLanguageDataUri() {
     return this.storage.config.apiUrl + this.settings.language + '/index.json';
   }
+  getNotificationsUri() {
+    return (
+      this.storage.config.apiUrl +
+      this.settings.language +
+      '/notifications.json'
+    );
+  }
   getPagePermalink(pageIndex) {
     return this.pageExists(pageIndex)
       ? this.getPageMetadata(pageIndex).permalink
@@ -196,8 +203,10 @@ class Pages {
         throw 'Failed';
       })
       .catch(() => {
-        // Amplitude.logEventWithProperties('error',
-        //   {errorDetail: "Failed to fetch page in language" + this.settings.language})
+        this.analytics.logEvent('error', {
+          errorDetail:
+            'Failed to fetch page in language' + this.settings.language,
+        });
       });
   }
   getPagesInCategory(categoryItem) {

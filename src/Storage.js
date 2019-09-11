@@ -6,7 +6,7 @@ import Analytics from './analytics';
 
 export class Storage {
   constructor() {
-    // AsyncStorage.clear()
+    //AsyncStorage.clear()
     this.onRefreshListeners = [];
     this.refreshFromStorage().then(() => {
       // If it's been over a day since we loaded new data, load on start
@@ -31,9 +31,15 @@ export class Storage {
     analyticsEnabled: false,
     loading: true,
     randomiseHomepage: true,
+
+    // App rating
     lastPromptedForAppRating: DateTime.utc(),
     timesPromptedForAppRating: 0,
     hasRatedApp: false,
+
+    // Notifications
+    notificationsEnabled: true, // Android only as iOS maintains its own permissions
+    lastNotification: DateTime.utc(),
   };
   config = {
     apiUrl: 'https://talkveganto.me/',

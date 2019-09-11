@@ -100,7 +100,7 @@ export class RateModal extends React.Component {
   ## Rate the App!
 
   Hi! We hope you're enjoying the app. 
-  If you've found the app useful, please consider rating it so that other people can find it useful too!
+  If you've found the app useful, please consider rating it to make it easier for others to find!
   `;
   componentDidMount() {
     let timer = setInterval(() => {
