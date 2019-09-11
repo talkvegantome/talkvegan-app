@@ -33,7 +33,7 @@ export default class App extends React.Component {
             pageKey: 'home',
           }),
         }),
-      ['favourites']
+      [{ key: 'favourites' }]
     );
     this.props.navigation.addOnNavigateListener((key, props) => {
       this.setState({

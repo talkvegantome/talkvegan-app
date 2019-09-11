@@ -13,7 +13,7 @@ export default class Favourites extends React.Component {
       (storage) => {
         this.setState({ favourites: storage.getFavourites() });
       },
-      ['favourites']
+      [{ key: 'favourites' }]
     );
     this.state = {
       undoVisible: false,

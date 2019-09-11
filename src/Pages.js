@@ -260,7 +260,7 @@ class Pages {
     });
     return AsyncStorage.setItem('pageData', stringify(this.pageData)).then(
       () => {
-        this.storage.refreshFromStorage(['pageData']);
+        this.storage.refreshFromStorage();
       }
     );
   }

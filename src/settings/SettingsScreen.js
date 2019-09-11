@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, AppState } from 'react-native';
 import {
   SafeAreaView,
   View,
@@ -67,12 +67,13 @@ class SettingsScreen extends React.Component {
       this.setState({
         lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
       });
-      this.checknotificationPermission();
-    }, 100);
-    this.setState({ timer: timer });
+    }, 1000);
+    AppState.addEventListener('change', this.checknotificationPermission);
+    this.timer = timer;
   }
   componentWillUnmount() {
     clearInterval(this.state.timer);
+    AppState.removeEventListener('change', this.checknotificationPermission);
   }
 
   setModalVisible(visible) {
@@ -88,7 +89,7 @@ class SettingsScreen extends React.Component {
     this.setState({
       settings: { ...this.state.settings, ...{ [settingName]: value } },
     });
-    this.props.storage.updateSetting(settingName, value);
+    this.props.storage.updateSettings({ [settingName]: value });
     this.state.analytics.logEvent('updateSetting', {
       settingName: settingName,
       value: value,

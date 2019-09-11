@@ -11,12 +11,12 @@ let mockNavigation = new MockNavigation();
 jest.mock('react-native-push-notification', () => {
   return {
     checkPermissions: jest.fn(),
-  }
+  };
 });
 jest.mock('react-native-background-fetch', () => {
   return {
     status: jest.fn(),
-  }
+  };
 });
 jest.mock('react-native-amplitude-analytics');
 

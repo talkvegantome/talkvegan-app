@@ -17,7 +17,7 @@ export class Storage {
         pagesObj.pullPageDataFromSite();
       }
     });
-    this.addOnRefreshListener(this.onRefresh, ['settings']);
+    this.addOnRefreshListener(this.onRefresh, [{ key: 'settings' }]);
     this.onRefresh();
   }
 
@@ -70,7 +70,10 @@ export class Storage {
       AsyncStorage.setItem(propertyName, JSON.stringify(this[propertyName]));
     }
   }
-  refreshFromStorage(keysToRefresh = ['pageData', 'settings', 'favourites']) {
+  refreshFromStorage(
+    keysToRefresh = ['pageData', 'settings', 'favourites'],
+    subKeysSaved = []
+  ) {
     let promises = [];
     this.loading = true;
     _.forEach(keysToRefresh, (propertyName) => {
@@ -87,15 +90,36 @@ export class Storage {
       _.forEach(this.onRefreshListeners, (methodObj) => {
         // If the listener cares about the keys we refreshed, call it!
         if (
-          _.intersectionWith(methodObj['listenForKeys'], keysToRefresh).length >
-          0
+          this.shouldTriggerStorageListener(
+            keysToRefresh,
+            subKeysSaved,
+            methodObj
+          )
         ) {
           methodObj['method'](this);
         }
       });
     });
   }
-
+  shouldTriggerStorageListener(keysRefreshed, subKeysSaved, methodObj) {
+    let trigger = false;
+    _.forEach(methodObj['listenForKeys'], (key) => {
+      if (!_.includes(keysRefreshed, key['key'])) {
+        return;
+      }
+      if (!('onlySubKeys' in key)) {
+        trigger = true;
+        return;
+      }
+      if (
+        !_.isNil(subKeysSaved) &&
+        _.intersection(key['onlySubKeys'], subKeysSaved).length > 0
+      ) {
+        trigger = true;
+      }
+    });
+    return trigger;
+  }
   updateSetting(settingName, value) {
     this.settings[settingName] = value;
     return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(
@@ -107,16 +131,23 @@ export class Storage {
 
   updateSettings(settings, triggerRefreshListeners = true) {
     this.settings = { ...this.settings, ...settings };
+    let settingsKeys = _.keys(settings);
     return AsyncStorage.setItem('settings', JSON.stringify(this.settings)).then(
       () => {
         if (triggerRefreshListeners) {
-          this.refreshFromStorage();
+          this.refreshFromStorage(['settings'], settingsKeys);
         }
       }
     );
   }
 
-  addOnRefreshListener(method, listenForKeys = ['settings', 'pageData']) {
+  addOnRefreshListener(
+    method,
+    listenForKeys = [
+      { key: 'settings', onlySubKeys: ['language'] },
+      { key: 'pageData' },
+    ]
+  ) {
     this.onRefreshListeners.push({
       method: method,
       listenForKeys: listenForKeys,
