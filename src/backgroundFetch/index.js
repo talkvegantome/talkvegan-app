@@ -19,7 +19,7 @@ export default class BackgroundFetchHelper {
     this.debug = {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
-    //this.debug = false;
+    this.debug = false;
     PushNotification.requestPermissions();
     this.getPermissionToAlert();
     this.configureBackgroundFetch();
@@ -76,6 +76,7 @@ export default class BackgroundFetchHelper {
       false
     );
   };
+
   shouldNotify = (responseJson) => {
     const lastNotification = this.debug
       ? this.debug.lastNotification
@@ -87,6 +88,7 @@ export default class BackgroundFetchHelper {
     });
     return DateTime.fromISO(responseJson.Date) > lastNotification;
   };
+
   validResponse(responseJson) {
     if (!responseJson.Date) {
       this.analytics.logEvent('error', {
