@@ -19,6 +19,7 @@ export default class Favourites extends React.Component {
   componentDidMount() {
     this.props.storage.addOnRefreshListener(this._refreshFavourites, [
       { key: 'favourites' },
+      { key: 'settings', onlySubKeys: ['language'] },
     ]);
   }
   componentWillUnmount() {
