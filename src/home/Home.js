@@ -22,19 +22,13 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.scrollRef = React.createRef();
-    this.props.storage.addOnRefreshListener((storage) =>
-      this.setState(this.returnState(storage))
-    );
-    this.props.storage.addOnRefreshListener(
-      (storage) =>
-        this.setState({
-          isFavourite: storage.isFavourite({
-            indexId: this.props.indexId,
-            pageKey: 'home',
-          }),
-        }),
-      ['favourites']
-    );
+    this.state = this.returnState(this.props.storage, true);
+  }
+  componentDidMount() {
+    this.props.storage.addOnRefreshListener(this._refreshPages);
+    this.props.storage.addOnRefreshListener(this._refreshFavourites, [
+      { key: 'favourites' },
+    ]);
     this.props.navigation.addOnNavigateListener((key, props) => {
       this.setState({
         isFavourite: this.props.storage.isFavourite({
@@ -43,8 +37,22 @@ export default class App extends React.Component {
         }),
       });
     });
-    this.state = this.returnState(this.props.storage, true);
   }
+  componentWillUnmount() {
+    this.props.storage.removeOnRefreshListener(this._refreshPages);
+    this.props.storage.removeOnRefreshListener(this._refreshFavourites);
+  }
+  _refreshPages = (storage) => {
+    this.setState(this.returnState(storage));
+  };
+  _refreshFavourites = (storage) => {
+    this.setState({
+      isFavourite: storage.isFavourite({
+        indexId: this.props.indexId,
+        pageKey: 'home',
+      }),
+    });
+  };
 
   returnState = (storage, loading = false) => {
     return {

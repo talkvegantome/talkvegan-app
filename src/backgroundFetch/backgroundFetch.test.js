@@ -19,7 +19,7 @@ jest.mock('react-native-push-notification', () => {
 let bf = new BackgroundFetch({ storage: mockStorage });
 
 test('Notifies when new article appears', () => {
-  responseJson = {
+  let responseJson = {
     Date: DateTime.utc().toISO(),
     Title: 'Hello!',
     Body: 'This is a test.',
@@ -31,7 +31,7 @@ test('Notifies when new article appears', () => {
 });
 
 test('Does not notify when there is no new article', () => {
-  responseJson = {
+  let responseJson = {
     Date: DateTime.utc()
       .plus({ days: -10 })
       .toISO(),

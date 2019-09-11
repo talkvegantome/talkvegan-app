@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, AppState } from 'react-native';
 import {
   SafeAreaView,
   View,
@@ -24,31 +24,30 @@ import RateApp from '../rateApp';
 class SettingsScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.props.storage.addOnRefreshListener((storage) => {
-      let pagesObj = new Pages(storage);
-      let analytics = new Analytics(storage.settings);
-      this.setState({
-        analytics: analytics,
-        settings: storage.settings,
-        pageObj: pagesObj,
-        rateApp: new RateApp({ storage: storage }),
-        lastSync: pagesObj.getLastPageDataSync('auto'),
-      });
-    });
 
-    let pagesObj = new Pages(this.props.storage);
-    let analytics = new Analytics(this.props.storage.settings);
     this.state = {
-      modalVisible: false,
-      notificationPermission: this.props.storage.settings.notificationsEnabled,
-      analytics: analytics,
-      pagesObj: pagesObj,
-      storage: this.props.storage,
-      rateApp: new RateApp({ storage: this.props.storage }),
-      lastSync: pagesObj.getLastPageDataSync('auto'),
-      settings: this.props.storage.settings,
+      ...{
+        modalVisible: false,
+        notificationPermission: this.props.storage.settings
+          .notificationsEnabled,
+      },
+      ...this.returnState(props.storage),
     };
   }
+
+  _refreshPages = (storage) => this.setState(this.returnState(storage));
+  returnState = (storage) => {
+    let pagesObj = new Pages(storage);
+    let analytics = new Analytics(storage.settings);
+    return {
+      analytics: analytics,
+      settings: storage.settings,
+      storage: this.props.storage,
+      pagesObj: pagesObj,
+      rateApp: new RateApp({ storage: storage }),
+      lastSync: pagesObj.getLastPageDataSync('auto'),
+    };
+  };
   checknotificationPermission = () => {
     if (Platform.OS === 'ios') {
       PushNotification.checkPermissions((permissions) =>
@@ -63,16 +62,19 @@ class SettingsScreen extends React.Component {
     }
   };
   componentDidMount() {
+    this.props.storage.addOnRefreshListener(this._refreshPages);
     let timer = setInterval(() => {
       this.setState({
         lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
       });
-      this.checknotificationPermission();
-    }, 100);
-    this.setState({ timer: timer });
+    }, 1000);
+    AppState.addEventListener('change', this.checknotificationPermission);
+    this.timer = timer;
   }
   componentWillUnmount() {
+    this.props.storage.removeOnRefreshListener(this._refreshPages);
     clearInterval(this.state.timer);
+    AppState.removeEventListener('change', this.checknotificationPermission);
   }
 
   setModalVisible(visible) {
@@ -88,7 +90,7 @@ class SettingsScreen extends React.Component {
     this.setState({
       settings: { ...this.state.settings, ...{ [settingName]: value } },
     });
-    this.props.storage.updateSetting(settingName, value);
+    this.props.storage.updateSettings({ [settingName]: value });
     this.state.analytics.logEvent('updateSetting', {
       settingName: settingName,
       value: value,
