@@ -13,6 +13,11 @@ jest.mock('react-native-push-notification', () => {
     checkPermissions: jest.fn(),
   }
 });
+jest.mock('react-native-background-fetch', () => {
+  return {
+    status: jest.fn(),
+  }
+});
 jest.mock('react-native-amplitude-analytics');
 
 test('SettingsScreen Renders Correctly', () => {

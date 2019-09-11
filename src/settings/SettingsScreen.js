@@ -10,6 +10,7 @@ import {
   Picker,
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import BackgroundFetch from 'react-native-background-fetch';
 import PushNotification from 'react-native-push-notification';
 
 import _ from 'lodash';
@@ -39,9 +40,7 @@ class SettingsScreen extends React.Component {
     let analytics = new Analytics(this.props.storage.settings);
     this.state = {
       modalVisible: false,
-      notificationPermissions: {
-        alert: this.props.storage.settings.notificationsEnabled,
-      },
+      notificationPermission: this.props.storage.settings.notificationsEnabled,
       analytics: analytics,
       pagesObj: pagesObj,
       storage: this.props.storage,
@@ -50,11 +49,17 @@ class SettingsScreen extends React.Component {
       settings: this.props.storage.settings,
     };
   }
-  checkNotificationPermissions = () => {
+  checknotificationPermission = () => {
     if (Platform.OS === 'ios') {
       PushNotification.checkPermissions((permissions) =>
-        this.setState({ notificationPermissions: permissions })
+        this.setState({ notificationPermission: Boolean(permissions.alert) })
       );
+      BackgroundFetch.status((status) => {
+        this.setState({
+          backgroundFetchPermission:
+            status == BackgroundFetch.STATUS_AVAILABLE ? true : false,
+        });
+      });
     }
   };
   componentDidMount() {
@@ -62,7 +67,7 @@ class SettingsScreen extends React.Component {
       this.setState({
         lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
       });
-      this.checkNotificationPermissions();
+      this.checknotificationPermission();
     }, 100);
     this.setState({ timer: timer });
   }
@@ -89,6 +94,22 @@ class SettingsScreen extends React.Component {
       value: value,
     });
   }
+  changeNotificationPermission = () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL('app-settings://');
+      return;
+    }
+    this.state.storage.updateSettings(
+      { notificationsEnabled: !this.state.notificationPermission },
+      false
+    );
+    this.setState({
+      notificationPermission: !this.state.notificationPermission,
+    });
+  };
+  changebackgroundFetchPermission = () => {
+    Linking.openURL('app-settings://');
+  };
   render() {
     return (
       <Wrapper
@@ -157,29 +178,33 @@ class SettingsScreen extends React.Component {
           <SettingsItem
             label="Notifications"
             leftIcon={{
-              name: this.state.notificationPermissions.alert
+              name: this.state.notificationPermission
                 ? 'notifications-active'
                 : 'notifications',
               color: commonStyle.secondary,
             }}
             icon={null}
             switch={{
-              value: Boolean(this.state.notificationPermissions.alert),
-              onValueChange: () => {
-                if (Platform.OS === 'ios') {
-                  Linking.openURL('app-settings://');
-                  return;
-                }
-                let toggledAlertPermission = !this.state.notificationPermissions
-                  .alert;
-                this.state.storage.updateSettings(
-                  { notificationsEnabled: toggledAlertPermission },
-                  false
-                );
-                this.setState({
-                  notificationPermissions: { alert: toggledAlertPermission },
-                });
-              },
+              value: this.state.notificationPermission,
+              onValueChange: () => this.changeNotificationPermission(),
+            }}
+          />
+          <SettingsItem
+            label="Background Fetch"
+            style={{
+              display:
+                this.state.notificationPermission && Platform.OS == 'ios'
+                  ? 'flex'
+                  : 'none',
+            }}
+            leftIcon={{
+              name: 'av-timer',
+              color: commonStyle.secondary,
+            }}
+            icon={null}
+            switch={{
+              value: this.state.backgroundFetchPermission,
+              onValueChange: () => this.changebackgroundFetchPermission(),
             }}
           />
         </View>
@@ -273,6 +298,7 @@ class SettingsItem extends React.Component {
         rightTitle={this.props.value}
         rightIcon={{ name: this.props.icon }}
         switch={this.props.switch}
+        containerStyle={this.props.style}
       />
     );
   }
