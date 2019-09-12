@@ -69,6 +69,7 @@ class SettingsScreen extends React.Component {
       });
     }, 1000);
     AppState.addEventListener('change', this.checknotificationPermission);
+    this.checknotificationPermission();
     this.timer = timer;
   }
   componentWillUnmount() {
