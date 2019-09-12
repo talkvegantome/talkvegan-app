@@ -22,6 +22,8 @@ import { RateModal } from './src/rateApp';
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
 import { BottomNavigation, Portal } from 'react-native-paper';
 
+console.disableYellowBox = true; // eslint-disable-line no-console
+
 class BottomDrawer extends React.Component {
   constructor(props) {
     super(props);
