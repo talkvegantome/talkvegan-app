@@ -63,7 +63,7 @@ class BottomDrawer extends React.Component {
     AppState.removeEventListener('change', this._appStateChange);
   }
   _appStateChange = () => {
-    this.BackgroundFetch.getPermissionToAlert()
+    this.BackgroundFetch.getPermissionToAlert();
   };
   _appendToHistory(index, params) {
     let lastLocation = _.nth(this.state.navigationHistory, -1);

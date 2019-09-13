@@ -20,10 +20,7 @@ export default class BackgroundFetchHelper {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
     this.debug = false;
-    PushNotification.requestPermissions().then((permissions) => {
-      this.havePermissionToAlert = permissions.alert;
-      this.configureBackgroundFetch();
-    });
+    this.requestPermissionToAlert();
     this.getPermissionToAlert();
   }
 
@@ -38,6 +35,16 @@ export default class BackgroundFetchHelper {
   }
   _refreshPermissions = (storage) => this.setState(this.returnState(storage));
 
+  requestPermissionToAlert() {
+    if (Platform.OS === 'ios') {
+      PushNotification.requestPermissions().then((permissions) => {
+        this.havePermissionToAlert = permissions.alert;
+        this.configureBackgroundFetch();
+      });
+    } else {
+      this.configureBackgroundFetch();
+    }
+  }
   getPermissionToAlert() {
     this.analytics = new Analytics(this.storage.settings);
     if (Platform.OS === 'ios') {
