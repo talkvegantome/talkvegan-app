@@ -47,11 +47,10 @@ export default class ContentIndex extends Component {
 
   render() {
     return _.map(this.state.pagesList, (menuItem, i) => (
-      <View testID="content_index" accessibilityLabel="content_index">
+      <View testID="content_index" accessibilityLabel="content_index" key={i}>
         <CarouselNavWrapper
           headerItem={menuItem.headerItem}
           pagesInCategory={menuItem.pagesInCategory}
-          key={i}
           navigation={this.props.navigation}
         />
       </View>
