@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-
+import { AppState } from 'react-native';
 import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js';
 import HomeScreen from './src/home/Home.js';
@@ -28,11 +28,11 @@ class BottomDrawer extends React.Component {
   constructor(props) {
     super(props);
     this.state.storage = new Storage();
+    this.BackgroundFetch = new BackgroundFetch({ storage: this.state.storage });
     this.state.storage.addOnRefreshListener((storage) =>
       this.setState(this.returnState(storage))
     );
     this.state = { ...this.state, ...this.returnState(this.state.storage) };
-    this.BackgroundFetch = new BackgroundFetch({ storage: this.state.storage })
   }
 
   returnState(storage) {
@@ -43,7 +43,7 @@ class BottomDrawer extends React.Component {
           index: 0,
           routeParams: {},
         },
-      ]
+      ],
     };
   }
   onNavigationListeners = [];
@@ -56,7 +56,15 @@ class BottomDrawer extends React.Component {
       { key: 'settings', title: 'Settings', icon: 'settings' },
     ],
   };
-
+  componentDidMount() {
+    AppState.addEventListener('change', this._appStateChange);
+  }
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._appStateChange);
+  }
+  _appStateChange = () => {
+    this.BackgroundFetch.getPermissionToAlert()
+  };
   _appendToHistory(index, params) {
     let lastLocation = _.nth(this.state.navigationHistory, -1);
     if (

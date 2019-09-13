@@ -10,25 +10,27 @@ import Pages from '../Pages.js';
 
 export default class BackgroundFetchHelper {
   constructor(props) {
-    this.storage = props.storage;
-    if (_.isNil(props.storage) || props.storage.loading) {
+    if (_.isNil(props.storage)) {
       return;
     }
-    this.analytics = new Analytics(props.storage.settings);
+    this.storage = props.storage;
+    this.analytics = new Analytics(this.storage.settings);
     this.pages = new Pages(props.storage);
     this.debug = {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
     this.debug = false;
-    PushNotification.requestPermissions();
+    PushNotification.requestPermissions().then((permissions) => {
+      this.havePermissionToAlert = permissions.alert;
+      this.configureBackgroundFetch();
+    });
     this.getPermissionToAlert();
-    this.configureBackgroundFetch();
   }
 
   componentDidMount() {
     this.props.storage.addOnRefreshListener(this.getPermissionToAlert, {
       key: 'settings',
-      onlySubKeys: ['notificationsEnabled'],
+      onlySubKeys: ['notificationsEnabled', 'analyticsEnabled'],
     });
   }
   componentWillUnmount() {
@@ -37,10 +39,12 @@ export default class BackgroundFetchHelper {
   _refreshPermissions = (storage) => this.setState(this.returnState(storage));
 
   getPermissionToAlert() {
+    this.analytics = new Analytics(this.storage.settings);
     if (Platform.OS === 'ios') {
-      PushNotification.checkPermissions(
-        (permissions) => (this.havePermissionToAlert = permissions.alert)
-      );
+      PushNotification.checkPermissions((permissions) => {
+        this.havePermissionToAlert = permissions.alert;
+        this.configureBackgroundFetch();
+      });
       return;
     }
     this.havePermissionToAlert = this.storage.settings.notificationsEnabled;
