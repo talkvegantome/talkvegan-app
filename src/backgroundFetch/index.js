@@ -87,15 +87,21 @@ export default class BackgroundFetchHelper {
       false
     );
   };
-
+  getlastNotification = () => {
+    if (_.isString(this.storage.settings.lastNotification)) {
+      return DateTime.fromISO(this.storage.settings.lastNotification);
+    }
+    return this.storage.settings.lastNotification;
+  };
   shouldNotify = (responseJson) => {
     const lastNotification = this.debug
       ? this.debug.lastNotification
-      : this.storage.settings.lastNotification;
+      : this.getlastNotification();
     this.analytics.logEvent('checkForNotification', {
       fired: DateTime.fromISO(responseJson.Date) > lastNotification,
       json: responseJson,
       lastNotification: lastNotification,
+      havePermissionToAlert: this.havePermissionToAlert,
     });
     return DateTime.fromISO(responseJson.Date) > lastNotification;
   };

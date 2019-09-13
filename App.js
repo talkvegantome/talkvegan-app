@@ -32,6 +32,7 @@ class BottomDrawer extends React.Component {
       this.setState(this.returnState(storage))
     );
     this.state = { ...this.state, ...this.returnState(this.state.storage) };
+    this.BackgroundFetch = new BackgroundFetch({ storage: this.state.storage })
   }
 
   returnState(storage) {
@@ -42,8 +43,7 @@ class BottomDrawer extends React.Component {
           index: 0,
           routeParams: {},
         },
-      ],
-      backgroundFetch: new BackgroundFetch({ storage: storage }),
+      ]
     };
   }
   onNavigationListeners = [];
