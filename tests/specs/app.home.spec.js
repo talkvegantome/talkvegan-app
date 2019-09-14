@@ -2,7 +2,7 @@ import Gestures from '../helpers/Gestures';
 import { _ } from 'lodash';
 
 describe('Test Startup', () => {
-  it('Should prompt for permission to notify', () => {
+  it('should prompt for permission to notify', () => {
     let allowButton = iosPredicatePicker(
       'XCUIElementTypeButton',
       'Allow',
@@ -10,7 +10,7 @@ describe('Test Startup', () => {
     );
     allowButton.click();
   });
-  it('Should prompt for analytics permissions', () => {
+  it('should prompt for analytics permissions', () => {
     let optInButton = iosPredicatePicker(
       'XCUIElementTypeButton',
       'Opt In',
@@ -36,7 +36,7 @@ describe('Test Startup', () => {
   });
 });
 describe('Test English', () => {
-  it('should be able to open a page in English', () => {
+  it('should be able to open a page', () => {
     clickBottomNavButton('Home');
     let randomArticle = iosPredicatePicker(
       'XCUIElementTypeOther',
@@ -46,11 +46,11 @@ describe('Test English', () => {
     randomArticle.click();
   });
 
-  it('should be able to favourite a page in English', () => {
+  it('should be able to favourite a page', () => {
     $('~favourite_this_page').click();
   });
 
-  it('New favourite should appear in favourites', () => {
+  it('new favourite should appear in favourites', () => {
     clickBottomNavButton('Favourites');
     // Should not show 'No favourites'
     iosPredicatePicker(
@@ -91,14 +91,14 @@ describe('Test French', () => {
     );
     doneElem.click();
   });
-  it('should have no favourites in English', () => {
+  it('should have no favourites', () => {
     clickBottomNavButton('Favourites');
     iosPredicatePicker(
       'XCUIElementTypeStaticText',
       'No favourites found'
     ).waitForDisplayed();
   });
-  it('should be able to open a page in French', () => {
+  it('should be able to open a page', () => {
     clickBottomNavButton('Home');
     let randomArticle = iosPredicatePicker(
       'XCUIElementTypeOther',
@@ -106,6 +106,18 @@ describe('Test French', () => {
       'BEGINSWITH'
     );
     randomArticle.click();
+  });
+  it('should be able to favourite a page', () => {
+    $('~favourite_this_page').click();
+  });
+
+  it('new favourite should appear in favourites', () => {
+    clickBottomNavButton('Favourites');
+    // Should not show 'No favourites'
+    iosPredicatePicker(
+      'XCUIElementTypeStaticText',
+      'No favourites found'
+    ).waitForDisplayed(null, true);
   });
 });
 

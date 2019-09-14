@@ -22,10 +22,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.scrollRef = React.createRef();
-    this.state = {
-      ...{ indexId: null },
-      ...this.returnState(this.props.storage, true),
-    };
+    this.state = this.returnState(this.props.storage, true);
   }
   componentDidMount() {
     this.props.storage.addOnRefreshListener(this._refreshPages);
@@ -44,6 +41,7 @@ export default class App extends React.Component {
     this.setState(this.returnState());
   };
   _onNavigationListener = (key, props) => {
+    // this is never actually read from _state_ but instead triggers a render to get indexId from props
     this.setState({
       indexId: props.indexId,
     });
@@ -57,13 +55,7 @@ export default class App extends React.Component {
       indexId: indexId,
       pageKey: 'home',
     });
-    // this.timer = setInterval(() => {
-    //   let isFavourite = this.props.storage.isFavourite({
-    //     indexId: indexId,
-    //     pageKey: 'home',
-    //   });
-    //   clearInterval(this.timer);
-    // }, 1000);
+
     this.setState({
       isFavourite: isFavourite,
     });
@@ -74,7 +66,7 @@ export default class App extends React.Component {
     return {
       analytics: new Analytics(this.props.storage.settings),
       isFavourite: storage.isFavourite({
-        indexId: !_.isNil(this.state) ? this.props.indexId : null,
+        indexId: this.props.indexId,
         page: 'home',
       }),
       loading: this.props.storage.loading,
