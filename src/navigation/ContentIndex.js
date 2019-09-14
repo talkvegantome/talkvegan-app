@@ -47,12 +47,13 @@ export default class ContentIndex extends Component {
 
   render() {
     return _.map(this.state.pagesList, (menuItem, i) => (
-      <CarouselNavWrapper
-        headerItem={menuItem.headerItem}
-        pagesInCategory={menuItem.pagesInCategory}
-        key={i}
-        navigation={this.props.navigation}
-      />
+      <View testID="content_index" accessibilityLabel="content_index" key={i}>
+        <CarouselNavWrapper
+          headerItem={menuItem.headerItem}
+          pagesInCategory={menuItem.pagesInCategory}
+          navigation={this.props.navigation}
+        />
+      </View>
     ));
   }
 }
@@ -79,6 +80,7 @@ class CarouselNavWrapper extends React.Component {
         content: item.description
           ? item.description
           : RemoveMarkdown(item.rawContent).replace(/\n/g, ' '),
+        relativePermalink: item.relativePermalink,
         navigateTo: this.navigateToScreen(item.relativePermalink),
       };
     });

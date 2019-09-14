@@ -165,6 +165,7 @@ export default class App extends React.Component {
           rightComponent={
             <Appbar.Action
               icon={this.state.isFavourite ? 'favorite' : 'favorite-border'}
+              accessibilityLabel="favourite_this_page"
               onPress={() => {
                 this.props.storage.toggleFavourite({
                   pageKey: 'home',

@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-
+import { AppState } from 'react-native';
 import SettingsScreen from './src/settings/SettingsScreen.js';
 import SearchScreen from './src/search/Search.js';
 import HomeScreen from './src/home/Home.js';
@@ -22,10 +22,13 @@ import { RateModal } from './src/rateApp';
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
 import { BottomNavigation, Portal } from 'react-native-paper';
 
+console.disableYellowBox = true; // eslint-disable-line no-console
+
 class BottomDrawer extends React.Component {
   constructor(props) {
     super(props);
     this.state.storage = new Storage();
+    this.BackgroundFetch = new BackgroundFetch({ storage: this.state.storage });
     this.state.storage.addOnRefreshListener((storage) =>
       this.setState(this.returnState(storage))
     );
@@ -41,7 +44,6 @@ class BottomDrawer extends React.Component {
           routeParams: {},
         },
       ],
-      backgroundFetch: new BackgroundFetch({ storage: storage }),
     };
   }
   onNavigationListeners = [];
@@ -54,7 +56,15 @@ class BottomDrawer extends React.Component {
       { key: 'settings', title: 'Settings', icon: 'settings' },
     ],
   };
-
+  componentDidMount() {
+    AppState.addEventListener('change', this._appStateChange);
+  }
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._appStateChange);
+  }
+  _appStateChange = () => {
+    this.BackgroundFetch.getPermissionToAlert();
+  };
   _appendToHistory(index, params) {
     let lastLocation = _.nth(this.state.navigationHistory, -1);
     if (

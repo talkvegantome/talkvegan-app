@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon';
+import { Platform } from 'react-native';
 import BackgroundFetch from './index.js';
 import { MockStorage } from '../../mocks/MockStorage.js';
+Platform.OS = 'android';
 let mockStorage = new MockStorage();
 
 jest.mock('react-native-amplitude-analytics');

@@ -10,25 +10,24 @@ import Pages from '../Pages.js';
 
 export default class BackgroundFetchHelper {
   constructor(props) {
-    this.storage = props.storage;
-    if (_.isNil(props.storage) || props.storage.loading) {
+    if (_.isNil(props.storage)) {
       return;
     }
-    this.analytics = new Analytics(props.storage.settings);
+    this.storage = props.storage;
+    this.analytics = new Analytics(this.storage.settings);
     this.pages = new Pages(props.storage);
     this.debug = {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
     this.debug = false;
-    PushNotification.requestPermissions();
+    this.requestPermissionToAlert();
     this.getPermissionToAlert();
-    this.configureBackgroundFetch();
   }
 
   componentDidMount() {
     this.props.storage.addOnRefreshListener(this.getPermissionToAlert, {
       key: 'settings',
-      onlySubKeys: ['notificationsEnabled'],
+      onlySubKeys: ['notificationsEnabled', 'analyticsEnabled'],
     });
   }
   componentWillUnmount() {
@@ -36,11 +35,23 @@ export default class BackgroundFetchHelper {
   }
   _refreshPermissions = (storage) => this.setState(this.returnState(storage));
 
-  getPermissionToAlert() {
+  requestPermissionToAlert() {
     if (Platform.OS === 'ios') {
-      PushNotification.checkPermissions(
-        (permissions) => (this.havePermissionToAlert = permissions.alert)
-      );
+      PushNotification.requestPermissions().then((permissions) => {
+        this.havePermissionToAlert = permissions.alert;
+        this.configureBackgroundFetch();
+      });
+    } else {
+      this.configureBackgroundFetch();
+    }
+  }
+  getPermissionToAlert() {
+    this.analytics = new Analytics(this.storage.settings);
+    if (Platform.OS === 'ios') {
+      PushNotification.checkPermissions((permissions) => {
+        this.havePermissionToAlert = permissions.alert;
+        this.configureBackgroundFetch();
+      });
       return;
     }
     this.havePermissionToAlert = this.storage.settings.notificationsEnabled;
@@ -87,15 +98,21 @@ export default class BackgroundFetchHelper {
       false
     );
   };
-
+  getlastNotification = () => {
+    if (_.isString(this.storage.settings.lastNotification)) {
+      return DateTime.fromISO(this.storage.settings.lastNotification);
+    }
+    return this.storage.settings.lastNotification;
+  };
   shouldNotify = (responseJson) => {
     const lastNotification = this.debug
       ? this.debug.lastNotification
-      : this.storage.settings.lastNotification;
+      : this.getlastNotification();
     this.analytics.logEvent('checkForNotification', {
       fired: DateTime.fromISO(responseJson.Date) > lastNotification,
       json: responseJson,
       lastNotification: lastNotification,
+      havePermissionToAlert: this.havePermissionToAlert,
     });
     return DateTime.fromISO(responseJson.Date) > lastNotification;
   };

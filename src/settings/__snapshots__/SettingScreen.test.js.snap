@@ -311,6 +311,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
                       },
                     ]
                   }
+                  testID="language_picker"
                 />
               </View>
             </View>
@@ -645,6 +646,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             </View>
           </View>
           <View
+            accessibilityLabel="language_button"
             accessible={true}
             clickable={true}
             isTVSelectable={true}
@@ -656,6 +658,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={null}
+            testID="language_button"
           >
             <View
               style={

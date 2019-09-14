@@ -60,8 +60,13 @@ export class NavigationCard extends React.Component {
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
   render() {
+    let testID = this.props.item.relativePermalink.toLowerCase();
     return (
-      <Card onPress={this.props.item.navigateTo} style={this.props.style}>
+      <Card
+        testID={testID}
+        accessibilityLabel={testID}
+        onPress={this.props.item.navigateTo}
+        style={this.props.style}>
         <Card.Content
           style={{ height: 140 * this.state.fontScale * fontScaleHelper }}>
           <Title numberOfLines={2}>{this.props.item.title}</Title>
