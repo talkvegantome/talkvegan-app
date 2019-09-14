@@ -18,7 +18,6 @@ export default class RateApp {
     };
     this.debug = false;
     this.analytics = new Analytics(props.storage.settings);
-    this.storage = props.storage;
   }
   ratingIntervals = {
     0: {
@@ -50,7 +49,7 @@ export default class RateApp {
   durationPassed(durationRequired) {
     let lastPrompted = this.debug
       ? this.debug.lastPrompted
-      : DateTime.fromISO(this.storage.settings.lastPromptedForAppRating);
+      : DateTime.fromISO(this.props.storage.settings.lastPromptedForAppRating);
     return DateTime.utc().diff(lastPrompted) > durationRequired;
   }
   promptForRating(callback) {
@@ -58,12 +57,12 @@ export default class RateApp {
     Rate.rate(this.ratingOptions, callback);
   }
   readyToPrompt() {
-    if (this.storage.settings.hasRatedApp) {
+    if (this.props.storage.settings.hasRatedApp) {
       return false;
     }
     let timesPrompted = this.debug
       ? this.debug.timesPrompted
-      : this.storage.settings.timesPromptedForAppRating;
+      : this.props.storage.settings.timesPromptedForAppRating;
     let durationRequired =
       timesPrompted in this.ratingIntervals
         ? this.ratingIntervals[timesPrompted].duration
@@ -72,11 +71,11 @@ export default class RateApp {
     return this.durationPassed(durationRequired);
   }
   dismissPrompt(hasRatedApp) {
-    this.storage.updateSettings(
+    this.props.storage.updateSettings(
       {
         lastPromptedForAppRating: DateTime.utc(),
         timesPromptedForAppRating:
-          this.storage.settings.timesPromptedForAppRating + 1,
+          this.props.storage.settings.timesPromptedForAppRating + 1,
         hasRatedApp: hasRatedApp,
       },
       false
@@ -92,8 +91,8 @@ export default class RateApp {
 export class RateModal extends React.Component {
   constructor(props) {
     super(props);
-    this.storage = this.props.storage;
     this.markdownRules = new markdownRules({}, props.storage.settings);
+    this.rateApp = new RateApp({ storage: this.props.storage });
   }
   state = { visible: false };
   promptBlurb = `
@@ -112,10 +111,10 @@ export class RateModal extends React.Component {
     clearInterval(this.state.timer);
   }
   componentDidUpdate() {
-    if (this.storage.loading || this.state.visible) {
+    if (this.props.storage.loading || this.state.visible) {
       return;
     }
-    this.rateApp = new RateApp({ storage: this.storage });
+    this.rateApp = new RateApp({ storage: this.props.storage });
     this.readyToPrompt();
   }
   onDismiss = () => {

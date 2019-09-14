@@ -10,12 +10,13 @@ import Pages from '../Pages.js';
 
 export default class BackgroundFetchHelper {
   constructor(props) {
+    this.props = props;
     if (_.isNil(props.storage)) {
       return;
     }
-    this.storage = props.storage;
-    this.analytics = new Analytics(this.storage.settings);
-    this.pages = new Pages(props.storage);
+
+    this.analytics = new Analytics(this.props.storage.settings);
+    this.pages = new Pages(this.props.storage);
     this.debug = {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
@@ -33,7 +34,7 @@ export default class BackgroundFetchHelper {
   componentWillUnmount() {
     this.props.storage.removeOnRefreshListener(this.getPermissionToAlert);
   }
-  _refreshPermissions = (storage) => this.setState(this.returnState(storage));
+  //_refreshPermissions = () => this.setState(this.returnState());
 
   requestPermissionToAlert() {
     if (Platform.OS === 'ios') {
@@ -46,7 +47,7 @@ export default class BackgroundFetchHelper {
     }
   }
   getPermissionToAlert() {
-    this.analytics = new Analytics(this.storage.settings);
+    this.analytics = new Analytics(this.props.storage.settings);
     if (Platform.OS === 'ios') {
       PushNotification.checkPermissions((permissions) => {
         this.havePermissionToAlert = permissions.alert;
@@ -54,7 +55,7 @@ export default class BackgroundFetchHelper {
       });
       return;
     }
-    this.havePermissionToAlert = this.storage.settings.notificationsEnabled;
+    this.havePermissionToAlert = this.props.storage.settings.notificationsEnabled;
   }
 
   configureBackgroundFetch() {
@@ -91,7 +92,7 @@ export default class BackgroundFetchHelper {
   }
 
   updateLastNotification = () => {
-    this.storage.updateSettings(
+    this.props.storage.updateSettings(
       {
         lastNotification: DateTime.utc(),
       },
@@ -99,10 +100,10 @@ export default class BackgroundFetchHelper {
     );
   };
   getlastNotification = () => {
-    if (_.isString(this.storage.settings.lastNotification)) {
-      return DateTime.fromISO(this.storage.settings.lastNotification);
+    if (_.isString(this.props.storage.settings.lastNotification)) {
+      return DateTime.fromISO(this.props.storage.settings.lastNotification);
     }
-    return this.storage.settings.lastNotification;
+    return this.props.storage.settings.lastNotification;
   };
   shouldNotify = (responseJson) => {
     const lastNotification = this.debug

@@ -157,7 +157,7 @@ class SettingsScreen extends React.Component {
           />
           <SettingsItem
             label="Language"
-            testId="language_button"
+            testID="language_button"
             leftIcon={{ name: 'language', color: commonStyle.secondary }}
             value={
               this.state.storage.pageData[this.state.settings.language]
@@ -298,8 +298,8 @@ class SettingsItem extends React.Component {
   render() {
     return (
       <ListItem
-        testID={this.props.testId}
-        accessibilityLabel={this.props.testId}
+        testID={this.props.testID}
+        accessibilityLabel={this.props.testID}
         onPress={this.props.onPress}
         leftIcon={this.props.leftIcon}
         title={this.props.label}
