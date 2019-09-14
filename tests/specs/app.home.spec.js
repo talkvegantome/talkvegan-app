@@ -5,26 +5,54 @@ import LoginScreen from '../screenobjects/login.screen';
 import { _ } from 'lodash';
 
 describe('Test Languages', () => {
-  it('should be able change languages and navigate to page', () => {
-    let languagePickerElem = getToLanguagePicker('English');
-    if (!_.isNil(languagePickerElem.error)) {
-      driver.reset();
+  it('should be in English', () => {
+    let englishArticle = iosPredicatePicker(
+      'XCUIElementTypeOther',
+      '/en/',
+      'BEGINSWITH'
+    );
+    if (!_.isNil(englishArticle.error)) {
       languagePickerElem = getToLanguagePicker('Français');
       swipFromElemTo(languagePickerElem, 1080);
-      driver.reset();
-      languagePickerElem = getToLanguagePicker('English');
+      let doneElem = iosPredicatePicker(
+        'XCUIElementTypeOther',
+        'Done',
+        'BEGINSWITH'
+      );
+      doneElem.click();
     }
+    clickBottomNavButton('Home');
+  });
+  it('should be able to open a page in English', () => {
+    let randomArticle = iosPredicatePicker(
+      'XCUIElementTypeOther',
+      '/en/',
+      'BEGINSWITH'
+    );
+    randomArticle.click();
+    $('~favourite_this_page').click();
+  });
+
+  // French Testing
+  it('should be able to swap to French', () => {
+    languagePickerElem = getToLanguagePicker('English');
     swipFromElemTo(languagePickerElem);
-    let donePicker = "type == 'XCUIElementTypeOther' && name BEGINSWITH 'Done'";
-    let doneElem = $(`-ios predicate string:${donePicker}`);
+    let doneElem = iosPredicatePicker(
+      'XCUIElementTypeOther',
+      'Done',
+      'BEGINSWITH'
+    );
     doneElem.click();
 
-    let homeSelector =
-      "type == 'XCUIElementTypeButton' && name CONTAINS 'Home'";
-    let homeButton = $(`-ios predicate string:${homeSelector}`);
-    homeButton.waitForDisplayed(10000);
-    homeButton.click();
-    $('~régime_végétalien').click();
+    clickBottomNavButton('Home');
+  });
+  it('should be able to open a page in French', () => {
+    let randomArticle = iosPredicatePicker(
+      'XCUIElementTypeOther',
+      '/fr/',
+      'BEGINSWITH'
+    );
+    randomArticle.click();
   });
 });
 
@@ -47,16 +75,18 @@ let swipFromElemTo = (elem, y = 0) => {
   );
 };
 
-let getToLanguagePicker = (language) => {
-  let settingsSelector =
-    "type == 'XCUIElementTypeButton' && name CONTAINS 'Settings'";
+let clickBottomNavButton = (buttonName) => {
+  let settingsSelector = `type == 'XCUIElementTypeButton' && name CONTAINS '${buttonName}'`;
   let settingsButton = $(`-ios predicate string:${settingsSelector}`);
-
-  settingsButton.waitForDisplayed(1000);
+  settingsButton.waitForDisplayed();
   settingsButton.click();
-  $('~language_button').waitForDisplayed(1000);
+};
+
+let getToLanguagePicker = (language) => {
+  clickBottomNavButton('Settings');
+  $('~language_button').waitForDisplayed();
   $('~language_button').click();
-  $('~language_picker').waitForDisplayed(1000);
+  $('~language_picker').waitForDisplayed();
 
   let languagePicker =
     "type == 'XCUIElementTypePickerWheel' && value CONTAINS '" + language + "'";
@@ -65,4 +95,9 @@ let getToLanguagePicker = (language) => {
     languagePickerElem.waitForDisplayed(1000);
   } catch {}
   return languagePickerElem;
+};
+
+let iosPredicatePicker = (elementName, text, operator = 'CONTAINS') => {
+  let predicatePicker = `type == 'XCUIElementTypeOther' && name ${operator} '${text}'`;
+  return $(`-ios predicate string:${predicatePicker}`);
 };

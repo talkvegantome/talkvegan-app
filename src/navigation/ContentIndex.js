@@ -80,6 +80,7 @@ class CarouselNavWrapper extends React.Component {
         content: item.description
           ? item.description
           : RemoveMarkdown(item.rawContent).replace(/\n/g, ' '),
+        relativePermalink: item.relativePermalink,
         navigateTo: this.navigateToScreen(item.relativePermalink),
       };
     });

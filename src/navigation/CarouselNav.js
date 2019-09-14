@@ -60,13 +60,11 @@ export class NavigationCard extends React.Component {
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
   render() {
-    let accessibilityLabel = this.props.item.title
-      .toLowerCase()
-      .replace(/\s+/g, '_');
+    let testID = this.props.item.relativePermalink.toLowerCase();
     return (
       <Card
-        testID={accessibilityLabel}
-        accessibilityLabel={accessibilityLabel}
+        testID={testID}
+        accessibilityLabel={testID}
         onPress={this.props.item.navigateTo}
         style={this.props.style}>
         <Card.Content
