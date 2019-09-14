@@ -14,7 +14,7 @@ import Pages from '../Pages.js';
 export default class ContentIndex extends Component {
   constructor(props) {
     super(props);
-    this.state = this.returnState(props.storage);
+    this.state = this.returnState();
   }
   componentDidMount() {
     this.props.storage.addOnRefreshListener(this._refreshPages);
@@ -22,9 +22,10 @@ export default class ContentIndex extends Component {
   componentWillUnmount() {
     this.props.storage.removeOnRefreshListener(this._refreshPages);
   }
-  _refreshPages = (storage) => this.setState(this.returnState(storage));
+  _refreshPages = () => this.setState(this.returnState());
 
-  returnState(storage) {
+  returnState() {
+    let storage = this.props.storage;
     let pagesObj = new Pages(storage);
     let analytics = new Analytics(storage.settings);
     return {

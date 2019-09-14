@@ -29,39 +29,47 @@ export default class App extends React.Component {
     this.props.storage.addOnRefreshListener(this._refreshFavourites, [
       { key: 'favourites' },
     ]);
-    this.props.navigation.addOnNavigateListener((key, props) => {
-      this.setState({
-        isFavourite: this.props.storage.isFavourite({
-          indexId: props.indexId,
-          pageKey: 'home',
-        }),
-      });
-    });
+    this.props.navigation.addOnNavigateListener(this._onNavigationListener);
   }
   componentWillUnmount() {
     this.props.storage.removeOnRefreshListener(this._refreshPages);
     this.props.storage.removeOnRefreshListener(this._refreshFavourites);
+    this.props.navigation.removeOnNavigateListener(this._onNavigationListener);
   }
-  _refreshPages = (storage) => {
-    this.setState(this.returnState(storage));
+
+  _refreshPages = () => {
+    this.setState(this.returnState());
   };
-  _refreshFavourites = (storage) => {
+  _onNavigationListener = (key, props) => {
+    // this is never actually read from _state_ but instead triggers a render to get indexId from props
     this.setState({
-      isFavourite: storage.isFavourite({
-        indexId: this.props.indexId,
-        pageKey: 'home',
-      }),
+      indexId: props.indexId,
+    });
+    this._refreshFavourites(props.indexId);
+  };
+  _refreshFavourites = (indexId = this.props.indexId) => {
+    if (this.props.storage.loading) {
+      return;
+    }
+    let isFavourite = this.props.storage.isFavourite({
+      indexId: indexId,
+      pageKey: 'home',
+    });
+
+    this.setState({
+      isFavourite: isFavourite,
     });
   };
 
-  returnState = (storage, loading = false) => {
+  returnState = () => {
+    let storage = this.props.storage;
     return {
-      analytics: new Analytics(storage.settings),
+      analytics: new Analytics(this.props.storage.settings),
       isFavourite: storage.isFavourite({
         indexId: this.props.indexId,
         page: 'home',
       }),
-      loading: loading,
+      loading: this.props.storage.loading,
       settings: storage.settings,
       pagesObj: new Pages(storage),
       markdownRulesObj: new markdownRules(

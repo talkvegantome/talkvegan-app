@@ -27,15 +27,16 @@ console.disableYellowBox = true; // eslint-disable-line no-console
 class BottomDrawer extends React.Component {
   constructor(props) {
     super(props);
-    this.state.storage = new Storage();
-    this.BackgroundFetch = new BackgroundFetch({ storage: this.state.storage });
-    this.state.storage.addOnRefreshListener((storage) =>
-      this.setState(this.returnState(storage))
-    );
-    this.state = { ...this.state, ...this.returnState(this.state.storage) };
+    this.storage = new Storage();
+    this.BackgroundFetch = new BackgroundFetch({ storage: this.storage });
+    this.storage.addOnRefreshListener(() => this._storageRefreshListener());
+    this.state = { ...this.state, ...this.returnState() };
   }
-
-  returnState(storage) {
+  _storageRefreshListener = () => {
+    this.setState(this.returnState());
+  };
+  returnState() {
+    let storage = this.storage;
     return {
       analytics: new Analytics(storage.settings),
       navigationHistory: [
@@ -102,22 +103,20 @@ class BottomDrawer extends React.Component {
     if (route.key == 'home') {
       return (
         <HomeScreen
-          storage={this.state.storage}
+          storage={this.storage}
           navigation={this}
           {...this.state.routeParams}
         />
       );
     }
     if (route.key == 'settings') {
-      return <SettingsScreen storage={this.state.storage} navigation={this} />;
+      return <SettingsScreen storage={this.storage} navigation={this} />;
     }
     if (route.key == 'search') {
-      return <SearchScreen storage={this.state.storage} navigation={this} />;
+      return <SearchScreen storage={this.storage} navigation={this} />;
     }
     if (route.key == 'favourites') {
-      return (
-        <FavouritesScreen storage={this.state.storage} navigation={this} />
-      );
+      return <FavouritesScreen storage={this.storage} navigation={this} />;
     }
   };
   _triggerNavigationListeners(key, props = {}) {
@@ -153,6 +152,10 @@ class BottomDrawer extends React.Component {
       routeParams: lastLocation.routeParams,
       navigationHistory: navigationHistoryLessLastLocation,
     });
+    this._triggerNavigationListeners(
+      lastLocation.index,
+      lastLocation.routeParams
+    );
   };
 
   addOnNavigateListener = (func) => {
@@ -168,7 +171,7 @@ class BottomDrawer extends React.Component {
   render() {
     return (
       <Portal.Host>
-        <RateModal storage={this.state.storage} />
+        <RateModal storage={this.storage} />
         <BottomNavigation
           theme={PaperTheme}
           activeColor={commonStyle.headerFontColor}

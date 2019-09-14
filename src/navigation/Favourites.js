@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Icon } from 'react-native-elements';
 import { Snackbar } from 'react-native-paper';
 import { _ } from 'lodash';
 import Wrapper from '../wrapper/Wrapper';
@@ -25,28 +25,36 @@ export default class Favourites extends React.Component {
   componentWillUnmount() {
     this.props.storage.removeOnRefreshListener(this._refreshFavourites);
   }
-  _refreshFavourites = (storage) =>
-    this.setState({ favourites: storage.getFavourites() });
+  _refreshFavourites = () =>
+    this.setState({ favourites: this.props.storage.getFavourites() });
   render() {
     let favouritesList;
     if (this.state.favourites.length > 0) {
       favouritesList = _.map(
         _.sortBy(this.state.favourites, ['displayName']),
         (favourite) => {
+          let testID =
+            'unfavourite_' + favourite.displayName.replace(/\W/g, '_');
           return (
             <ListItem
               key={favourite.indexId}
-              leftIcon={{
-                name: 'favorite',
-                color: commonStyle.primary,
-                onPress: () => {
-                  this.props.storage.toggleFavourite(favourite);
-                  this.setState({
-                    undoVisible: true,
-                    lastUnfavourite: favourite,
-                  });
-                },
-              }}
+              leftIcon={
+                <View>
+                  <Icon
+                    name="favorite"
+                    testID={testID}
+                    accessibilityLabel={testID}
+                    color={commonStyle.primary}
+                    onPress={() => {
+                      this.props.storage.toggleFavourite(favourite);
+                      this.setState({
+                        undoVisible: true,
+                        lastUnfavourite: favourite,
+                      });
+                    }}
+                  />
+                </View>
+              }
               topDivider={true}
               bottomDivider={true}
               title={favourite.displayName}

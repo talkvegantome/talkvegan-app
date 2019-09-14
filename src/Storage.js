@@ -6,17 +6,18 @@ import Analytics from './analytics';
 
 export class Storage {
   constructor() {
-    //AsyncStorage.clear()
+    // AsyncStorage.clear();
     this.onRefreshListeners = [];
-    this.refreshFromStorage().then(() => {
-      // If it's been over a day since we loaded new data, load on start
-      let pagesObj = new Pages(this);
-      let daysSinceLastSync =
-        pagesObj.getLastPageDataSync().diffNow('days').days * -1;
-      if (daysSinceLastSync > 1) {
-        pagesObj.pullPageDataFromSite();
-      }
-    });
+    this.refreshFromStorage();
+
+    // If it's been over a day since we loaded new data, load on start
+    let pagesObj = new Pages(this);
+    let daysSinceLastSync =
+      pagesObj.getLastPageDataSync().diffNow('days').days * -1;
+    if (daysSinceLastSync > 1) {
+      pagesObj.pullPageDataFromSite();
+    }
+
     this.addOnRefreshListener(this.onRefresh, [{ key: 'settings' }]);
     this.onRefresh();
   }
@@ -70,7 +71,7 @@ export class Storage {
       AsyncStorage.setItem(propertyName, JSON.stringify(this[propertyName]));
     }
   }
-  refreshFromStorage(
+  async refreshFromStorage(
     keysToRefresh = ['pageData', 'settings', 'favourites'],
     subKeysSaved = []
   ) {
@@ -85,20 +86,20 @@ export class Storage {
       );
       promises.push(promise);
     });
-    return Promise.all(promises).then(() => {
-      this.loading = false;
-      _.forEach(this.onRefreshListeners, (methodObj) => {
-        // If the listener cares about the keys we refreshed, call it!
-        if (
-          this.shouldTriggerStorageListener(
-            keysToRefresh,
-            subKeysSaved,
-            methodObj
-          )
-        ) {
-          methodObj['method'](this);
-        }
-      });
+    this.lastRefreshed = DateTime.utc().toISO();
+    await Promise.all(promises);
+    this.loading = false;
+    _.forEach(this.onRefreshListeners, (methodObj) => {
+      // If the listener cares about the keys we refreshed, call it!
+      if (
+        this.shouldTriggerStorageListener(
+          keysToRefresh,
+          subKeysSaved,
+          methodObj
+        )
+      ) {
+        methodObj['method']();
+      }
     });
   }
   shouldTriggerStorageListener(keysRefreshed, subKeysSaved, methodObj) {
