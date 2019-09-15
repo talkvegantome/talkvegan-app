@@ -80,6 +80,14 @@ export default class App extends React.PureComponent {
       loading: this.props.storage.loading,
     };
   };
+  _scrollRefPopulator = (scrollRef) => {
+    this.scrollRef = scrollRef;
+  };
+  _scrollListener = (e) => {
+    if (!_.isNil(this.state.scrollListener)) {
+      this.state.scrollListener(e);
+    }
+  };
 
   render() {
     if (this.state.loading) {
@@ -87,9 +95,7 @@ export default class App extends React.PureComponent {
         <Wrapper
           navigation={this.props.navigation}
           title={this.pagesObj.getPageTitle()}
-          scrollRefPopulator={(scrollRef) => {
-            this.scrollRef = scrollRef;
-          }}
+          scrollRefPopulator={this._scrollRefPopulator}
           style={{
             flex: 1,
             paddingLeft: 0,
@@ -116,9 +122,7 @@ export default class App extends React.PureComponent {
           <Wrapper
             navigation={this.props.navigation}
             title={this.pagesObj.getPageTitle()}
-            scrollRefPopulator={(scrollRef) => {
-              this.scrollRef = scrollRef;
-            }}
+            scrollRefPopulator={this._scrollRefPopulator}
             scrollListener={(e) => {
               if (!_.isNil(this.state.scrollListener)) {
                 this.state.scrollListener(e);
@@ -158,14 +162,8 @@ export default class App extends React.PureComponent {
         <Wrapper
           navigation={this.props.navigation}
           title={this.pagesObj.getPageTitle(this.props.indexId)}
-          scrollRefPopulator={(scrollRef) => {
-            this.scrollRef = scrollRef;
-          }}
-          scrollListener={(e) => {
-            if (!_.isNil(this.state.scrollListener)) {
-              this.state.scrollListener(e);
-            }
-          }}
+          scrollRefPopulator={this._scrollRefPopulator}
+          scrollListener={this._scrollListener}
           style={{
             flex: 1,
             backgroundColor: commonStyle.contentBackgroundColor,

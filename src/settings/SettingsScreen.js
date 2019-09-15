@@ -39,7 +39,7 @@ class SettingsScreen extends React.Component {
   returnState = () => {
     this.pagesObj = new Pages(this.props.storage);
     // Ensure we have the page data for this language if we've just swapped to a new one
-    this.pagesObj.getPageData()
+    this.pagesObj.getPageData();
     this.analytics = new Analytics(this.props.storage.settings);
     this.rateApp = new RateApp({ storage: this.props.storage });
     return {

@@ -120,7 +120,9 @@ class BottomDrawer extends React.Component {
     _.forEach(
       _.filter(
         this.onNavigationListeners,
-        (o) => _.includes(o.keys, key) && o.propsEvaluator(props)
+        (o) =>
+          (_.includes(o.keys, key) || _.isNil(o.keys)) &&
+          (_.isNil(o.propsEvaluator) || o.propsEvaluator(props))
       ),
       (listener) => {
         listener.method(key, props);
