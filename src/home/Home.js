@@ -16,9 +16,9 @@ import { markdownRules } from '../MarkDownRules.js';
 import { markdownStyles } from '../styles/Markdown.style.js';
 import { commonStyle } from '../styles/Common.style.js';
 
-import Analytics, { PrivacyDialog } from '../analytics';
+import Analytics from '../analytics';
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.scrollRef = React.createRef();
@@ -131,7 +131,6 @@ export default class App extends React.Component {
               paddingTop: 20,
               paddingBottom: 20,
             }}>
-            <PrivacyDialog storage={this.props.storage} />
             <View style={{ marginBottom: -20 }} />
             <ContentIndex
               storage={this.props.storage}

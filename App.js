@@ -16,7 +16,7 @@ import { _ } from 'lodash';
 
 import BackgroundFetch from './src/backgroundFetch';
 import { Storage } from './src/Storage.js';
-import Analytics from './src/analytics';
+import Analytics, { PrivacyDialog } from './src/analytics';
 import { RateModal } from './src/rateApp';
 
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
@@ -174,6 +174,7 @@ class BottomDrawer extends React.Component {
   render() {
     return (
       <Portal.Host>
+        <PrivacyDialog storage={this.storage} />
         <RateModal storage={this.storage} />
         <BottomNavigation
           theme={PaperTheme}
