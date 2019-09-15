@@ -33,28 +33,22 @@ export default class Favourites extends React.Component {
       favouritesList = _.map(
         _.sortBy(this.state.favourites, ['displayName']),
         (favourite) => {
-          let testID =
-            'unfavourite_' + favourite.displayName.replace(/\W/g, '_');
+          let testID = 'favouriteRow';
           return (
             <ListItem
               key={favourite.indexId}
-              leftIcon={
-                <View>
-                  <Icon
-                    name="favorite"
-                    testID={testID}
-                    accessibilityLabel={testID}
-                    color={commonStyle.primary}
-                    onPress={() => {
-                      this.props.storage.toggleFavourite(favourite);
-                      this.setState({
-                        undoVisible: true,
-                        lastUnfavourite: favourite,
-                      });
-                    }}
-                  />
-                </View>
-              }
+              testID={testID}
+              leftIcon={{
+                name: 'favorite',
+                color: commonStyle.primary,
+                onPress: () => {
+                  this.props.storage.toggleFavourite(favourite);
+                  this.setState({
+                    undoVisible: true,
+                    lastUnfavourite: favourite,
+                  });
+                },
+              }}
               topDivider={true}
               bottomDivider={true}
               title={favourite.displayName}

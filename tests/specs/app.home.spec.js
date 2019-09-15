@@ -26,16 +26,16 @@ describe('Test Startup', () => {
     );
     englishArticle.waitForDisplayed();
   });
-
-  it('should have no favourites in English', () => {
+});
+describe('Test English', () => {
+  it('should have no favourites', () => {
     clickBottomNavButton('Favourites');
     iosPredicatePicker(
       'XCUIElementTypeStaticText',
       'No favourites found'
     ).waitForDisplayed();
   });
-});
-describe('Test English', () => {
+
   it('should be able to open a page', () => {
     clickBottomNavButton('Home');
     let randomArticle = iosPredicatePicker(
@@ -59,24 +59,23 @@ describe('Test English', () => {
     ).waitForDisplayed(null, true);
   });
 
-  // it('Unfavourite new favourite should work', () => {
-  //   //const selector  = '**/XCUIElementTypeOther[`name BEGINSWITH "unfavourite_"`]/XCUIElementTypeOther/XCUIElementTypeOther[`name BEGINSWITH "unfavourite_"`]'
-  //   //const selector  = '**/XCUIElementTypeOther[`name BEGINSWITH "unfavourite_"`]/XCUIElementTypeScrollView/XCUIElementTypeOther[`name BEGINSWITH "unfavourite_"`]/XCUIElementTypeOther[`name BEGINSWITH "unfavourite_"`]'
-  //   // const selector =
-  //   //   '**/XCUIElementTypeOther[`name CONTAINS "unfavourite_"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton';
-  //   // const unfavouriteButton = $(`-ios class chain:${selector}`);
-  //   //console.log(unfavouriteButton);
-  //   console.log(driver.getPageSource());
-
-  //   // TRY XPATH checking the selector on line
-  //   let unfavouriteButton = $('~unfavourite_*')
-  //   unfavouriteButton.click();
-
-  //   iosPredicatePicker(
-  //     'XCUIElementTypeStaticText',
-  //     'No favourites found'
-  //   ).waitForDisplayed();
-  // });
+  it('unfavourite new favourite should work', () => {
+    let unfavouriteButton = $('~favouriteRow');
+    clickRelativeInsideElement(unfavouriteButton, 15, 15);
+    iosPredicatePicker(
+      'XCUIElementTypeStaticText',
+      'No favourites found'
+    ).waitForDisplayed();
+  });
+  it('undo unfavourite should work', () => {
+    let undoButton = iosPredicatePicker('XCUIElementTypeButton', 'UNDO', '==');
+    undoButton.click();
+    // Should not show 'No favourites'
+    iosPredicatePicker(
+      'XCUIElementTypeStaticText',
+      'No favourites found'
+    ).waitForDisplayed(null, true);
+  });
 });
 
 describe('Test French', () => {
@@ -119,9 +118,48 @@ describe('Test French', () => {
       'No favourites found'
     ).waitForDisplayed(null, true);
   });
+
+  it('unfavourite new favourite should work', () => {
+    let unfavouriteButton = $('~favouriteRow');
+    clickRelativeInsideElement(unfavouriteButton, 15, 15);
+    iosPredicatePicker(
+      'XCUIElementTypeStaticText',
+      'No favourites found'
+    ).waitForDisplayed();
+  });
+  it('undo unfavourite should work', () => {
+    let undoButton = iosPredicatePicker('XCUIElementTypeButton', 'UNDO', '==');
+    undoButton.click();
+    // Should not show 'No favourites'
+    iosPredicatePicker(
+      'XCUIElementTypeStaticText',
+      'No favourites found'
+    ).waitForDisplayed(null, true);
+  });
 });
 
-let swipFromElemTo = (elem, y = 0) => {
+let clickRelativeInsideElement = (
+  elem,
+  y = 0,
+  x = 0,
+  relative_to = 'top_left'
+) => {
+  elemLocation = elem.getLocation();
+  elemenSize = elem.getSize();
+  newX = x + elemLocation.x;
+  newY = y + elemLocation.y;
+  driver.touchPerform([
+    {
+      action: 'press',
+      options: {
+        x: newX,
+        y: newY,
+      },
+    },
+  ]);
+};
+
+let swipFromElemTo = (elem, y = 0, x = 0) => {
   elemLocation = elem.getLocation();
   elemenSize = elem.getSize();
   Gestures.swipe(
