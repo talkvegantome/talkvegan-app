@@ -27,115 +27,27 @@ describe('Test Startup', () => {
     englishArticle.waitForDisplayed();
   });
 });
-describe('Test English', () => {
-  it('should have no favourites', () => {
-    clickBottomNavButton('Favourites');
-    iosPredicatePicker(
-      'XCUIElementTypeStaticText',
-      'No favourites found'
-    ).waitForDisplayed();
-  });
 
-  it('should be able to open a page', () => {
-    clickBottomNavButton('Home');
-    let randomArticle = iosPredicatePicker(
-      'XCUIElementTypeOther',
-      '/en/',
-      'BEGINSWITH'
-    );
-    randomArticle.click();
-  });
-
-  it('should be able to favourite a page', () => {
-    $('~favourite_this_page').click();
-  });
-
-  it('new favourite should appear in favourites', () => {
-    clickBottomNavButton('Favourites');
-    // Should not show 'No favourites'
-    iosPredicatePicker(
-      'XCUIElementTypeStaticText',
-      'No favourites found'
-    ).waitForDisplayed(null, true);
-  });
-
-  it('unfavourite new favourite should work', () => {
-    let unfavouriteButton = $('~favouriteRow');
-    clickRelativeInsideElement(unfavouriteButton, 15, 15);
-    iosPredicatePicker(
-      'XCUIElementTypeStaticText',
-      'No favourites found'
-    ).waitForDisplayed();
-  });
-  it('undo unfavourite should work', () => {
-    let undoButton = iosPredicatePicker('XCUIElementTypeButton', 'UNDO', '==');
-    undoButton.click();
-    // Should not show 'No favourites'
-    iosPredicatePicker(
-      'XCUIElementTypeStaticText',
-      'No favourites found'
-    ).waitForDisplayed(null, true);
-  });
+testLanguage({
+  languageToTest: 'English',
+  languageToTestShortCode: 'en',
+  previousLanguage: 'English',
+  languageSelectorDirection: 'up',
+  expectFavouritesToAlreadyExist: false,
 });
-
-describe('Test French', () => {
-  // French Testing
-  it('should be able to swap to French', () => {
-    languagePickerElem = getToLanguagePicker('English');
-    swipFromElemTo(languagePickerElem);
-    let doneElem = iosPredicatePicker(
-      'XCUIElementTypeOther',
-      'Done',
-      'BEGINSWITH'
-    );
-    doneElem.click();
-  });
-  it('should have no favourites', () => {
-    clickBottomNavButton('Favourites');
-    iosPredicatePicker(
-      'XCUIElementTypeStaticText',
-      'No favourites found'
-    ).waitForDisplayed();
-  });
-  it('should be able to open a page', () => {
-    clickBottomNavButton('Home');
-    let randomArticle = iosPredicatePicker(
-      'XCUIElementTypeOther',
-      '/fr/',
-      'BEGINSWITH'
-    );
-    randomArticle.click();
-  });
-  it('should be able to favourite a page', () => {
-    $('~favourite_this_page').click();
-  });
-
-  it('new favourite should appear in favourites', () => {
-    clickBottomNavButton('Favourites');
-    // Should not show 'No favourites'
-    iosPredicatePicker(
-      'XCUIElementTypeStaticText',
-      'No favourites found'
-    ).waitForDisplayed(null, true);
-  });
-
-  it('unfavourite new favourite should work', () => {
-    let unfavouriteButton = $('~favouriteRow');
-    clickRelativeInsideElement(unfavouriteButton, 15, 15);
-    iosPredicatePicker(
-      'XCUIElementTypeStaticText',
-      'No favourites found'
-    ).waitForDisplayed();
-  });
-  it('undo unfavourite should work', () => {
-    let undoButton = iosPredicatePicker('XCUIElementTypeButton', 'UNDO', '==');
-    undoButton.click();
-    // Should not show 'No favourites'
-    iosPredicatePicker(
-      'XCUIElementTypeStaticText',
-      'No favourites found'
-    ).waitForDisplayed(null, true);
-  });
+testLanguage({
+  languageToTest: 'Français',
+  languageToTestShortCode: 'fr',
+  previousLanguage: 'English',
+  languageSelectorDirection: 'down',
+  expectFavouritesToAlreadyExist: false,
+});
+testLanguage({
+  languageToTest: 'English',
+  languageToTestShortCode: 'en',
+  previousLanguage: 'Français',
+  languageSelectorDirection: 'up',
+  expectFavouritesToAlreadyExist: true,
 });
 
 let clickRelativeInsideElement = (
@@ -177,6 +89,99 @@ let swipFromElemTo = (elem, y = 0, x = 0) => {
     }
   );
 };
+
+function testLanguage(
+  props = {
+    languageToTest: 'English',
+    languageToTestShortCode: 'fr',
+    previousLanguage: 'Français',
+    languageSelectorDirection: 'up',
+    expectFavouritesToAlreadyExist: true,
+  }
+) {
+  describe(`Test ${props.languageToTest}`, () => {
+    it(`should be able to swap to ${props.languageToTest}`, () => {
+      languagePickerElem = getToLanguagePicker(props.previousLanguage);
+      swipFromElemTo(
+        languagePickerElem,
+        props.languageSelectorDirection === 'up' ? 1024 : 0
+      );
+      let doneElem = iosPredicatePicker(
+        'XCUIElementTypeOther',
+        'Done',
+        'BEGINSWITH'
+      );
+      doneElem.click();
+    });
+
+    if (!props.expectFavouritesToAlreadyExist) {
+      it('should have no favourites', () => {
+        clickBottomNavButton('Favourites');
+        iosPredicatePicker(
+          'XCUIElementTypeStaticText',
+          'No favourites found'
+        ).waitForDisplayed();
+      });
+    } else {
+      it('should be able to remove favourites', () => {
+        clickBottomNavButton('Favourites');
+        let noFavourites = iosPredicatePicker(
+          'XCUIElementTypeStaticText',
+          'No favourites found'
+        );
+        if (!_.isNil(noFavourites.error)) {
+          let unfavouriteButton = $('~favouriteRow');
+          clickRelativeInsideElement(unfavouriteButton, 15, 15);
+        }
+      });
+    }
+
+    it('should be able to open a page', () => {
+      clickBottomNavButton('Home');
+      let randomArticle = iosPredicatePicker(
+        'XCUIElementTypeOther',
+        `/${props.languageToTestShortCode}/`,
+        'BEGINSWITH'
+      );
+      randomArticle.click();
+    });
+
+    it('should be able to favourite a page', () => {
+      $('~favourite_this_page').click();
+    });
+
+    it('new favourite should appear in favourites', () => {
+      clickBottomNavButton('Favourites');
+      // Should not show 'No favourites'
+      iosPredicatePicker(
+        'XCUIElementTypeStaticText',
+        'No favourites found'
+      ).waitForDisplayed(null, true);
+    });
+
+    it('unfavourite new favourite should work', () => {
+      let unfavouriteButton = $('~favouriteRow');
+      clickRelativeInsideElement(unfavouriteButton, 15, 15);
+      iosPredicatePicker(
+        'XCUIElementTypeStaticText',
+        'No favourites found'
+      ).waitForDisplayed();
+    });
+    it('undo unfavourite should work', () => {
+      let undoButton = iosPredicatePicker(
+        'XCUIElementTypeButton',
+        'UNDO',
+        '=='
+      );
+      undoButton.click();
+      // Should not show 'No favourites'
+      iosPredicatePicker(
+        'XCUIElementTypeStaticText',
+        'No favourites found'
+      ).waitForDisplayed(null, true);
+    });
+  });
+}
 
 let clickBottomNavButton = (buttonName) => {
   let settingsSelector = `type == 'XCUIElementTypeButton' && name CONTAINS '${buttonName}'`;

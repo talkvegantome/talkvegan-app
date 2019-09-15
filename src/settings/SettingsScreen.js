@@ -35,16 +35,16 @@ class SettingsScreen extends React.Component {
     };
   }
 
-  _refreshPages = (storage) => this.setState(this.returnState(storage));
-  returnState = (storage) => {
-    let pagesObj = new Pages(storage);
-    let analytics = new Analytics(storage.settings);
+  _refreshPages = () => this.setState(this.returnState());
+  returnState = () => {
+    let pagesObj = new Pages(this.props.storage);
+    let analytics = new Analytics(this.props.storage.settings);
     return {
       analytics: analytics,
-      settings: storage.settings,
+      settings: this.props.storage.settings,
       storage: this.props.storage,
       pagesObj: pagesObj,
-      rateApp: new RateApp({ storage: storage }),
+      rateApp: new RateApp({ storage: this.props.storage }),
       lastSync: pagesObj.getLastPageDataSync('auto'),
     };
   };
@@ -102,7 +102,7 @@ class SettingsScreen extends React.Component {
       Linking.openURL('app-settings://');
       return;
     }
-    this.state.storage.updateSettings(
+    this.props.storage.updateSettings(
       { notificationsEnabled: !this.state.notificationPermission },
       false
     );
@@ -134,7 +134,7 @@ class SettingsScreen extends React.Component {
             onValueChange={(itemValue) =>
               this.updateSetting('language', itemValue)
             }>
-            {_.map(this.state.storage.pageData, (lang, short) => {
+            {_.map(this.props.storage.pageData, (lang, short) => {
               return (
                 <Picker.Item
                   label={lang.languageName}
@@ -160,7 +160,7 @@ class SettingsScreen extends React.Component {
             testID="language_button"
             leftIcon={{ name: 'language', color: commonStyle.secondary }}
             value={
-              this.state.storage.pageData[this.state.settings.language]
+              this.props.storage.pageData[this.state.settings.language]
                 .languageName
             }
             onPress={() => {
@@ -176,7 +176,7 @@ class SettingsScreen extends React.Component {
             }}
             icon={null}
             switch={{
-              value: this.state.storage.settings.analyticsEnabled,
+              value: this.props.storage.settings.analyticsEnabled,
               onValueChange: (value) =>
                 this.updateSetting('analyticsEnabled', value),
             }}
@@ -217,7 +217,7 @@ class SettingsScreen extends React.Component {
         <View style={{ marginTop: 20 }}>
           <ListItem
             onPress={() =>
-              Linking.openURL(this.state.storage.config.helpDeskUrl)
+              Linking.openURL(this.props.storage.config.helpDeskUrl)
             }
             leftIcon={{ name: 'chat-bubble', color: commonStyle.secondary }}
             title="Contact Us"
@@ -225,7 +225,7 @@ class SettingsScreen extends React.Component {
           <ListItem
             topDivider={true}
             onPress={() =>
-              Linking.openURL(this.state.storage.config.twitterUrl)
+              Linking.openURL(this.props.storage.config.twitterUrl)
             }
             leftIcon={{
               name: 'twitter',

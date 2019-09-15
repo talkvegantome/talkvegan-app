@@ -38,6 +38,7 @@ export default class App extends React.Component {
   }
 
   _refreshPages = () => {
+    console.log('Refresh Pages in Home')
     this.setState(this.returnState());
   };
   _onNavigationListener = (key, props) => {
