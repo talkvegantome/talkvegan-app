@@ -85,7 +85,9 @@ exports[`Wrapper Renders Correctly 1`] = `
                   "width": 36,
                 },
                 undefined,
-                Object {},
+                Object {
+                  "display": "none",
+                },
               ],
             ]
           }
