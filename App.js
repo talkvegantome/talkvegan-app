@@ -39,14 +39,14 @@ class BottomDrawer extends React.Component {
     let storage = this.storage;
     return {
       analytics: new Analytics(storage.settings),
-      navigationHistory: [
-        {
-          index: 0,
-          routeParams: {},
-        },
-      ],
     };
   }
+  navigationHistory = [
+    {
+      index: 0,
+      routeParams: {},
+    },
+  ];
   onNavigationListeners = [];
   state = {
     index: 0,
@@ -67,19 +67,16 @@ class BottomDrawer extends React.Component {
     this.BackgroundFetch.getPermissionToAlert();
   };
   _appendToHistory(index, params) {
-    let lastLocation = _.nth(this.state.navigationHistory, -1);
+    let lastLocation = _.nth(this.navigationHistory, -1);
     if (
       lastLocation.index === index &&
       _.isEqual(lastLocation.routeParams, params)
     ) {
       return;
     }
-    this.setState({
-      routeParams: {},
-      navigationHistory: this.state.navigationHistory.concat({
-        index: index,
-        routeParams: params,
-      }),
+    this.navigationHistory = this.navigationHistory.concat({
+      index: index,
+      routeParams: params,
     });
   }
 
@@ -144,21 +141,19 @@ class BottomDrawer extends React.Component {
       routeParams: props,
     });
   };
-  /// REMOVE this.state.navigationhistory as it's triggering updates unnecessarily
   goBack = () => {
-    let lastLocation = _.nth(this.state.navigationHistory, -2); // current location is -1
+    let lastLocation = _.nth(this.navigationHistory, -2); // current location is -1
     if (_.isNil(lastLocation)) {
       return;
     }
-    let navigationHistoryLessLastLocation = this.state.navigationHistory.slice(
+    this.navigationHistory = this.navigationHistory.slice(
       0,
-      this.state.navigationHistory.length - 1
+      this.navigationHistory.length - 1
     );
 
     this.setState({
       index: lastLocation.index,
       routeParams: lastLocation.routeParams,
-      navigationHistory: navigationHistoryLessLastLocation,
     });
     this._triggerNavigationListeners(
       lastLocation.index,

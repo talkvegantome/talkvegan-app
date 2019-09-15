@@ -36,7 +36,7 @@ class Wrapper extends React.Component {
             <Appbar.Action
               style={
                 // Hide back button if there's no back to go to.
-                this.props.navigation.state.navigationHistory.length == 1
+                this.props.navigation.navigationHistory.length == 1
                   ? { display: 'none' }
                   : {}
               }
