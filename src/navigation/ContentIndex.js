@@ -11,10 +11,8 @@ import NavHeader from './NavHeader.js';
 import Pages from '../Pages.js';
 
 export default class ContentIndex extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
+    this.pagesList = this.generatePagesList(new Pages(this.props.storage));
     this.props.storage.addOnRefreshListener(this._storageListener);
   }
   componentWillUnmount() {
@@ -22,8 +20,7 @@ export default class ContentIndex extends Component {
   }
 
   _storageListener = () => {
-    let pagesObj = new Pages(this.props.storage);
-    this.pagesList = this.generatePagesList(pagesObj);
+    this.pagesList = this.generatePagesList(new Pages(this.props.storage));
     this.setState({ triggerRender: true });
   };
 

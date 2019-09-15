@@ -117,6 +117,16 @@ function testLanguage(
       doneElem.click();
     });
 
+    it('should be able to open a page', () => {
+      clickBottomNavButton('Home');
+      let randomArticle = iosPredicatePicker(
+        'XCUIElementTypeOther',
+        `/${props.languageToTestShortCode}/`,
+        'BEGINSWITH'
+      );
+      randomArticle.click();
+    });
+
     if (!props.expectFavouritesToAlreadyExist) {
       it('should have no favourites', () => {
         clickBottomNavButton('Favourites');
