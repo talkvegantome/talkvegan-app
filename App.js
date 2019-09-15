@@ -95,7 +95,7 @@ class BottomDrawer extends React.Component {
       _.findIndex(this.state.routes, ['key', route.route.key]),
       {}
     );
-    this._triggerNavigationListeners();
+    this._triggerNavigationListeners(route.route.key, {});
     this.setState({ routeParams: {} });
   };
 
@@ -120,7 +120,15 @@ class BottomDrawer extends React.Component {
     }
   };
   _triggerNavigationListeners(key, props = {}) {
-    _.forEach(this.onNavigationListeners, (method) => method(key, props));
+    _.forEach(
+      _.filter(
+        this.onNavigationListeners,
+        (o) => _.includes(o.keys, key) && o.propsEvaluator(props)
+      ),
+      (listener) => {
+        listener.method(key, props);
+      }
+    );
   }
   navigate = (key, props, type = 'unknown') => {
     let index = _.findIndex(this.state.routes, ['key', key]);
@@ -136,7 +144,7 @@ class BottomDrawer extends React.Component {
       routeParams: props,
     });
   };
-
+  /// REMOVE this.state.navigationhistory as it's triggering updates unnecessarily
   goBack = () => {
     let lastLocation = _.nth(this.state.navigationHistory, -2); // current location is -1
     if (_.isNil(lastLocation)) {
@@ -158,13 +166,13 @@ class BottomDrawer extends React.Component {
     );
   };
 
-  addOnNavigateListener = (func) => {
-    this.onNavigationListeners = this.onNavigationListeners.concat(func);
+  addOnNavigateListener = (props) => {
+    this.onNavigationListeners = this.onNavigationListeners.concat(props);
   };
   removeOnNavigateListener = (func) => {
     this.onNavigationListeners = _.filter(
       this.onNavigationListeners,
-      (o) => o !== func
+      (o) => o.method !== func
     );
   };
 

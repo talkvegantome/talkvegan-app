@@ -14,7 +14,11 @@ class Wrapper extends React.Component {
   }
 
   componentDidMount() {
-    this.props.navigation.addOnNavigateListener(this._scrollToZero);
+    this.props.navigation.addOnNavigateListener({
+      method: this._scrollToZero,
+      keys: ['home'],
+      propsEvaluator: (o) => !_.isEmpty(o),
+    });
   }
   componentWillUnmount() {
     this.props.navigation.removeOnNavigateListener(this._scrollToZero);

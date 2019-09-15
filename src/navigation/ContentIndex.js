@@ -54,14 +54,7 @@ class CarouselNavWrapper extends React.Component {
   constructor(props) {
     super(props);
   }
-  navigateToScreen = (indexId) => () => {
-    // Navigation is always to the 'Home' screen, but content changes based on the indexId
-    this.props.navigation.navigate(
-      'home',
-      { indexId: indexId },
-      'carouselNavCard'
-    );
-  };
+
   generateCardList() {
     return _.map(this.props.pagesInCategory, (item) => {
       return {
@@ -70,7 +63,6 @@ class CarouselNavWrapper extends React.Component {
           ? item.description
           : RemoveMarkdown(item.rawContent).replace(/\n/g, ' '),
         relativePermalink: item.relativePermalink,
-        navigateTo: this.navigateToScreen(item.relativePermalink),
       };
     });
   }
@@ -121,6 +113,7 @@ class CarouselNavWrapper extends React.Component {
               <NavigationCard
                 key={i}
                 item={item}
+                navigation={this.props.navigation}
                 style={{ marginLeft: 10, marginBottom: 20 }}
               />
             ))}

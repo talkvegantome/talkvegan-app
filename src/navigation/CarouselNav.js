@@ -6,9 +6,6 @@ import { Button, Card, Title, Paragraph } from 'react-native-paper';
 var fontScaleHelper = 1.2;
 
 export default class CarouselNav extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   state = Dimensions.get('window');
 
   _handleAppStateChange = () => {
@@ -26,6 +23,7 @@ export default class CarouselNav extends React.Component {
     return (
       <View onLayout={this._handleAppStateChange}>
         <Carousel
+          removeClippedSubviews={true}
           enableMomentum={true}
           enableSnap={false}
           decelerationRate={0.9}
@@ -34,7 +32,12 @@ export default class CarouselNav extends React.Component {
             this._carousel = c;
           }}
           data={this.props.items}
-          renderItem={(props) => <NavigationCard item={props.item} />}
+          renderItem={(props) => (
+            <NavigationCard
+              navigation={this.props.navigation}
+              item={props.item}
+            />
+          )}
           sliderWidth={this.state.width}
           itemWidth={
             this.state.width < 500
@@ -47,7 +50,7 @@ export default class CarouselNav extends React.Component {
   }
 }
 
-export class NavigationCard extends React.Component {
+export class NavigationCard extends React.PureComponent {
   state = Dimensions.get('window');
 
   _handleAppStateChange = () => {
@@ -59,13 +62,21 @@ export class NavigationCard extends React.Component {
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
   }
+  navigateToScreen = () => {
+    // Navigation is always to the 'Home' screen, but content changes based on the indexId
+    this.props.navigation.navigate(
+      'home',
+      { indexId: this.props.item.relativePermalink },
+      'carouselNavCard'
+    );
+  };
   render() {
     let testID = this.props.item.relativePermalink.toLowerCase();
     return (
       <Card
         testID={testID}
         accessibilityLabel={testID}
-        onPress={this.props.item.navigateTo}
+        onPress={this.navigateToScreen}
         style={this.props.style}>
         <Card.Content
           style={{ height: 140 * this.state.fontScale * fontScaleHelper }}>

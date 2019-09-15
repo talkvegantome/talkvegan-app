@@ -29,7 +29,11 @@ export default class App extends React.Component {
     this.props.storage.addOnRefreshListener(this._refreshFavourites, [
       { key: 'favourites' },
     ]);
-    this.props.navigation.addOnNavigateListener(this._onNavigationListener);
+    this.props.navigation.addOnNavigateListener({
+      method: this._onNavigationListener,
+      keys: ['home'],
+      propsEvaluator: (o) => !_.isEmpty(o),
+    });
   }
   componentWillUnmount() {
     this.props.storage.removeOnRefreshListener(this._refreshPages);
