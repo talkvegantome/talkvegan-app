@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { ListItem, Icon } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 import { Snackbar } from 'react-native-paper';
 import { _ } from 'lodash';
 import Wrapper from '../wrapper/Wrapper';
