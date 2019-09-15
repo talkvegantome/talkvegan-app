@@ -37,15 +37,13 @@ class SettingsScreen extends React.Component {
 
   _refreshPages = () => this.setState(this.returnState());
   returnState = () => {
-    let pagesObj = new Pages(this.props.storage);
-    let analytics = new Analytics(this.props.storage.settings);
+    this.pagesObj = new Pages(this.props.storage);
+    this.analytics = new Analytics(this.props.storage.settings);
+    this.rateApp = new RateApp({ storage: this.props.storage });
     return {
-      analytics: analytics,
       settings: this.props.storage.settings,
       storage: this.props.storage,
-      pagesObj: pagesObj,
-      rateApp: new RateApp({ storage: this.props.storage }),
-      lastSync: pagesObj.getLastPageDataSync('auto'),
+      lastSync: this.pagesObj.getLastPageDataSync('auto'),
     };
   };
   checknotificationPermission = () => {
@@ -65,7 +63,7 @@ class SettingsScreen extends React.Component {
     this.props.storage.addOnRefreshListener(this._refreshPages);
     let timer = setInterval(() => {
       this.setState({
-        lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
+        lastSync: this.pagesObj.getLastPageDataSync('auto'),
       });
     }, 1000);
     AppState.addEventListener('change', this.checknotificationPermission);
@@ -83,7 +81,7 @@ class SettingsScreen extends React.Component {
   }
   pullPageDataFromSite() {
     this.setState({ pageDataIsLoading: true });
-    this.state.pagesObj.pullPageDataFromSite().then(() => {
+    this.pagesObj.pullPageDataFromSite().then(() => {
       this.setState({ pageDataIsLoading: false });
     });
   }
@@ -92,7 +90,7 @@ class SettingsScreen extends React.Component {
       settings: { ...this.state.settings, ...{ [settingName]: value } },
     });
     this.props.storage.updateSettings({ [settingName]: value });
-    this.state.analytics.logEvent('updateSetting', {
+    this.analytics.logEvent('updateSetting', {
       settingName: settingName,
       value: value,
     });
@@ -236,7 +234,7 @@ class SettingsScreen extends React.Component {
           />
           <ListItem
             topDivider={true}
-            onPress={() => this.state.rateApp.promptForRating()}
+            onPress={() => this.rateApp.promptForRating()}
             leftIcon={{
               name: 'rate-review',
               color: commonStyle.secondary,

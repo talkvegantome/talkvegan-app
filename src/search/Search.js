@@ -21,22 +21,18 @@ export default class Search extends React.Component {
   componentWillUnmount() {
     this.props.storage.removeOnRefreshListener(this._refreshPages);
   }
-  _refreshPages = (storage) => this.setState(this.returnState(storage));
-  returnState = (storage) => {
-    let pagesObj = new Pages(storage);
+  _refreshPages = () => this.setState(this.returnState());
+  returnState = () => {
+    this.pagesObj = new Pages(this.props.storage);
+    this.analytics = new Analytics(this.props.storage.settings);
+    this.searchScoring = new SearchScoring({
+      pages: this.pagesObj.getPages(),
+      pageTitles: this.pagesObj.getPageTitles(),
+    });
     return {
-      analytics: new Analytics(storage.settings),
-      searchPending: false,
       query: '',
       results: [],
       resultsPlaceholder: '',
-      storage: storage,
-      ticksSinceQueryUpdated: 0,
-      pagesObj: pagesObj,
-      searchScoring: new SearchScoring({
-        pages: pagesObj.getPages(),
-        pageTitles: pagesObj.getPageTitles(),
-      }),
     };
   };
 
@@ -48,14 +44,14 @@ export default class Search extends React.Component {
     this.setState({ resultsPlaceholder: 'Searching...' });
     let startTime = new Date();
     setTimeout(() => {
-      this.state.searchScoring.getMatches(this.state.query).then((results) => {
+      this.searchScoring.getMatches(this.state.query).then((results) => {
         this.setState({
           results: results,
           resultsPlaceholder:
             results.length == 0 ? 'No Results for: ' + this.state.query : '',
         });
         let endTime = new Date();
-        this.state.analytics.logEvent('search', {
+        this.analytics.logEvent('search', {
           query: this.state.query,
           duration: endTime.getTime() - startTime.getTime(),
         });
@@ -72,6 +68,7 @@ export default class Search extends React.Component {
         style={{ flex: 1 }}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Searchbar
+            testID="search_bar"
             style={{ marginTop: 10, width: '100%' }}
             placeholder="Search"
             onChangeText={this._searchQueryUpdate}
@@ -88,7 +85,7 @@ export default class Search extends React.Component {
           resultsPlaceholder={this.state.resultsPlaceholder}
           navigation={this.props.navigation}
           results={this.state.results}
-          pagesObj={this.state.pagesObj}
+          pagesObj={this.pagesObj}
         />
       </Wrapper>
     );
@@ -124,6 +121,7 @@ class Results extends React.Component {
     return (
       <Card
         key={key}
+        testID="search_result"
         style={{ marginTop: 10 }}
         onPress={() =>
           this.props.navigation.navigate(

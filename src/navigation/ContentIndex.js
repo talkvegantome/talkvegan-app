@@ -7,34 +7,25 @@ import _ from 'lodash';
 
 import CarouselNav, { NavigationCard } from './CarouselNav';
 import NavHeader from './NavHeader.js';
-import Analytics from '../analytics';
 
 import Pages from '../Pages.js';
 
 export default class ContentIndex extends Component {
   constructor(props) {
     super(props);
-    this.state = this.returnState();
   }
   componentDidMount() {
-    this.props.storage.addOnRefreshListener(this._refreshPages);
+    this.props.storage.addOnRefreshListener(this._storageListener);
   }
   componentWillUnmount() {
-    this.props.storage.removeOnRefreshListener(this._refreshPages);
+    this.props.storage.removeOnRefreshListener(this._storageListener);
   }
-  _refreshPages = () => this.setState(this.returnState());
 
-  returnState() {
-    let storage = this.props.storage;
-    let pagesObj = new Pages(storage);
-    let analytics = new Analytics(storage.settings);
-    return {
-      analytics: analytics,
-      settings: storage.settings,
-      headerVisibility: {},
-      pagesList: this.generatePagesList(pagesObj),
-    };
-  }
+  _storageListener = () => {
+    let pagesObj = new Pages(this.props.storage);
+    this.pagesList = this.generatePagesList(pagesObj);
+    this.setState({ triggerRender: true });
+  };
 
   generatePagesList(pagesObj) {
     let menuSorted = _.sortBy(pagesObj.getMenu(), ['weight', 'friendlyName']);
@@ -47,7 +38,7 @@ export default class ContentIndex extends Component {
   }
 
   render() {
-    return _.map(this.state.pagesList, (menuItem, i) => (
+    return _.map(this.pagesList, (menuItem, i) => (
       <View testID="content_index" accessibilityLabel="content_index" key={i}>
         <CarouselNavWrapper
           headerItem={menuItem.headerItem}
@@ -86,7 +77,7 @@ class CarouselNavWrapper extends React.Component {
       };
     });
   }
-
+  expandHeader = () => this.setState({ expanded: !this.state.expanded });
   render() {
     let headerFriendlyName = this.props.headerItem.friendlyName;
     this.items = this.generateCardList();
@@ -102,7 +93,6 @@ class CarouselNavWrapper extends React.Component {
             iconSize={20}
             style={{
               alignItems: 'flex-start',
-
               marginTop: markdownStyles.heading1.marginTop,
               width: '100%',
             }}
@@ -111,7 +101,7 @@ class CarouselNavWrapper extends React.Component {
               fontSize: 15,
             }}
             size={20}
-            onPress={() => this.setState({ expanded: !this.state.expanded })}>
+            onPress={this.expandHeader}>
             {headerFriendlyName}
           </NavHeader>
         </View>

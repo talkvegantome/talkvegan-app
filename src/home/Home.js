@@ -62,20 +62,18 @@ export default class App extends React.Component {
   };
 
   returnState = () => {
-    let storage = this.props.storage;
+    (this.analytics = new Analytics(this.props.storage.settings)),
+      (this.pagesObj = new Pages(this.props.storage)),
+      (this.markdownRulesObj = new markdownRules(
+        this.props.navigation,
+        this.props.storage.settings
+      ));
     return {
-      analytics: new Analytics(this.props.storage.settings),
-      isFavourite: storage.isFavourite({
+      isFavourite: this.props.storage.isFavourite({
         indexId: this.props.indexId,
         page: 'home',
       }),
       loading: this.props.storage.loading,
-      settings: storage.settings,
-      pagesObj: new Pages(storage),
-      markdownRulesObj: new markdownRules(
-        this.props.navigation,
-        storage.settings
-      ),
     };
   };
 
@@ -84,7 +82,7 @@ export default class App extends React.Component {
       return (
         <Wrapper
           navigation={this.props.navigation}
-          title={this.state.pagesObj.getPageTitle()}
+          title={this.pagesObj.getPageTitle()}
           scrollRefPopulator={(scrollRef) => {
             this.scrollRef = scrollRef;
           }}
@@ -113,7 +111,7 @@ export default class App extends React.Component {
           }}>
           <Wrapper
             navigation={this.props.navigation}
-            title={this.state.pagesObj.getPageTitle()}
+            title={this.pagesObj.getPageTitle()}
             scrollRefPopulator={(scrollRef) => {
               this.scrollRef = scrollRef;
             }}
@@ -132,7 +130,6 @@ export default class App extends React.Component {
             <PrivacyDialog storage={this.props.storage} />
             <View style={{ marginBottom: -20 }} />
             <ContentIndex
-              language={this.state.settings.language}
               storage={this.props.storage}
               navigation={this.props.navigation}
             />
@@ -157,7 +154,7 @@ export default class App extends React.Component {
         }}>
         <Wrapper
           navigation={this.props.navigation}
-          title={this.state.pagesObj.getPageTitle(this.props.indexId)}
+          title={this.pagesObj.getPageTitle(this.props.indexId)}
           scrollRefPopulator={(scrollRef) => {
             this.scrollRef = scrollRef;
           }}
@@ -178,38 +175,32 @@ export default class App extends React.Component {
                 this.props.storage.toggleFavourite({
                   pageKey: 'home',
                   indexId: this.props.indexId,
-                  displayName: this.state.pagesObj.getPageTitle(
-                    this.props.indexId
-                  ),
+                  displayName: this.pagesObj.getPageTitle(this.props.indexId),
                 });
               }}
             />
           }>
           <Markdown
             style={markdownStyles}
-            rules={this.state.markdownRulesObj.returnRules()}>
-            {this.state.markdownRulesObj.preProcessMarkDown(
-              this.state.pagesObj.getPageContent(this.props.indexId)
+            rules={this.markdownRulesObj.returnRules()}>
+            {this.markdownRulesObj.preProcessMarkDown(
+              this.pagesObj.getPageContent(this.props.indexId)
             )}
           </Markdown>
         </Wrapper>
         <PageMenu
-          previousPage={this.state.pagesObj.getPageOffsetInCategory(
+          previousPage={this.pagesObj.getPageOffsetInCategory(
             this.props.indexId,
             -1
           )}
-          nextPage={this.state.pagesObj.getPageOffsetInCategory(
+          nextPage={this.pagesObj.getPageOffsetInCategory(
             this.props.indexId,
             1
           )}
           navigation={this.props.navigation}
-          pagePermalink={this.state.pagesObj.getPagePermalink(
-            this.props.indexId
-          )}
-          pageGitHubLink={this.state.pagesObj.getPageGitHubLink(
-            this.props.indexId
-          )}
-          analytics={this.state.analytics}
+          pagePermalink={this.pagesObj.getPagePermalink(this.props.indexId)}
+          pageGitHubLink={this.pagesObj.getPageGitHubLink(this.props.indexId)}
+          analytics={this.analytics}
           scrollRef={this.scrollRef}
           registerScrollListener={(method) =>
             this.setState({ scrollListener: method })

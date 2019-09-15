@@ -12,7 +12,6 @@ export default class Favourites extends React.Component {
 
     this.state = {
       undoVisible: false,
-      favourites: this.props.storage.getFavourites(),
       lastUnfavourite: null,
     };
   }
@@ -25,13 +24,13 @@ export default class Favourites extends React.Component {
   componentWillUnmount() {
     this.props.storage.removeOnRefreshListener(this._refreshFavourites);
   }
-  _refreshFavourites = () =>
-    this.setState({ favourites: this.props.storage.getFavourites() });
+  _refreshFavourites = () => this.setState({ favourites: 1 }); // trigger a re-render to re-calculate favourites
   render() {
     let favouritesList;
-    if (this.state.favourites.length > 0) {
+    let favourites = this.props.storage.getFavourites();
+    if (favourites.length > 0) {
       favouritesList = _.map(
-        _.sortBy(this.state.favourites, ['displayName']),
+        _.sortBy(favourites, ['displayName']),
         (favourite) => {
           let testID = 'favouriteRow';
           return (

@@ -34,6 +34,7 @@ testLanguage({
   previousLanguage: 'English',
   languageSelectorDirection: 'up',
   expectFavouritesToAlreadyExist: false,
+  searchTerm: 'Soy',
 });
 testLanguage({
   languageToTest: 'Français',
@@ -41,6 +42,7 @@ testLanguage({
   previousLanguage: 'English',
   languageSelectorDirection: 'down',
   expectFavouritesToAlreadyExist: false,
+  searchTerm: 'Régime végétalien',
 });
 testLanguage({
   languageToTest: 'English',
@@ -48,6 +50,7 @@ testLanguage({
   previousLanguage: 'Français',
   languageSelectorDirection: 'up',
   expectFavouritesToAlreadyExist: true,
+  searchTerm: 'Soy',
 });
 
 let clickRelativeInsideElement = (
@@ -136,6 +139,13 @@ function testLanguage(
       });
     }
 
+    it('search should work', () => {
+      clickBottomNavButton('Search');
+      $('~search_bar').setValue(`${props.searchTerm}\uE006`);
+      // console.log(driver.getPageSource())
+      $('~search_result').waitForDisplayed();
+    });
+
     it('should be able to open a page', () => {
       clickBottomNavButton('Home');
       let randomArticle = iosPredicatePicker(
@@ -214,18 +224,3 @@ let iosPredicatePicker = (
   let predicatePicker = `type == '${elementName}' && ${property} ${operator} '${text}'`;
   return $(`-ios predicate string:${predicatePicker}`);
 };
-
-// let unfavouriteAll = () => {
-//     console.log('unfavouriting all')
-//   let unfavouriteButton = iosPredicatePicker(
-//     'XCUIElementTypeOther',
-//     'unfavourite_',
-//     'BEGINSWITH'
-//   );
-//   console.log(unfavouriteButton)
-//   if(!_.isNil(unfavouriteButton.error)){
-//       console.log('clicking unfavourite')
-//     unfavouriteButton.click()
-//     unfavouriteAll()
-//   }
-// };
