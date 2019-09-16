@@ -5,8 +5,6 @@ import { _ } from 'lodash';
 import RemoveMarkdown from 'remove-markdown';
 
 import Wrapper from '../wrapper/Wrapper.js';
-import Analytics from '../analytics';
-import Pages from '../Pages.js';
 import SearchScoring from './SearchScoring.js';
 import { commonStyle } from '../styles/Common.style.js';
 
@@ -23,11 +21,9 @@ export default class Search extends React.Component {
   }
   _refreshPages = () => this.setState(this.returnState());
   returnState = () => {
-    this.pagesObj = new Pages(this.props.storage);
-    this.analytics = new Analytics(this.props.storage.settings);
     this.searchScoring = new SearchScoring({
-      pages: this.pagesObj.getPages(),
-      pageTitles: this.pagesObj.getPageTitles(),
+      pages: this.props.storage.pagesObj.getPages(),
+      pageTitles: this.props.storage.pagesObj.getPageTitles(),
     });
     return {
       query: '',
@@ -51,7 +47,7 @@ export default class Search extends React.Component {
             results.length == 0 ? 'No Results for: ' + this.state.query : '',
         });
         let endTime = new Date();
-        this.analytics.logEvent('search', {
+        this.props.storage.analytics.logEvent('search', {
           query: this.state.query,
           duration: endTime.getTime() - startTime.getTime(),
         });
@@ -82,10 +78,10 @@ export default class Search extends React.Component {
           />
         </View>
         <Results
+          storage={this.props.storage}
           resultsPlaceholder={this.state.resultsPlaceholder}
           navigation={this.props.navigation}
           results={this.state.results}
-          pagesObj={this.pagesObj}
         />
       </Wrapper>
     );
@@ -109,10 +105,10 @@ class Results extends React.Component {
         false
       );
       body = RemoveMarkdown(
-        this.props.pagesObj.getPageContent(result.path)
+        this.props.storage.pagesObj.getPageContent(result.path)
       ).replace(/\n/g, ' ');
     } else {
-      title = this.props.pagesObj.getPageTitle(result.path);
+      title = this.props.storage.pagesObj.getPageTitle(result.path);
       body = _.map(result.topMatch.matches, (match, index) =>
         this.renderMatchText(match, contextMaxLength, index)
       );

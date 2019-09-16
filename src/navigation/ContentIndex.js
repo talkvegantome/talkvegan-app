@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import RemoveMarkdown from 'remove-markdown';
 import { commonStyle } from '../styles/Common.style';
 import { markdownStyles } from '../styles/Markdown.style';
@@ -8,11 +9,15 @@ import _ from 'lodash';
 import CarouselNav, { NavigationCard } from './CarouselNav';
 import NavHeader from './NavHeader.js';
 
-import Pages from '../Pages.js';
-
 export default class ContentIndex extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { loading: this.props.storage.loading };
+  }
   componentDidMount() {
-    this.pagesList = this.generatePagesList(new Pages(this.props.storage));
+    if (!this.state.loading) {
+      this.pagesList = this.generatePagesList(this.props.storage.pagesObj);
+    }
     this.props.storage.addOnRefreshListener(this._storageListener);
   }
   componentWillUnmount() {
@@ -20,21 +25,32 @@ export default class ContentIndex extends Component {
   }
 
   _storageListener = () => {
-    this.pagesList = this.generatePagesList(new Pages(this.props.storage));
-    this.setState({ triggerRender: true });
+    if (this.props.storage.loading) {
+      return;
+    }
+    this.pagesList = this.generatePagesList(this.props.storage.pagesObj);
+    this.setState({ loading: false });
   };
 
-  generatePagesList(pagesObj) {
-    let menuSorted = _.sortBy(pagesObj.getMenu(), ['weight', 'friendlyName']);
+  generatePagesList() {
+    let menuSorted = _.sortBy(this.props.storage.pagesObj.getMenu(), [
+      'weight',
+      'friendlyName',
+    ]);
     return _.map(menuSorted, (headerItem) => {
       return {
         headerItem: headerItem,
-        pagesInCategory: pagesObj.getPagesInCategory(headerItem),
+        pagesInCategory: this.props.storage.pagesObj.getPagesInCategory(
+          headerItem
+        ),
       };
     });
   }
 
   render() {
+    if (this.state.loading) {
+      return <ActivityIndicator style={{ marginTop: 20 }} size="large" />;
+    }
     return _.map(this.pagesList, (menuItem, i) => (
       <View testID="content_index" accessibilityLabel="content_index" key={i}>
         <CarouselNavWrapper

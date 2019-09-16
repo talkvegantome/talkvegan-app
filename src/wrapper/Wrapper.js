@@ -8,7 +8,9 @@ class Wrapper extends React.Component {
   constructor(props) {
     super(props);
     this.scrollRef = React.createRef();
-    this.state = { showBackButton: false };
+    this.state = {
+      showBackButton: this.props.navigation.navigationHistory.length > 1,
+    };
     if (!_.isNil(this.props.scrollRefPopulator)) {
       this.props.scrollRefPopulator(this.scrollRef);
     }
@@ -22,12 +24,12 @@ class Wrapper extends React.Component {
   componentWillUnmount() {
     this.props.navigation.removeOnNavigateListener(this._navigateListener);
   }
-  _navigateListener = (key, props) => {
+  _navigateListener = (key) => {
     let showBackButton = this.props.navigation.navigationHistory.length > 1;
     if (showBackButton != this.state.showBackButton) {
       this.setState({ showBackButton: showBackButton });
     }
-    if (key === 'home' && !_.isEmpty(props)) {
+    if (key === 'home') {
       this.scrollRef.current.scrollTo({ y: 0, animated: false });
     }
   };
@@ -43,6 +45,7 @@ class Wrapper extends React.Component {
                 // Hide back button if there's no back to go to.
                 this.state.showBackButton ? {} : { display: 'none' }
               }
+              testID="back_button"
               icon="keyboard-arrow-left"
               onPress={() => {
                 this.props.navigation.goBack();

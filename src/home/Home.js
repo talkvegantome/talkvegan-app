@@ -7,7 +7,6 @@ import {
   DefaultTheme,
 } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
-import Pages from '../Pages.js';
 import { _ } from 'lodash';
 
 import ContentIndex from '../navigation/ContentIndex';
@@ -16,13 +15,11 @@ import { markdownRules } from '../MarkDownRules.js';
 import { markdownStyles } from '../styles/Markdown.style.js';
 import { commonStyle } from '../styles/Common.style.js';
 
-import Analytics from '../analytics';
-
 export default class App extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.state = { loading: true };
     this.scrollRef = React.createRef();
-    this.state = this.returnState(this.props.storage, true);
   }
   componentDidMount() {
     this.props.storage.addOnRefreshListener(this._refreshPages);
@@ -46,6 +43,9 @@ export default class App extends React.PureComponent {
   };
   _onNavigationListener = (key, props) => {
     // this is never actually read from _state_ but instead triggers a render to get indexId from props
+    if (key !== 'home') {
+      return;
+    }
     this.setState({
       indexId: props.indexId,
     });
@@ -66,12 +66,14 @@ export default class App extends React.PureComponent {
   };
 
   returnState = () => {
-    (this.analytics = new Analytics(this.props.storage.settings)),
-      (this.pagesObj = new Pages(this.props.storage)),
-      (this.markdownRulesObj = new markdownRules(
-        this.props.navigation,
-        this.props.storage.settings
-      ));
+    if (this.props.storage.loading) {
+      return {};
+    }
+    this.markdownRulesObj = new markdownRules(
+      this.props.navigation,
+      this.props.storage.settings
+    );
+
     return {
       isFavourite: this.props.storage.isFavourite({
         indexId: this.props.indexId,
@@ -94,7 +96,7 @@ export default class App extends React.PureComponent {
       return (
         <Wrapper
           navigation={this.props.navigation}
-          title={this.pagesObj.getPageTitle()}
+          title="TalkVeganToMe"
           scrollRefPopulator={this._scrollRefPopulator}
           style={{
             flex: 1,
@@ -121,7 +123,7 @@ export default class App extends React.PureComponent {
           }}>
           <Wrapper
             navigation={this.props.navigation}
-            title={this.pagesObj.getPageTitle()}
+            title="TalkVeganToMe"
             scrollRefPopulator={this._scrollRefPopulator}
             scrollListener={(e) => {
               if (!_.isNil(this.state.scrollListener)) {
@@ -161,7 +163,7 @@ export default class App extends React.PureComponent {
         }}>
         <Wrapper
           navigation={this.props.navigation}
-          title={this.pagesObj.getPageTitle(this.props.indexId)}
+          title={this.props.storage.pagesObj.getPageTitle(this.props.indexId)}
           scrollRefPopulator={this._scrollRefPopulator}
           scrollListener={this._scrollListener}
           style={{
@@ -176,7 +178,9 @@ export default class App extends React.PureComponent {
                 this.props.storage.toggleFavourite({
                   pageKey: 'home',
                   indexId: this.props.indexId,
-                  displayName: this.pagesObj.getPageTitle(this.props.indexId),
+                  displayName: this.props.storage.pagesObj.getPageTitle(
+                    this.props.indexId
+                  ),
                 });
               }}
             />
@@ -185,23 +189,26 @@ export default class App extends React.PureComponent {
             style={markdownStyles}
             rules={this.markdownRulesObj.returnRules()}>
             {this.markdownRulesObj.preProcessMarkDown(
-              this.pagesObj.getPageContent(this.props.indexId)
+              this.props.storage.pagesObj.getPageContent(this.props.indexId)
             )}
           </Markdown>
         </Wrapper>
         <PageMenu
-          previousPage={this.pagesObj.getPageOffsetInCategory(
+          previousPage={this.props.storage.pagesObj.getPageOffsetInCategory(
             this.props.indexId,
             -1
           )}
-          nextPage={this.pagesObj.getPageOffsetInCategory(
+          nextPage={this.props.storage.pagesObj.getPageOffsetInCategory(
             this.props.indexId,
             1
           )}
           navigation={this.props.navigation}
-          pagePermalink={this.pagesObj.getPagePermalink(this.props.indexId)}
-          pageGitHubLink={this.pagesObj.getPageGitHubLink(this.props.indexId)}
-          analytics={this.analytics}
+          pagePermalink={this.props.storage.pagesObj.getPagePermalink(
+            this.props.indexId
+          )}
+          pageGitHubLink={this.props.storage.pagesObj.getPageGitHubLink(
+            this.props.indexId
+          )}
           scrollRef={this.scrollRef}
           registerScrollListener={(method) =>
             this.setState({ scrollListener: method })

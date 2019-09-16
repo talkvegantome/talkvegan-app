@@ -16,7 +16,7 @@ import { _ } from 'lodash';
 
 import BackgroundFetch from './src/backgroundFetch';
 import { Storage } from './src/Storage.js';
-import Analytics, { PrivacyDialog } from './src/analytics';
+import { PrivacyDialog } from './src/analytics';
 import { RateModal } from './src/rateApp';
 
 import { commonStyle, PaperTheme } from './src/styles/Common.style.js';
@@ -30,17 +30,11 @@ class BottomDrawer extends React.Component {
     this.storage = new Storage();
     this.BackgroundFetch = new BackgroundFetch({ storage: this.storage });
     this.storage.addOnRefreshListener(() => this._storageRefreshListener());
-    this.state = { ...this.state, ...this.returnState() };
   }
   _storageRefreshListener = () => {
-    this.setState(this.returnState());
+    this.setState({ forceRender: 1 });
   };
-  returnState() {
-    let storage = this.storage;
-    return {
-      analytics: new Analytics(storage.settings),
-    };
-  }
+
   navigationHistory = [
     {
       index: 0,
@@ -50,6 +44,7 @@ class BottomDrawer extends React.Component {
   onNavigationListeners = [];
   state = {
     index: 0,
+    routeParams: { home: {} },
     routes: [
       { key: 'home', title: 'Home', icon: 'home' },
       { key: 'search', title: 'Search', icon: 'search' },
@@ -76,6 +71,7 @@ class BottomDrawer extends React.Component {
     }
     this.navigationHistory = this.navigationHistory.concat({
       index: index,
+      // this is pure params (not a child of the index) because it's history not state
       routeParams: params,
     });
   }
@@ -84,8 +80,9 @@ class BottomDrawer extends React.Component {
     this.setState({ index });
   };
   _handleTabPress = (route) => {
-    this.state.analytics.logEvent('navigateToPage', {
-      page: route.route.key,
+    let key = route.route.key;
+    this.storage.analytics.logEvent('navigateToPage', {
+      page: key,
       params: {},
     });
     this._appendToHistory(
@@ -93,7 +90,9 @@ class BottomDrawer extends React.Component {
       {}
     );
     this._triggerNavigationListeners(route.route.key, {});
-    this.setState({ routeParams: {} });
+    this.setState({
+      routeParams: { ...this.state.routeParams, ...{ [key]: {} } },
+    });
   };
 
   _renderScene = ({ route }) => {
@@ -102,7 +101,7 @@ class BottomDrawer extends React.Component {
         <HomeScreen
           storage={this.storage}
           navigation={this}
-          {...this.state.routeParams}
+          {...this.state.routeParams['home']}
         />
       );
     }
@@ -131,7 +130,7 @@ class BottomDrawer extends React.Component {
   }
   navigate = (key, props, type = 'unknown') => {
     let index = _.findIndex(this.state.routes, ['key', key]);
-    this.state.analytics.logEvent('navigateToPage', {
+    this.storage.analytics.logEvent('navigateToPage', {
       page: key,
       params: props,
       type: type,
@@ -140,11 +139,12 @@ class BottomDrawer extends React.Component {
     this._triggerNavigationListeners(key, props);
     this.setState({
       index: index,
-      routeParams: props,
+      routeParams: { ...this.state.routeParams, ...{ [key]: props } },
     });
   };
   goBack = () => {
     let lastLocation = _.nth(this.navigationHistory, -2); // current location is -1
+    let key = this.state.routes[lastLocation.index].key;
     if (_.isNil(lastLocation)) {
       return;
     }
@@ -152,15 +152,14 @@ class BottomDrawer extends React.Component {
       0,
       this.navigationHistory.length - 1
     );
-
     this.setState({
       index: lastLocation.index,
-      routeParams: lastLocation.routeParams,
+      routeParams: {
+        ...this.state.routeParams,
+        ...{ [key]: lastLocation.routeParams },
+      },
     });
-    this._triggerNavigationListeners(
-      lastLocation.index,
-      lastLocation.routeParams
-    );
+    this._triggerNavigationListeners(key, lastLocation.routeParams);
   };
 
   addOnNavigateListener = (props) => {

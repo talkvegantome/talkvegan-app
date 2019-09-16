@@ -9,15 +9,6 @@ export class Storage {
     // AsyncStorage.clear();
     this.onRefreshListeners = [];
     this.refreshFromStorage();
-
-    // If it's been over a day since we loaded new data, load on start
-    let pagesObj = new Pages(this);
-    let daysSinceLastSync =
-      pagesObj.getLastPageDataSync().diffNow('days').days * -1;
-    if (daysSinceLastSync > 1) {
-      pagesObj.pullPageDataFromSite();
-    }
-
     this.addOnRefreshListener(this.onRefresh, [{ key: 'settings' }]);
     this.onRefresh();
   }
@@ -52,6 +43,13 @@ export class Storage {
 
   onRefresh = () => {
     this.analytics = new Analytics(this.settings);
+    this.pagesObj = new Pages(this);
+    // If it's been over a day since we loaded new data, load on start
+    let daysSinceLastSync =
+      this.pagesObj.getLastPageDataSync().diffNow('days').days * -1;
+    if (daysSinceLastSync > 1) {
+      this.pagesObj.pullPageDataFromSite();
+    }
   };
   mergeStorage(propertyName, storageValue) {
     if (!storageValue) {

@@ -15,10 +15,8 @@ import PushNotification from 'react-native-push-notification';
 
 import _ from 'lodash';
 
-import Analytics from '../analytics';
 import { commonStyle } from '../styles/Common.style.js';
 import Wrapper from '../wrapper/Wrapper.js';
-import Pages from '../Pages.js';
 import RateApp from '../rateApp';
 
 class SettingsScreen extends React.Component {
@@ -37,15 +35,13 @@ class SettingsScreen extends React.Component {
 
   _refreshPages = () => this.setState(this.returnState());
   returnState = () => {
-    this.pagesObj = new Pages(this.props.storage);
     // Ensure we have the page data for this language if we've just swapped to a new one
-    this.pagesObj.getPageData();
-    this.analytics = new Analytics(this.props.storage.settings);
+    this.props.storage.pagesObj.getPageData();
     this.rateApp = new RateApp({ storage: this.props.storage });
     return {
       settings: this.props.storage.settings,
       storage: this.props.storage,
-      lastSync: this.pagesObj.getLastPageDataSync('auto'),
+      lastSync: this.props.storage.pagesObj.getLastPageDataSync('auto'),
     };
   };
   checknotificationPermission = () => {
@@ -65,7 +61,7 @@ class SettingsScreen extends React.Component {
     this.props.storage.addOnRefreshListener(this._refreshPages);
     let timer = setInterval(() => {
       this.setState({
-        lastSync: this.pagesObj.getLastPageDataSync('auto'),
+        lastSync: this.props.storage.pagesObj.getLastPageDataSync('auto'),
       });
     }, 1000);
     AppState.addEventListener('change', this.checknotificationPermission);
@@ -83,7 +79,7 @@ class SettingsScreen extends React.Component {
   }
   pullPageDataFromSite() {
     this.setState({ pageDataIsLoading: true });
-    this.pagesObj.pullPageDataFromSite().then(() => {
+    this.props.storage.pagesObj.pullPageDataFromSite().then(() => {
       this.setState({ pageDataIsLoading: false });
     });
   }
@@ -92,7 +88,7 @@ class SettingsScreen extends React.Component {
       settings: { ...this.state.settings, ...{ [settingName]: value } },
     });
     this.props.storage.updateSettings({ [settingName]: value });
-    this.analytics.logEvent('updateSetting', {
+    this.props.storage.analytics.logEvent('updateSetting', {
       settingName: settingName,
       value: value,
     });

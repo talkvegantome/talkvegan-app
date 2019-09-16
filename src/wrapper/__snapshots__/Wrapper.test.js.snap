@@ -91,6 +91,7 @@ exports[`Wrapper Renders Correctly 1`] = `
               ],
             ]
           }
+          testID="back_button"
         >
           <View
             style={null}

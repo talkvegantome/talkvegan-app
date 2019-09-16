@@ -1,6 +1,5 @@
 export class MockNavigation {
-  state = {
-    navigationHistory: [],
-  };
+  navigationHistory = [];
+
   addOnNavigateListener() {}
 }

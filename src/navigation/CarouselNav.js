@@ -5,7 +5,7 @@ import { Button, Card, Title, Paragraph } from 'react-native-paper';
 
 var fontScaleHelper = 1.2;
 
-export default class CarouselNav extends React.Component {
+export default class CarouselNav extends React.PureComponent {
   state = Dimensions.get('window');
 
   _handleAppStateChange = () => {

@@ -200,6 +200,16 @@ function testLanguage(
         'No favourites found'
       ).waitForDisplayed(null, true);
     });
+    it('should be able to go back to the home page', () => {
+      $('~back_button').click();
+      $('~back_button').click();
+      let randomArticle = iosPredicatePicker(
+        'XCUIElementTypeOther',
+        `/${props.languageToTestShortCode}/`,
+        'BEGINSWITH'
+      );
+      randomArticle.waitForDisplayed();
+    });
   });
 }
 

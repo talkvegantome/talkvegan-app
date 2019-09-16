@@ -4,11 +4,8 @@ import stringify from 'fast-stringify';
 import { DateTime } from 'luxon';
 import RemoveMarkdown from 'remove-markdown';
 
-import Analytics from './analytics';
-
 class Pages {
   constructor(storage) {
-    this.analytics = new Analytics(storage.settings);
     this.storage = storage;
     this.settings = storage.settings;
     this.pageData = storage.pageData;
@@ -18,7 +15,7 @@ class Pages {
   getPageData() {
     // if the language's data hasn't loaded yet return a default
     if (!('data' in this.pageData[this.settings.language])) {
-      this.analytics.logEvent('error', {
+      this.storage.analytics.logEvent('error', {
         errorDetail: 'Failed to load page in language' + this.settings.language,
       });
       this.pullPageDataFromSite();
@@ -178,14 +175,14 @@ class Pages {
         'Error loading ' +
         pageIndex +
         '. Try refreshing data from the Settings page.';
-      this.analytics.logEvent('error', { errorDetail: errorMessage });
+      this.storage.analytics.logEvent('error', { errorDetail: errorMessage });
       return errorMessage;
     }
     return pages[pageIndex];
   }
 
   async pullPageDataFromSite() {
-    this.analytics.logEvent('pullPageDataFromSite', {
+    this.storage.analytics.logEvent('pullPageDataFromSite', {
       language: this.settings.language,
     });
     return fetch(this.getLanguageDataUri(), {
@@ -203,7 +200,7 @@ class Pages {
         throw 'Failed';
       })
       .catch(() => {
-        this.analytics.logEvent('error', {
+        this.storage.analytics.logEvent('error', {
           errorDetail:
             'Failed to fetch page in language' + this.settings.language,
         });
