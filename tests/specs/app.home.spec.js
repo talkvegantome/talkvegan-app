@@ -61,8 +61,14 @@ let clickRelativeInsideElement = (
 ) => {
   elemLocation = elem.getLocation();
   elemenSize = elem.getSize();
-  newX = x + elemLocation.x;
-  newY = y + elemLocation.y;
+  if (relative_to === 'top_left') {
+    newX = x + elemLocation.x;
+    newY = y + elemLocation.y;
+  }
+  if (relative_to === 'bottom_right') {
+    newX = elemenSize.width + elemLocation.x - x;
+    newY = elemenSize.height + elemLocation.y - y;
+  }
   driver.touchPerform([
     {
       action: 'press',
@@ -122,7 +128,12 @@ function testLanguage(
     });
 
     it(`should be able to toggle analytics without crashing`, () => {
-      $('~analytics_toggle').click();
+      clickRelativeInsideElement(
+        $('~analytics_toggle'),
+        25,
+        50,
+        'bottom_right'
+      );
     });
 
     it(`should be able to sync data without crashing`, () => {
@@ -166,6 +177,11 @@ function testLanguage(
       $('~search_bar').setValue(`${props.searchTerm}\uE006`);
       // console.log(driver.getPageSource())
       $('~search_result').waitForDisplayed();
+    });
+
+    it('should be able to open a search result', () => {
+      // console.log(driver.getPageSource())
+      $('~search_result').click();
     });
 
     it('should be able to open a page', () => {
@@ -230,7 +246,7 @@ function testLanguage(
       ).waitForDisplayed(null, true);
     });
     it('should be able to go back to the home page', () => {
-      for(let i = 0; i < 4; i++){
+      for (let i = 0; i < 4; i++) {
         $('~back_button').click();
       }
       let randomArticle = iosPredicatePicker(

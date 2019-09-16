@@ -51,7 +51,7 @@ export default class PageMenu extends React.Component {
       <Appbar style={styles.PageMenu} theme={pageMenuTheme}>
         <Appbar.Action
           icon="arrow-back"
-          testID='previous_article_button'
+          testID="previous_article_button"
           size={iconSize}
           disabled={this.previousPage === false}
           style={styles.PageMenuItem}
@@ -59,7 +59,7 @@ export default class PageMenu extends React.Component {
         />
         <Appbar.Action
           icon="share"
-          testID='share_button'
+          testID="share_button"
           size={iconSize}
           style={styles.PageMenuItem}
           onPress={() => {
@@ -79,7 +79,7 @@ export default class PageMenu extends React.Component {
         />
         <Appbar.Action
           icon="arrow-upward"
-          testID='scroll_to_top_button'
+          testID="scroll_to_top_button"
           size={iconSize}
           style={styles.PageMenuItem}
           disabled={!this.state.displayScrollUp}
@@ -100,7 +100,7 @@ export default class PageMenu extends React.Component {
         />
         <Appbar.Action
           icon="arrow-forward"
-          testID='next_article_button'
+          testID="next_article_button"
           size={iconSize}
           disabled={this.nextPage === false}
           style={styles.PageMenuItem}

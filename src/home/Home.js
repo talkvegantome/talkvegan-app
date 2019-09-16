@@ -1,10 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import {
-  Appbar,
-  FAB,
-  ActivityIndicator,
-} from 'react-native-paper';
+import { Appbar, FAB, ActivityIndicator } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import { _ } from 'lodash';
 

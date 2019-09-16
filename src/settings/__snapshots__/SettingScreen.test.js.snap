@@ -364,6 +364,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={null}
+            testID="sync_data_button"
           >
             <View
               style={
@@ -588,7 +589,6 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             </View>
           </View>
           <View
-            accessibilityLabel="language_button"
             accessible={true}
             clickable={true}
             isTVSelectable={true}
@@ -885,7 +885,10 @@ exports[`SettingsScreen Renders Correctly 1`] = `
               </View>
             </View>
           </View>
-          <View>
+          <View
+            accessibilityId="analytics_toggle"
+            testID="analytics_toggle"
+          >
             <View
               style={
                 Object {
@@ -1125,7 +1128,10 @@ exports[`SettingsScreen Renders Correctly 1`] = `
               </View>
             </View>
           </View>
-          <View>
+          <View
+            accessibilityId="notifications_toggle"
+            testID="notifications_toggle"
+          >
             <View
               style={
                 Object {
@@ -1365,7 +1371,10 @@ exports[`SettingsScreen Renders Correctly 1`] = `
               </View>
             </View>
           </View>
-          <View>
+          <View
+            accessibilityId="background_fetch_toggle"
+            testID="background_fetch_toggle"
+          >
             <View
               style={
                 Object {
@@ -1945,6 +1954,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={null}
+            testID="rate_app_button"
           >
             <View
               style={
