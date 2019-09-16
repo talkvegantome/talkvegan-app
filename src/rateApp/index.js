@@ -120,8 +120,8 @@ export class RateModal extends React.Component {
     this.setState({ visible: false });
   };
   onRate = () => {
-    this.rateApp.promptForRating();
     this.rateApp.dismissPrompt(true);
+    this.rateApp.promptForRating();
   };
   readyToPrompt() {
     if (this.rateApp.readyToPrompt()) {

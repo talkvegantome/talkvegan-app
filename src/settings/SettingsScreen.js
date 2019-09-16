@@ -126,7 +126,7 @@ class SettingsScreen extends React.Component {
             style={commonStyle.picker}
             itemStyle={commonStyle.pickerItem}
             testID="language_picker"
-            accessibilityLabel="language_picker"
+            accessibilityId="language_picker"
             onValueChange={(itemValue) =>
               this.updateSetting('language', itemValue)
             }>
@@ -144,6 +144,7 @@ class SettingsScreen extends React.Component {
         <View style={{ marginTop: 20 }}>
           <SettingsItem
             label="Last Synced Data"
+            testID="sync_data_button"
             leftIcon={{ name: 'access-time', color: commonStyle.secondary }}
             value={this.state.lastSync}
             icon={this.state.pageDataIsLoading ? 'hourglass-empty' : 'refresh'}
@@ -165,6 +166,7 @@ class SettingsScreen extends React.Component {
           />
           <SettingsItem
             label="Analytics"
+            testID="analytics_toggle"
             leftIcon={{
               name: 'chart-areaspline',
               type: 'material-community',
@@ -179,6 +181,7 @@ class SettingsScreen extends React.Component {
           />
           <SettingsItem
             label="Notifications"
+            testID="notifications_toggle"
             leftIcon={{
               name: this.state.notificationPermission
                 ? 'notifications-active'
@@ -193,6 +196,7 @@ class SettingsScreen extends React.Component {
           />
           <SettingsItem
             label="Background Fetch"
+            testID="background_fetch_toggle"
             style={{
               display:
                 this.state.notificationPermission && Platform.OS == 'ios'
@@ -232,6 +236,7 @@ class SettingsScreen extends React.Component {
           />
           <ListItem
             topDivider={true}
+            testID="rate_app_button"
             onPress={() => this.rateApp.promptForRating()}
             leftIcon={{
               name: 'rate-review',
@@ -295,7 +300,7 @@ class SettingsItem extends React.Component {
     return (
       <ListItem
         testID={this.props.testID}
-        accessibilityLabel={this.props.testID}
+        accessibilityId={this.props.testID}
         onPress={this.props.onPress}
         leftIcon={this.props.leftIcon}
         title={this.props.label}

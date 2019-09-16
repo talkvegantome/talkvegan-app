@@ -117,6 +117,18 @@ function testLanguage(
       doneElem.click();
     });
 
+    it(`should be able to press rate app button without crashing`, () => {
+      $('~rate_app_button').click();
+    });
+
+    it(`should be able to toggle analytics without crashing`, () => {
+      $('~analytics_toggle').click();
+    });
+
+    it(`should be able to sync data without crashing`, () => {
+      $('~sync_data_button').click();
+    });
+
     it('should be able to open a page', () => {
       clickBottomNavButton('Home');
       let randomArticle = iosPredicatePicker(
