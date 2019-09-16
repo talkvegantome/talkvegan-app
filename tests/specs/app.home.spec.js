@@ -194,16 +194,32 @@ function testLanguage(
       randomArticle.click();
     });
 
-    it('should be able to favourite a page', () => {
-      $('~favourite_this_page').click();
-    });
-
     it('should be able to go forward a page', () => {
-      $('~next_article_button').click();
+      let pageTitle = $('~page_title').getAttribute('label');
+      for (let i = 0; i < 5; i++) {
+        $('~next_article_button').click();
+        expect(pageTitle).not.toBe($('~page_title').getAttribute('label'));
+        pageTitle = $('~page_title').getAttribute('label');
+      }
     });
 
     it('should be able to go backwards a page', () => {
-      $('~previous_article_button').click();
+      let pageTitle = $('~page_title').getAttribute('label');
+      for (let i = 0; i < 5; i++) {
+        $('~previous_article_button').click();
+        expect(pageTitle).not.toBe($('~page_title').getAttribute('label'));
+        pageTitle = $('~page_title').getAttribute('label');
+      }
+    });
+
+    it('should be able to open a page', () => {
+      clickBottomNavButton('Home');
+      let randomArticle = iosPredicatePicker(
+        'XCUIElementTypeOther',
+        `/${props.languageToTestShortCode}/`,
+        'BEGINSWITH'
+      );
+      randomArticle.click();
     });
 
     it('should be able to share a page', () => {
@@ -213,6 +229,10 @@ function testLanguage(
         'Cancel',
         'BEGINSWITH'
       ).click();
+    });
+
+    it('should be able to favourite a page', () => {
+      $('~favourite_this_page').click();
     });
 
     it('new favourite should appear in favourites', () => {
@@ -246,9 +266,8 @@ function testLanguage(
       ).waitForDisplayed(null, true);
     });
     it('should be able to go back to the home page', () => {
-      for (let i = 0; i < 4; i++) {
-        $('~back_button').click();
-      }
+      $('~back_button').click();
+      $('~back_button').click();
       let randomArticle = iosPredicatePicker(
         'XCUIElementTypeOther',
         `/${props.languageToTestShortCode}/`,

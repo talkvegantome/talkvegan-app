@@ -192,6 +192,7 @@ exports[`Wrapper Renders Correctly 1`] = `
               ],
             ]
           }
+          testID="page_title"
         >
           <Text
             accessibilityRole="header"

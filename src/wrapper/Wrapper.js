@@ -52,6 +52,7 @@ class Wrapper extends React.Component {
               }}
             />
             <Appbar.Content
+              testID={'page_title'}
               titleStyle={{
                 color: commonStyle.headerFontColor,
               }}
