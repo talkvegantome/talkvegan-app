@@ -134,7 +134,7 @@ android {
         applicationId "com.talkvegantome"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 109
+        versionCode 110
         versionName "0.0.11"
     }
     splits {

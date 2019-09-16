@@ -182,6 +182,23 @@ function testLanguage(
       $('~favourite_this_page').click();
     });
 
+    it('should be able to go forward a page', () => {
+      $('~next_article_button').click();
+    });
+
+    it('should be able to go backwards a page', () => {
+      $('~previous_article_button').click();
+    });
+
+    it('should be able to share a page', () => {
+      $('~share_button').click();
+      iosPredicatePicker(
+        'XCUIElementTypeButton',
+        'Cancel',
+        'BEGINSWITH'
+      ).click();
+    });
+
     it('new favourite should appear in favourites', () => {
       clickBottomNavButton('Favourites');
       // Should not show 'No favourites'
@@ -213,8 +230,9 @@ function testLanguage(
       ).waitForDisplayed(null, true);
     });
     it('should be able to go back to the home page', () => {
-      $('~back_button').click();
-      $('~back_button').click();
+      for(let i = 0; i < 4; i++){
+        $('~back_button').click();
+      }
       let randomArticle = iosPredicatePicker(
         'XCUIElementTypeOther',
         `/${props.languageToTestShortCode}/`,

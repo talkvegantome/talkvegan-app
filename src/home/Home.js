@@ -1,14 +1,14 @@
 import React from 'react';
-import { Share, StyleSheet, View, Linking } from 'react-native';
+import { View } from 'react-native';
 import {
   Appbar,
   FAB,
   ActivityIndicator,
-  DefaultTheme,
 } from 'react-native-paper';
 import Markdown from 'react-native-markdown-renderer';
 import { _ } from 'lodash';
 
+import PageMenu from './PageMenu';
 import ContentIndex from '../navigation/ContentIndex';
 import Wrapper from '../wrapper/Wrapper.js';
 import { markdownRules } from '../MarkDownRules.js';
@@ -194,115 +194,15 @@ export default class App extends React.PureComponent {
           </Markdown>
         </Wrapper>
         <PageMenu
-          previousPage={this.props.storage.pagesObj.getPageOffsetInCategory(
-            this.props.indexId,
-            -1
-          )}
-          nextPage={this.props.storage.pagesObj.getPageOffsetInCategory(
-            this.props.indexId,
-            1
-          )}
+          storage={this.props.storage}
+          indexId={this.props.indexId}
           navigation={this.props.navigation}
-          pagePermalink={this.props.storage.pagesObj.getPagePermalink(
-            this.props.indexId
-          )}
-          pageGitHubLink={this.props.storage.pagesObj.getPageGitHubLink(
-            this.props.indexId
-          )}
           scrollRef={this.scrollRef}
           registerScrollListener={(method) =>
             this.setState({ scrollListener: method })
           }
         />
       </View>
-    );
-  }
-}
-
-class PageMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { displayScrollUp: false };
-    this.props.registerScrollListener(this.scrollListener);
-  }
-  scrollListener = (e) => {
-    this.setState({ displayScrollUp: e.nativeEvent.contentOffset.y > 0 });
-  };
-  _navigateForward() {
-    this.props.navigation.navigate(
-      'home',
-      {
-        indexId: this.props.nextPage['relativePermalink'],
-        from: this.props.thisPage,
-      },
-      'articleNextButton'
-    );
-  }
-  _navigateBackward() {
-    this.props.navigation.navigate(
-      'home',
-      {
-        indexId: this.props.previousPage['relativePermalink'],
-      },
-      'articlePreviousButton'
-    );
-  }
-  render() {
-    const iconSize = 18;
-    return (
-      <Appbar style={styles.PageMenu} theme={pageMenuTheme}>
-        <Appbar.Action
-          icon="arrow-back"
-          size={iconSize}
-          disabled={this.props.previousPage === false}
-          style={styles.PageMenuItem}
-          onPress={() => this._navigateBackward()}
-        />
-        <Appbar.Action
-          icon="share"
-          size={iconSize}
-          style={styles.PageMenuItem}
-          onPress={() => {
-            Share.share({ message: this.props.pagePermalink })
-              .then((result) => {
-                this.props.analytics.logEvent('sharedPage', {
-                  page: this.props.pagePermalink,
-                  activity: result.activityType,
-                });
-              })
-              .catch((err) => {
-                this.props.analytics.logEvent('error', { errorDetail: err });
-              });
-          }}
-        />
-        <Appbar.Action
-          icon="arrow-upward"
-          size={iconSize}
-          style={styles.PageMenuItem}
-          disabled={!this.state.displayScrollUp}
-          onPress={() =>
-            this.props.scrollRef.current.scrollTo({ y: 0, animated: true })
-          }
-        />
-        <Appbar.Action
-          icon="edit"
-          size={iconSize}
-          style={styles.PageMenuItem}
-          onPress={() => {
-            this.props.analytics.logEvent('openedGitHubLink', {
-              page: this.props.pagePermalink,
-            });
-            Linking.openURL(this.props.pageGitHubLink);
-          }}
-        />
-        <Appbar.Action
-          icon="arrow-forward"
-          size={iconSize}
-          disabled={this.props.nextPage === false}
-          style={styles.PageMenuItem}
-          onPress={() => this._navigateForward()}
-        />
-      </Appbar>
     );
   }
 }
@@ -333,28 +233,3 @@ class ScrollUpFAB extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  PageMenu: {
-    flex: 1,
-    justifyContent: 'space-between',
-    position: 'absolute',
-    height: 50,
-    width: '100%',
-    right: 0,
-    bottom: 0,
-  },
-  PageMenuItem: {
-    margin: 0,
-  },
-});
-
-const pageMenuTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: commonStyle.secondary,
-    accent: commonStyle.white,
-    onSurface: '#FFFFFF',
-  },
-};
