@@ -20,7 +20,7 @@ export default class PageMenu extends React.Component {
       'home',
       {
         indexId: nextPage['relativePermalink'],
-        from: this.thisPage,
+        from: this.props.indexId,
       },
       'articleNextButton'
     );
@@ -34,6 +34,7 @@ export default class PageMenu extends React.Component {
       'home',
       {
         indexId: previousPage['relativePermalink'],
+        from: this.props.indexId,
       },
       'articlePreviousButton'
     );
@@ -46,7 +47,6 @@ export default class PageMenu extends React.Component {
           icon="arrow-back"
           testID="previous_article_button"
           size={iconSize}
-          //disabled={this.previousPage === false}
           style={styles.PageMenuItem}
           onPress={() => this._navigateBackward()}
         />
@@ -101,7 +101,6 @@ export default class PageMenu extends React.Component {
           icon="arrow-forward"
           testID="next_article_button"
           size={iconSize}
-          //disabled={this.nextPage === false}
           style={styles.PageMenuItem}
           onPress={() => this._navigateForward()}
         />
