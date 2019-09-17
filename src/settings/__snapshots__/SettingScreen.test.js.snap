@@ -85,10 +85,13 @@ exports[`SettingsScreen Renders Correctly 1`] = `
                   "width": 36,
                 },
                 undefined,
-                Object {},
+                Object {
+                  "display": "none",
+                },
               ],
             ]
           }
+          testID="back_button"
         >
           <View
             style={null}
@@ -189,6 +192,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
               ],
             ]
           }
+          testID="page_title"
         >
           <Text
             accessibilityRole="header"
@@ -361,6 +365,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={null}
+            testID="sync_data_button"
           >
             <View
               style={
@@ -509,67 +514,6 @@ exports[`SettingsScreen Renders Correctly 1`] = `
               <View
                 width={16}
               />
-              <View
-                style={
-                  Object {
-                    "alignItems": "flex-end",
-                    "flex": 0.5,
-                    "justifyContent": "center",
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "color": "rgba(0, 0, 0, 0.54)",
-                      "fontSize": 17,
-                    }
-                  }
-                  theme={
-                    Object {
-                      "colors": Object {
-                        "disabled": "hsl(208, 8%, 90%)",
-                        "divider": "#bcbbc1",
-                        "error": "#ff190c",
-                        "grey0": "#393e42",
-                        "grey1": "#43484d",
-                        "grey2": "#5e6977",
-                        "grey3": "#86939e",
-                        "grey4": "#bdc6cf",
-                        "grey5": "#e1e8ee",
-                        "greyOutline": "#bbb",
-                        "platform": Object {
-                          "android": Object {
-                            "error": "#f44336",
-                            "primary": "#2196f3",
-                            "secondary": "#9C27B0",
-                            "success": "#4caf50",
-                            "warning": "#ffeb3b",
-                          },
-                          "ios": Object {
-                            "error": "#ff3b30",
-                            "primary": "#007aff",
-                            "secondary": "#5856d6",
-                            "success": "#4cd964",
-                            "warning": "#ffcc00",
-                          },
-                        },
-                        "primary": "#2089dc",
-                        "searchBg": "#303337",
-                        "secondary": "#8F0CE8",
-                        "success": "#52c41a",
-                        "warning": "#faad14",
-                      },
-                    }
-                  }
-                >
-                  7 days
-                </Text>
-              </View>
-              <View
-                width={16}
-              />
               <View>
                 <View
                   style={
@@ -646,7 +590,6 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             </View>
           </View>
           <View
-            accessibilityLabel="language_button"
             accessible={true}
             clickable={true}
             isTVSelectable={true}
@@ -943,7 +886,10 @@ exports[`SettingsScreen Renders Correctly 1`] = `
               </View>
             </View>
           </View>
-          <View>
+          <View
+            accessibilityId="analytics_toggle"
+            testID="analytics_toggle"
+          >
             <View
               style={
                 Object {
@@ -1183,7 +1129,10 @@ exports[`SettingsScreen Renders Correctly 1`] = `
               </View>
             </View>
           </View>
-          <View>
+          <View
+            accessibilityId="notifications_toggle"
+            testID="notifications_toggle"
+          >
             <View
               style={
                 Object {
@@ -1423,7 +1372,10 @@ exports[`SettingsScreen Renders Correctly 1`] = `
               </View>
             </View>
           </View>
-          <View>
+          <View
+            accessibilityId="background_fetch_toggle"
+            testID="background_fetch_toggle"
+          >
             <View
               style={
                 Object {
@@ -2003,6 +1955,7 @@ exports[`SettingsScreen Renders Correctly 1`] = `
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
             style={null}
+            testID="rate_app_button"
           >
             <View
               style={

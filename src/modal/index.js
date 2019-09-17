@@ -1,13 +1,26 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ScrollView, Dimensions, AppState } from 'react-native';
 import { Modal, Portal, Text, Button, Surface } from 'react-native-paper';
 import { commonStyle, PaperTheme } from '../styles/Common.style';
 
 export default class TalkVeganModal extends React.Component {
+  state = Dimensions.get('window');
+  _handleAppStateChange = () => {
+    this.setState(Dimensions.get('window'));
+  };
+
+  componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
   render() {
     return (
       <Portal>
-        <Modal visible={this.props.visible}>
+        <Modal
+          visible={this.props.visible}
+          contentContainerStyle={{ maxHeight: this.state.height * 0.5 }}>
           <Surface
             style={{
               width: '80%',
@@ -15,7 +28,7 @@ export default class TalkVeganModal extends React.Component {
               marginRight: 'auto',
               padding: 20,
             }}>
-            {this.props.children}
+            <ScrollView>{this.props.children}</ScrollView>
             <View
               style={{
                 marginTop: 20,

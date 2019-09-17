@@ -30,5 +30,12 @@ export class MockStorage {
       },
     };
   }
+  analytics = {
+    logEvent: () => {},
+  };
+  pagesObj = {
+    getPageData: () => {},
+    getLastPageDataSync: () => {},
+  };
   addOnRefreshListener() {}
 }

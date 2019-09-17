@@ -5,9 +5,6 @@ import PushNotification from 'react-native-push-notification';
 import { DateTime } from 'luxon';
 import { _ } from 'lodash';
 
-import Analytics from '../analytics';
-import Pages from '../Pages.js';
-
 export default class BackgroundFetchHelper {
   constructor(props) {
     this.props = props;
@@ -15,8 +12,6 @@ export default class BackgroundFetchHelper {
       return;
     }
 
-    this.analytics = new Analytics(this.props.storage.settings);
-    this.pages = new Pages(this.props.storage);
     this.debug = {
       lastNotification: DateTime.utc().plus({ years: -1 }),
     };
@@ -47,7 +42,6 @@ export default class BackgroundFetchHelper {
     }
   }
   getPermissionToAlert() {
-    this.analytics = new Analytics(this.props.storage.settings);
     if (Platform.OS === 'ios') {
       PushNotification.checkPermissions((permissions) => {
         this.havePermissionToAlert = permissions.alert;
@@ -73,7 +67,7 @@ export default class BackgroundFetchHelper {
         BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
       },
       (error) => {
-        this.analytics.logEvent('error', {
+        this.props.storage.analytics.logEvent('error', {
           action: 'backgroundNotification',
           errorDetail: error,
         });
@@ -109,7 +103,7 @@ export default class BackgroundFetchHelper {
     const lastNotification = this.debug
       ? this.debug.lastNotification
       : this.getlastNotification();
-    this.analytics.logEvent('checkForNotification', {
+    this.props.storage.analytics.logEvent('checkForNotification', {
       fired: DateTime.fromISO(responseJson.Date) > lastNotification,
       json: responseJson,
       lastNotification: lastNotification,
@@ -120,7 +114,7 @@ export default class BackgroundFetchHelper {
 
   validResponse(responseJson) {
     if (!responseJson.Date) {
-      this.analytics.logEvent('error', {
+      this.props.storage.analytics.logEvent('error', {
         errorDetail: 'Invalid response JSON',
         json: responseJson,
       });
@@ -130,7 +124,7 @@ export default class BackgroundFetchHelper {
   }
 
   checkForNotifications = async () => {
-    return fetch(this.pages.getNotificationsUri(), {
+    return fetch(this.props.storage.pagesObj.getNotificationsUri(), {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -148,10 +142,10 @@ export default class BackgroundFetchHelper {
         });
       })
       .catch((err) => {
-        this.analytics.logEvent('error', {
+        this.props.storage.analytics.logEvent('error', {
           errorDetail:
             'Failed to fetch notifications from ' +
-            this.pages.getNotificationsUri() +
+            this.props.storage.pagesObj.getNotificationsUri() +
             ' ' +
             err,
         });

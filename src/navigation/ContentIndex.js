@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import RemoveMarkdown from 'remove-markdown';
 import { commonStyle } from '../styles/Common.style';
 import { markdownStyles } from '../styles/Markdown.style';
@@ -7,47 +8,50 @@ import _ from 'lodash';
 
 import CarouselNav, { NavigationCard } from './CarouselNav';
 import NavHeader from './NavHeader.js';
-import Analytics from '../analytics';
-
-import Pages from '../Pages.js';
 
 export default class ContentIndex extends Component {
   constructor(props) {
     super(props);
-    this.state = this.returnState();
+    this.state = { loading: this.props.storage.loading };
   }
   componentDidMount() {
-    this.props.storage.addOnRefreshListener(this._refreshPages);
+    if (!this.state.loading) {
+      this.pagesList = this.generatePagesList(this.props.storage.pagesObj);
+    }
+    this.props.storage.addOnRefreshListener(this._storageListener);
   }
   componentWillUnmount() {
-    this.props.storage.removeOnRefreshListener(this._refreshPages);
-  }
-  _refreshPages = () => this.setState(this.returnState());
-
-  returnState() {
-    let storage = this.props.storage;
-    let pagesObj = new Pages(storage);
-    let analytics = new Analytics(storage.settings);
-    return {
-      analytics: analytics,
-      settings: storage.settings,
-      headerVisibility: {},
-      pagesList: this.generatePagesList(pagesObj),
-    };
+    this.props.storage.removeOnRefreshListener(this._storageListener);
   }
 
-  generatePagesList(pagesObj) {
-    let menuSorted = _.sortBy(pagesObj.getMenu(), ['weight', 'friendlyName']);
+  _storageListener = () => {
+    if (this.props.storage.loading) {
+      return;
+    }
+    this.pagesList = this.generatePagesList(this.props.storage.pagesObj);
+    this.setState({ loading: false });
+  };
+
+  generatePagesList() {
+    let menuSorted = _.sortBy(this.props.storage.pagesObj.getMenu(), [
+      'weight',
+      'friendlyName',
+    ]);
     return _.map(menuSorted, (headerItem) => {
       return {
         headerItem: headerItem,
-        pagesInCategory: pagesObj.getPagesInCategory(headerItem),
+        pagesInCategory: this.props.storage.pagesObj.getPagesInCategory(
+          headerItem
+        ),
       };
     });
   }
 
   render() {
-    return _.map(this.state.pagesList, (menuItem, i) => (
+    if (this.state.loading) {
+      return <ActivityIndicator style={{ marginTop: 20 }} size="large" />;
+    }
+    return _.map(this.pagesList, (menuItem, i) => (
       <View testID="content_index" accessibilityLabel="content_index" key={i}>
         <CarouselNavWrapper
           headerItem={menuItem.headerItem}
@@ -66,14 +70,7 @@ class CarouselNavWrapper extends React.Component {
   constructor(props) {
     super(props);
   }
-  navigateToScreen = (indexId) => () => {
-    // Navigation is always to the 'Home' screen, but content changes based on the indexId
-    this.props.navigation.navigate(
-      'home',
-      { indexId: indexId },
-      'carouselNavCard'
-    );
-  };
+
   generateCardList() {
     return _.map(this.props.pagesInCategory, (item) => {
       return {
@@ -82,11 +79,10 @@ class CarouselNavWrapper extends React.Component {
           ? item.description
           : RemoveMarkdown(item.rawContent).replace(/\n/g, ' '),
         relativePermalink: item.relativePermalink,
-        navigateTo: this.navigateToScreen(item.relativePermalink),
       };
     });
   }
-
+  expandHeader = () => this.setState({ expanded: !this.state.expanded });
   render() {
     let headerFriendlyName = this.props.headerItem.friendlyName;
     this.items = this.generateCardList();
@@ -102,7 +98,6 @@ class CarouselNavWrapper extends React.Component {
             iconSize={20}
             style={{
               alignItems: 'flex-start',
-
               marginTop: markdownStyles.heading1.marginTop,
               width: '100%',
             }}
@@ -111,7 +106,7 @@ class CarouselNavWrapper extends React.Component {
               fontSize: 15,
             }}
             size={20}
-            onPress={() => this.setState({ expanded: !this.state.expanded })}>
+            onPress={this.expandHeader}>
             {headerFriendlyName}
           </NavHeader>
         </View>
@@ -134,6 +129,7 @@ class CarouselNavWrapper extends React.Component {
               <NavigationCard
                 key={i}
                 item={item}
+                navigation={this.props.navigation}
                 style={{ marginLeft: 10, marginBottom: 20 }}
               />
             ))}

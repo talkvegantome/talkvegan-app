@@ -5,8 +5,6 @@ import { _ } from 'lodash';
 import RemoveMarkdown from 'remove-markdown';
 
 import Wrapper from '../wrapper/Wrapper.js';
-import Analytics from '../analytics';
-import Pages from '../Pages.js';
 import SearchScoring from './SearchScoring.js';
 import { commonStyle } from '../styles/Common.style.js';
 
@@ -21,22 +19,16 @@ export default class Search extends React.Component {
   componentWillUnmount() {
     this.props.storage.removeOnRefreshListener(this._refreshPages);
   }
-  _refreshPages = (storage) => this.setState(this.returnState(storage));
-  returnState = (storage) => {
-    let pagesObj = new Pages(storage);
+  _refreshPages = () => this.setState(this.returnState());
+  returnState = () => {
+    this.searchScoring = new SearchScoring({
+      pages: this.props.storage.pagesObj.getPages(),
+      pageTitles: this.props.storage.pagesObj.getPageTitles(),
+    });
     return {
-      analytics: new Analytics(storage.settings),
-      searchPending: false,
       query: '',
       results: [],
       resultsPlaceholder: '',
-      storage: storage,
-      ticksSinceQueryUpdated: 0,
-      pagesObj: pagesObj,
-      searchScoring: new SearchScoring({
-        pages: pagesObj.getPages(),
-        pageTitles: pagesObj.getPageTitles(),
-      }),
     };
   };
 
@@ -48,14 +40,14 @@ export default class Search extends React.Component {
     this.setState({ resultsPlaceholder: 'Searching...' });
     let startTime = new Date();
     setTimeout(() => {
-      this.state.searchScoring.getMatches(this.state.query).then((results) => {
+      this.searchScoring.getMatches(this.state.query).then((results) => {
         this.setState({
           results: results,
           resultsPlaceholder:
             results.length == 0 ? 'No Results for: ' + this.state.query : '',
         });
         let endTime = new Date();
-        this.state.analytics.logEvent('search', {
+        this.props.storage.analytics.logEvent('search', {
           query: this.state.query,
           duration: endTime.getTime() - startTime.getTime(),
         });
@@ -72,6 +64,7 @@ export default class Search extends React.Component {
         style={{ flex: 1 }}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Searchbar
+            testID="search_bar"
             style={{ marginTop: 10, width: '100%' }}
             placeholder="Search"
             onChangeText={this._searchQueryUpdate}
@@ -85,10 +78,10 @@ export default class Search extends React.Component {
           />
         </View>
         <Results
+          storage={this.props.storage}
           resultsPlaceholder={this.state.resultsPlaceholder}
           navigation={this.props.navigation}
           results={this.state.results}
-          pagesObj={this.state.pagesObj}
         />
       </Wrapper>
     );
@@ -112,10 +105,10 @@ class Results extends React.Component {
         false
       );
       body = RemoveMarkdown(
-        this.props.pagesObj.getPageContent(result.path)
+        this.props.storage.pagesObj.getPageContent(result.path)
       ).replace(/\n/g, ' ');
     } else {
-      title = this.props.pagesObj.getPageTitle(result.path);
+      title = this.props.storage.pagesObj.getPageTitle(result.path);
       body = _.map(result.topMatch.matches, (match, index) =>
         this.renderMatchText(match, contextMaxLength, index)
       );
@@ -124,6 +117,7 @@ class Results extends React.Component {
     return (
       <Card
         key={key}
+        testID="search_result"
         style={{ marginTop: 10 }}
         onPress={() =>
           this.props.navigation.navigate(

@@ -8,6 +8,7 @@ assets/amplitudeSettings.json
 *.ipa
 *.apk
 *.zip
+*.mov
 
 ## Build
 android/app/build/**

@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { DateTime, Duration } from 'luxon';
 import Rate, { AndroidMarket } from 'react-native-rate';
 import Markdown from 'react-native-markdown-renderer';
-import Analytics from '../analytics';
 
 import { markdownRules } from '../MarkDownRules.js';
 import { popUpmarkdownStyles } from '../styles/Markdown.style.js';
@@ -17,7 +16,6 @@ export default class RateApp {
       lastPrompted: DateTime.utc().plus({ minutes: -11 }),
     };
     this.debug = false;
-    this.analytics = new Analytics(props.storage.settings);
   }
   ratingIntervals = {
     0: {
@@ -81,7 +79,7 @@ export default class RateApp {
       false
     );
 
-    this.analytics.logEvent('dismissAppRatingDialog', {
+    this.props.storage.analytics.logEvent('dismissAppRatingDialog', {
       hasRatedApp: hasRatedApp,
       debug: this.debug,
     });
@@ -91,7 +89,7 @@ export default class RateApp {
 export class RateModal extends React.Component {
   constructor(props) {
     super(props);
-    this.markdownRules = new markdownRules({}, props.storage.settings);
+    this.markdownRules = new markdownRules({}, this.props.storage.settings);
     this.rateApp = new RateApp({ storage: this.props.storage });
   }
   state = { visible: false };
@@ -122,8 +120,9 @@ export class RateModal extends React.Component {
     this.setState({ visible: false });
   };
   onRate = () => {
-    this.rateApp.promptForRating();
     this.rateApp.dismissPrompt(true);
+    this.rateApp.promptForRating();
+    this.setState({ visible: false });
   };
   readyToPrompt() {
     if (this.rateApp.readyToPrompt()) {

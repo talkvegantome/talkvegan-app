@@ -15,10 +15,8 @@ import PushNotification from 'react-native-push-notification';
 
 import _ from 'lodash';
 
-import Analytics from '../analytics';
 import { commonStyle } from '../styles/Common.style.js';
 import Wrapper from '../wrapper/Wrapper.js';
-import Pages from '../Pages.js';
 import RateApp from '../rateApp';
 
 class SettingsScreen extends React.Component {
@@ -35,17 +33,15 @@ class SettingsScreen extends React.Component {
     };
   }
 
-  _refreshPages = (storage) => this.setState(this.returnState(storage));
-  returnState = (storage) => {
-    let pagesObj = new Pages(storage);
-    let analytics = new Analytics(storage.settings);
+  _refreshPages = () => this.setState(this.returnState());
+  returnState = () => {
+    // Ensure we have the page data for this language if we've just swapped to a new one
+    this.props.storage.pagesObj.getPageData();
+    this.rateApp = new RateApp({ storage: this.props.storage });
     return {
-      analytics: analytics,
-      settings: storage.settings,
+      settings: this.props.storage.settings,
       storage: this.props.storage,
-      pagesObj: pagesObj,
-      rateApp: new RateApp({ storage: storage }),
-      lastSync: pagesObj.getLastPageDataSync('auto'),
+      lastSync: this.props.storage.pagesObj.getLastPageDataSync('auto'),
     };
   };
   checknotificationPermission = () => {
@@ -65,7 +61,7 @@ class SettingsScreen extends React.Component {
     this.props.storage.addOnRefreshListener(this._refreshPages);
     let timer = setInterval(() => {
       this.setState({
-        lastSync: this.state.pagesObj.getLastPageDataSync('auto'),
+        lastSync: this.props.storage.pagesObj.getLastPageDataSync('auto'),
       });
     }, 1000);
     AppState.addEventListener('change', this.checknotificationPermission);
@@ -83,7 +79,7 @@ class SettingsScreen extends React.Component {
   }
   pullPageDataFromSite() {
     this.setState({ pageDataIsLoading: true });
-    this.state.pagesObj.pullPageDataFromSite().then(() => {
+    this.props.storage.pagesObj.pullPageDataFromSite().then(() => {
       this.setState({ pageDataIsLoading: false });
     });
   }
@@ -92,7 +88,7 @@ class SettingsScreen extends React.Component {
       settings: { ...this.state.settings, ...{ [settingName]: value } },
     });
     this.props.storage.updateSettings({ [settingName]: value });
-    this.state.analytics.logEvent('updateSetting', {
+    this.props.storage.analytics.logEvent('updateSetting', {
       settingName: settingName,
       value: value,
     });
@@ -102,7 +98,7 @@ class SettingsScreen extends React.Component {
       Linking.openURL('app-settings://');
       return;
     }
-    this.state.storage.updateSettings(
+    this.props.storage.updateSettings(
       { notificationsEnabled: !this.state.notificationPermission },
       false
     );
@@ -130,11 +126,11 @@ class SettingsScreen extends React.Component {
             style={commonStyle.picker}
             itemStyle={commonStyle.pickerItem}
             testID="language_picker"
-            accessibilityLabel="language_picker"
+            accessibilityId="language_picker"
             onValueChange={(itemValue) =>
               this.updateSetting('language', itemValue)
             }>
-            {_.map(this.state.storage.pageData, (lang, short) => {
+            {_.map(this.props.storage.pageData, (lang, short) => {
               return (
                 <Picker.Item
                   label={lang.languageName}
@@ -148,6 +144,7 @@ class SettingsScreen extends React.Component {
         <View style={{ marginTop: 20 }}>
           <SettingsItem
             label="Last Synced Data"
+            testID="sync_data_button"
             leftIcon={{ name: 'access-time', color: commonStyle.secondary }}
             value={this.state.lastSync}
             icon={this.state.pageDataIsLoading ? 'hourglass-empty' : 'refresh'}
@@ -160,7 +157,7 @@ class SettingsScreen extends React.Component {
             testID="language_button"
             leftIcon={{ name: 'language', color: commonStyle.secondary }}
             value={
-              this.state.storage.pageData[this.state.settings.language]
+              this.props.storage.pageData[this.state.settings.language]
                 .languageName
             }
             onPress={() => {
@@ -169,6 +166,7 @@ class SettingsScreen extends React.Component {
           />
           <SettingsItem
             label="Analytics"
+            testID="analytics_toggle"
             leftIcon={{
               name: 'chart-areaspline',
               type: 'material-community',
@@ -176,13 +174,14 @@ class SettingsScreen extends React.Component {
             }}
             icon={null}
             switch={{
-              value: this.state.storage.settings.analyticsEnabled,
+              value: this.props.storage.settings.analyticsEnabled,
               onValueChange: (value) =>
                 this.updateSetting('analyticsEnabled', value),
             }}
           />
           <SettingsItem
             label="Notifications"
+            testID="notifications_toggle"
             leftIcon={{
               name: this.state.notificationPermission
                 ? 'notifications-active'
@@ -197,6 +196,7 @@ class SettingsScreen extends React.Component {
           />
           <SettingsItem
             label="Background Fetch"
+            testID="background_fetch_toggle"
             style={{
               display:
                 this.state.notificationPermission && Platform.OS == 'ios'
@@ -217,7 +217,7 @@ class SettingsScreen extends React.Component {
         <View style={{ marginTop: 20 }}>
           <ListItem
             onPress={() =>
-              Linking.openURL(this.state.storage.config.helpDeskUrl)
+              Linking.openURL(this.props.storage.config.helpDeskUrl)
             }
             leftIcon={{ name: 'chat-bubble', color: commonStyle.secondary }}
             title="Contact Us"
@@ -225,7 +225,7 @@ class SettingsScreen extends React.Component {
           <ListItem
             topDivider={true}
             onPress={() =>
-              Linking.openURL(this.state.storage.config.twitterUrl)
+              Linking.openURL(this.props.storage.config.twitterUrl)
             }
             leftIcon={{
               name: 'twitter',
@@ -236,7 +236,8 @@ class SettingsScreen extends React.Component {
           />
           <ListItem
             topDivider={true}
-            onPress={() => this.state.rateApp.promptForRating()}
+            testID="rate_app_button"
+            onPress={() => this.rateApp.promptForRating()}
             leftIcon={{
               name: 'rate-review',
               color: commonStyle.secondary,
@@ -299,7 +300,7 @@ class SettingsItem extends React.Component {
     return (
       <ListItem
         testID={this.props.testID}
-        accessibilityLabel={this.props.testID}
+        accessibilityId={this.props.testID}
         onPress={this.props.onPress}
         leftIcon={this.props.leftIcon}
         title={this.props.label}

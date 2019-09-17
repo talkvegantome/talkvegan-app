@@ -4,13 +4,11 @@ import _ from 'lodash';
 import { getUniqueID, hasParents } from 'react-native-markdown-renderer';
 
 import { normaliseRelPath } from './Pages.js';
-import Analytics from './analytics';
 
 export class markdownRules {
   constructor(navigation, settings) {
     this.navigation = navigation;
     this.settings = settings;
-    this.analytics = new Analytics(settings);
   }
   generateHeading(node, children, parent, styles) {
     return (
@@ -20,7 +18,7 @@ export class markdownRules {
     );
   }
   openUrl(url) {
-    this.analytics.logEvent('openUrl', { url: url });
+    this.props.storage.analytics.logEvent('openUrl', { url: url });
     // If it's an internal link reformatted by preProcessMarkDown, navigate!
     if (url.match(/^REF:/)) {
       let indexId = url.replace(/REF:/, '');
@@ -32,7 +30,7 @@ export class markdownRules {
       return;
     }
     Linking.openURL(url).catch((err) => {
-      this.analytics.logEvent('error', { errorDetail: err });
+      this.props.storage.analytics.logEvent('error', { errorDetail: err });
     });
   }
   styleChildren(child, style) {

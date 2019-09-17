@@ -85,10 +85,13 @@ exports[`Wrapper Renders Correctly 1`] = `
                   "width": 36,
                 },
                 undefined,
-                Object {},
+                Object {
+                  "display": "none",
+                },
               ],
             ]
           }
+          testID="back_button"
         >
           <View
             style={null}
@@ -189,6 +192,7 @@ exports[`Wrapper Renders Correctly 1`] = `
               ],
             ]
           }
+          testID="page_title"
         >
           <Text
             accessibilityRole="header"
