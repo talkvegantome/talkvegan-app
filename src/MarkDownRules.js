@@ -7,7 +7,7 @@ import { normaliseRelPath } from './Pages.js';
 
 export class markdownRules {
   constructor(props) {
-    this.props = props
+    this.props = props;
   }
   generateHeading(node, children, parent, styles) {
     return (
@@ -132,7 +132,8 @@ export class markdownRules {
         //   the markdown formatter
         find: /\[([^\]\]]+)\]\([\s\{<]{2,}\s*ref[:]*\s*"([^"]+)"[\}>\s]{2,}\)/g,
         replacement: (match, p1, p2) => {
-          let relPath = '/' + this.props.storage.settings.language + normaliseRelPath(p2);
+          let relPath =
+            '/' + this.props.storage.settings.language + normaliseRelPath(p2);
           return '[' + p1 + '](REF:' + relPath + ')';
         },
       },
