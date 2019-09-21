@@ -65,10 +65,10 @@ export default class App extends React.PureComponent {
     if (this.props.storage.loading) {
       return {};
     }
-    this.markdownRulesObj = new markdownRules(
-      this.props.navigation,
-      this.props.storage.settings
-    );
+    this.markdownRulesObj = new markdownRules({
+      navigation: this.props.navigation,
+      storage: this.props.storage,
+    });
 
     return {
       isFavourite: this.props.storage.isFavourite({

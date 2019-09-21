@@ -89,7 +89,10 @@ export default class RateApp {
 export class RateModal extends React.Component {
   constructor(props) {
     super(props);
-    this.markdownRules = new markdownRules({}, this.props.storage.settings);
+    this.markdownRules = new markdownRules({
+      navigation: {},
+      storage: this.props.storage,
+    });
     this.rateApp = new RateApp({ storage: this.props.storage });
   }
   state = { visible: false };

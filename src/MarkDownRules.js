@@ -6,9 +6,8 @@ import { getUniqueID, hasParents } from 'react-native-markdown-renderer';
 import { normaliseRelPath } from './Pages.js';
 
 export class markdownRules {
-  constructor(navigation, settings) {
-    this.navigation = navigation;
-    this.settings = settings;
+  constructor(props) {
+    this.props = props;
   }
   generateHeading(node, children, parent, styles) {
     return (
@@ -22,7 +21,7 @@ export class markdownRules {
     // If it's an internal link reformatted by preProcessMarkDown, navigate!
     if (url.match(/^REF:/)) {
       let indexId = url.replace(/REF:/, '');
-      this.navigation.navigate(
+      this.props.navigation.navigate(
         'home',
         { indexId: normaliseRelPath(indexId) },
         'markdownLink'
@@ -133,7 +132,8 @@ export class markdownRules {
         //   the markdown formatter
         find: /\[([^\]\]]+)\]\([\s\{<]{2,}\s*ref[:]*\s*"([^"]+)"[\}>\s]{2,}\)/g,
         replacement: (match, p1, p2) => {
-          let relPath = '/' + this.settings.language + normaliseRelPath(p2);
+          let relPath =
+            '/' + this.props.storage.settings.language + normaliseRelPath(p2);
           return '[' + p1 + '](REF:' + relPath + ')';
         },
       },

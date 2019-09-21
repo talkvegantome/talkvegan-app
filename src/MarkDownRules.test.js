@@ -3,6 +3,19 @@ import { MockStorage } from '../mocks/MockStorage.js';
 
 jest.mock('./analytics');
 let mockStorage = new MockStorage();
+jest.doMock(
+  'Linking',
+  () => {
+    return {
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      openURL: jest.fn().mockResolvedValue(),
+      canOpenURL: jest.fn(),
+      getInitialURL: jest.fn(),
+    };
+  },
+  { virtual: true }
+);
 
 test('preProcessMarkDown Catches Links', () => {
   let scenarios = [
@@ -36,10 +49,23 @@ test('preProcessMarkDown Catches Links', () => {
         '[acre for acre plants are on average 100 to 160 times more efficient](REF:/en/vegan-statistics/land-usage/)',
     },
   ];
-  let markdownRulesObj = new markdownRules({}, mockStorage.settings);
+  let markdownRulesObj = new markdownRules({
+    navigation: {},
+    storage: mockStorage,
+  });
   scenarios.forEach((scenario) => {
     expect(
       markdownRulesObj.preProcessMarkDown(scenario.input, mockStorage.settings)
     ).toEqual(scenario.output);
   });
+});
+
+test('preProcessMarkDown Opens Links', () => {
+  let markdownRulesObj = new markdownRules({
+    navigation: {},
+    storage: mockStorage,
+  });
+  expect(() => {
+    markdownRulesObj.openUrl('http:///google.com');
+  }).not.toThrow();
 });
