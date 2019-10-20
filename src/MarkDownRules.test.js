@@ -75,11 +75,11 @@ test('styleChildren does not crash on blockquoted numeric lists', () => {
     navigation: {},
     storage: mockStorage,
   });
-  blockQuotedList = `
+  let blockQuotedList = `
 > 1. I am a blockquoted numeric list
 > 2. No way! So am I!
-`
+`;
   expect(() => {
-    markdownRulesObj.styleChildren(blockQuotedList, mockStorage.settings)
+    markdownRulesObj.styleChildren(blockQuotedList, mockStorage.settings);
   }).not.toThrow();
 });

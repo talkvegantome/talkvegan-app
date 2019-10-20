@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Appbar, FAB, ActivityIndicator } from 'react-native-paper';
+import { ListItem } from 'react-native-elements';
 import Markdown from 'react-native-markdown-renderer';
 import { _ } from 'lodash';
 
@@ -188,6 +189,13 @@ export default class App extends React.PureComponent {
               this.props.storage.pagesObj.getPageContent(this.props.indexId)
             )}
           </Markdown>
+          <View style={{ marginBottom: 20 }} />
+          {_.map(
+            this.props.storage.pagesObj.getContributors(this.props.indexId),
+            (contributor) => {
+              return <Contributor contributor={contributor} />;
+            }
+          )}
         </Wrapper>
         <PageMenu
           storage={this.props.storage}
@@ -199,6 +207,24 @@ export default class App extends React.PureComponent {
           }
         />
       </View>
+    );
+  }
+}
+
+class Contributor extends React.Component {
+  render() {
+    return (
+      <ListItem
+        leftAvatar={{
+          title: this.props.contributor.name,
+          source: { uri: this.props.contributor.imageUrl },
+        }}
+        title={this.props.contributor.name}
+        subtitle={_.startCase(this.props.contributor.role)}
+        style={{ marginLeft: -30, marginRight: -30 }}
+        topDivider={true}
+        bottomDivider={true}
+      />
     );
   }
 }

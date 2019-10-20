@@ -132,8 +132,11 @@ class Pages {
       ? pageMetadata.description
       : RemoveMarkdown(pageMetadata.rawContent).replace(/\n/g, ' ');
   }
+  getLanguageUri() {
+    return this.storage.config.apiUrl + this.settings.language;
+  }
   getLanguageDataUri() {
-    return this.storage.config.apiUrl + this.settings.language + '/index.json';
+    return this.getLanguage() + '/index.json';
   }
   getNotificationsUri() {
     return (
@@ -293,6 +296,17 @@ class Pages {
       return Math.round(diff.minutes) + ' mins';
     }
     return lastSyncDate;
+  }
+
+  getContributors(relPath) {
+    let metadata = this.getPageMetadata(relPath);
+    let contributors = this.pageData[this.settings.language].contributors;
+    return _.map(metadata.contributors, (contributorObj) => {
+      let contributor = contributors[contributorObj.name];
+      contributor.role = contributorObj.role;
+      contributor.imageUrl = this.storage.config.apiUrl + contributor.image;
+      return contributor;
+    });
   }
 }
 
