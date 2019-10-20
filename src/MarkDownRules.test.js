@@ -69,3 +69,17 @@ test('preProcessMarkDown Opens Links', () => {
     markdownRulesObj.openUrl('http:///google.com');
   }).not.toThrow();
 });
+
+test('styleChildren does not crash on blockquoted numeric lists', () => {
+  let markdownRulesObj = new markdownRules({
+    navigation: {},
+    storage: mockStorage,
+  });
+  blockQuotedList = `
+> 1. I am a blockquoted numeric list
+> 2. No way! So am I!
+`
+  expect(() => {
+    markdownRulesObj.styleChildren(blockQuotedList, mockStorage.settings)
+  }).not.toThrow();
+});

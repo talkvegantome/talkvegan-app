@@ -35,7 +35,7 @@ export class markdownRules {
   styleChildren(child, style) {
     let grandChildren = [];
     let childStyle = {};
-    if (_.isNil(child)) {
+    if (_.isNil(child) || !_.isObject(child)) {
       return child;
     }
     if ('props' in child && 'children' in child.props) {
