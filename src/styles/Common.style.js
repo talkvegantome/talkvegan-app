@@ -39,9 +39,9 @@ export const commonStyle = {
 
   // Text
   headingFontColor: palette.secondary,
-  paragraphFont: Platform.OS === 'ios' ? 'system font' : 'sans-serif',
+  paragraphFont: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
   paragraphFontBold:
-    Platform.OS === 'ios' ? 'ArialRoundedMTBold' : 'sans-serif-bold',
+    Platform.OS === 'ios' ? 'Arial Rounded MT Bold' : 'sans-serif-bold',
   contentBackgroundColor: '#f6f6f6',
   content: {
     paddingLeft: 30,

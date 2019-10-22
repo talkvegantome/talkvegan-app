@@ -136,7 +136,7 @@ class Pages {
     return this.storage.config.apiUrl + this.settings.language;
   }
   getLanguageDataUri() {
-    return this.getLanguage() + '/index.json';
+    return this.getLanguageUri() + '/index.json';
   }
   getNotificationsUri() {
     return (

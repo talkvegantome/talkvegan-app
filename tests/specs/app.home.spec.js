@@ -222,14 +222,15 @@ function testLanguage(
       randomArticle.click();
     });
 
-    it('should be able to share a page', () => {
-      $('~share_button').click();
-      iosPredicatePicker(
-        'XCUIElementTypeButton',
-        'Cancel',
-        'BEGINSWITH'
-      ).click();
-    });
+    // it('should be able to share a page', () => {
+    //   $('~share_button').click();
+    //   console.log(driver.getPageSource())
+    //   iosPredicatePicker(
+    //     'XCUIElementTypeButton',
+    //     'Cancel',
+    //     'BEGINSWITH'
+    //   ).click();
+    // });
 
     it('should be able to favourite a page', () => {
       $('~favourite_this_page').click();
