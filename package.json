@@ -27,7 +27,7 @@
     "@react-native-community/async-storage": "1.2.4",
     "@react-native-community/push-notification-ios": "^1.0.2",
     "fast-stringify": "^1.1.1",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "luxon": "^1.17.2",
     "react": "16.8.6",
     "react-native": "0.60.5",
