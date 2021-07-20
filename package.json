@@ -30,7 +30,7 @@
     "lodash": "^4.17.13",
     "luxon": "^1.17.2",
     "react": "16.8.6",
-    "react-native": "0.60.5",
+    "react-native": "0.62.3",
     "react-native-amplitude-analytics": "^0.2.7",
     "react-native-background-fetch": "^2.7.0",
     "react-native-elements": "^1.1.0",
